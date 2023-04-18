@@ -5,6 +5,7 @@ import StopWatch from '../common/StopWatch';
 import MathUtils from '../../utils/MathUtils';
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import CelebrationLottie from '../common/CelebrationLottie';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 const values = ['A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'X'];
@@ -12,6 +13,7 @@ const values = ['A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'X'];
 const MemoryBoard = () => {
   const insets = useSafeAreaInsets();
 
+  const lottieRef = React.useRef();
   const timeRef = React.useRef();
   const childRefs = React.useRef([]);
   const [cards, setCards] = React.useState([]);
@@ -54,6 +56,7 @@ const MemoryBoard = () => {
     setCurrentFlipped([]);
     setCardsDisabled(false);
     setGameOver(false);
+    timeRef.current.reset();
   };
 
   React.useEffect(() => {
@@ -96,6 +99,10 @@ const MemoryBoard = () => {
   }, [cards]);
 
   React.useEffect(() => {
+    gameOver && lottieRef?.current?.play(0, 210);
+  }, [gameOver]);
+
+  React.useEffect(() => {
     const flippedEqual =
       currentFlipped?.[0]?.value === currentFlipped?.[1]?.value;
 
@@ -129,8 +136,6 @@ const MemoryBoard = () => {
     }
   }, [currentFlipped]);
 
-  console.log('Watch ref', timeRef.current);
-
   return (
     <>
       <View
@@ -151,6 +156,7 @@ const MemoryBoard = () => {
         ))}
       </View>
       {gameOver && <Text style={styles.label}>GAME OVER</Text>}
+      {gameOver && <CelebrationLottie ref={lottieRef} />}
       <NewGameButton setNewGame={setNewGame} />
     </>
   );
@@ -163,6 +169,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: (HEIGHT - (3 * WIDTH) / 4 - (3 * WIDTH) / 16) / 2,
     marginHorizontal: WIDTH / 16,
+    zIndex: 100,
   },
   label: {
     fontSize: 24,

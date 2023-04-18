@@ -26,6 +26,7 @@ const StopWatch = React.forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     start,
     stop,
+    reset,
     isRunning,
   }));
 
@@ -49,6 +50,12 @@ const StopWatch = React.forwardRef((props, ref) => {
     setNowState(0);
     setLaps([firstLap + now - startState, ...other]);
     setIsRunning(false);
+  };
+
+  const reset = () => {
+    setStartState(0);
+    setNowState(0);
+    setLaps([]);
   };
 
   React.useEffect(() => {
