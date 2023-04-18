@@ -6,80 +6,88 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import React from 'react';
+import React, {useImperativeHandle} from 'react';
 
 const {width: WIDTH} = Dimensions.get('window');
 
-const Card = ({value, index, isFlipped, setIsFlipped}) => {
-  let flipRotation = isFlipped;
-  const flipAnimation = React.useRef(new Animated.Value(0)).current;
+const Card = React.forwardRef(
+  ({value, index, cardsDisabled, isFlipped, setIsFlipped}, ref) => {
+    let flipRotation = isFlipped;
+    const flipAnimation = React.useRef(new Animated.Value(0)).current;
 
-  flipAnimation.addListener(({value}) => (flipRotation = value));
+    flipAnimation.addListener(({value}) => (flipRotation = value));
 
-  const flipToFrontStyle = {
-    transform: [
-      {
-        rotateY: flipAnimation.interpolate({
-          inputRange: [0, 180],
-          outputRange: ['0deg', '180deg'],
-        }),
-      },
-    ],
-  };
+    const flipToFrontStyle = {
+      transform: [
+        {
+          rotateY: flipAnimation.interpolate({
+            inputRange: [0, 180],
+            outputRange: ['0deg', '180deg'],
+          }),
+        },
+      ],
+    };
 
-  const flipToBackStyle = {
-    transform: [
-      {
-        rotateY: flipAnimation.interpolate({
-          inputRange: [0, 180],
-          outputRange: ['180deg', '360deg'],
-        }),
-      },
-    ],
-  };
+    const flipToBackStyle = {
+      transform: [
+        {
+          rotateY: flipAnimation.interpolate({
+            inputRange: [0, 180],
+            outputRange: ['180deg', '360deg'],
+          }),
+        },
+      ],
+    };
 
-  const flipToFront = () => {
-    setIsFlipped(index);
-    Animated.timing(flipAnimation, {
-      toValue: 180,
-      duration: 300,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
-  };
+    useImperativeHandle(ref, () => ({
+      flipToBack,
+    }));
 
-  const flipToBack = () => {
-    setIsFlipped(index);
-    Animated.timing(flipAnimation, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
+    const flipToFront = () => {
+      setIsFlipped(index);
+      Animated.timing(flipAnimation, {
+        toValue: 180,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start();
+    };
 
-  return (
-    <Pressable onPress={() => (!!flipRotation ? flipToBack() : flipToFront())}>
-      <Animated.View
-        style={[
-          {
-            ...flipToBackStyle,
-          },
-          styles.front,
-        ]}>
-        <Text style={{fontSize: 48, fontWeight: '900'}}>{value}</Text>
-      </Animated.View>
-      <Animated.View
-        style={[
-          {
-            ...flipToFrontStyle,
-          },
-          styles.back,
-        ]}>
-        <Text style={{fontSize: 48, fontWeight: '900'}}>?</Text>
-      </Animated.View>
-    </Pressable>
-  );
-};
+    const flipToBack = () => {
+      setIsFlipped(index);
+      Animated.timing(flipAnimation, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    return (
+      <Pressable
+        disabled={cardsDisabled}
+        onPress={() => !flipRotation && flipToFront()}>
+        <Animated.View
+          style={[
+            {
+              ...flipToBackStyle,
+            },
+            styles.front,
+          ]}>
+          <Text style={styles.label}>{value}</Text>
+        </Animated.View>
+        <Animated.View
+          style={[
+            {
+              ...flipToFrontStyle,
+            },
+            styles.back,
+          ]}>
+          <Text style={styles.label}>?</Text>
+        </Animated.View>
+      </Pressable>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   front: {
@@ -102,6 +110,11 @@ const styles = StyleSheet.create({
     backfaceVisibility: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  label: {
+    fontSize: 48,
+    fontWeight: '900',
+    color: 'black',
   },
 });
 
