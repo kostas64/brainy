@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, {useImperativeHandle} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
+import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Timer = ({interval, style}) => {
   const pad = n => (n < 10 ? '0' + n : n);
@@ -79,15 +80,16 @@ export default StopWatch;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12,
-    borderRadius: 8,
+    paddingVertical: DimensionsUtils.getDP(8),
+    paddingHorizontal: DimensionsUtils.getDP(12),
+    borderRadius: DimensionsUtils.getDP(8),
     backgroundColor: '#0D0D0D',
   },
   timer: {
     color: '#FFFFFF',
-    fontSize: 24,
+    fontSize: DimensionsUtils.getFontSize(24),
     fontWeight: '300',
-    width: 36,
+    width: DimensionsUtils.getDP(36),
   },
   timerContainer: {
     flexDirection: 'row',

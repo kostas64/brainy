@@ -7,6 +7,7 @@ import {
   Dimensions,
 } from 'react-native';
 import React, {useImperativeHandle} from 'react';
+import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -91,28 +92,28 @@ const Card = React.forwardRef(
 
 const styles = StyleSheet.create({
   front: {
-    height: WIDTH / 4,
-    width: WIDTH / 4,
-    backgroundColor: '#D8D9CF',
-    borderRadius: 16,
-    marginBottom: WIDTH / 16,
+    height: DimensionsUtils.getDP(WIDTH / 5),
+    width: DimensionsUtils.getDP(WIDTH / 5),
+    backgroundColor: 'rgba(255,255,255,0.75)',
+    borderRadius: DimensionsUtils.getDP(16),
+    marginBottom: DimensionsUtils.getDP(WIDTH / 16),
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
     backfaceVisibility: 'hidden',
   },
   back: {
-    height: WIDTH / 4,
-    width: WIDTH / 4,
-    backgroundColor: '#FF8787',
-    borderRadius: 16,
-    marginBottom: WIDTH / 16,
+    height: DimensionsUtils.getDP(WIDTH / 5),
+    width: DimensionsUtils.getDP(WIDTH / 5),
+    backgroundColor: 'rgba(255,135,135,0.9)',
+    borderRadius: DimensionsUtils.getDP(16),
+    marginBottom: DimensionsUtils.getDP(WIDTH / 16),
     backfaceVisibility: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
   },
   label: {
-    fontSize: 48,
+    fontSize: DimensionsUtils.getFontSize(48),
     fontWeight: '900',
     color: 'black',
   },

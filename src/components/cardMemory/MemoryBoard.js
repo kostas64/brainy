@@ -1,14 +1,16 @@
 import React from 'react';
 import Card from './Card';
+import MemoryBack from './MemoryBack';
 import NewGameButton from './NewGameButton';
 import StopWatch from '../common/StopWatch';
 import MathUtils from '../../utils/MathUtils';
+import MemoryValues from '../../assets/values/memory';
+import {DimensionsUtils} from '../../utils/DimensionUtils';
+import CelebrationLottie from '../common/CelebrationLottie';
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import CelebrationLottie from '../common/CelebrationLottie';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
-const values = ['A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'X'];
 
 const MemoryBoard = () => {
   const insets = useSafeAreaInsets();
@@ -17,6 +19,7 @@ const MemoryBoard = () => {
   const timeRef = React.useRef();
   const childRefs = React.useRef([]);
   const [cards, setCards] = React.useState([]);
+  const [flipCounter, setFlipCounter] = React.useState(0);
   const [gameOver, setGameOver] = React.useState(false);
   const [currentFlipped, setCurrentFlipped] = React.useState([]);
   const [cardsDisabled, setCardsDisabled] = React.useState(false);
@@ -42,7 +45,7 @@ const MemoryBoard = () => {
 
   const isGameOver = () => {
     const sum = cards.reduce((acc, cur) => acc + (!!cur.isMatched ? 1 : 0), 0);
-    if (sum === values.length - 1 || sum === values.length) {
+    if (sum === MemoryValues.length - 1 || sum === MemoryValues.length) {
       setCardsDisabled(true);
       return true;
     } else {
@@ -53,9 +56,11 @@ const MemoryBoard = () => {
 
   const setNewGame = () => {
     setCards([]);
+    setFlipCounter(0);
     setCurrentFlipped([]);
     setCardsDisabled(false);
     setGameOver(false);
+    timeRef.current.stop();
     timeRef.current.reset();
   };
 
@@ -63,8 +68,8 @@ const MemoryBoard = () => {
     if (cards.length === 0) {
       let newCards = [];
       //Fill cards
-      for (let i = 0; i < 9; i++) {
-        const value = values[i];
+      for (let i = 0; i < 16; i++) {
+        const value = MemoryValues[i];
         newCards.push({value, isFlipped: false, isMatched: false});
       }
 
@@ -108,6 +113,7 @@ const MemoryBoard = () => {
 
     //Check if cards match and flip back if not
     if (currentFlipped.length === 2 && !flippedEqual) {
+      setFlipCounter(oldCounter => oldCounter + 1);
       setCardsDisabled(true);
       setTimeout(() => {
         childRefs.current?.[currentFlipped[0]?.id]?.flipToBack();
@@ -116,6 +122,8 @@ const MemoryBoard = () => {
         setCardsDisabled(false);
       }, 500);
     } else if (currentFlipped.length === 2 && flippedEqual) {
+      setFlipCounter(oldCounter => oldCounter + 1);
+
       //Keep cards that match
       setCards(
         cards.map(card => {
@@ -137,10 +145,18 @@ const MemoryBoard = () => {
   }, [currentFlipped]);
 
   return (
-    <>
-      <View
-        style={{position: 'absolute', right: WIDTH / 16, top: insets.top + 24}}>
+    <MemoryBack>
+      <View style={[styles.watchContainer, {top: insets.top + 24}]}>
         <StopWatch ref={timeRef} />
+      </View>
+      <View
+        style={[
+          styles.flipContainer,
+          {
+            top: insets.top + 24,
+          },
+        ]}>
+        <Text style={styles.flipLabel}>{`Flips: ${flipCounter}`}</Text>
       </View>
       <View style={styles.board}>
         {cards.map((card, i) => (
@@ -158,21 +174,41 @@ const MemoryBoard = () => {
       {gameOver && <Text style={styles.label}>GAME OVER</Text>}
       {gameOver && <CelebrationLottie ref={lottieRef} />}
       <NewGameButton setNewGame={setNewGame} />
-    </>
+    </MemoryBack>
   );
 };
 
 const styles = StyleSheet.create({
+  watchContainer: {
+    position: 'absolute',
+    right: DimensionsUtils.getDP(WIDTH / 16),
+  },
   board: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: (HEIGHT - (3 * WIDTH) / 4 - (3 * WIDTH) / 16) / 2,
-    marginHorizontal: WIDTH / 16,
+    marginTop: DimensionsUtils.getDP(
+      (HEIGHT - (3 * WIDTH) / 4 - (3 * WIDTH) / 16) / 2,
+    ),
+    marginHorizontal: DimensionsUtils.getDP(WIDTH / 16),
     zIndex: 100,
   },
+  flipContainer: {
+    position: 'absolute',
+    left: DimensionsUtils.getDP(26),
+    padding: DimensionsUtils.getDP(8),
+    borderRadius: DimensionsUtils.getDP(8),
+    width: DimensionsUtils.getDP(104),
+    backgroundColor: 'black',
+    alignItems: 'center',
+  },
+  flipLabel: {
+    color: 'white',
+    fontSize: DimensionsUtils.getFontSize(24),
+    fontWeight: '300',
+  },
   label: {
-    fontSize: 24,
+    fontSize: DimensionsUtils.getFontSize(24),
     fontWeight: '900',
     color: 'black',
     alignSelf: 'center',

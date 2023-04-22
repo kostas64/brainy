@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, Pressable, StyleSheet} from 'react-native';
+import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const NewGameButton = ({setNewGame}) => {
@@ -10,7 +11,7 @@ const NewGameButton = ({setNewGame}) => {
       style={[
         styles.container,
         {
-          bottom: insets.bottom,
+          bottom: insets.bottom > 0 ? insets.bottom : 24,
         },
       ]}>
       <Text style={styles.label}>New Game</Text>
@@ -21,14 +22,14 @@ const NewGameButton = ({setNewGame}) => {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    padding: 12,
+    padding: DimensionsUtils.getDP(12),
     alignSelf: 'center',
-    borderRadius: 12,
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    borderRadius: DimensionsUtils.getDP(12),
+    backgroundColor: 'rgba(255,255,255,0.8)',
     justifyContent: 'flex-end',
   },
   label: {
-    fontSize: 24,
+    fontSize: DimensionsUtils.getFontSize(24),
     fontWeight: '900',
     color: 'black',
     alignSelf: 'center',
