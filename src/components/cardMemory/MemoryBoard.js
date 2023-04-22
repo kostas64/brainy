@@ -5,6 +5,7 @@ import NewGameButton from './NewGameButton';
 import StopWatch from '../common/StopWatch';
 import MathUtils from '../../utils/MathUtils';
 import MemoryValues from '../../assets/values/memory';
+import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import CelebrationLottie from '../common/CelebrationLottie';
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
@@ -173,7 +174,7 @@ const MemoryBoard = () => {
       </View>
       {gameOver && <Text style={styles.label}>GAME OVER</Text>}
       {gameOver && <CelebrationLottie ref={lottieRef} />}
-      <NewGameButton setNewGame={setNewGame} />
+      <NewGameButton gameFinished={gameOver} setNewGame={setNewGame} />
     </MemoryBack>
   );
 };
@@ -205,11 +206,11 @@ const styles = StyleSheet.create({
   flipLabel: {
     color: 'white',
     fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: 'DiloWorld',
+    fontFamily: GenericUtils.fontFamily(),
   },
   label: {
     fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: 'DiloWorld',
+    fontFamily: GenericUtils.fontFamily(),
     color: 'black',
     alignSelf: 'center',
   },

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, {useImperativeHandle} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
+import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Timer = ({interval, style}) => {
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
   timer: {
     color: '#FFFFFF',
     fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: 'DiloWorld',
+    fontFamily: GenericUtils.fontFamily(),
     width: DimensionsUtils.getDP(36),
   },
   timerContainer: {

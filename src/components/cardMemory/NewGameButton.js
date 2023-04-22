@@ -1,9 +1,10 @@
 import React from 'react';
+import {GenericUtils} from '../../utils/GenericUtils';
 import {Text, Pressable, StyleSheet} from 'react-native';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-const NewGameButton = ({setNewGame}) => {
+const NewGameButton = ({gameFinished, setNewGame}) => {
   const insets = useSafeAreaInsets();
   return (
     <Pressable
@@ -14,7 +15,9 @@ const NewGameButton = ({setNewGame}) => {
           bottom: insets.bottom > 0 ? insets.bottom : 24,
         },
       ]}>
-      <Text style={styles.label}>New Game</Text>
+      <Text style={styles.label}>
+        {gameFinished ? 'Play Again' : 'New Game'}
+      </Text>
     </Pressable>
   );
 };
@@ -29,7 +32,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   label: {
-    fontFamily: 'DiloWorld',
+    fontFamily: GenericUtils.fontFamily(),
     fontSize: DimensionsUtils.getFontSize(28),
     color: 'black',
     alignSelf: 'center',

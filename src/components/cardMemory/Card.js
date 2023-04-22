@@ -7,6 +7,7 @@ import {
   Dimensions,
 } from 'react-native';
 import React, {useImperativeHandle} from 'react';
+import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
-    fontFamily: 'DiloWorld',
+    fontFamily: GenericUtils.fontFamily(),
     fontSize: DimensionsUtils.getFontSize(48),
     color: 'black',
   },
