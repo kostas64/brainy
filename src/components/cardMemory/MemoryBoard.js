@@ -4,8 +4,10 @@ import MemoryBack from './MemoryBack';
 import NewGameButton from './NewGameButton';
 import StopWatch from '../common/StopWatch';
 import MathUtils from '../../utils/MathUtils';
+import AnimatedModal from '../common/AnimatedModal';
 import MemoryValues from '../../assets/values/memory';
 import {GenericUtils} from '../../utils/GenericUtils';
+import MemorySuccessModal from './MemorySuccessModal';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import CelebrationLottie from '../common/CelebrationLottie';
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
@@ -19,6 +21,7 @@ const MemoryBoard = () => {
   const lottieRef = React.useRef();
   const timeRef = React.useRef();
   const childRefs = React.useRef([]);
+  const [modalOpen, setModalOpen] = React.useState(false);
   const [cards, setCards] = React.useState([]);
   const [flipCounter, setFlipCounter] = React.useState(0);
   const [gameOver, setGameOver] = React.useState(false);
@@ -65,6 +68,21 @@ const MemoryBoard = () => {
     timeRef.current.reset();
   };
 
+  const successContent = () => {
+    const pad = n => (n < 10 ? '0' + n : n);
+    const duration = timeRef?.current?.extractTime();
+    const centiseconds = Math.floor(duration?.milliseconds() / 10);
+
+    return (
+      <MemorySuccessModal
+        pad={pad}
+        duration={duration}
+        flipCounter={flipCounter}
+        centiseconds={centiseconds}
+      />
+    );
+  };
+
   React.useEffect(() => {
     if (cards.length === 0) {
       let newCards = [];
@@ -90,6 +108,7 @@ const MemoryBoard = () => {
       //Stop timer
       timeRef.current.stop();
       setGameOver(true);
+      setModalOpen(true);
     } else {
       const sumFlipped = cards.reduce(
         (acc, cur) => acc + (!!cur.isFlipped ? 1 : 0),
@@ -174,6 +193,12 @@ const MemoryBoard = () => {
       </View>
       {gameOver && <Text style={styles.label}>GAME OVER</Text>}
       {gameOver && <CelebrationLottie ref={lottieRef} />}
+      <AnimatedModal
+        gameOver={gameOver}
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        content={successContent()}
+      />
       <NewGameButton gameFinished={gameOver} setNewGame={setNewGame} />
     </MemoryBack>
   );

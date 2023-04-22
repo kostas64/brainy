@@ -6,15 +6,21 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Timer = ({interval, style}) => {
   const pad = n => (n < 10 ? '0' + n : n);
-  const duration = moment.duration(interval);
+  const duration = convertTime(interval);
   const centiseconds = Math.floor(duration.milliseconds() / 10);
   return (
     <View style={styles.timerContainer}>
       <Text style={style}>{pad(duration.minutes())}:</Text>
       <Text style={style}>{pad(duration.seconds())},</Text>
-      <Text style={[style, {width: 30}]}>{pad(centiseconds)}</Text>
+      <Text style={[style, {width: DimensionsUtils.getDP(32)}]}>
+        {pad(centiseconds)}
+      </Text>
     </View>
   );
+};
+
+const convertTime = time => {
+  return moment.duration(time);
 };
 
 let timer;
@@ -30,6 +36,7 @@ const StopWatch = React.forwardRef((props, ref) => {
     stop,
     reset,
     isRunning,
+    extractTime,
   }));
 
   const start = () => {
@@ -60,6 +67,9 @@ const StopWatch = React.forwardRef((props, ref) => {
     setLaps([]);
   };
 
+  const extractTime = () =>
+    convertTime(laps.reduce((total, curr) => total + curr, 0) + timerVar);
+
   React.useEffect(() => {
     return () => {
       clearInterval(timer);
@@ -85,6 +95,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: DimensionsUtils.getDP(12),
     borderRadius: DimensionsUtils.getDP(8),
     backgroundColor: '#0D0D0D',
+    width: DimensionsUtils.getDP(120),
   },
   timer: {
     color: '#FFFFFF',
@@ -94,5 +105,6 @@ const styles = StyleSheet.create({
   },
   timerContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
   },
 });
