@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   timer: {
     color: '#FFFFFF',
     fontSize: DimensionsUtils.getFontSize(24),
-    fontWeight: '300',
+    fontFamily: 'DiloWorld',
     width: DimensionsUtils.getDP(36),
   },
   timerContainer: {

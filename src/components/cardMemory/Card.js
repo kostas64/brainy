@@ -113,8 +113,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
+    fontFamily: 'DiloWorld',
     fontSize: DimensionsUtils.getFontSize(48),
-    fontWeight: '900',
     color: 'black',
   },
 });

@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   label: {
-    fontSize: DimensionsUtils.getFontSize(24),
-    fontWeight: '900',
+    fontFamily: 'DiloWorld',
+    fontSize: DimensionsUtils.getFontSize(28),
     color: 'black',
     alignSelf: 'center',
   },

@@ -205,11 +205,11 @@ const styles = StyleSheet.create({
   flipLabel: {
     color: 'white',
     fontSize: DimensionsUtils.getFontSize(24),
-    fontWeight: '300',
+    fontFamily: 'DiloWorld',
   },
   label: {
     fontSize: DimensionsUtils.getFontSize(24),
-    fontWeight: '900',
+    fontFamily: 'DiloWorld',
     color: 'black',
     alignSelf: 'center',
   },
