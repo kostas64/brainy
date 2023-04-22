@@ -37,9 +37,8 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
         tension: 20,
         useNativeDriver: true,
       }),
-    ]).start(() => {
-      setModalOpen(false);
-    });
+    ]).start();
+    setModalOpen(false);
   };
 
   return (
