@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   container: {
     padding: DimensionsUtils.getDP(12),
     marginHorizontal: DimensionsUtils.getDP(16),
+    alignItems: 'center',
   },
   label: {
     color: 'black',
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     padding: DimensionsUtils.getDP(4),
     marginBottom: DimensionsUtils.getDP(16),
   },
-  flipsLabel: {
+  resultsLabel: {
     color: 'black',
     fontSize: DimensionsUtils.getFontSize(22),
     fontFamily: GenericUtils.fontFamily(),
