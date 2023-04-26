@@ -1,6 +1,7 @@
 import React from 'react';
-import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {Animated, StyleSheet, Pressable} from 'react-native';
+
+import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimPress = Animated.createAnimatedComponent(Pressable);
 

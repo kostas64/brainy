@@ -8,6 +8,16 @@ class MathUtils extends React.Component {
     }
     return array;
   };
+
+  static getRandom(min, max) {
+    // Get the current time in milliseconds and use
+    // it as the seed for a pseudo-random number generator
+    let seed = Math.random() * new Date().getTime();
+    let random = (seed * 9301 + 49297) % 233280;
+    let randomNumber = min + (random / 233280) * (max - min);
+
+    return randomNumber;
+  }
 }
 
 export default MathUtils;

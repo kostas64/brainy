@@ -1,8 +1,9 @@
 import React from 'react';
-import {GenericUtils} from '../../utils/GenericUtils';
 import {Text, Pressable, StyleSheet} from 'react-native';
-import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+import {GenericUtils} from '../../utils/GenericUtils';
+import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const NewGameButton = ({gameFinished, setNewGame}) => {
   const insets = useSafeAreaInsets();

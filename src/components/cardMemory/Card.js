@@ -7,6 +7,7 @@ import {
   Dimensions,
 } from 'react-native';
 import React, {useImperativeHandle} from 'react';
+
 import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
@@ -59,7 +60,7 @@ const Card = React.forwardRef(
       setIsFlipped(index);
       Animated.timing(flipAnimation, {
         toValue: 0,
-        duration: 300,
+        duration: 200,
         useNativeDriver: true,
       }).start();
     };

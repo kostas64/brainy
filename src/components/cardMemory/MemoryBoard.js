@@ -1,6 +1,8 @@
 import React from 'react';
+import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
 import Card from './Card';
-import MemoryBack from './MemoryBack';
 import NewGameButton from './NewGameButton';
 import StopWatch from '../common/StopWatch';
 import MathUtils from '../../utils/MathUtils';
@@ -10,8 +12,7 @@ import {GenericUtils} from '../../utils/GenericUtils';
 import MemorySuccessModal from './MemorySuccessModal';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import CelebrationLottie from '../common/CelebrationLottie';
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import BackgroundWrapper from '../common/BackgroundWrapper';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 
@@ -165,7 +166,9 @@ const MemoryBoard = () => {
   }, [currentFlipped]);
 
   return (
-    <MemoryBack>
+    <BackgroundWrapper
+      statusBar={'light-content'}
+      source={require('../../assets/images/background.png')}>
       <View style={[styles.watchContainer, {top: insets.top + 24}]}>
         <StopWatch ref={timeRef} />
       </View>
@@ -200,7 +203,7 @@ const MemoryBoard = () => {
         content={successContent()}
       />
       <NewGameButton gameFinished={gameOver} setNewGame={setNewGame} />
-    </MemoryBack>
+    </BackgroundWrapper>
   );
 };
 

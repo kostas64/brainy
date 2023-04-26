@@ -1,17 +1,18 @@
 import React from 'react';
 import {ImageBackground, StatusBar, StyleSheet} from 'react-native';
 
-const MemoryBack = ({children}) => {
+const BackgroundWrapper = ({children, statusBar, source}) => {
   return (
     <>
       <StatusBar
         translucent
         backgroundColor={'transparent'}
-        barStyle={'dark-content'}
+        barStyle={statusBar}
       />
       <ImageBackground
         style={styles.container}
-        source={require('../../assets/images/background.png')}>
+        source={source}
+        resizeMode="cover">
         {children}
       </ImageBackground>
     </>
@@ -24,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MemoryBack;
+export default BackgroundWrapper;
