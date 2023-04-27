@@ -1,79 +1,151 @@
 import React from 'react';
+import {View, Text, Dimensions, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Text, Dimensions, StyleSheet, Pressable} from 'react-native';
 
+import ColorCard from './ColorCard';
+import Timer from '../common/Timer';
+import ColorButton from './ColorButton';
 import MathUtils from '../../utils/MathUtils';
+import CardSuccessModal from './CardSuccessModal';
+import {COLORS} from '../../assets/values/colors';
+import AnimatedModal from '../common/AnimatedModal';
 import {GenericUtils} from '../../utils/GenericUtils';
+import NewGameButton from '../cardMemory/NewGameButton';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import BackgroundWrapper from '../common/BackgroundWrapper';
 
 const {width: WIDTH} = Dimensions.get('window');
-const values = [
-  {color: 'red', value: 'crimson'},
-  {color: 'blue', value: 'dodgerblue'},
-  {color: 'green', value: 'forestgreen'},
-  {color: 'yellow', value: 'gold'},
-  {color: 'grey', value: 'grey'},
-  {color: 'pink', value: 'hotpink'},
-  {color: 'brown', value: 'saddlebrown'},
-  {color: 'black', value: 'black'},
-  {color: 'orange', value: 'darkorange'},
-];
 
-const Card = () => {
-  const rand1 = Math.floor(MathUtils.getRandom(0, values.length));
-  const rand2 = Math.floor(MathUtils.getRandom(0, values.length));
-
-  return (
-    <View style={styles.cardContainer}>
-      <Text
-        style={[
-          styles.cardLabel,
-          {
-            color: values[rand1].value,
-          },
-        ]}>
-        {values[rand2].color}
-      </Text>
-    </View>
-  );
-};
-
-const BottomButton = ({label}) => {
+const BottomButton = ({label, onPress, disabled}) => {
   const insets = useSafeAreaInsets();
 
   return (
-    <Pressable
-      style={[
-        styles.buttonContainer,
-        {
-          marginBottom:
-            insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(16),
-          height:
-            insets.bottom > 0
-              ? DimensionsUtils.getDP(32) + insets.bottom
-              : DimensionsUtils.getDP(32),
-        },
-      ]}>
-      <Text style={styles.buttonLabel}>{label}</Text>
-    </Pressable>
+    <ColorButton
+      disabled={disabled}
+      label={label}
+      onPress={onPress}
+      insets={insets}
+    />
   );
 };
 
 const ColorMatch = () => {
+  const insets = useSafeAreaInsets();
+  const timeRef = React.useRef();
+
+  const [rand1, setRand1] = React.useState();
+  const [rand2, setRand2] = React.useState();
+  const [rand3, setRand3] = React.useState();
+  const [rand4, setRand4] = React.useState();
+  const [tries, setTries] = React.useState(0);
+  const [correct, setCorrect] = React.useState(0);
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [isFinished, setIsFinished] = React.useState(false);
+
+  const checkValid = answer => {
+    if (
+      (COLORS[rand2]?.color === COLORS[rand3]?.color && answer === 'yes') ||
+      (COLORS[rand2]?.color !== COLORS[rand3]?.color && answer === 'no')
+    ) {
+      setCorrect(oldCorrect => oldCorrect + 1);
+    }
+    setTries(oldTries => oldTries + 1);
+  };
+
+  const generateRandoms = () => {
+    setRand1(Math.floor(MathUtils.getRandom(0, COLORS.length)));
+    setRand2(Math.floor(MathUtils.getRandom(0, COLORS.length)));
+    setRand3(Math.floor(MathUtils.getRandom(0, COLORS.length)));
+    setRand4(Math.floor(MathUtils.getRandom(0, COLORS.length)));
+  };
+
+  const successContent = () => (
+    <CardSuccessModal tries={tries} correct={correct} />
+  );
+
+  const setNewGame = () => {
+    setTries(0);
+    setCorrect(0);
+    setIsFinished(false);
+    generateRandoms();
+    timeRef.current?.resetTime();
+  };
+
+  React.useEffect(() => {
+    generateRandoms();
+  }, []);
+
   return (
     <BackgroundWrapper
-      statusBar={'light-content'}
+      statusBar={'dark-content'}
       source={require('../../assets/images/background2.png')}>
       <View style={styles.container}>
-        <Card />
+        <View
+          style={[
+            styles.counterContainer,
+            {
+              top: insets.top + 24,
+            },
+          ]}>
+          <Text style={styles.counterLabel}>{`${correct}/${tries}`}</Text>
+        </View>
+        <View style={[styles.watchContainer, {top: insets.top + 24}]}>
+          <Timer
+            ref={timeRef}
+            seconds={30}
+            setIsFinished={() => {
+              setModalOpen(true);
+              setIsFinished(true);
+            }}
+          />
+        </View>
+        <ColorCard number1={rand1} number2={rand2} />
         <View style={{marginVertical: DimensionsUtils.getDP(8)}} />
-        <Card />
+        <ColorCard number1={rand3} number2={rand4} />
       </View>
       <View style={styles.bottomContainer}>
-        <BottomButton label={'NO'} />
-        <BottomButton label={'YES'} />
+        <BottomButton
+          label={'NO'}
+          disabled={isFinished}
+          onPress={() => {
+            if (!timeRef.current.isRunning) {
+              timeRef.current.start();
+            }
+            checkValid('no');
+            generateRandoms();
+          }}
+        />
+        <BottomButton
+          label={'YES'}
+          disabled={isFinished}
+          onPress={() => {
+            if (!timeRef.current.isRunning) {
+              timeRef.current.start();
+            }
+            checkValid('yes');
+            generateRandoms();
+          }}
+        />
       </View>
+      {isFinished && (
+        <View
+          style={{
+            position: 'absolute',
+            alignSelf: 'center',
+            bottom:
+              insets.bottom > 0
+                ? insets.bottom + DimensionsUtils.getDP(96)
+                : DimensionsUtils.getDP(96),
+          }}>
+          <NewGameButton gameFinished={isFinished} setNewGame={setNewGame} />
+        </View>
+      )}
+      <AnimatedModal
+        gameOver={isFinished}
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        content={successContent()}
+      />
     </BackgroundWrapper>
   );
 };
@@ -84,26 +156,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cardContainer: {
-    height: DimensionsUtils.getDP(50),
-    width: WIDTH / 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    paddingVertical: DimensionsUtils.getDP(8),
+  counterContainer: {
+    position: 'absolute',
+    left: DimensionsUtils.getDP(26),
+    padding: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.17,
-    shadowRadius: 2.54,
-    elevation: 3,
+    width: DimensionsUtils.getDP(104),
+    backgroundColor: 'black',
+    alignItems: 'center',
   },
-  cardLabel: {
+  counterLabel: {
+    color: 'white',
+    fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: GenericUtils.fontFamily(),
-    fontSize: DimensionsUtils.getFontSize(32),
+  },
+  watchContainer: {
+    position: 'absolute',
+    right: DimensionsUtils.getDP(WIDTH / 16),
   },
   bottomContainer: {
     bottom: 0,

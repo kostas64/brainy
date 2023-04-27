@@ -8,14 +8,7 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 const NewGameButton = ({gameFinished, setNewGame}) => {
   const insets = useSafeAreaInsets();
   return (
-    <Pressable
-      onPress={setNewGame}
-      style={[
-        styles.container,
-        {
-          bottom: insets.bottom > 0 ? insets.bottom : 24,
-        },
-      ]}>
+    <Pressable onPress={setNewGame} style={[styles.container]}>
       <Text style={styles.label}>
         {gameFinished ? 'Play Again' : 'New Game'}
       </Text>
@@ -25,9 +18,7 @@ const NewGameButton = ({gameFinished, setNewGame}) => {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
     padding: DimensionsUtils.getDP(12),
-    alignSelf: 'center',
     borderRadius: DimensionsUtils.getDP(12),
     backgroundColor: 'rgba(255,255,255,0.8)',
     justifyContent: 'flex-end',

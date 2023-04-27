@@ -167,7 +167,7 @@ const MemoryBoard = () => {
 
   return (
     <BackgroundWrapper
-      statusBar={'light-content'}
+      statusBar={'dark-content'}
       source={require('../../assets/images/background.png')}>
       <View style={[styles.watchContainer, {top: insets.top + 24}]}>
         <StopWatch ref={timeRef} />
@@ -202,7 +202,15 @@ const MemoryBoard = () => {
         setModalOpen={setModalOpen}
         content={successContent()}
       />
-      <NewGameButton gameFinished={gameOver} setNewGame={setNewGame} />
+      <View
+        style={[
+          styles.newGameCont,
+          {
+            bottom: insets.bottom > 0 ? insets.bottom : 24,
+          },
+        ]}>
+        <NewGameButton gameFinished={gameOver} setNewGame={setNewGame} />
+      </View>
     </BackgroundWrapper>
   );
 };
@@ -240,6 +248,10 @@ const styles = StyleSheet.create({
     fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: GenericUtils.fontFamily(),
     color: 'black',
+    alignSelf: 'center',
+  },
+  newGameCont: {
+    position: 'absolute',
     alignSelf: 'center',
   },
 });
