@@ -5,10 +5,10 @@ import FastImage from 'react-native-fast-image';
 import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const HomeGameCard = ({onPress, image}) => {
+const HomeGameCard = ({onPress, image, label}) => {
   return (
     <Pressable onPress={onPress}>
-      <Text style={styles.label}>Memory Cards</Text>
+      <Text style={styles.label}>{label}</Text>
       <FastImage source={image} style={styles.image} />
     </Pressable>
   );

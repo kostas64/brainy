@@ -6,7 +6,7 @@ import Header from '../components/common/Header';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import HomeGameCard from '../components/common/HomeGameCard';
 
-const HomeScreen = ({navigation}) => {
+const GamesScreen = ({navigation}) => {
   const insets = useSafeAreaInsets();
   return (
     <>
@@ -26,15 +26,17 @@ const HomeScreen = ({navigation}) => {
         <HomeGameCard
           onPress={() => navigation.navigate('MemoryCard')}
           image={require('../assets/images/memory_match.png')}
+          label={'Memory Cards'}
         />
         <View style={{marginVertical: DimensionsUtils.getDP(12)}} />
         <HomeGameCard
           onPress={() => navigation.navigate('ColorCard')}
           image={require('../assets/images/color_match.jpg')}
+          label={'Color Match'}
         />
       </View>
     </>
   );
 };
 
-export default HomeScreen;
+export default GamesScreen;
