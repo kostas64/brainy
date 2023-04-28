@@ -11,17 +11,19 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
 
   React.useEffect(() => {
     if (gameOver) {
-      Animated.timing(opacityRef, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-      }).start();
-      Animated.spring(translateY, {
-        toValue: 0,
-        friction: 3,
-        tension: 20,
-        useNativeDriver: true,
-      }).start();
+      Animated.parallel([
+        Animated.timing(opacityRef, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.spring(translateY, {
+          toValue: 0,
+          friction: 3,
+          tension: 20,
+          useNativeDriver: true,
+        }),
+      ]).start();
     }
   }, [gameOver, modalOpen]);
 
@@ -39,7 +41,12 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
         useNativeDriver: true,
       }),
     ]).start();
-    setModalOpen(false);
+
+    //Calling in Animation finish cb
+    //doesnt trigger rerender
+    setTimeout(() => {
+      setModalOpen(false);
+    }, 150);
   };
 
   return (

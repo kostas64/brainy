@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import {View, Dimensions, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import ColorCard from './ColorCard';
 import Timer from '../common/Timer';
 import ColorButton from './ColorButton';
+import ColorPoints from './ColorPoints';
 import MathUtils from '../../utils/MathUtils';
 import CardSuccessModal from './CardSuccessModal';
 import {COLORS} from '../../assets/values/colors';
@@ -39,6 +40,7 @@ const ColorMatch = () => {
   const [rand4, setRand4] = React.useState();
   const [tries, setTries] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
+  const [points, setPoints] = React.useState(0);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
 
@@ -47,7 +49,10 @@ const ColorMatch = () => {
       (COLORS[rand2]?.color === COLORS[rand3]?.color && answer === 'yes') ||
       (COLORS[rand2]?.color !== COLORS[rand3]?.color && answer === 'no')
     ) {
+      setPoints(oldPoints => oldPoints + 1);
       setCorrect(oldCorrect => oldCorrect + 1);
+    } else {
+      setPoints(oldPoints => (oldPoints - 3 > 0 ? oldPoints - 3 : 0));
     }
     setTries(oldTries => oldTries + 1);
   };
@@ -60,12 +65,13 @@ const ColorMatch = () => {
   };
 
   const successContent = () => (
-    <CardSuccessModal tries={tries} correct={correct} />
+    <CardSuccessModal tries={tries} correct={correct} points={points} />
   );
 
   const setNewGame = () => {
     setTries(0);
     setCorrect(0);
+    setPoints(0);
     setIsFinished(false);
     generateRandoms();
     timeRef.current?.resetTime();
@@ -80,15 +86,12 @@ const ColorMatch = () => {
       statusBar={'dark-content'}
       source={require('../../assets/images/background2.png')}>
       <View style={styles.container}>
-        <View
-          style={[
-            styles.counterContainer,
-            {
-              top: insets.top + 24,
-            },
-          ]}>
-          <Text style={styles.counterLabel}>{`${correct}/${tries}`}</Text>
-        </View>
+        <ColorPoints
+          correct={correct}
+          tries={tries}
+          points={points}
+          insets={insets}
+        />
         <View style={[styles.watchContainer, {top: insets.top + 24}]}>
           <Timer
             ref={timeRef}
@@ -129,14 +132,15 @@ const ColorMatch = () => {
       </View>
       {isFinished && (
         <View
-          style={{
-            position: 'absolute',
-            alignSelf: 'center',
-            bottom:
-              insets.bottom > 0
-                ? insets.bottom + DimensionsUtils.getDP(96)
-                : DimensionsUtils.getDP(96),
-          }}>
+          style={[
+            styles.playAgainCont,
+            {
+              bottom:
+                insets.bottom > 0
+                  ? insets.bottom + DimensionsUtils.getDP(96)
+                  : DimensionsUtils.getDP(96),
+            },
+          ]}>
           <NewGameButton gameFinished={isFinished} setNewGame={setNewGame} />
         </View>
       )}
@@ -155,20 +159,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  counterContainer: {
-    position: 'absolute',
-    left: DimensionsUtils.getDP(26),
-    padding: DimensionsUtils.getDP(8),
-    borderRadius: DimensionsUtils.getDP(8),
-    width: DimensionsUtils.getDP(104),
-    backgroundColor: 'black',
-    alignItems: 'center',
-  },
-  counterLabel: {
-    color: 'white',
-    fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: GenericUtils.fontFamily(),
   },
   watchContainer: {
     position: 'absolute',
@@ -191,6 +181,10 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: GenericUtils.fontFamily(),
     fontSize: DimensionsUtils.getFontSize(24),
+  },
+  playAgainCont: {
+    position: 'absolute',
+    alignSelf: 'center',
   },
 });
 
