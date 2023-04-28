@@ -84,7 +84,7 @@ const ColorMatch = () => {
   return (
     <BackgroundWrapper
       statusBar={'dark-content'}
-      source={require('../../assets/images/background2.png')}>
+      source={require('../../assets/images/color_match_background.jpg')}>
       <View style={styles.container}>
         <ColorPoints
           correct={correct}

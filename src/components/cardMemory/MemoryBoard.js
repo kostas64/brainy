@@ -168,7 +168,7 @@ const MemoryBoard = () => {
   return (
     <BackgroundWrapper
       statusBar={'dark-content'}
-      source={require('../../assets/images/background.jpg')}>
+      source={require('../../assets/images/memory_background.jpg')}>
       <View style={[styles.watchContainer, {top: insets.top + 24}]}>
         <StopWatch ref={timeRef} />
       </View>
