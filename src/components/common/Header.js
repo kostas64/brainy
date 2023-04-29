@@ -33,14 +33,15 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: DimensionsUtils.getDP(12),
+    paddingLeft: DimensionsUtils.getDP(16),
+    paddingHorizontal: DimensionsUtils.getDP(12),
   },
   logo: {
     width: DimensionsUtils.getDP(48),
     height: DimensionsUtils.getDP(72),
   },
   label: {
-    color: '#043442',
+    color: 'white',
     marginLeft: DimensionsUtils.getDP(12),
     fontSize: DimensionsUtils.getFontSize(28),
     fontFamily: GenericUtils.fontFamily(),

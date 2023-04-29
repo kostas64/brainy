@@ -16,11 +16,11 @@ const GamesScreen = ({navigation}) => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#c2f3ff',
+          backgroundColor: '#043442',
         }}>
         <StatusBar
           translucent
-          barStyle={'dark-content'}
+          barStyle={'light-content'}
           backgroundColor={'transparent'}
         />
         <HomeGameCard

@@ -61,49 +61,57 @@ const TabBar = props => {
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          height:
-            insets.bottom > 0
-              ? DimensionsUtils.getDP(58) + insets.bottom / 2
-              : DimensionsUtils.getDP(58),
-        },
-      ]}>
-      {routes.map((route, routeIndex) => {
-        const isRouteActive = routeIndex === activeRouteIndex;
+    <View style={styles.container}>
+      <View
+        style={[
+          styles.innerContainer,
+          {
+            marginBottom:
+              insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(16),
+          },
+        ]}>
+        {routes.map((route, routeIndex) => {
+          const isRouteActive = routeIndex === activeRouteIndex;
 
-        return (
-          <TouchableOpacity
-            key={routeIndex}
-            style={[styles.tabButton, insets.bottom !== 0 && {height: '80%'}]}
-            activeOpacity={0.4}
-            onPress={() => {
-              props.navigation.navigate(routes?.[routeIndex].name);
-            }}>
-            {renderIcon({route, focused: isRouteActive})}
-            {getLabel(routes?.[routeIndex].name, isRouteActive)}
-          </TouchableOpacity>
-        );
-      })}
+          return (
+            <TouchableOpacity
+              key={routeIndex}
+              style={[styles.tabButton, insets.bottom !== 0 && {height: '80%'}]}
+              activeOpacity={0.4}
+              onPress={() => {
+                props.navigation.navigate(routes?.[routeIndex].name);
+              }}>
+              {renderIcon({route, focused: isRouteActive})}
+              {getLabel(routes?.[routeIndex].name, isRouteActive)}
+            </TouchableOpacity>
+          );
+        })}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    width: WIDTH,
+    backgroundColor: '#043442',
+    position: 'absolute',
+    bottom: 0,
+  },
+  innerContainer: {
     flexDirection: 'row',
     backgroundColor: 'white',
-    borderTopColor: 'rgba(0,0,0,0.15)',
-    borderTopWidth: 1,
     alignItems: 'flex-start',
+    justifyContent: 'center',
+    height: DimensionsUtils.getDP(68),
+    borderRadius: DimensionsUtils.getDP(16),
+    marginHorizontal: DimensionsUtils.getDP(16),
   },
   tabButton: {
     flex: 1,
-    marginTop: DimensionsUtils.getDP(2),
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: DimensionsUtils.getDP(6),
   },
   text: {
     marginTop: DimensionsUtils.getDP(4),

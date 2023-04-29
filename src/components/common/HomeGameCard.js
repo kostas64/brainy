@@ -16,7 +16,7 @@ const HomeGameCard = ({onPress, image, label}) => {
 
 const styles = StyleSheet.create({
   label: {
-    color: '#043442',
+    color: 'white',
     fontFamily: GenericUtils.fontFamily(),
     fontSize: DimensionsUtils.getDP(18),
   },
