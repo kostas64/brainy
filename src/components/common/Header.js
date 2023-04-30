@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     height: DimensionsUtils.getDP(72),
   },
   label: {
-    color: 'white',
+    color: '#8ada4d',
     marginLeft: DimensionsUtils.getDP(12),
     fontSize: DimensionsUtils.getFontSize(28),
     fontFamily: GenericUtils.fontFamily(),

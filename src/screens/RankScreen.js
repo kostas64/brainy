@@ -8,7 +8,7 @@ const RankScreen = () => {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#043442',
+        backgroundColor: 'black',
       }}>
       <Text>RankScreen</Text>
     </View>
