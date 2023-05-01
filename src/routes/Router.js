@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import TabStack from './TabRouter';
 import ColorCardScreen from '../screens/ColorCardScreen';
+import EqualMathScreen from '../screens/EqualMathScreen';
 import MemoryCardScreen from '../screens/MemoryCardScreen';
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ const Router = () => {
         <Stack.Screen name="GamesStack" component={TabStack} />
         <Stack.Screen name="ColorCard" component={ColorCardScreen} />
         <Stack.Screen name="MemoryCard" component={MemoryCardScreen} />
+        <Stack.Screen name="EqualMath" component={EqualMathScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

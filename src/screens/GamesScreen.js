@@ -34,6 +34,12 @@ const GamesScreen = ({navigation}) => {
           image={require('../assets/images/color_match.jpg')}
           label={'Color Match'}
         />
+        <View style={{marginVertical: DimensionsUtils.getDP(12)}} />
+        <HomeGameCard
+          onPress={() => navigation.navigate('EqualMath')}
+          image={require('../assets/images/color_match.jpg')}
+          label={'Equal Math'}
+        />
       </View>
     </>
   );
