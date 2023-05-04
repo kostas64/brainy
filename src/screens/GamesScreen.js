@@ -16,7 +16,7 @@ const GamesScreen = ({navigation}) => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: 'black', //'#043442',
+          backgroundColor: 'black',
         }}>
         <StatusBar
           translucent
