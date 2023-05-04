@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const CountdownTimer = React.forwardRef(({seconds, setIsFinished}, ref) => {
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
   timer: {
     color: '#FFFFFF',
     fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Regular',
     width: DimensionsUtils.getDP(36),
   },
 });

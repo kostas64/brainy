@@ -176,19 +176,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
   },
-  buttonContainer: {
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: DimensionsUtils.getDP(8),
-    marginHorizontal: DimensionsUtils.getDP(16),
-    width: WIDTH / 2 - DimensionsUtils.getDP(32),
-  },
-  buttonLabel: {
-    color: 'black',
-    fontFamily: GenericUtils.fontFamily(),
-    fontSize: DimensionsUtils.getFontSize(24),
-  },
   playAgainCont: {
     position: 'absolute',
     alignSelf: 'center',

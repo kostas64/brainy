@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const ColorPoints = ({insets, points, correct, tries}) => {
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
   counterLabel: {
     color: 'white',
     fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Regular',
   },
 });
 

@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Header = ({insets}) => {
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     color: '#8ada4d',
     marginLeft: DimensionsUtils.getDP(12),
     fontSize: DimensionsUtils.getFontSize(28),
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Bold',
   },
 });
 

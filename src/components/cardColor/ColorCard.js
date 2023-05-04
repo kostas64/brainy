@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 
 import {COLORS} from '../../assets/values/colors';
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -30,7 +29,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-    paddingVertical: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
     shadowColor: '#000000',
     shadowOffset: {
@@ -42,7 +40,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   cardLabel: {
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(32),
   },
 });

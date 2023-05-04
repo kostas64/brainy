@@ -1,12 +1,9 @@
 import React from 'react';
 import {Text, Pressable, StyleSheet} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const NewGameButton = ({gameFinished, setNewGame}) => {
-  const insets = useSafeAreaInsets();
   return (
     <Pressable onPress={setNewGame} style={[styles.container]}>
       <Text style={styles.label}>
@@ -24,7 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   label: {
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(28),
     color: 'black',
     alignSelf: 'center',

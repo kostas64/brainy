@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   timer: {
     color: '#FFFFFF',
     fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Regular',
     width: DimensionsUtils.getDP(36),
   },
   timerContainer: {

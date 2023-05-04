@@ -3,7 +3,6 @@ import {evaluate} from 'mathjs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View, Text, StyleSheet, Dimensions, Pressable} from 'react-native';
 
-import {GenericUtils} from '../utils/GenericUtils';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import EqualButton from '../components/equalMath/EqualButton';
@@ -30,6 +29,7 @@ const EqualMathScreen = () => {
   const insets = useSafeAreaInsets();
   const timeRef = React.useRef();
   const lottieRef = React.useRef();
+  const [points, setPoints] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
@@ -56,6 +56,8 @@ const EqualMathScreen = () => {
       : evaluate(equationEasyMed1.replace('X', '*')) <
         evaluate(equationEasyMed2.replace('X', '*'));
     isCorrect && setCorrect(oldCorrect => oldCorrect + 1);
+    isCorrect && setPoints(oldPoints => oldPoints + 2);
+    !isCorrect && setPoints(oldPoints => (oldPoints >= 3 ? oldPoints - 3 : 0));
     setQuestion(oldQuestion => oldQuestion + 1);
   };
 
@@ -129,6 +131,7 @@ const EqualMathScreen = () => {
               top: insets.top + 24,
             },
           ]}>
+          <Text style={styles.counterLabel}>{`Points: ${points}`}</Text>
           <Text style={styles.counterLabel}>{`${correct}/${question}`}</Text>
         </View>
         <View style={[styles.watchContainer, {top: insets.top + 24}]}>
@@ -201,14 +204,14 @@ const styles = StyleSheet.create({
     left: DimensionsUtils.getDP(26),
     padding: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
-    width: DimensionsUtils.getDP(104),
+    width: DimensionsUtils.getDP(124),
     backgroundColor: 'black',
     alignItems: 'center',
   },
   counterLabel: {
     color: 'white',
     fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Regular',
   },
   watchContainer: {
     position: 'absolute',
@@ -220,7 +223,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-    paddingVertical: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
     shadowColor: '#000000',
     shadowOffset: {
@@ -232,8 +234,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   cardLabel: {
-    fontFamily: GenericUtils.fontFamily(),
-    fontSize: DimensionsUtils.getFontSize(32),
+    fontFamily: 'Poppins-Bold',
+    fontSize: DimensionsUtils.getFontSize(26),
   },
 
   playAgainCont: {

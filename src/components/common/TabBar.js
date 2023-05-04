@@ -10,7 +10,6 @@ import {
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
   text: {
     marginTop: DimensionsUtils.getDP(4),
     fontSize: DimensionsUtils.getFontSize(14),
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-SemiBold',
   },
 });
 

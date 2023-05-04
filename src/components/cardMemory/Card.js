@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import React, {useImperativeHandle} from 'react';
 
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(48),
     color: 'black',
   },

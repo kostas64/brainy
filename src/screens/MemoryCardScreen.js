@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   flipLabel: {
     color: 'white',
     fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Regular',
   },
   newGameCont: {
     position: 'absolute',

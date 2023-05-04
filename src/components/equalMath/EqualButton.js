@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     color: 'black',
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(24),
   },
 });

@@ -2,7 +2,6 @@ import React from 'react';
 import {Text, Pressable, StyleSheet} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const HomeGameCard = ({onPress, image, label}) => {
@@ -17,7 +16,7 @@ const HomeGameCard = ({onPress, image, label}) => {
 const styles = StyleSheet.create({
   label: {
     color: 'white',
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-SemiBold',
     fontSize: DimensionsUtils.getDP(18),
   },
   image: {

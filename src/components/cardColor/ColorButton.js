@@ -1,7 +1,6 @@
 import React from 'react';
 import {Text, Pressable, StyleSheet, Dimensions} from 'react-native';
 
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     color: 'black',
-    fontFamily: GenericUtils.fontFamily(),
+    fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(24),
   },
 });
