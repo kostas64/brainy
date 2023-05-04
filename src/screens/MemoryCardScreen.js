@@ -194,7 +194,6 @@ const MemoryCardScreen = () => {
           />
         ))}
       </View>
-      {gameOver && <Text style={styles.label}>GAME OVER</Text>}
       {gameOver && <CelebrationLottie ref={lottieRef} />}
       <AnimatedModal
         gameOver={gameOver}
@@ -243,12 +242,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: GenericUtils.fontFamily(),
-  },
-  label: {
-    fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: GenericUtils.fontFamily(),
-    color: 'black',
-    alignSelf: 'center',
   },
   newGameCont: {
     position: 'absolute',

@@ -13,6 +13,7 @@ import ColorPoints from '../components/cardColor/ColorPoints';
 import AnimatedModal from '../components/common/AnimatedModal';
 import NewGameButton from '../components/cardMemory/NewGameButton';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
+import CelebrationLottie from '../components/common/CelebrationLottie';
 import CardSuccessModal from '../components/cardColor/CardSuccessModal';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -33,6 +34,7 @@ const BottomButton = ({label, onPress, disabled}) => {
 const ColorCardScreen = () => {
   const insets = useSafeAreaInsets();
   const timeRef = React.useRef();
+  const lottieRef = React.useRef();
 
   const [rand1, setRand1] = React.useState();
   const [rand2, setRand2] = React.useState();
@@ -80,6 +82,10 @@ const ColorCardScreen = () => {
   React.useEffect(() => {
     generateRandoms();
   }, []);
+
+  React.useEffect(() => {
+    isFinished && lottieRef?.current?.play(0, 210);
+  }, [isFinished]);
 
   return (
     <BackgroundWrapper
@@ -144,6 +150,7 @@ const ColorCardScreen = () => {
           <NewGameButton gameFinished={isFinished} setNewGame={setNewGame} />
         </View>
       )}
+      {isFinished && <CelebrationLottie ref={lottieRef} />}
       <AnimatedModal
         gameOver={isFinished}
         modalOpen={modalOpen}

@@ -37,7 +37,7 @@ const GamesScreen = ({navigation}) => {
         <View style={{marginVertical: DimensionsUtils.getDP(12)}} />
         <HomeGameCard
           onPress={() => navigation.navigate('EqualMath')}
-          image={require('../assets/images/color_match.jpg')}
+          image={require('../assets/images/match_equal.png')}
           label={'Equal Math'}
         />
       </View>
