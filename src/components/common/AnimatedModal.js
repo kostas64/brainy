@@ -6,6 +6,7 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 const AnimPress = Animated.createAnimatedComponent(Pressable);
 
 const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
+  const [animFinished, setAnimFinished] = React.useState(false);
   const opacityRef = React.useRef(new Animated.Value(0)).current;
   const translateY = React.useRef(new Animated.Value(1000)).current;
 
@@ -23,7 +24,7 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
           tension: 20,
           useNativeDriver: true,
         }),
-      ]).start();
+      ]).start(() => setAnimFinished(true));
     }
   }, [gameOver, modalOpen]);
 
@@ -41,17 +42,16 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
         useNativeDriver: true,
       }),
     ]).start();
-
-    //Calling in Animation finish cb
-    //doesnt trigger rerender
-    setTimeout(() => {
-      setModalOpen(false);
-    }, 150);
   };
+
+  React.useEffect(() => {
+    animFinished && setModalOpen(false);
+  }, [animFinished]);
 
   return (
     modalOpen && (
       <AnimPress
+        disabled={!animFinished}
         onPress={closeAnimation}
         style={[
           styles.container,
