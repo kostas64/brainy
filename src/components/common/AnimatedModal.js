@@ -42,11 +42,11 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
         useNativeDriver: true,
       }),
     ]).start();
-  };
 
-  React.useEffect(() => {
-    animFinished && setModalOpen(false);
-  }, [animFinished]);
+    setTimeout(() => {
+      setModalOpen(false);
+    }, 200);
+  };
 
   return (
     modalOpen && (

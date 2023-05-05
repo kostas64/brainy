@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     left: DimensionsUtils.getDP(26),
     padding: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
-    width: DimensionsUtils.getDP(104),
+    width: DimensionsUtils.getDP(112),
     backgroundColor: 'black',
     alignItems: 'center',
   },

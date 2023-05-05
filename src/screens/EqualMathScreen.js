@@ -96,7 +96,7 @@ const EqualMathScreen = () => {
   };
 
   const successContent = () => (
-    <EqualMathModal correct={correct} total={question} />
+    <EqualMathModal correct={correct} total={question} points={points} />
   );
 
   React.useEffect(() => {
@@ -137,7 +137,7 @@ const EqualMathScreen = () => {
         <View style={[styles.watchContainer, {top: insets.top + 24}]}>
           <CountdownTimer
             ref={timeRef}
-            seconds={10}
+            seconds={30}
             setIsFinished={() => {
               setModalOpen(true);
               setIsFinished(true);

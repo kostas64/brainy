@@ -3,11 +3,12 @@ import {View, Text, StyleSheet} from 'react-native';
 
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const EqualMathModal = ({correct, total}) => {
+const EqualMathModal = ({correct, total, points}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Bravo !!!</Text>
-      <Text style={styles.resultsLabel}>{`Correct ${correct}/${total}`}</Text>
+      <Text style={styles.resultsLabel}>{`Points: ${points}`}</Text>
+      <Text style={styles.resultsLabel}>{`${correct}/${total}`}</Text>
     </View>
   );
 };
