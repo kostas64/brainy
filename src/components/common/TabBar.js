@@ -117,13 +117,13 @@ const TabBar = props => {
 const styles = StyleSheet.create({
   container: {
     width: WIDTH,
-    backgroundColor: 'black',
+    backgroundColor: '#222123',
     position: 'absolute',
     bottom: 0,
   },
   innerContainer: {
     flexDirection: 'row',
-    backgroundColor: '#2d2d2d',
+    backgroundColor: '#353435',
     alignItems: 'flex-start',
     justifyContent: 'center',
     height: DimensionsUtils.getDP(54),

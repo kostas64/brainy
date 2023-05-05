@@ -16,7 +16,7 @@ const GamesScreen = ({navigation}) => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: 'black',
+          backgroundColor: '#222123',
         }}>
         <StatusBar
           translucent
@@ -31,7 +31,7 @@ const GamesScreen = ({navigation}) => {
         <View style={{marginVertical: DimensionsUtils.getDP(12)}} />
         <HomeGameCard
           onPress={() => navigation.navigate('ColorCard')}
-          image={require('../assets/images/color_match.jpg')}
+          image={require('../assets/images/color_match.png')}
           label={'Color Match'}
         />
         <View style={{marginVertical: DimensionsUtils.getDP(12)}} />
