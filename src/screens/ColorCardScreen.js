@@ -2,9 +2,9 @@ import React from 'react';
 import {View, Dimensions, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
+import {Colors} from '../utils/Colors';
 import MathUtils from '../utils/MathUtils';
 import {COLORS} from '../assets/values/colors';
-import {GenericUtils} from '../utils/GenericUtils';
 import CountdownTimer from '../components/common/Timer';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import ColorCard from '../components/cardColor/ColorCard';
@@ -16,7 +16,7 @@ import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import CardSuccessModal from '../components/cardColor/CardSuccessModal';
 
-const {width: WIDTH} = Dimensions.get('window');
+const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 
 const BottomButton = ({label, onPress, disabled}) => {
   const insets = useSafeAreaInsets();
@@ -108,6 +108,7 @@ const ColorCardScreen = () => {
             }}
           />
         </View>
+        <View style={styles.cardsBg} />
         <ColorCard number1={rand1} number2={rand2} />
         <View style={{marginVertical: DimensionsUtils.getDP(8)}} />
         <ColorCard number1={rand3} number2={rand4} />
@@ -170,6 +171,16 @@ const styles = StyleSheet.create({
   watchContainer: {
     position: 'absolute',
     right: DimensionsUtils.getDP(WIDTH / 16),
+  },
+  cardsBg: {
+    alignSelf: 'center',
+    position: 'absolute',
+    borderRadius: DimensionsUtils.getDP(12),
+    height: DimensionsUtils.getDP(148),
+    width: (WIDTH + DimensionsUtils.getDP(48)) / 2,
+    top: (HEIGHT - DimensionsUtils.getDP(148)) / 2,
+    backgroundColor: Colors.background,
+    opacity: 0.5,
   },
   bottomContainer: {
     bottom: 0,

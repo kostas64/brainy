@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StatusBar, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {View, StatusBar, StyleSheet, Animated, Platform} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import Header from '../components/common/Header';
@@ -9,14 +9,23 @@ import HomeGameCard from '../components/common/HomeGameCard';
 
 const GamesScreen = ({navigation}) => {
   const insets = useSafeAreaInsets();
+  const opacityRef = React.useRef(new Animated.Value(0.2)).current;
+
+  React.useEffect(() => {
+    Animated.timing(opacityRef, {
+      toValue: 1,
+      duration: Platform.OS === 'ios' ? 1000 : 350,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   return (
-    <>
+    <View style={styles.container}>
       <Header insets={insets} />
-      <View style={styles.container}>
+      <Animated.View style={[styles.gamesContainer, {opacity: opacityRef}]}>
         <StatusBar
-          translucent
           barStyle={'light-content'}
-          backgroundColor={'transparent'}
+          backgroundColor={Colors.background}
         />
         <HomeGameCard
           onPress={() => navigation.navigate('MemoryCard')}
@@ -35,13 +44,17 @@ const GamesScreen = ({navigation}) => {
           image={require('../assets/images/match_equal.png')}
           label={'Equal Math'}
         />
-      </View>
-    </>
+      </Animated.View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
+  gamesContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

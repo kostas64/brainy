@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     padding: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
     width: DimensionsUtils.getDP(112),
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.background,
     alignItems: 'center',
   },
   flipLabel: {

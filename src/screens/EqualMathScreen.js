@@ -123,6 +123,7 @@ const EqualMathScreen = () => {
 
   return (
     <BackgroundWrapper
+      statusBar={'dark-content'}
       source={require('../assets/images/match_equal_background.jpg')}>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
     padding: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
     width: DimensionsUtils.getDP(124),
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.background,
     alignItems: 'center',
   },
   counterLabel: {
