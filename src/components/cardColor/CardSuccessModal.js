@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
+import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const CardSuccessModal = ({correct, tries, points}) => {
@@ -20,14 +21,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    color: 'black',
+    color: Colors.black,
     fontSize: DimensionsUtils.getFontSize(26),
     fontFamily: 'Poppins-Bold',
     padding: DimensionsUtils.getDP(4),
     marginBottom: DimensionsUtils.getDP(16),
   },
   resultsLabel: {
-    color: 'black',
+    color: Colors.black,
     fontSize: DimensionsUtils.getFontSize(22),
     fontFamily: 'Poppins-Medium',
     padding: DimensionsUtils.getDP(4),

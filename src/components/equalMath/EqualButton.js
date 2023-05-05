@@ -1,6 +1,6 @@
 import {Pressable, Text, StyleSheet, Dimensions} from 'react-native';
 
-import {GenericUtils} from '../../utils/GenericUtils';
+import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -26,7 +26,7 @@ const EqualButton = ({disabled = false, onPress, insets, label}) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: DimensionsUtils.getDP(8),
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     width: WIDTH - DimensionsUtils.getDP(32),
   },
   buttonLabel: {
-    color: 'black',
+    color: Colors.black,
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(24),
   },

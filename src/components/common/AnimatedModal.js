@@ -1,6 +1,7 @@
 import React from 'react';
 import {Animated, StyleSheet, Pressable} from 'react-native';
 
+import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimPress = Animated.createAnimatedComponent(Pressable);
@@ -62,7 +63,7 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
         ]}>
         <Animated.View
           style={{
-            backgroundColor: 'white',
+            backgroundColor: Colors.white,
             borderRadius: DimensionsUtils.getDP(12),
             transform: [{translateY}],
           }}>

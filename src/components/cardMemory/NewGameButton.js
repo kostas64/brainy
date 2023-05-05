@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, Pressable, StyleSheet} from 'react-native';
 
+import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const NewGameButton = ({gameFinished, setNewGame}) => {
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(28),
-    color: 'black',
+    color: Colors.black,
     alignSelf: 'center',
   },
 });

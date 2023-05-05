@@ -3,6 +3,7 @@ import {evaluate} from 'mathjs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View, Text, StyleSheet, Dimensions, Pressable} from 'react-native';
 
+import {Colors} from '../utils/Colors';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import EqualButton from '../components/equalMath/EqualButton';
@@ -205,11 +206,11 @@ const styles = StyleSheet.create({
     padding: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
     width: DimensionsUtils.getDP(124),
-    backgroundColor: 'black',
+    backgroundColor: Colors.black,
     alignItems: 'center',
   },
   counterLabel: {
-    color: 'white',
+    color: Colors.white,
     fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: 'Poppins-Regular',
   },
@@ -224,7 +225,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     borderRadius: DimensionsUtils.getDP(8),
-    shadowColor: '#000000',
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -234,6 +235,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   cardLabel: {
+    color: Colors.black,
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(26),
   },

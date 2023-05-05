@@ -2,10 +2,10 @@ import React from 'react';
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
+import {Colors} from '../utils/Colors';
 import MathUtils from '../utils/MathUtils';
 import Card from '../components/cardMemory/Card';
 import MemoryValues from '../assets/values/memory';
-import {GenericUtils} from '../utils/GenericUtils';
 import StopWatch from '../components/common/StopWatch';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import AnimatedModal from '../components/common/AnimatedModal';
@@ -235,11 +235,11 @@ const styles = StyleSheet.create({
     padding: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
     width: DimensionsUtils.getDP(112),
-    backgroundColor: 'black',
+    backgroundColor: Colors.black,
     alignItems: 'center',
   },
   flipLabel: {
-    color: 'white',
+    color: Colors.white,
     fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: 'Poppins-Regular',
   },

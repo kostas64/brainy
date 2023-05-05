@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
+import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const ColorPoints = ({insets, points, correct, tries}) => {
@@ -25,11 +26,11 @@ const styles = StyleSheet.create({
     padding: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
     width: DimensionsUtils.getDP(138),
-    backgroundColor: 'black',
+    backgroundColor: Colors.black,
     alignItems: 'center',
   },
   counterLabel: {
-    color: 'white',
+    color: Colors.white,
     fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: 'Poppins-Regular',
   },

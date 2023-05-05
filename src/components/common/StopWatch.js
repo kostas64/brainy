@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, {useImperativeHandle} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 
-import {GenericUtils} from '../../utils/GenericUtils';
+import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Timer = ({interval, style}) => {
@@ -95,11 +95,11 @@ const styles = StyleSheet.create({
     paddingVertical: DimensionsUtils.getDP(8),
     paddingHorizontal: DimensionsUtils.getDP(12),
     borderRadius: DimensionsUtils.getDP(8),
-    backgroundColor: '#0D0D0D',
+    backgroundColor: Colors.black,
     width: DimensionsUtils.getDP(120),
   },
   timer: {
-    color: '#FFFFFF',
+    color: Colors.white,
     fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: 'Poppins-Regular',
     width: DimensionsUtils.getDP(36),

@@ -9,9 +9,10 @@ import {
 } from 'react-native';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-
-import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+import {Colors} from '../../utils/Colors';
+import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -47,11 +48,12 @@ const TabBar = props => {
   };
 
   const getLabel = (name, focused) => {
-    const color = {
-      color: focused ? 'white' : '#8e8e8e',
+    const style = {
+      color: focused ? Colors.white : Colors.tabBarIcon,
+      fontFamily: focused ? 'Poppins-SemiBold' : 'Poppins-Medium',
     };
 
-    return <Text style={[styles.text, color]}>{name}</Text>;
+    return <Text style={[styles.text, style]}>{name}</Text>;
   };
 
   const translateX = translateRef.interpolate({
@@ -84,6 +86,7 @@ const TabBar = props => {
             style={[
               styles.pose,
               {
+                width: (WIDTH - DimensionsUtils.getDP(32)) / routes.length,
                 transform: [
                   {
                     translateX,
@@ -117,13 +120,13 @@ const TabBar = props => {
 const styles = StyleSheet.create({
   container: {
     width: WIDTH,
-    backgroundColor: '#222123',
+    backgroundColor: Colors.background,
     position: 'absolute',
     bottom: 0,
   },
   innerContainer: {
     flexDirection: 'row',
-    backgroundColor: '#353435',
+    backgroundColor: Colors.tabBarBg,
     alignItems: 'flex-start',
     justifyContent: 'center',
     height: DimensionsUtils.getDP(54),
@@ -131,9 +134,8 @@ const styles = StyleSheet.create({
     marginHorizontal: DimensionsUtils.getDP(16),
   },
   pose: {
-    backgroundColor: '#8ada4d',
+    backgroundColor: Colors.appGreen,
     height: DimensionsUtils.getDP(54),
-    width: (WIDTH - DimensionsUtils.getDP(32)) / 2,
     borderRadius: DimensionsUtils.getDP(16),
   },
   tabButton: {
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
   text: {
     marginTop: DimensionsUtils.getDP(4),
     fontSize: DimensionsUtils.getFontSize(14),
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Poppins-Medium',
   },
 });
 

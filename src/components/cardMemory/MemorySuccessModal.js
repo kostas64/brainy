@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-import {GenericUtils} from '../../utils/GenericUtils';
+import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const MemorySuccessModal = ({pad, duration, flipCounter, centiseconds}) => {
@@ -23,14 +23,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    color: 'black',
+    color: Colors.black,
     fontSize: DimensionsUtils.getFontSize(26),
     fontFamily: 'Poppins-Bold',
     padding: DimensionsUtils.getDP(4),
     marginBottom: DimensionsUtils.getDP(16),
   },
   resultsLabel: {
-    color: 'black',
+    color: Colors.black,
     fontSize: DimensionsUtils.getFontSize(22),
     fontFamily: 'Poppins-Medium',
     padding: DimensionsUtils.getDP(4),
