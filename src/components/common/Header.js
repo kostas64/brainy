@@ -5,7 +5,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const Header = ({insets}) => {
+const Header = ({insets, label}) => {
   return (
     <View
       style={[
@@ -19,7 +19,7 @@ const Header = ({insets}) => {
           source={require('../../assets/images/logo.png')}
           style={styles.logo}
         />
-        <Text style={styles.label}>Brainy</Text>
+        <Text style={styles.label}>{label}</Text>
       </View>
     </View>
   );

@@ -21,7 +21,7 @@ const GamesScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Header insets={insets} />
+      <Header insets={insets} label={'Games'} />
       <Animated.View style={[styles.gamesContainer, {opacity: opacityRef}]}>
         <StatusBar
           barStyle={'light-content'}

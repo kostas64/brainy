@@ -16,7 +16,7 @@ import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import CardSuccessModal from '../components/cardColor/CardSuccessModal';
 
-const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
+const {width: WIDTH} = Dimensions.get('window');
 
 const BottomButton = ({label, onPress, disabled}) => {
   const insets = useSafeAreaInsets();
@@ -173,14 +173,12 @@ const styles = StyleSheet.create({
     right: DimensionsUtils.getDP(WIDTH / 16),
   },
   cardsBg: {
-    alignSelf: 'center',
-    position: 'absolute',
-    borderRadius: DimensionsUtils.getDP(12),
-    height: DimensionsUtils.getDP(148),
-    width: (WIDTH + DimensionsUtils.getDP(48)) / 2,
-    top: (HEIGHT - DimensionsUtils.getDP(148)) / 2,
-    backgroundColor: Colors.background,
     opacity: 0.5,
+    borderRadius: DimensionsUtils.getDP(12),
+    backgroundColor: Colors.background,
+    position: 'absolute',
+    width: (WIDTH + DimensionsUtils.getDP(48)) / 2,
+    height: DimensionsUtils.getDP(148),
   },
   bottomContainer: {
     bottom: 0,
