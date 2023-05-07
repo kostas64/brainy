@@ -44,8 +44,6 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
   };
 
   const changeEquations = () => {
-    setCounter(oldCounter => oldCounter + 1);
-
     setEquation1(`${generateNum()} ${generateOper()} ${generateNum()}`);
     setEquation2(`${generateNum()} ${generateOper()} ${generateNum()}`);
   };
