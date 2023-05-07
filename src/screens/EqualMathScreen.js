@@ -123,9 +123,9 @@ const EqualMathScreen = () => {
 
   return (
     <BackgroundWrapper
-      statusBar={'dark-content'}
+      statusBar={'light-content'}
       source={require('../assets/images/match_equal_background.jpg')}>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={styles.container}>
         <View
           style={[
             styles.counterContainer,
@@ -201,6 +201,11 @@ const EqualMathScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   counterContainer: {
     position: 'absolute',
     left: DimensionsUtils.getDP(26),

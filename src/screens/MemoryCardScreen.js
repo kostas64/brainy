@@ -13,6 +13,7 @@ import NewGameButton from '../components/cardMemory/NewGameButton';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import MemorySuccessModal from '../components/cardMemory/MemorySuccessModal';
+import CardMemoryTutorial from '../components/cardMemory/CardMemoryTutorial';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 
@@ -22,6 +23,7 @@ const MemoryCardScreen = () => {
   const lottieRef = React.useRef();
   const timeRef = React.useRef();
   const childRefs = React.useRef([]);
+  const [tutOpen, setTutOpen] = React.useState(true);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [cards, setCards] = React.useState([]);
   const [flipCounter, setFlipCounter] = React.useState(0);
@@ -167,8 +169,9 @@ const MemoryCardScreen = () => {
 
   return (
     <BackgroundWrapper
-      statusBar={'dark-content'}
+      statusBar={'light-content'}
       source={require('../assets/images/memory_background.jpg')}>
+      <CardMemoryTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View style={[styles.watchContainer, {top: insets.top + 24}]}>
         <StopWatch ref={timeRef} />
       </View>

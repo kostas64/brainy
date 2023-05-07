@@ -89,7 +89,7 @@ const ColorCardScreen = () => {
 
   return (
     <BackgroundWrapper
-      statusBar={'dark-content'}
+      statusBar={'light-content'}
       source={require('../assets/images/color_match_background.jpg')}>
       <View style={styles.container}>
         <ColorPoints
