@@ -10,14 +10,19 @@ import GetStartedScreen from '../screens/GetStartedScreen';
 
 const Stack = createNativeStackNavigator();
 
+const screenConfig = {
+  animation: 'fade',
+  customAnimationOnGesture: true,
+};
+
 const Router = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-          animation: 'fade',
-          customAnimationOnGesture: true,
+
+          animationTypeForReplace: 'pop',
         }}>
         <Stack.Screen name="GetStarted" component={GetStartedScreen} />
         <Stack.Screen
@@ -25,13 +30,25 @@ const Router = () => {
           component={TabStack}
           options={{
             animationDuration: 550,
-            animation: 'fade_from_bottom',
+            animation: 'fade',
             customAnimationOnGesture: true,
           }}
         />
-        <Stack.Screen name="ColorCard" component={ColorCardScreen} />
-        <Stack.Screen name="MemoryCard" component={MemoryCardScreen} />
-        <Stack.Screen name="EqualMath" component={EqualMathScreen} />
+        <Stack.Screen
+          name="ColorCard"
+          component={ColorCardScreen}
+          options={screenConfig}
+        />
+        <Stack.Screen
+          name="MemoryCard"
+          component={MemoryCardScreen}
+          options={screenConfig}
+        />
+        <Stack.Screen
+          name="EqualMath"
+          component={EqualMathScreen}
+          options={screenConfig}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

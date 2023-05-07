@@ -1,6 +1,6 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Platform} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
@@ -19,7 +19,13 @@ const Header = ({insets, label}) => {
           source={require('../../assets/images/logo.png')}
           style={styles.logo}
         />
-        <Text style={styles.label}>{label}</Text>
+        <Text
+          style={[
+            styles.label,
+            Platform.OS === 'android' && {marginTop: DimensionsUtils.getDP(2)},
+          ]}>
+          {label}
+        </Text>
       </View>
     </View>
   );

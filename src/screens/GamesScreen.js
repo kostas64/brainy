@@ -7,7 +7,7 @@ import Header from '../components/common/Header';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import HomeGameCard from '../components/common/HomeGameCard';
 
-const GamesScreen = ({navigation}) => {
+const GamesScreen = ({navigation, route}) => {
   const insets = useSafeAreaInsets();
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
 
@@ -17,6 +17,12 @@ const GamesScreen = ({navigation}) => {
       duration: Platform.OS === 'ios' ? 1000 : 350,
       useNativeDriver: true,
     }).start();
+  }, []);
+
+  React.useEffect(() => {
+    navigation.addListener('beforeRemove', () => {
+      route?.params?.backTransition();
+    });
   }, []);
 
   return (

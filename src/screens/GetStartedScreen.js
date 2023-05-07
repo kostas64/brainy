@@ -15,22 +15,35 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import CircularTransition from '../components/transitions/CircularTransition';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 
-const GetStartedScreen = ({navigation}) => {
+const GetStartedScreen = () => {
   const insets = useSafeAreaInsets();
   const {setOptions} = useNavigation();
 
   const opacityRef = React.useRef(new Animated.Value(0)).current;
   const translateYRef = React.useRef(new Animated.Value(10)).current;
 
+  const [positionCirc, setPositionCirc] = React.useState({
+    posX: -100,
+    posY: -100,
+  });
+
   React.useEffect(() => {
     setOptions({gestureEnabled: false});
   }, [setOptions]);
 
-  const navigate = () => {
-    navigation.navigate('GamesStack');
+  const navigate = e => {
+    setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
+  };
+
+  const setClickCoords = (posX, posY) => {
+    setPositionCirc({
+      posX,
+      posY,
+    });
   };
 
   React.useEffect(() => {
@@ -54,6 +67,7 @@ const GetStartedScreen = ({navigation}) => {
         barStyle={'light-content'}
         backgroundColor={Colors.background}
       />
+      <CircularTransition posX={positionCirc.posX} posY={positionCirc.posY} />
       <View style={styles.imageContainer}>
         <FastImage
           source={require('../assets/images/logo.png')}
