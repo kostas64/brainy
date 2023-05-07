@@ -298,6 +298,7 @@ const styles = StyleSheet.create({
     color: Colors.black,
     fontSize: DimensionsUtils.getFontSize(16),
     fontFamily: 'Poppins-Regular',
+    textAlign: 'justify',
   },
 });
 
