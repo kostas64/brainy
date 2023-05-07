@@ -13,6 +13,7 @@ import NewGameButton from '../components/cardMemory/NewGameButton';
 import EqualMathModal from '../components/equalMath/EqualMathModal';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import CelebrationLottie from '../components/common/CelebrationLottie';
+import EqualMathTutorial from '../components/equalMath/EqualMathTutorial';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -33,6 +34,7 @@ const EqualMathScreen = () => {
   const lottieRef = React.useRef();
   const [points, setPoints] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
+  const [tutOpen, setTutOpen] = React.useState(true);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
 
@@ -126,6 +128,7 @@ const EqualMathScreen = () => {
     <BackgroundWrapper
       statusBar={'light-content'}
       source={require('../assets/images/match_equal_background.jpg')}>
+      <EqualMathTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View style={styles.container}>
         <View
           style={[
