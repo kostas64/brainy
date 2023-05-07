@@ -2,13 +2,14 @@ import React from 'react';
 import {Text, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const NewGameButton = ({gameFinished, setNewGame}) => {
   return (
     <Pressable onPress={setNewGame} style={[styles.container]}>
       <Text style={styles.label}>
-        {gameFinished ? 'Play Again' : 'New Game'}
+        {gameFinished ? dict.playAgainLabel : dict.newGameLabel}
       </Text>
     </Pressable>
   );

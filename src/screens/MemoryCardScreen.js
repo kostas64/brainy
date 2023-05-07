@@ -4,6 +4,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
 import MathUtils from '../utils/MathUtils';
+import dict from '../assets/values/dict.json';
 import Card from '../components/cardMemory/Card';
 import MemoryValues from '../assets/values/memory';
 import StopWatch from '../components/common/StopWatch';
@@ -182,7 +183,10 @@ const MemoryCardScreen = () => {
             top: insets.top + 24,
           },
         ]}>
-        <Text style={styles.flipLabel}>{`Flips: ${flipCounter}`}</Text>
+        <Text
+          style={
+            styles.flipLabel
+          }>{`${dict.memoryCardFlipLabel}: ${flipCounter}`}</Text>
       </View>
       <View style={styles.board}>
         {cards.map((card, i) => (

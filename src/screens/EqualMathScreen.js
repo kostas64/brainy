@@ -4,6 +4,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View, Text, StyleSheet, Dimensions, Pressable} from 'react-native';
 
 import {Colors} from '../utils/Colors';
+import dict from '../assets/values/dict.json';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import EqualButton from '../components/equalMath/EqualButton';
@@ -133,7 +134,10 @@ const EqualMathScreen = () => {
               top: insets.top + 24,
             },
           ]}>
-          <Text style={styles.counterLabel}>{`Points: ${points}`}</Text>
+          <Text
+            style={
+              styles.counterLabel
+            }>{`${dict.pointsLabel}: ${points}`}</Text>
           <Text style={styles.counterLabel}>{`${correct}/${question}`}</Text>
         </View>
         <View style={[styles.watchContainer, {top: insets.top + 24}]}>
@@ -162,13 +166,9 @@ const EqualMathScreen = () => {
           generateOperators={generateOperators}
           equation={question <= 10 ? equationEasyMed2 : equationDiff2}
         />
-        <View
-          style={{
-            bottom: 0,
-            position: 'absolute',
-          }}>
+        <View style={styles.buttonContainer}>
           <EqualButton
-            label={'Equal'}
+            label={dict.equalLabel}
             insets={insets}
             disabled={isFinished}
             onPress={() => onCardPress(false, true)}
@@ -245,7 +245,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(26),
   },
-
+  buttonContainer: {
+    bottom: 0,
+    position: 'absolute',
+  },
   playAgainCont: {
     position: 'absolute',
     alignSelf: 'center',

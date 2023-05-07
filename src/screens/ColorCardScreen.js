@@ -4,6 +4,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
 import MathUtils from '../utils/MathUtils';
+import dict from '../assets/values/dict.json';
 import {COLORS} from '../assets/values/colors';
 import CountdownTimer from '../components/common/Timer';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -15,6 +16,7 @@ import NewGameButton from '../components/cardMemory/NewGameButton';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import CardSuccessModal from '../components/cardColor/CardSuccessModal';
+import CardColorTutorial from '../components/cardColor/CardColorTutorial';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -43,6 +45,8 @@ const ColorCardScreen = () => {
   const [tries, setTries] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
   const [points, setPoints] = React.useState(0);
+
+  const [tutOpen, setTutOpen] = React.useState(true);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
 
@@ -91,6 +95,8 @@ const ColorCardScreen = () => {
     <BackgroundWrapper
       statusBar={'light-content'}
       source={require('../assets/images/color_match_background.jpg')}>
+      <CardColorTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
+
       <View style={styles.container}>
         <ColorPoints
           correct={correct}
@@ -115,24 +121,24 @@ const ColorCardScreen = () => {
       </View>
       <View style={styles.bottomContainer}>
         <BottomButton
-          label={'NO'}
+          label={dict.noLabel}
           disabled={isFinished}
           onPress={() => {
             if (!timeRef.current.isRunning) {
               timeRef.current.start();
             }
-            checkValid('no');
+            checkValid(dict.noLabel.toLowerCase());
             generateRandoms();
           }}
         />
         <BottomButton
-          label={'YES'}
+          label={dict.yesLabel}
           disabled={isFinished}
           onPress={() => {
             if (!timeRef.current.isRunning) {
               timeRef.current.start();
             }
-            checkValid('yes');
+            checkValid(dict.yesLabel.toLowerCase());
             generateRandoms();
           }}
         />

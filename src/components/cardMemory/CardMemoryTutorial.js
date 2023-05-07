@@ -3,6 +3,7 @@ import FastImage from 'react-native-fast-image';
 import {View, Text, StyleSheet, Animated, TouchableOpacity} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const BackCard = React.forwardRef(({value, flipToFrontStyle}, ref) => {
@@ -174,7 +175,7 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
                 source={require('../../assets/images/tutorial.png')}
                 style={styles.icon}
               />
-              <Text style={styles.title}>Match the cards</Text>
+              <Text style={styles.title}>{dict.memoryCardTutTitle}</Text>
             </View>
             <TouchableOpacity onPress={closeModal}>
               <FastImage
@@ -211,11 +212,7 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
               flipToBackStyle={flipToBackStyle}
             />
           </View>
-          <Text style={styles.text}>
-            In this game you have to flip the cards in order to match all the
-            couples. Time starts to count when you flip the first card. Let's
-            play!
-          </Text>
+          <Text style={styles.text}>{dict.memoryCardTutContent}</Text>
         </View>
       </Animated.View>
     )

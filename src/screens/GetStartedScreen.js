@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
+import dict from '../assets/values/dict.json';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CircularTransition from '../components/transitions/CircularTransition';
 
@@ -91,7 +92,7 @@ const GetStartedScreen = () => {
             ],
           },
         ]}>
-        <Text style={styles.name}>Brainy</Text>
+        <Text style={styles.name}>{dict.appName}</Text>
       </Animated.View>
       <Animated.View
         style={[
@@ -106,11 +107,9 @@ const GetStartedScreen = () => {
             bottom: insets.bottom + DimensionsUtils.getDP(24),
           },
         ]}>
-        <Text style={styles.subtitle}>
-          Have fun with a big collection of brain games
-        </Text>
+        <Text style={styles.subtitle}>{dict.getStartedSub}</Text>
         <Pressable style={styles.buttonContainer} onPress={navigate}>
-          <Text style={styles.buttonLabel}>Get Started</Text>
+          <Text style={styles.buttonLabel}>{dict?.getStartedButton}</Text>
         </Pressable>
       </Animated.View>
     </>

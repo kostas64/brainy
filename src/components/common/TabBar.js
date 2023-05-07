@@ -12,6 +12,7 @@ import FastImage from 'react-native-fast-image';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../../utils/Colors';
+import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -31,18 +32,20 @@ const TabBar = props => {
     let iconName;
 
     iconName =
-      route.name === 'Games' && focused
+      route.name === dict.gamesScrTitle && focused
         ? gamesI
-        : route.name === 'Games'
+        : route.name === dict.gamesScrTitle
         ? gamesIO
-        : route.name === 'Rank' && focused
+        : route.name === dict.rankScrTitle && focused
         ? rankI
         : rankIO;
 
     return (
       <FastImage
         source={iconName}
-        style={route.name === 'Games' ? styles.gamesIcon : styles.rankIcon}
+        style={
+          route.name === dict.gamesScrTitle ? styles.gamesIcon : styles.rankIcon
+        }
       />
     );
   };
