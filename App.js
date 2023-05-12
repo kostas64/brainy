@@ -6,6 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 //Router
 import Router from './src/routes/Router';
+import {AuthProvider} from './src/context/AuthProvider';
 
 function App() {
   LogBox.ignoreLogs([
@@ -18,7 +19,9 @@ function App() {
 
   return (
     <SafeAreaProvider>
-      <Router />
+      <AuthProvider>
+        <Router />
+      </AuthProvider>
     </SafeAreaProvider>
   );
 }

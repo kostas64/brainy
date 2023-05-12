@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const CircularTransition = ({posX, posY}) => {
+const CircularTransition = ({posX, posY, outCircleColor, inCircleColor}) => {
   const navigation = useNavigation();
   const scaleRef = React.useRef(new Animated.Value(0)).current;
 
@@ -39,7 +39,7 @@ const CircularTransition = ({posX, posY}) => {
           position: 'absolute',
           top: posY - DimensionsUtils.getDP(24),
           left: posX - DimensionsUtils.getDP(24),
-          backgroundColor: Colors.appGreen,
+          backgroundColor: outCircleColor,
           width: DimensionsUtils.getDP(42),
           height: DimensionsUtils.getDP(42),
           borderRadius: DimensionsUtils.getDP(24),
@@ -52,7 +52,7 @@ const CircularTransition = ({posX, posY}) => {
           position: 'absolute',
           top: posY - DimensionsUtils.getDP(14),
           left: posX - DimensionsUtils.getDP(14),
-          backgroundColor: Colors.background,
+          backgroundColor: inCircleColor,
           width: DimensionsUtils.getDP(28),
           height: DimensionsUtils.getDP(28),
           borderRadius: DimensionsUtils.getDP(14),

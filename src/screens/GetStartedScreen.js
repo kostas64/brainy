@@ -8,13 +8,16 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
+import {signIn} from '../services/auth';
 import dict from '../assets/values/dict.json';
+import {GenericUtils} from '../utils/GenericUtils';
+import {AuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CircularTransition from '../components/transitions/CircularTransition';
 
@@ -23,10 +26,12 @@ const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 const GetStartedScreen = () => {
   const insets = useSafeAreaInsets();
   const {setOptions} = useNavigation();
+  const {token, setToken, name, setName} = useContext(AuthContext);
 
   const opacityRef = React.useRef(new Animated.Value(0)).current;
   const translateYRef = React.useRef(new Animated.Value(10)).current;
 
+  const [outCircle, setOutCircle] = React.useState(null);
   const [positionCirc, setPositionCirc] = React.useState({
     posX: -100,
     posY: -100,
@@ -36,7 +41,14 @@ const GetStartedScreen = () => {
     setOptions({gestureEnabled: false});
   }, [setOptions]);
 
-  const navigate = e => {
+  const navigate = async (e, type) => {
+    if (type === 'login') {
+      !token && (await signIn(setToken, setName));
+      setOutCircle(Colors.appGreen);
+    } else {
+      setOutCircle(Colors.white);
+    }
+
     setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
   };
 
@@ -68,7 +80,12 @@ const GetStartedScreen = () => {
         barStyle={'light-content'}
         backgroundColor={Colors.background}
       />
-      <CircularTransition posX={positionCirc.posX} posY={positionCirc.posY} />
+      <CircularTransition
+        posX={positionCirc.posX}
+        posY={positionCirc.posY}
+        inCircleColor={Colors.background}
+        outCircleColor={outCircle}
+      />
       <View style={styles.imageContainer}>
         <FastImage
           source={require('../assets/images/logo.png')}
@@ -107,9 +124,55 @@ const GetStartedScreen = () => {
             bottom: insets.bottom + DimensionsUtils.getDP(24),
           },
         ]}>
-        <Text style={styles.subtitle}>{dict.getStartedSub}</Text>
-        <Pressable style={styles.buttonContainer} onPress={navigate}>
-          <Text style={styles.buttonLabel}>{dict?.getStartedButton}</Text>
+        <Text
+          style={[
+            styles.subtitle,
+            {
+              fontSize: GenericUtils.adaptLayout(
+                DimensionsUtils.getFontSize(18),
+                DimensionsUtils.getFontSize(22),
+              ),
+            },
+          ]}>
+          {dict.getStartedSub}
+        </Text>
+        <Pressable
+          style={[styles.buttonContainer]}
+          onPress={e => navigate(e, 'login')}>
+          <Text
+            style={[
+              styles.buttonLabel,
+              {
+                fontSize: GenericUtils.adaptLayout(
+                  DimensionsUtils.getFontSize(18),
+                  DimensionsUtils.getFontSize(20),
+                ),
+              },
+            ]}>
+            {!!token
+              ? dict?.getStartedLoggedInButton
+              : dict?.getStartedLoginButton}
+          </Text>
+          {!!token && !!name && (
+            <Text style={styles.loggedName}>{`(${name})`}</Text>
+          )}
+        </Pressable>
+        <Pressable
+          style={[styles.buttonContainer, {backgroundColor: Colors.white}]}
+          onPress={e => navigate(e, 'guest')}>
+          <Text
+            style={[
+              styles.buttonLabel,
+              {
+                color: Colors.appGreen,
+                fontSize: GenericUtils.adaptLayout(
+                  DimensionsUtils.getFontSize(18),
+                  DimensionsUtils.getFontSize(20),
+                ),
+              },
+            ]}>
+            {dict?.getStartedGuestButton}
+          </Text>
         </Pressable>
       </Animated.View>
     </>
@@ -150,7 +213,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignSelf: 'center',
     alignItems: 'center',
-    marginTop: DimensionsUtils.getDP(16),
+    marginTop: DimensionsUtils.getDP(8),
     backgroundColor: Colors.appGreen,
     borderRadius: DimensionsUtils.getDP(12),
     paddingVertical: DimensionsUtils.getDP(12),
@@ -160,6 +223,10 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontFamily: 'Poppins-SemiBold',
     fontSize: DimensionsUtils.getFontSize(20),
+  },
+  loggedName: {
+    color: Colors.white,
+    fontSize: DimensionsUtils.getFontSize(12),
   },
 });
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>687899979713-sikdd6redf5eculrs4uk1ep0ldemlsar.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.687899979713-sikdd6redf5eculrs4uk1ep0ldemlsar</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>687899979713-4k8um5g9svu04s99o4emi1v8o5ohadb6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCVBWmVyy6WgifeI4zbuzwlNSLeVMkVolY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>687899979713</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.Brainy</string>
+	<key>PROJECT_ID</key>
+	<string>brainy-cece5</string>
+	<key>STORAGE_BUCKET</key>
+	<string>brainy-cece5.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:687899979713:ios:98f41ba8da2f61ce90c940</string>
+</dict>
+</plist>

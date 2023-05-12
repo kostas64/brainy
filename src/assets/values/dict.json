@@ -1,7 +1,9 @@
 {
   "appName": "Brainy",
   "getStartedSub": "Have fun with a big collection of brain games",
-  "getStartedButton": "Get Started",
+  "getStartedLoginButton": "Login",
+  "getStartedLoggedInButton": "Continue",
+  "getStartedGuestButton": "Play as guest",
   "gamesScrTitle": "Games",
   "memoryCardsGameTitle": "Memory Cards",
   "memoryCardFlipLabel": "Flips",
