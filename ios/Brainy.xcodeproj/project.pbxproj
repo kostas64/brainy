@@ -12,9 +12,16 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2CA7A79133D04A3195667B0D /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D10197A54BD54522A010A32C /* Poppins-ExtraLight.ttf */; };
+		5196B9AA5F7340BB85319E0E /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A8EC84E43E7420DBCB907FB /* Poppins-Regular.ttf */; };
+		700CCBBD2A0AC15C001061CD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 700CCBBC2A0AC15C001061CD /* GoogleService-Info.plist */; };
 		7699B88040F8A987B510C191 /* libPods-Brainy-BrainyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Brainy-BrainyTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		BC5DA2B62E0B473285DB46E7 /* DiloWorld.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA2AF943758A45FEB8A0C8BA /* DiloWorld.ttf */; };
+		8DD11E7A1AD54BFFAB35FF18 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F85457289C16485CA4CC8277 /* Poppins-SemiBold.ttf */; };
+		9673B96A61834A5BA695C81A /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F267275E3BEF4FB6879E9B0D /* Poppins-Thin.ttf */; };
+		B18C8E6E338B4B368422E2FC /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 252B4CEC234B4A7C9B7CE86F /* Poppins-Bold.ttf */; };
+		C3CA97E6C1AB4E24AF2C5B98 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 025155EF389A4162B0E82B44 /* Poppins-Light.ttf */; };
+		D452B8533BFD4D2183F44D24 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1943573579AA4D34B7F0EDFF /* Poppins-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,21 +38,30 @@
 		00E356EE1AD99517003FC87E /* BrainyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrainyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* BrainyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrainyTests.m; sourceTree = "<group>"; };
+		025155EF389A4162B0E82B44 /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../src/assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
+		0A8EC84E43E7420DBCB907FB /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../src/assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Brainy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Brainy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Brainy/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Brainy/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Brainy/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Brainy/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Brainy/main.m; sourceTree = "<group>"; };
+		1943573579AA4D34B7F0EDFF /* Poppins-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Medium.ttf"; path = "../src/assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Brainy-BrainyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Brainy-BrainyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		252B4CEC234B4A7C9B7CE86F /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../src/assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Brainy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brainy.debug.xcconfig"; path = "Target Support Files/Pods-Brainy/Pods-Brainy.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Brainy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brainy.release.xcconfig"; path = "Target Support Files/Pods-Brainy/Pods-Brainy.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Brainy-BrainyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brainy-BrainyTests.debug.xcconfig"; path = "Target Support Files/Pods-Brainy-BrainyTests/Pods-Brainy-BrainyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Brainy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Brainy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		700CCBBC2A0AC15C001061CD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		70A51EEE2A0C18B1008260ED /* libGoogleSignIn.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libGoogleSignIn.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		70A51EF02A0C18C3008260ED /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Brainy/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Brainy-BrainyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brainy-BrainyTests.release.xcconfig"; path = "Target Support Files/Pods-Brainy-BrainyTests/Pods-Brainy-BrainyTests.release.xcconfig"; sourceTree = "<group>"; };
-		EA2AF943758A45FEB8A0C8BA /* DiloWorld.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = DiloWorld.ttf; path = ../src/assets/fonts/DiloWorld.ttf; sourceTree = "<group>"; };
+		D10197A54BD54522A010A32C /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLight.ttf"; path = "../src/assets/fonts/Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F267275E3BEF4FB6879E9B0D /* Poppins-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Thin.ttf"; path = "../src/assets/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; };
+		F85457289C16485CA4CC8277 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../src/assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +108,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				700CCBBC2A0AC15C001061CD /* GoogleService-Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -101,7 +118,13 @@
 		1FD3D27E74A1478BA982A1A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				EA2AF943758A45FEB8A0C8BA /* DiloWorld.ttf */,
+				252B4CEC234B4A7C9B7CE86F /* Poppins-Bold.ttf */,
+				D10197A54BD54522A010A32C /* Poppins-ExtraLight.ttf */,
+				025155EF389A4162B0E82B44 /* Poppins-Light.ttf */,
+				1943573579AA4D34B7F0EDFF /* Poppins-Medium.ttf */,
+				0A8EC84E43E7420DBCB907FB /* Poppins-Regular.ttf */,
+				F85457289C16485CA4CC8277 /* Poppins-SemiBold.ttf */,
+				F267275E3BEF4FB6879E9B0D /* Poppins-Thin.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -109,6 +132,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				70A51EF02A0C18C3008260ED /* libRNGoogleSignin.a */,
+				70A51EEE2A0C18B1008260ED /* libGoogleSignIn.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-Brainy.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-Brainy-BrainyTests.a */,
@@ -255,7 +280,14 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				BC5DA2B62E0B473285DB46E7 /* DiloWorld.ttf in Resources */,
+				B18C8E6E338B4B368422E2FC /* Poppins-Bold.ttf in Resources */,
+				2CA7A79133D04A3195667B0D /* Poppins-ExtraLight.ttf in Resources */,
+				C3CA97E6C1AB4E24AF2C5B98 /* Poppins-Light.ttf in Resources */,
+				D452B8533BFD4D2183F44D24 /* Poppins-Medium.ttf in Resources */,
+				5196B9AA5F7340BB85319E0E /* Poppins-Regular.ttf in Resources */,
+				700CCBBD2A0AC15C001061CD /* GoogleService-Info.plist in Resources */,
+				8DD11E7A1AD54BFFAB35FF18 /* Poppins-SemiBold.ttf in Resources */,
+				9673B96A61834A5BA695C81A /* Poppins-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,12 +477,13 @@
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-Brainy-BrainyTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = BrainyTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -473,8 +506,9 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BrainyTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -501,6 +535,7 @@
 				DEVELOPMENT_TEAM = TBTXH8NBPW;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Brainy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -527,7 +562,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TBTXH8NBPW;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Brainy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -576,6 +613,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -648,6 +686,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
