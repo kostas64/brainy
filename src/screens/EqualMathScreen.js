@@ -5,6 +5,7 @@ import {View, Text, StyleSheet, Dimensions, Pressable} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import dict from '../assets/values/dict.json';
+import Points from '../components/common/Points';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import EqualButton from '../components/equalMath/EqualButton';
@@ -130,19 +131,7 @@ const EqualMathScreen = () => {
       source={require('../assets/images/match_equal_background.jpg')}>
       <EqualMathTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View style={styles.container}>
-        <View
-          style={[
-            styles.counterContainer,
-            {
-              top: insets.top + 24,
-            },
-          ]}>
-          <Text
-            style={
-              styles.counterLabel
-            }>{`${dict.pointsLabel}: ${points}`}</Text>
-          <Text style={styles.counterLabel}>{`${correct}/${question}`}</Text>
-        </View>
+        <Points points={points} insets={insets} />
         <View style={[styles.watchContainer, {top: insets.top + 24}]}>
           <CountdownTimer
             ref={timeRef}
@@ -225,7 +214,7 @@ const styles = StyleSheet.create({
   },
   watchContainer: {
     position: 'absolute',
-    right: DimensionsUtils.getDP(WIDTH / 16),
+    right: DimensionsUtils.getDP(26),
   },
   cardContainer: {
     height: DimensionsUtils.getDP(50),

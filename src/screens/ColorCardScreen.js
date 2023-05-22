@@ -6,11 +6,11 @@ import {Colors} from '../utils/Colors';
 import MathUtils from '../utils/MathUtils';
 import dict from '../assets/values/dict.json';
 import {COLORS} from '../assets/values/colors';
+import Points from '../components/common/Points';
 import CountdownTimer from '../components/common/Timer';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import ColorCard from '../components/cardColor/ColorCard';
 import ColorButton from '../components/cardColor/ColorButton';
-import ColorPoints from '../components/cardColor/ColorPoints';
 import AnimatedModal from '../components/common/AnimatedModal';
 import NewGameButton from '../components/cardMemory/NewGameButton';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
@@ -98,12 +98,7 @@ const ColorCardScreen = () => {
       <CardColorTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
 
       <View style={styles.container}>
-        <ColorPoints
-          correct={correct}
-          tries={tries}
-          points={points}
-          insets={insets}
-        />
+        <Points points={points} insets={insets} />
         <View style={[styles.watchContainer, {top: insets.top + 24}]}>
           <CountdownTimer
             ref={timeRef}

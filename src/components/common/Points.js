@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Platform} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const ColorPoints = ({insets, points, correct, tries}) => {
+const Points = ({insets, points}) => {
   return (
     <View
       style={[
@@ -13,10 +13,10 @@ const ColorPoints = ({insets, points, correct, tries}) => {
         {
           top: insets.top + 24,
         },
+        Platform.OS === 'android' && {height: DimensionsUtils.getDP(50)},
       ]}>
       <Text
         style={styles.counterLabel}>{`${dict.pointsLabel}: ${points} `}</Text>
-      <Text style={styles.counterLabel}>{`${correct}/${tries}`}</Text>
     </View>
   );
 };
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ColorPoints;
+export default Points;
