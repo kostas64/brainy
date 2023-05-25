@@ -7,6 +7,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 //Router
 import Router from './src/routes/Router';
 import {AuthProvider} from './src/context/AuthProvider';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 function App() {
   LogBox.ignoreLogs([
@@ -18,11 +19,13 @@ function App() {
   });
 
   return (
-    <SafeAreaProvider>
-      <AuthProvider>
-        <Router />
-      </AuthProvider>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <SafeAreaProvider>
+        <AuthProvider>
+          <Router />
+        </AuthProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 

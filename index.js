@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+
 import App from './App';
 import Config from 'react-native-config';
 import {AppRegistry} from 'react-native';
