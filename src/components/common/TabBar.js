@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   container: {
     width: WIDTH,
     backgroundColor: Colors.background,
-    position: 'absolute',
     bottom: 0,
   },
   innerContainer: {

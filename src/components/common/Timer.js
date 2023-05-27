@@ -32,7 +32,7 @@ const CountdownTimer = React.forwardRef(({seconds, setIsFinished}, ref) => {
         setTime(prevTime => Math.max(0, prevTime - deltaTime));
       } else if (isRunning && timeState <= 0) {
         setIsRunning(false);
-        setIsFinished();
+        !!setIsFinished && setIsFinished();
       }
     };
 
