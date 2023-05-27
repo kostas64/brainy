@@ -12,19 +12,24 @@ export const signIn = async (setToken, setName) => {
     setName(userInfo?.user.name);
     await AsyncStorage.setItem('token', userInfo?.idToken);
     await AsyncStorage.setItem('name', userInfo?.user.name);
+    return true;
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       // user cancelled the login flow
       console.log('user cancelled the login flow');
+      return false;
     } else if (error.code === statusCodes.IN_PROGRESS) {
       // operation (e.g. sign in) is in progress already
       console.log('operation (e.g. sign in) is in progress already');
+      return false;
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
       // play services not available or outdated
       console.log('play services not available or outdated');
+      return false;
     } else {
       // some other error happened
       console.log('some other error happened', error);
+      return false;
     }
   }
 };

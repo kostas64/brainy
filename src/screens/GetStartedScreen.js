@@ -43,13 +43,19 @@ const GetStartedScreen = () => {
 
   const navigate = async (e, type) => {
     if (type === 'login') {
-      !token && (await signIn(setToken, setName));
-      setOutCircle(Colors.appGreen);
+      let logged = false;
+      if (!token) {
+        logged = await signIn(setToken, setName);
+      } else {
+        logged = true;
+      }
+
+      logged && setOutCircle(Colors.appGreen);
+      logged && setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
     } else {
       setOutCircle(Colors.white);
+      setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
     }
-
-    setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
   };
 
   const setClickCoords = (posX, posY) => {
