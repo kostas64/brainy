@@ -7,6 +7,7 @@ import ColorCardScreen from '../screens/ColorCardScreen';
 import EqualMathScreen from '../screens/EqualMathScreen';
 import MemoryCardScreen from '../screens/MemoryCardScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
+import GestureItScreen from '../screens/GestureItScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +22,6 @@ const Router = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-
           animationTypeForReplace: 'pop',
         }}>
         <Stack.Screen name="GetStarted" component={GetStartedScreen} />
@@ -47,6 +47,11 @@ const Router = () => {
         <Stack.Screen
           name="EqualMath"
           component={EqualMathScreen}
+          options={screenConfig}
+        />
+        <Stack.Screen
+          name="GestureIt"
+          component={GestureItScreen}
           options={screenConfig}
         />
       </Stack.Navigator>
