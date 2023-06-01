@@ -1,10 +1,10 @@
 import {
   View,
-  StatusBar,
-  StyleSheet,
   Animated,
   Platform,
-  ScrollView,
+  FlatList,
+  StatusBar,
+  StyleSheet,
 } from 'react-native';
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -18,6 +18,37 @@ import HomeGameCard from '../components/common/HomeGameCard';
 const GamesScreen = ({navigation, route}) => {
   const insets = useSafeAreaInsets();
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
+
+  const GAMES = [
+    {
+      label: dict.memoryCardsGameTitle,
+      image: require('../assets/images/memory_match.png'),
+      onPress: () => navigation.navigate('MemoryCard'),
+    },
+    {
+      label: dict.colorMatchGameTitle,
+      image: require('../assets/images/color_match.png'),
+      onPress: () => navigation.navigate('ColorCard'),
+    },
+    {
+      label: dict.doTheMathGameTitle,
+      image: require('../assets/images/match_equal.png'),
+      onPress: () => navigation.navigate('EqualMath'),
+    },
+    {
+      label: dict.gestureItGameTitle,
+      image: require('../assets/images/gesture_it.png'),
+      onPress: () => navigation.navigate('GestureIt'),
+    },
+  ];
+
+  const renderItem = ({item}) => (
+    <HomeGameCard
+      onPress={item?.onPress}
+      image={item?.image}
+      label={item?.label}
+    />
+  );
 
   React.useEffect(() => {
     Animated.timing(opacityRef, {
@@ -41,40 +72,19 @@ const GamesScreen = ({navigation, route}) => {
       />
       <Header insets={insets} label={dict?.gamesScrTitle} />
       <Animated.View style={[styles.gamesContainer, {opacity: opacityRef}]}>
-        <ScrollView
+        <FlatList
+          data={GAMES}
+          renderItem={renderItem}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContainer}
+          ItemSeparatorComponent={<View style={styles.seperator} />}
           style={{
             marginBottom: DimensionsUtils.getDP(8),
             marginTop:
               insets.top > 0
                 ? insets.top + DimensionsUtils.getDP(58)
                 : DimensionsUtils.getDP(76),
-          }}>
-          <HomeGameCard
-            onPress={() => navigation.navigate('MemoryCard')}
-            image={require('../assets/images/memory_match.png')}
-            label={dict.memoryCardsGameTitle}
-          />
-          <View style={styles.seperator} />
-          <HomeGameCard
-            onPress={() => navigation.navigate('ColorCard')}
-            image={require('../assets/images/color_match.png')}
-            label={dict.colorMatchGameTitle}
-          />
-          <View style={styles.seperator} />
-          <HomeGameCard
-            onPress={() => navigation.navigate('EqualMath')}
-            image={require('../assets/images/match_equal.png')}
-            label={dict.doTheMathGameTitle}
-          />
-          <View style={styles.seperator} />
-          <HomeGameCard
-            onPress={() => navigation.navigate('GestureIt')}
-            image={require('../assets/images/gesture_it.png')}
-            label={dict.gestureItGameTitle}
-          />
-        </ScrollView>
+          }}
+        />
       </Animated.View>
     </View>
   );
