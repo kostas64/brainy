@@ -2,7 +2,6 @@ import React from 'react';
 import {Animated} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const CircularTransition = ({posX, posY, outCircleColor, inCircleColor}) => {

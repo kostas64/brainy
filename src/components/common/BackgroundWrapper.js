@@ -1,16 +1,18 @@
 import React from 'react';
-import {ImageBackground, StatusBar, StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import {Dimensions, StatusBar, StyleSheet} from 'react-native';
 
-const BackgroundWrapper = ({children, statusBar, source}) => {
+const {width, height} = Dimensions.get('window');
+
+const BackgroundWrapper = ({statusBar, source}) => {
   return (
     <>
       <StatusBar backgroundColor={'transparent'} barStyle={statusBar} />
-      <ImageBackground
-        style={styles.container}
+      <FastImage
         source={source}
-        resizeMode="cover">
-        {children}
-      </ImageBackground>
+        resizeMode="cover"
+        style={{position: 'absolute', top: 0, left: 0, width, height}}
+      />
     </>
   );
 };

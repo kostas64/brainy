@@ -126,9 +126,11 @@ const EqualMathScreen = () => {
       : `${number4} ${generateOperators()} (${number5} ${generateOperators()} ${number6})`;
 
   return (
-    <BackgroundWrapper
-      statusBar={'light-content'}
-      source={require('../assets/images/match_equal_background.jpg')}>
+    <>
+      <BackgroundWrapper
+        statusBar={'light-content'}
+        source={require('../assets/images/match_equal_background.jpg')}
+      />
       <EqualMathTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View style={styles.container}>
         <Points points={points} insets={insets} />
@@ -188,7 +190,7 @@ const EqualMathScreen = () => {
         setModalOpen={setModalOpen}
         content={successContent()}
       />
-    </BackgroundWrapper>
+    </>
   );
 };
 

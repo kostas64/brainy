@@ -92,9 +92,11 @@ const ColorCardScreen = () => {
   }, [isFinished]);
 
   return (
-    <BackgroundWrapper
-      statusBar={'light-content'}
-      source={require('../assets/images/color_match_background.jpg')}>
+    <>
+      <BackgroundWrapper
+        statusBar={'light-content'}
+        source={require('../assets/images/color_match_background.jpg')}
+      />
       <CardColorTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
 
       <View style={styles.container}>
@@ -159,7 +161,7 @@ const ColorCardScreen = () => {
         setModalOpen={setModalOpen}
         content={successContent()}
       />
-    </BackgroundWrapper>
+    </>
   );
 };
 

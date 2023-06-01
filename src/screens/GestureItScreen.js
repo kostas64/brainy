@@ -129,9 +129,11 @@ const GestureItScreen = () => {
   }, [isFinished]);
 
   return (
-    <BackgroundWrapper
-      statusBar={'light-content'}
-      source={require('../assets/images/gesture_background.jpg')}>
+    <>
+      <BackgroundWrapper
+        statusBar={'light-content'}
+        source={require('../assets/images/gesture_background.jpg')}
+      />
       <GestureItTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View
         style={[
@@ -193,7 +195,7 @@ const GestureItScreen = () => {
         setModalOpen={setModalOpen}
         content={successContent()}
       />
-    </BackgroundWrapper>
+    </>
   );
 };
 

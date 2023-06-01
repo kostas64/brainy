@@ -6,29 +6,17 @@ import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const BackCard = React.forwardRef(({value, flipToFrontStyle}, ref) => {
-  return (
-    <Animated.View style={[styles.back, flipToFrontStyle(ref)]}>
-      <Text style={styles.cardLabel}>{value}</Text>
-    </Animated.View>
-  );
-});
-
-const FrontCard = React.forwardRef(({value, flipToBackStyle}, ref) => {
-  return (
-    <Animated.View style={[styles.front, flipToBackStyle(ref)]}>
-      <Text style={styles.cardLabel}>{value}</Text>
-    </Animated.View>
-  );
-});
-
 const Card = React.forwardRef(
   ({value, flipToFrontStyle, flipToBackStyle}, ref) => {
     return (
       <View style={styles.rowCenter}>
-        <BackCard ref={ref} value={'?'} flipToFrontStyle={flipToFrontStyle} />
+        <Animated.View style={[styles.back, flipToFrontStyle(ref)]}>
+          <Text style={styles.cardLabel}>{value}</Text>
+        </Animated.View>
         <View style={{marginRight: DimensionsUtils.getDP(8)}} />
-        <FrontCard ref={ref} value={value} flipToBackStyle={flipToBackStyle} />
+        <Animated.View style={[styles.front, flipToBackStyle(ref)]}>
+          <Text style={styles.cardLabel}>{value}</Text>
+        </Animated.View>
       </View>
     );
   },

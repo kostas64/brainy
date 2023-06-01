@@ -169,9 +169,11 @@ const MemoryCardScreen = () => {
   }, [currentFlipped]);
 
   return (
-    <BackgroundWrapper
-      statusBar={'light-content'}
-      source={require('../assets/images/memory_background.jpg')}>
+    <>
+      <BackgroundWrapper
+        statusBar={'light-content'}
+        source={require('../assets/images/memory_background.jpg')}
+      />
       <CardMemoryTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View style={[styles.watchContainer, {top: insets.top + 24}]}>
         <StopWatch ref={timeRef} />
@@ -217,7 +219,7 @@ const MemoryCardScreen = () => {
         ]}>
         <NewGameButton gameFinished={gameOver} setNewGame={setNewGame} />
       </View>
-    </BackgroundWrapper>
+    </>
   );
 };
 
