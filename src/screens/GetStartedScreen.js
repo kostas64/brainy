@@ -26,7 +26,7 @@ const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 const GetStartedScreen = () => {
   const insets = useSafeAreaInsets();
   const {setOptions} = useNavigation();
-  const {token, setToken, name, setName} = useContext(AuthContext);
+  const {token, setToken, user, setUser} = useContext(AuthContext);
 
   const opacityRef = React.useRef(new Animated.Value(0)).current;
   const translateYRef = React.useRef(new Animated.Value(10)).current;
@@ -45,11 +45,10 @@ const GetStartedScreen = () => {
     if (type === 'login') {
       let logged = false;
       if (!token) {
-        logged = await signIn(setToken, setName);
+        logged = await signIn(setToken, setUser);
       } else {
         logged = true;
       }
-
       logged && setOutCircle(Colors.appGreen);
       logged && setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
     } else {
@@ -159,8 +158,8 @@ const GetStartedScreen = () => {
               ? dict?.getStartedLoggedInButton
               : dict?.getStartedLoginButton}
           </Text>
-          {!!token && !!name && (
-            <Text style={styles.loggedName}>{`(${name})`}</Text>
+          {!!token && !!user?.email && (
+            <Text style={styles.loggedName}>{`(${user?.email})`}</Text>
           )}
         </Pressable>
         <Pressable

@@ -5,22 +5,32 @@ export const AuthContext = React.createContext({});
 
 export const AuthProvider = ({children}) => {
   const [token, setToken] = React.useState(null);
-  const [name, setName] = React.useState(null);
+  const [user, setUser] = React.useState({
+    avatar: null,
+    email: null,
+  });
 
   React.useEffect(() => {
-    // Fetch the token from storage then navigate to our appropriate place
+    // Fetch token and user's data
     const bootstrapAsync = async () => {
-      let userToken, userName;
+      let userToken, userEmail;
 
       try {
         userToken = await AsyncStorage.getItem('token');
-        userName = await AsyncStorage.getItem('name');
+        userEmail = await AsyncStorage.getItem('email');
+        userAvatar = await AsyncStorage.getItem('avatar');
 
         setToken(userToken);
-        setName(userName);
+        setUser({
+          avatar: userAvatar,
+          email: userEmail,
+        });
       } catch (e) {
         setToken(null);
-        setName(null);
+        setUser({
+          avatar: null,
+          email: null,
+        });
       }
     };
 
@@ -32,8 +42,8 @@ export const AuthProvider = ({children}) => {
       value={{
         token,
         setToken,
-        name,
-        setName,
+        user,
+        setUser,
       }}>
       {children}
     </AuthContext.Provider>

@@ -6,17 +6,19 @@ import {
   StatusBar,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
 import dict from '../assets/values/dict.json';
 import Header from '../components/common/Header';
+import {AuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import HomeGameCard from '../components/common/HomeGameCard';
 
 const GamesScreen = ({navigation, route}) => {
   const insets = useSafeAreaInsets();
+  const {user} = useContext(AuthContext);
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
 
   const GAMES = [
@@ -70,7 +72,16 @@ const GamesScreen = ({navigation, route}) => {
         barStyle={'light-content'}
         backgroundColor={Colors.background}
       />
-      <Header insets={insets} label={dict?.gamesScrTitle} />
+      <View
+        style={{
+          marginTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24),
+        }}>
+        <Header
+          insets={insets}
+          label={dict?.gamesScrTitle}
+          avatar={user?.avatar}
+        />
+      </View>
       <Animated.View style={[styles.gamesContainer, {opacity: opacityRef}]}>
         <FlatList
           data={GAMES}
@@ -79,10 +90,6 @@ const GamesScreen = ({navigation, route}) => {
           ItemSeparatorComponent={<View style={styles.seperator} />}
           style={{
             marginBottom: DimensionsUtils.getDP(8),
-            marginTop:
-              insets.top > 0
-                ? insets.top + DimensionsUtils.getDP(58)
-                : DimensionsUtils.getDP(76),
           }}
         />
       </Animated.View>
