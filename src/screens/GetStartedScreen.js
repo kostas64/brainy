@@ -48,10 +48,20 @@ const GetStartedScreen = () => {
         logged = await signIn(setToken, setUser);
       } else {
         logged = true;
+        setUser({
+          email: user?.email,
+          avatar: user?.avatar,
+          isGuest: false,
+        });
       }
       logged && setOutCircle(Colors.appGreen);
       logged && setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
     } else {
+      setUser({
+        email: user?.email,
+        avatar: user?.avatar,
+        isGuest: true,
+      });
       setOutCircle(Colors.white);
       setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
     }

@@ -57,7 +57,11 @@ export const signIn = async (setToken, setUser) => {
       const data = await res.json();
 
       setToken(data?.token);
-      setUser({email: data?.user?.email, avatar: data?.user?.avatar});
+      setUser({
+        email: data?.user?.email,
+        avatar: data?.user?.avatar,
+        isGuest: false,
+      });
       await AsyncStorage.setItem('token', data?.token);
       await AsyncStorage.setItem('email', data?.user?.email);
       await AsyncStorage.setItem('avatar', data?.user?.avatar);

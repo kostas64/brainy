@@ -8,6 +8,7 @@ export const AuthProvider = ({children}) => {
   const [user, setUser] = React.useState({
     avatar: null,
     email: null,
+    isGuest: null,
   });
 
   React.useEffect(() => {
@@ -30,6 +31,7 @@ export const AuthProvider = ({children}) => {
         setUser({
           avatar: null,
           email: null,
+          isGuest: null,
         });
       }
     };

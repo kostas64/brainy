@@ -5,7 +5,11 @@ import {View, Text, StyleSheet, Platform} from 'react-native';
 import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const Header = ({label, avatar}) => {
+const Header = ({label, avatar, isGuest}) => {
+  const iconSource = isGuest
+    ? require('../../assets/images/guest.png')
+    : {uri: avatar};
+
   return (
     <View style={styles.container}>
       <Text
@@ -19,7 +23,7 @@ const Header = ({label, avatar}) => {
       </Text>
       {avatar && (
         <View style={styles.avatarContainer}>
-          <FastImage source={{uri: avatar}} style={styles.avatar} />
+          <FastImage source={iconSource} style={styles.avatar} />
         </View>
       )}
     </View>
@@ -48,8 +52,8 @@ const styles = StyleSheet.create({
   avatar: {
     borderWidth: DimensionsUtils.getDP(2),
     borderRadius: DimensionsUtils.getDP(24),
-    width: DimensionsUtils.getDP(48),
-    height: DimensionsUtils.getDP(48),
+    width: DimensionsUtils.getDP(40),
+    height: DimensionsUtils.getDP(40),
   },
 });
 

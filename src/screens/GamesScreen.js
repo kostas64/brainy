@@ -78,6 +78,7 @@ const GamesScreen = ({navigation, route}) => {
         }}>
         <Header
           insets={insets}
+          isGuest={user?.isGuest}
           label={dict?.gamesScrTitle}
           avatar={user?.avatar}
         />

@@ -19,6 +19,7 @@ const RankScreen = () => {
         }}>
         <Header
           insets={insets}
+          isGuest={user?.isGuest}
           label={dict.rankScrTitle}
           avatar={user?.avatar}
         />
