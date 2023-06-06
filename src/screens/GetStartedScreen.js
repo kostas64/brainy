@@ -7,6 +7,7 @@ import {
   StatusBar,
   Dimensions,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useContext} from 'react';
 import FastImage from 'react-native-fast-image';
@@ -156,20 +157,24 @@ const GetStartedScreen = () => {
           disabled={loading}
           style={[styles.buttonContainer, loading && {opacity: 0.4}]}
           onPress={e => navigate(e, 'login')}>
-          <Text
-            style={[
-              styles.buttonLabel,
-              {
-                fontSize: GenericUtils.adaptLayout(
-                  DimensionsUtils.getFontSize(18),
-                  DimensionsUtils.getFontSize(20),
-                ),
-              },
-            ]}>
-            {!!token
-              ? dict?.getStartedLoggedInButton
-              : dict?.getStartedLoginButton}
-          </Text>
+          {!loading ? (
+            <Text
+              style={[
+                styles.buttonLabel,
+                {
+                  fontSize: GenericUtils.adaptLayout(
+                    DimensionsUtils.getFontSize(18),
+                    DimensionsUtils.getFontSize(20),
+                  ),
+                },
+              ]}>
+              {!!token
+                ? dict?.getStartedLoggedInButton
+                : dict?.getStartedLoginButton}
+            </Text>
+          ) : (
+            <ActivityIndicator size={'small'} color={'white'} />
+          )}
           {!!token && !!user?.email && (
             <Text style={styles.loggedName}>{`(${user?.email})`}</Text>
           )}
@@ -233,8 +238,10 @@ const styles = StyleSheet.create({
     marginHorizontal: DimensionsUtils.getDP(16),
   },
   buttonContainer: {
+    minHeight: DimensionsUtils.getDP(52),
     alignSelf: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: DimensionsUtils.getDP(8),
     backgroundColor: Colors.appGreen,
     borderRadius: DimensionsUtils.getDP(12),

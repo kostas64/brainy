@@ -77,6 +77,7 @@ export const signIn = async (setToken, setUser, setLoading) => {
 };
 
 export const signOut = async (setToken, setUser) => {
+  await GoogleSignin.signOut();
   setToken(null);
   setUser(old => ({
     email: null,

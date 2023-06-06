@@ -1,6 +1,8 @@
+import {HOST, REQUEST_ACCESS} from '../Endpoints';
+
 export const requestAccess = async user => {
   try {
-    return fetch(`http://192.168.2.17:3000/users/requestAccess`, {
+    return fetch(`${HOST}${REQUEST_ACCESS}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

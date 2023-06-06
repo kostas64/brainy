@@ -66,4 +66,4 @@ yarn-error.log
 TODO.md
 
 #Ignore env file
-.env
+*.env
