@@ -31,6 +31,7 @@ const GetStartedScreen = () => {
   const opacityRef = React.useRef(new Animated.Value(0)).current;
   const translateYRef = React.useRef(new Animated.Value(10)).current;
 
+  const [loading, setLoading] = React.useState(false);
   const [outCircle, setOutCircle] = React.useState(null);
   const [positionCirc, setPositionCirc] = React.useState({
     posX: -100,
@@ -45,7 +46,7 @@ const GetStartedScreen = () => {
     if (type === 'login') {
       let logged = false;
       if (!token) {
-        logged = await signIn(setToken, setUser);
+        logged = await signIn(setToken, setUser, setLoading);
       } else {
         logged = true;
         setUser({
@@ -152,7 +153,8 @@ const GetStartedScreen = () => {
           {dict.getStartedSub}
         </Text>
         <Pressable
-          style={[styles.buttonContainer]}
+          disabled={loading}
+          style={[styles.buttonContainer, loading && {opacity: 0.4}]}
           onPress={e => navigate(e, 'login')}>
           <Text
             style={[
@@ -173,7 +175,12 @@ const GetStartedScreen = () => {
           )}
         </Pressable>
         <Pressable
-          style={[styles.buttonContainer, {backgroundColor: Colors.white}]}
+          disabled={loading}
+          style={[
+            styles.buttonContainer,
+            loading && {opacity: 0.4},
+            {backgroundColor: Colors.white},
+          ]}
           onPress={e => navigate(e, 'guest')}>
           <Text
             style={[

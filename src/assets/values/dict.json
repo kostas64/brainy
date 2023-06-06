@@ -32,5 +32,6 @@
   "pointsLabel": "Points",
   "equalLabel": "Equal",
   "noLabel": "NO",
-  "yesLabel": "YES"
+  "yesLabel": "YES",
+  "logout": "Logout"
 }

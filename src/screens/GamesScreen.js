@@ -6,10 +6,12 @@ import {
   StatusBar,
   StyleSheet,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
+import {useIsFocused} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
+import {signOut} from '../services/auth';
 import dict from '../assets/values/dict.json';
 import Header from '../components/common/Header';
 import {AuthContext} from '../context/AuthProvider';
@@ -17,9 +19,12 @@ import {DimensionsUtils} from '../utils/DimensionUtils';
 import HomeGameCard from '../components/common/HomeGameCard';
 
 const GamesScreen = ({navigation, route}) => {
+  const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
-  const {user} = useContext(AuthContext);
+
+  const menuRef = React.useRef();
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
+  const {user, setUser, setToken} = React.useContext(AuthContext);
 
   const GAMES = [
     {
@@ -52,35 +57,47 @@ const GamesScreen = ({navigation, route}) => {
     />
   );
 
+  const logout = async () => {
+    !user?.isGuest && (await signOut(setToken, setUser));
+    navigation.pop();
+  };
+
   React.useEffect(() => {
     Animated.timing(opacityRef, {
       toValue: 1,
       duration: Platform.OS === 'ios' ? 1000 : 350,
       useNativeDriver: true,
     }).start();
-  }, []);
 
-  React.useEffect(() => {
     navigation.addListener('beforeRemove', () => {
       route?.params?.backTransition();
     });
   }, []);
 
+  React.useEffect(() => {
+    !isFocused && menuRef?.current?.closeMenu();
+  }, [isFocused]);
+
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      onStartShouldSetResponder={() => menuRef?.current?.closeMenu()}>
       <StatusBar
         barStyle={'light-content'}
         backgroundColor={Colors.background}
       />
       <View
         style={{
+          zIndex: 10000,
           marginTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24),
         }}>
         <Header
+          ref={menuRef}
           insets={insets}
           isGuest={user?.isGuest}
           label={dict?.gamesScrTitle}
           avatar={user?.avatar}
+          logout={logout}
         />
       </View>
       <Animated.View style={[styles.gamesContainer, {opacity: opacityRef}]}>

@@ -48,8 +48,9 @@ export const signInGoogle = async () => {
   }
 };
 
-export const signIn = async (setToken, setUser) => {
+export const signIn = async (setToken, setUser, setLoading) => {
   try {
+    setLoading(true);
     const {logged, user} = await signInGoogle();
 
     if (logged && user) {
@@ -67,9 +68,22 @@ export const signIn = async (setToken, setUser) => {
       await AsyncStorage.setItem('avatar', data?.user?.avatar);
     }
 
+    setLoading(false);
     return logged;
   } catch (e) {
     console.log('Error ', e);
     return false;
   }
+};
+
+export const signOut = async (setToken, setUser) => {
+  setToken(null);
+  setUser(old => ({
+    email: null,
+    avatar: old?.avatar,
+    isGuest: null,
+  }));
+  await AsyncStorage.removeItem('token');
+  await AsyncStorage.removeItem('email');
+  await AsyncStorage.removeItem('avatar');
 };
