@@ -32,6 +32,10 @@ const MemoryCardScreen = () => {
   const [currentFlipped, setCurrentFlipped] = React.useState([]);
   const [cardsDisabled, setCardsDisabled] = React.useState(false);
 
+  const pad = n => (n < 10 ? '0' + n : n);
+  const duration = timeRef?.current?.extractTime();
+  const centiseconds = Math.floor(duration?.milliseconds() / 10);
+
   const setIsFlipped = index => {
     //Keep flipped cards
     const tempCards = cards.map((card, i) => {
@@ -73,10 +77,6 @@ const MemoryCardScreen = () => {
   };
 
   const successContent = () => {
-    const pad = n => (n < 10 ? '0' + n : n);
-    const duration = timeRef?.current?.extractTime();
-    const centiseconds = Math.floor(duration?.milliseconds() / 10);
-
     return (
       <MemorySuccessModal
         pad={pad}

@@ -53,13 +53,13 @@ const EqualMathScreen = () => {
     }
 
     const isCorrect = isEqual
-      ? evaluate(equationEasyMed1.replace('X', '*')) ==
-        evaluate(equationEasyMed2.replace('X', '*'))
+      ? evaluate(equationEasyMed1.replaceAll('X', '*')) ==
+        evaluate(equationEasyMed2.replaceAll('X', '*'))
       : firstCardPressed
-      ? evaluate(equationEasyMed1.replace('X', '*')) >
-        evaluate(equationEasyMed2.replace('X', '*'))
-      : evaluate(equationEasyMed1.replace('X', '*')) <
-        evaluate(equationEasyMed2.replace('X', '*'));
+      ? evaluate(equationEasyMed1.replaceAll('X', '*')) >
+        evaluate(equationEasyMed2.replaceAll('X', '*'))
+      : evaluate(equationEasyMed1.replaceAll('X', '*')) <
+        evaluate(equationEasyMed2.replaceAll('X', '*'));
     isCorrect && setCorrect(oldCorrect => oldCorrect + 1);
     isCorrect && setPoints(oldPoints => oldPoints + 2);
     !isCorrect && setPoints(oldPoints => (oldPoints >= 3 ? oldPoints - 3 : 0));
@@ -94,6 +94,7 @@ const EqualMathScreen = () => {
   };
 
   const setNewGame = () => {
+    setPoints(0);
     setCorrect(0);
     setQuestion(0);
     setIsFinished(false);
