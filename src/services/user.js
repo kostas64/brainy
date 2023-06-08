@@ -1,6 +1,7 @@
 import {HOST, REQUEST_ACCESS} from '../Endpoints';
 
 export const requestAccess = async user => {
+  console.log('API requestAccess ', `${HOST}${REQUEST_ACCESS}`);
   try {
     return fetch(`${HOST}${REQUEST_ACCESS}`, {
       method: 'POST',

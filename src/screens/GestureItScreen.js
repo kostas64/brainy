@@ -3,6 +3,7 @@ import {Dimensions, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 
+import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
 import {GenericUtils} from '../utils/GenericUtils';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -49,6 +50,12 @@ const GestureItScreen = () => {
   const successContent = () => (
     <CardSuccessModal correct={correct} points={points} tries={tries} />
   );
+
+  const sendScore = () =>
+    submitScore('gesture_it', {
+      points,
+      correctness: Math.floor((correct / tries) * 100),
+    });
 
   const setNewGame = () => {
     setTries(0);
@@ -124,8 +131,11 @@ const GestureItScreen = () => {
   }, []);
 
   React.useEffect(() => {
-    isFinished && setDesigns(GEST_DESIGNS?.map((_, index) => index));
-    isFinished && lottieRef?.current?.play(0, 210);
+    if (isFinished) {
+      setDesigns(GEST_DESIGNS?.map((_, index) => index));
+      lottieRef?.current?.play(0, 210);
+      sendScore();
+    }
   }, [isFinished]);
 
   return (

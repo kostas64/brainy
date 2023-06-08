@@ -5,6 +5,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Colors} from '../utils/Colors';
 import MathUtils from '../utils/MathUtils';
 import dict from '../assets/values/dict.json';
+import {submitScore} from '../services/score';
 import Card from '../components/cardMemory/Card';
 import MemoryValues from '../assets/values/memory';
 import StopWatch from '../components/common/StopWatch';
@@ -87,6 +88,12 @@ const MemoryCardScreen = () => {
     );
   };
 
+  const sendScore = () =>
+    submitScore('match_cards', {
+      flips: flipCounter,
+      milliseconds: duration?.seconds() * 1000 + duration?.milliseconds(),
+    });
+
   React.useEffect(() => {
     if (cards.length === 0) {
       let newCards = [];
@@ -128,7 +135,10 @@ const MemoryCardScreen = () => {
   }, [cards]);
 
   React.useEffect(() => {
-    gameOver && lottieRef?.current?.play(0, 210);
+    if (gameOver) {
+      lottieRef?.current?.play(0, 210);
+      sendScore();
+    }
   }, [gameOver]);
 
   React.useEffect(() => {

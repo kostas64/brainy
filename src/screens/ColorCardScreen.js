@@ -4,6 +4,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
 import MathUtils from '../utils/MathUtils';
+import {submitScore} from '../services/score';
 import dict from '../assets/values/dict.json';
 import {COLORS} from '../assets/values/colors';
 import Points from '../components/common/Points';
@@ -74,6 +75,12 @@ const ColorCardScreen = () => {
     <CardSuccessModal tries={tries} correct={correct} points={points} />
   );
 
+  const sendScore = () =>
+    submitScore('color_cards', {
+      points,
+      correctness: Math.floor((correct / tries) * 100),
+    });
+
   const setNewGame = () => {
     setTries(0);
     setCorrect(0);
@@ -88,7 +95,10 @@ const ColorCardScreen = () => {
   }, []);
 
   React.useEffect(() => {
-    isFinished && lottieRef?.current?.play(0, 210);
+    if (isFinished) {
+      lottieRef?.current?.play(0, 210);
+      sendScore();
+    }
   }, [isFinished]);
 
   return (

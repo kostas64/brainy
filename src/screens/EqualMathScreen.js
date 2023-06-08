@@ -5,6 +5,7 @@ import {View, Text, StyleSheet, Dimensions, Pressable} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import dict from '../assets/values/dict.json';
+import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
@@ -101,6 +102,12 @@ const EqualMathScreen = () => {
     timeRef.current?.resetTime();
   };
 
+  const sendScore = () =>
+    submitScore('equal_math', {
+      points,
+      correctness: Math.floor((correct / question) * 100),
+    });
+
   const successContent = () => (
     <EqualMathModal correct={correct} total={question} points={points} />
   );
@@ -110,7 +117,10 @@ const EqualMathScreen = () => {
   }, [question]);
 
   React.useEffect(() => {
-    isFinished && lottieRef?.current?.play(0, 210);
+    if (isFinished) {
+      lottieRef?.current?.play(0, 210);
+      sendScore();
+    }
   }, [isFinished]);
 
   const equationEasyMed1 = generateEquationEasy(number1, number2);
