@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
-    backgroundColor: Colors.background,
+    backgroundColor: 'rgba(0,0,0,0.5)',
     width: DimensionsUtils.getDP(120),
   },
   timerContainer: {

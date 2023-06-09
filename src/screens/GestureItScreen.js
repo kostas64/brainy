@@ -140,10 +140,7 @@ const GestureItScreen = () => {
 
   return (
     <>
-      <BackgroundWrapper
-        statusBar={'light-content'}
-        source={require('../assets/images/gesture_background.jpg')}
-      />
+      <BackgroundWrapper statusBar={'light-content'} />
       <GestureItTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View
         style={[

@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   front: {
     height: DimensionsUtils.getDP(WIDTH / 5),
     width: DimensionsUtils.getDP(WIDTH / 5),
-    backgroundColor: 'rgba(255,255,255,0.75)',
+    backgroundColor: 'rgba(255,255,255,1)',
     borderRadius: DimensionsUtils.getDP(16),
     marginBottom: DimensionsUtils.getDP(WIDTH / 16),
     position: 'absolute',

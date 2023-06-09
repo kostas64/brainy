@@ -180,10 +180,7 @@ const MemoryCardScreen = () => {
 
   return (
     <>
-      <BackgroundWrapper
-        statusBar={'light-content'}
-        source={require('../assets/images/memory_background.jpg')}
-      />
+      <BackgroundWrapper statusBar={'light-content'} />
       <CardMemoryTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View style={[styles.watchContainer, {top: insets.top + 24}]}>
         <StopWatch ref={timeRef} />
@@ -254,7 +251,7 @@ const styles = StyleSheet.create({
     padding: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
     width: DimensionsUtils.getDP(112),
-    backgroundColor: Colors.background,
+    backgroundColor: 'rgba(0,0,0,0.5)',
     alignItems: 'center',
   },
   flipLabel: {

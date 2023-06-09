@@ -103,10 +103,7 @@ const ColorCardScreen = () => {
 
   return (
     <>
-      <BackgroundWrapper
-        statusBar={'light-content'}
-        source={require('../assets/images/color_match_background.jpg')}
-      />
+      <BackgroundWrapper statusBar={'light-content'} />
       <CardColorTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
 
       <View style={styles.container}>
@@ -121,7 +118,6 @@ const ColorCardScreen = () => {
             }}
           />
         </View>
-        <View style={styles.cardsBg} />
         <ColorCard number1={rand1} number2={rand2} />
         <View style={{marginVertical: DimensionsUtils.getDP(8)}} />
         <ColorCard number1={rand3} number2={rand4} />

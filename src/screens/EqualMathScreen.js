@@ -138,10 +138,7 @@ const EqualMathScreen = () => {
 
   return (
     <>
-      <BackgroundWrapper
-        statusBar={'light-content'}
-        source={require('../assets/images/match_equal_background.jpg')}
-      />
+      <BackgroundWrapper statusBar={'light-content'} />
       <EqualMathTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View style={styles.container}>
         <Points points={points} insets={insets} />
