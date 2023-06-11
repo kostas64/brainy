@@ -36,6 +36,11 @@ const BackgroundWrapper = ({statusBar}) => {
       <FastImage
         source={image}
         resizeMode="cover"
+        style={styles.splashMiddleRight}
+      />
+      <FastImage
+        source={image}
+        resizeMode="cover"
         style={styles.splashBottomRight}
       />
       <FastImage
@@ -58,10 +63,10 @@ const styles = StyleSheet.create({
   },
   splashTopLeft: {
     position: 'absolute',
-    left: DimensionsUtils.getDP(-68),
-    top: DimensionsUtils.getDP(-48),
-    width: DimensionsUtils.getDP(196),
-    height: DimensionsUtils.getDP(196),
+    left: DimensionsUtils.getDP(-48),
+    top: DimensionsUtils.getDP(-28),
+    width: DimensionsUtils.getDP(156),
+    height: DimensionsUtils.getDP(156),
   },
   splashTopRight: {
     position: 'absolute',
@@ -74,9 +79,9 @@ const styles = StyleSheet.create({
   splashMiddleLeft: {
     position: 'absolute',
     left: '28%',
-    top: '20%',
-    width: DimensionsUtils.getDP(184),
-    height: DimensionsUtils.getDP(264),
+    top: '22%',
+    width: DimensionsUtils.getDP(164),
+    height: DimensionsUtils.getDP(224),
     transform: [{rotate: '270deg'}],
   },
   splashMiddleLeft2: {
@@ -87,19 +92,26 @@ const styles = StyleSheet.create({
     height: DimensionsUtils.getDP(216),
     transform: [{rotate: '180deg'}],
   },
+  splashMiddleRight: {
+    position: 'absolute',
+    right: DimensionsUtils.getDP(36),
+    top: '50%',
+    width: DimensionsUtils.getDP(94),
+    height: DimensionsUtils.getDP(96),
+  },
   splashBottomLeft: {
     position: 'absolute',
     left: DimensionsUtils.getDP(-24),
     bottom: 0,
-    width: DimensionsUtils.getDP(96),
-    height: DimensionsUtils.getDP(96),
+    width: DimensionsUtils.getDP(126),
+    height: DimensionsUtils.getDP(126),
     transform: [{rotate: '450deg'}],
   },
   splashBottomRight: {
     position: 'absolute',
     right: DimensionsUtils.getDP(-56),
     bottom: 0,
-    width: DimensionsUtils.getDP(164),
+    width: DimensionsUtils.getDP(184),
     height: DimensionsUtils.getDP(264),
     transform: [{rotate: '145deg'}],
   },
