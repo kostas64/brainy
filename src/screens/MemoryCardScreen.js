@@ -1,16 +1,16 @@
 import React from 'react';
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import {View, Dimensions, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {Colors} from '../utils/Colors';
 import MathUtils from '../utils/MathUtils';
-import dict from '../assets/values/dict.json';
 import {submitScore} from '../services/score';
 import Card from '../components/cardMemory/Card';
 import MemoryValues from '../assets/values/memory';
 import StopWatch from '../components/common/StopWatch';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import AnimatedModal from '../components/common/AnimatedModal';
+import FlipCounter from '../components/cardMemory/FlipCounter';
+import AnimatedAnswer from '../components/common/AnimatedAnswer';
 import NewGameButton from '../components/cardMemory/NewGameButton';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
@@ -22,8 +22,9 @@ const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 const MemoryCardScreen = () => {
   const insets = useSafeAreaInsets();
 
-  const lottieRef = React.useRef();
   const timeRef = React.useRef();
+  const lottieRef = React.useRef();
+  const animAnswerRef = React.useRef();
   const childRefs = React.useRef([]);
   const [tutOpen, setTutOpen] = React.useState(true);
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -147,6 +148,7 @@ const MemoryCardScreen = () => {
 
     //Check if cards match and flip back if not
     if (currentFlipped.length === 2 && !flippedEqual) {
+      animAnswerRef.current.animateAnswer(false);
       setFlipCounter(oldCounter => oldCounter + 1);
       setCardsDisabled(true);
       setTimeout(() => {
@@ -156,6 +158,7 @@ const MemoryCardScreen = () => {
         setCardsDisabled(false);
       }, 500);
     } else if (currentFlipped.length === 2 && flippedEqual) {
+      animAnswerRef.current.animateAnswer(true);
       setFlipCounter(oldCounter => oldCounter + 1);
 
       //Keep cards that match
@@ -182,20 +185,16 @@ const MemoryCardScreen = () => {
     <>
       <BackgroundWrapper statusBar={'light-content'} />
       <CardMemoryTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
-      <View style={[styles.watchContainer, {top: insets.top + 24}]}>
-        <StopWatch ref={timeRef} />
-      </View>
       <View
         style={[
-          styles.flipContainer,
+          styles.header,
           {
-            top: insets.top + 24,
+            top: insets.top + DimensionsUtils.getDP(24),
           },
         ]}>
-        <Text
-          style={
-            styles.flipLabel
-          }>{`${dict.memoryCardFlipLabel}: ${flipCounter}`}</Text>
+        <FlipCounter flipCounter={flipCounter} />
+        <AnimatedAnswer ref={animAnswerRef} />
+        <StopWatch ref={timeRef} />
       </View>
       <View style={styles.board}>
         {cards.map((card, i) => (
@@ -221,7 +220,8 @@ const MemoryCardScreen = () => {
         style={[
           styles.newGameCont,
           {
-            bottom: insets.bottom > 0 ? insets.bottom : 24,
+            bottom:
+              insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(24),
           },
         ]}>
         <NewGameButton gameFinished={gameOver} setNewGame={setNewGame} />
@@ -231,33 +231,31 @@ const MemoryCardScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  watchContainer: {
-    position: 'absolute',
-    right: DimensionsUtils.getDP(WIDTH / 16),
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: DimensionsUtils.getDP(26),
   },
   board: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: DimensionsUtils.getDP(
-      (HEIGHT - (3 * WIDTH) / 4 - (3 * WIDTH) / 16) / 2,
+      (HEIGHT -
+        (3 * WIDTH) / 4 -
+        (3 * WIDTH) / 16 -
+        DimensionsUtils.getDP(80)) /
+        2,
     ),
     marginHorizontal: DimensionsUtils.getDP(WIDTH / 16),
     zIndex: 100,
   },
   flipContainer: {
-    position: 'absolute',
-    left: DimensionsUtils.getDP(26),
     padding: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
     width: DimensionsUtils.getDP(112),
     backgroundColor: 'rgba(0,0,0,0.5)',
     alignItems: 'center',
-  },
-  flipLabel: {
-    color: Colors.white,
-    fontSize: DimensionsUtils.getFontSize(24),
-    fontFamily: 'Poppins-Regular',
   },
   newGameCont: {
     position: 'absolute',

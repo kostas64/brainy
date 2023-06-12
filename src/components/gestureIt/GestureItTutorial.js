@@ -49,12 +49,12 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
       />
       <View style={styles.rowCenter}>
         <FastImage
-          source={require('../../assets/images/arrow.png')}
+          source={require('../../assets/images/arrow_black.png')}
           style={styles.smallImg}
         />
         <View style={styles.rightSpacer} />
         <FastImage
-          source={require('../../assets/images/arrow.png')}
+          source={require('../../assets/images/arrow_black.png')}
           style={[
             styles.smallImg,
             {
@@ -64,7 +64,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         />
         <View style={styles.rightSpacer} />
         <FastImage
-          source={require('../../assets/images/arrow.png')}
+          source={require('../../assets/images/arrow_black.png')}
           style={styles.smallImg}
         />
       </View>
@@ -82,14 +82,13 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
             top: DimensionsUtils.getDP(42),
             left: WIDTH / 2 - DimensionsUtils.getDP(108),
             position: 'absolute',
-
             transform: [{translateX: translateXRef}],
           },
         ]}
       />
       <View style={{alignSelf: 'center'}}>
         <FastImage
-          source={require('../../assets/images/arrow.png')}
+          source={require('../../assets/images/arrow_black.png')}
           style={[
             styles.smallImg,
             {
@@ -99,7 +98,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         />
         <View style={styles.rightSpacer} />
         <FastImage
-          source={require('../../assets/images/arrow.png')}
+          source={require('../../assets/images/arrow_black.png')}
           style={[
             styles.smallImg,
             {
@@ -110,7 +109,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         />
         <View style={styles.rightSpacer} />
         <FastImage
-          source={require('../../assets/images/arrow.png')}
+          source={require('../../assets/images/arrow_black.png')}
           style={[
             styles.smallImg,
             {

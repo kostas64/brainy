@@ -10,6 +10,7 @@ import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import {GEST_DESIGNS} from '../assets/values/gestDesignes';
 import AnimatedModal from '../components/common/AnimatedModal';
+import AnimatedAnswer from '../components/common/AnimatedAnswer';
 import NewGameButton from '../components/cardMemory/NewGameButton';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import CelebrationLottie from '../components/common/CelebrationLottie';
@@ -23,6 +24,7 @@ const GestureItScreen = () => {
   const timeRef = React.useRef();
   const swipeRef = React.useRef();
   const lottieRef = React.useRef();
+  const animAnswerRef = React.useRef();
 
   const [tries, setTries] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
@@ -110,10 +112,13 @@ const GestureItScreen = () => {
 
   const statsHandler = direction => {
     if (currentDesign?.designDirection === direction) {
+      animAnswerRef?.current?.animateAnswer(true);
       setCorrect(oldCorrect => oldCorrect + 1);
       setPoints(oldPoints => oldPoints + 1);
     }
 
+    currentDesign?.designDirection !== direction &&
+      animAnswerRef?.current?.animateAnswer(false);
     setTries(oldTries => oldTries + 1);
     generateNext();
   };
@@ -144,29 +149,30 @@ const GestureItScreen = () => {
       <GestureItTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View
         style={[
+          styles.header,
+          {
+            top: insets.top + DimensionsUtils.getDP(24),
+          },
+        ]}>
+        <Points points={points} />
+        <AnimatedAnswer ref={animAnswerRef} />
+        <CountdownTimer
+          ref={timeRef}
+          seconds={45}
+          setIsFinished={() => {
+            setModalOpen(true);
+            setIsFinished(true);
+          }}
+        />
+      </View>
+      <View
+        style={[
           styles.container,
           {
-            paddingTop: insets.top + DimensionsUtils.getDP(86),
+            paddingTop: insets.top + DimensionsUtils.getDP(32),
             paddingBottom: insets.bottom,
           },
         ]}>
-        <Points points={points} insets={insets} />
-        <View
-          style={[
-            styles.timer,
-            {
-              top: insets.top + 24,
-            },
-          ]}>
-          <CountdownTimer
-            ref={timeRef}
-            seconds={45}
-            setIsFinished={() => {
-              setModalOpen(true);
-              setIsFinished(true);
-            }}
-          />
-        </View>
         <PanGestureHandler ref={swipeRef} onHandlerStateChange={swipeHandler}>
           <View
             style={{
@@ -187,7 +193,7 @@ const GestureItScreen = () => {
       {isFinished && (
         <View
           style={[
-            {position: 'absolute', alignSelf: 'center'},
+            styles.newGameCont,
             {
               bottom: insets.bottom > 0 ? insets.bottom : 24,
             },
@@ -211,19 +217,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: DimensionsUtils.getDP(28),
   },
-  timer: {
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: DimensionsUtils.getDP(26),
+  },
+  newGameCont: {
     position: 'absolute',
-    right: DimensionsUtils.getDP(26),
-  },
-  image: {
-    width: DimensionsUtils.getDP(28),
-    height: DimensionsUtils.getDP(28),
-  },
-  horSpace: {
-    marginHorizontal: DimensionsUtils.getDP(2),
-  },
-  verSpace: {
-    marginVertical: DimensionsUtils.getDP(4),
+    alignSelf: 'center',
   },
 });
 

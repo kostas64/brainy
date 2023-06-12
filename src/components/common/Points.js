@@ -5,14 +5,11 @@ import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const Points = ({insets, points}) => {
+const Points = ({points}) => {
   return (
     <View
       style={[
         styles.counterContainer,
-        {
-          top: insets.top + 24,
-        },
         Platform.OS === 'android' && {height: DimensionsUtils.getDP(50)},
       ]}>
       <Text
@@ -23,13 +20,11 @@ const Points = ({insets, points}) => {
 
 const styles = StyleSheet.create({
   counterContainer: {
-    position: 'absolute',
-    left: DimensionsUtils.getDP(26),
-    padding: DimensionsUtils.getDP(8),
+    paddingLeft: DimensionsUtils.getDP(12),
+    paddingVertical: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
     width: DimensionsUtils.getDP(138),
     backgroundColor: 'rgba(0,0,0,0.5)',
-    alignItems: 'center',
   },
   counterLabel: {
     color: Colors.white,

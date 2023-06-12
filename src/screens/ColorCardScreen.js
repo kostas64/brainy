@@ -13,6 +13,7 @@ import {DimensionsUtils} from '../utils/DimensionUtils';
 import ColorCard from '../components/cardColor/ColorCard';
 import ColorButton from '../components/cardColor/ColorButton';
 import AnimatedModal from '../components/common/AnimatedModal';
+import AnimatedAnswer from '../components/common/AnimatedAnswer';
 import NewGameButton from '../components/cardMemory/NewGameButton';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import CelebrationLottie from '../components/common/CelebrationLottie';
@@ -38,6 +39,7 @@ const ColorCardScreen = () => {
   const insets = useSafeAreaInsets();
   const timeRef = React.useRef();
   const lottieRef = React.useRef();
+  const animAnswerRef = React.useRef();
 
   const [rand1, setRand1] = React.useState();
   const [rand2, setRand2] = React.useState();
@@ -56,9 +58,11 @@ const ColorCardScreen = () => {
       (COLORS[rand2]?.color === COLORS[rand3]?.color && answer === 'yes') ||
       (COLORS[rand2]?.color !== COLORS[rand3]?.color && answer === 'no')
     ) {
+      animAnswerRef.current.animateAnswer(true);
       setPoints(oldPoints => oldPoints + 1);
       setCorrect(oldCorrect => oldCorrect + 1);
     } else {
+      animAnswerRef.current.animateAnswer(false);
       setPoints(oldPoints => (oldPoints - 3 > 0 ? oldPoints - 3 : 0));
     }
     setTries(oldTries => oldTries + 1);
@@ -105,19 +109,26 @@ const ColorCardScreen = () => {
     <>
       <BackgroundWrapper statusBar={'light-content'} />
       <CardColorTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
+      <View
+        style={[
+          styles.header,
+          {
+            top: insets.top + DimensionsUtils.getDP(24),
+          },
+        ]}>
+        <Points points={points} />
+        <AnimatedAnswer ref={animAnswerRef} />
+        <CountdownTimer
+          ref={timeRef}
+          seconds={30}
+          setIsFinished={() => {
+            setModalOpen(true);
+            setIsFinished(true);
+          }}
+        />
+      </View>
 
-      <View style={styles.container}>
-        <Points points={points} insets={insets} />
-        <View style={[styles.watchContainer, {top: insets.top + 24}]}>
-          <CountdownTimer
-            ref={timeRef}
-            seconds={30}
-            setIsFinished={() => {
-              setModalOpen(true);
-              setIsFinished(true);
-            }}
-          />
-        </View>
+      <View style={[styles.container, {top: -insets.top}]}>
         <ColorCard number1={rand1} number2={rand2} />
         <View style={{marginVertical: DimensionsUtils.getDP(8)}} />
         <ColorCard number1={rand3} number2={rand4} />
@@ -177,9 +188,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  watchContainer: {
-    position: 'absolute',
-    right: DimensionsUtils.getDP(WIDTH / 16),
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: DimensionsUtils.getDP(26),
   },
   cardsBg: {
     opacity: 0.5,

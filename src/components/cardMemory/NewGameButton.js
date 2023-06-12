@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Pressable, StyleSheet} from 'react-native';
+import {Text, Pressable, StyleSheet, Platform} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
@@ -7,7 +7,12 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const NewGameButton = ({gameFinished, setNewGame}) => {
   return (
-    <Pressable onPress={setNewGame} style={[styles.container]}>
+    <Pressable
+      onPress={setNewGame}
+      style={[
+        styles.container,
+        Platform.OS === 'android' && {height: DimensionsUtils.getDP(64)},
+      ]}>
       <Text style={styles.label}>
         {gameFinished ? dict.playAgainLabel : dict.newGameLabel}
       </Text>

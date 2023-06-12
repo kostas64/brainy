@@ -11,6 +11,7 @@ import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import EqualButton from '../components/equalMath/EqualButton';
 import AnimatedModal from '../components/common/AnimatedModal';
+import AnimatedAnswer from '../components/common/AnimatedAnswer';
 import NewGameButton from '../components/cardMemory/NewGameButton';
 import EqualMathModal from '../components/equalMath/EqualMathModal';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
@@ -34,6 +35,7 @@ const EqualMathScreen = () => {
   const insets = useSafeAreaInsets();
   const timeRef = React.useRef();
   const lottieRef = React.useRef();
+  const animAnswerRef = React.useRef();
   const [points, setPoints] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
   const [tutOpen, setTutOpen] = React.useState(true);
@@ -63,7 +65,9 @@ const EqualMathScreen = () => {
         evaluate(equationEasyMed2.replaceAll('X', '*'));
     isCorrect && setCorrect(oldCorrect => oldCorrect + 1);
     isCorrect && setPoints(oldPoints => oldPoints + 2);
+    isCorrect && animAnswerRef.current.animateAnswer(true);
     !isCorrect && setPoints(oldPoints => (oldPoints >= 3 ? oldPoints - 3 : 0));
+    !isCorrect && animAnswerRef.current.animateAnswer(false);
     setQuestion(oldQuestion => oldQuestion + 1);
   };
 
@@ -140,18 +144,25 @@ const EqualMathScreen = () => {
     <>
       <BackgroundWrapper statusBar={'light-content'} />
       <EqualMathTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.header,
+          {
+            top: insets.top + DimensionsUtils.getDP(24),
+          },
+        ]}>
         <Points points={points} insets={insets} />
-        <View style={[styles.watchContainer, {top: insets.top + 24}]}>
-          <CountdownTimer
-            ref={timeRef}
-            seconds={30}
-            setIsFinished={() => {
-              setModalOpen(true);
-              setIsFinished(true);
-            }}
-          />
-        </View>
+        <AnimatedAnswer ref={animAnswerRef} />
+        <CountdownTimer
+          ref={timeRef}
+          seconds={30}
+          setIsFinished={() => {
+            setModalOpen(true);
+            setIsFinished(true);
+          }}
+        />
+      </View>
+      <View style={[styles.container, {top: -insets.top}]}>
         <Card
           card={1}
           question={question}
@@ -168,14 +179,14 @@ const EqualMathScreen = () => {
           generateOperators={generateOperators}
           equation={question <= 10 ? equationEasyMed2 : equationDiff2}
         />
-        <View style={styles.buttonContainer}>
-          <EqualButton
-            label={dict.equalLabel}
-            insets={insets}
-            disabled={isFinished}
-            onPress={() => onCardPress(false, true)}
-          />
-        </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <EqualButton
+          label={dict.equalLabel}
+          insets={insets}
+          disabled={isFinished}
+          onPress={() => onCardPress(false, true)}
+        />
       </View>
       {isFinished && (
         <View
@@ -222,9 +233,10 @@ const styles = StyleSheet.create({
     fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: 'Poppins-Regular',
   },
-  watchContainer: {
-    position: 'absolute',
-    right: DimensionsUtils.getDP(26),
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: DimensionsUtils.getDP(26),
   },
   cardContainer: {
     height: DimensionsUtils.getDP(50),
