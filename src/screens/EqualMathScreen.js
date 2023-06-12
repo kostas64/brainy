@@ -50,24 +50,25 @@ const EqualMathScreen = () => {
   const [number6, setNumber6] = React.useState();
   const [question, setQuestion] = React.useState(0);
 
-  const onCardPress = (firstCardPressed, isEqual = false) => {
+  const onCardPress = (firstCardPressed, isEqual = false, eq1, eq2) => {
     if (!timeRef.current.isRunning) {
       timeRef.current.start();
     }
 
     const isCorrect = isEqual
-      ? evaluate(equationEasyMed1.replaceAll('X', '*')) ==
-        evaluate(equationEasyMed2.replaceAll('X', '*'))
+      ? evaluate(eq1.replaceAll('X', '*')) == evaluate(eq2.replaceAll('X', '*'))
       : firstCardPressed
-      ? evaluate(equationEasyMed1.replaceAll('X', '*')) >
-        evaluate(equationEasyMed2.replaceAll('X', '*'))
-      : evaluate(equationEasyMed1.replaceAll('X', '*')) <
-        evaluate(equationEasyMed2.replaceAll('X', '*'));
+      ? evaluate(eq1.replaceAll('X', '*')) > evaluate(eq2.replaceAll('X', '*'))
+      : evaluate(eq1.replaceAll('X', '*')) < evaluate(eq2.replaceAll('X', '*'));
+
     isCorrect && setCorrect(oldCorrect => oldCorrect + 1);
-    isCorrect && setPoints(oldPoints => oldPoints + 2);
+    isCorrect && isEqual && setPoints(oldPoints => oldPoints + 3);
+    isCorrect && !isEqual && setPoints(oldPoints => oldPoints + 2);
     isCorrect && animAnswerRef.current.animateAnswer(true);
+
     !isCorrect && setPoints(oldPoints => (oldPoints >= 3 ? oldPoints - 3 : 0));
     !isCorrect && animAnswerRef.current.animateAnswer(false);
+
     setQuestion(oldQuestion => oldQuestion + 1);
   };
 
@@ -140,6 +141,9 @@ const EqualMathScreen = () => {
       ? `(${equationEasyMed2}) ${generateOperators()} ${number3}`
       : `${number4} ${generateOperators()} (${number5} ${generateOperators()} ${number6})`;
 
+  const eq1 = question <= 10 ? equationEasyMed1 : equationDiff1;
+  const eq2 = question <= 10 ? equationEasyMed2 : equationDiff2;
+
   return (
     <>
       <BackgroundWrapper statusBar={'light-content'} />
@@ -155,7 +159,7 @@ const EqualMathScreen = () => {
         <AnimatedAnswer ref={animAnswerRef} />
         <CountdownTimer
           ref={timeRef}
-          seconds={30}
+          seconds={120}
           setIsFinished={() => {
             setModalOpen(true);
             setIsFinished(true);
@@ -167,7 +171,7 @@ const EqualMathScreen = () => {
           card={1}
           question={question}
           disabled={isFinished}
-          onPress={() => onCardPress(true)}
+          onPress={() => onCardPress(true, false, eq1, eq2)}
           equation={question <= 10 ? equationEasyMed1 : equationDiff1}
         />
         <View style={{marginVertical: DimensionsUtils.getDP(8)}} />
@@ -175,7 +179,7 @@ const EqualMathScreen = () => {
           card={2}
           question={question}
           disabled={isFinished}
-          onPress={() => onCardPress(false)}
+          onPress={() => onCardPress(false, false, eq1, eq2)}
           generateOperators={generateOperators}
           equation={question <= 10 ? equationEasyMed2 : equationDiff2}
         />
@@ -185,7 +189,7 @@ const EqualMathScreen = () => {
           label={dict.equalLabel}
           insets={insets}
           disabled={isFinished}
-          onPress={() => onCardPress(false, true)}
+          onPress={() => onCardPress(false, true, eq1, eq2)}
         />
       </View>
       {isFinished && (
