@@ -16,26 +16,30 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 const AnimatedButton = Animated.createAnimatedComponent(Pressable);
 
 const Header = React.forwardRef(({label, avatar, isGuest, logout}, ref) => {
-  const translateX = React.useRef(new Animated.Value(200)).current;
-  const [pressed, setPressed] = React.useState(false);
+  const fadeRef = React.useRef(new Animated.Value(0)).current;
+
   const [isOpen, setIsOpen] = React.useState(false);
+  const [pressed, setPressed] = React.useState(false);
+  const [imgLoaded, setImgLoaded] = React.useState(isGuest ? true : false);
 
   const iconSource = isGuest
     ? require('../../assets/images/guest.png')
     : {uri: avatar};
 
   const closeMenu = () => {
-    Animated.timing(translateX, {
-      toValue: 200,
+    Animated.timing(fadeRef, {
+      toValue: 0,
       duration: 200,
-      friction: 20,
-      tension: 1,
       useNativeDriver: true,
     }).start(() => {
       setIsOpen(false);
       setPressed(false);
     });
   };
+
+  const onAvatarLoad = useCallback(() => {
+    setImgLoaded(true);
+  });
 
   const onAvatarPress = useCallback(() => {
     if (!pressed) {
@@ -45,11 +49,9 @@ const Header = React.forwardRef(({label, avatar, isGuest, logout}, ref) => {
 
   React.useEffect(() => {
     if (isOpen) {
-      Animated.spring(translateX, {
+      Animated.timing(fadeRef, {
         toValue: 1,
         duration: 250,
-        friction: 4,
-        tension: 24,
         useNativeDriver: true,
       }).start();
     } else {
@@ -69,7 +71,7 @@ const Header = React.forwardRef(({label, avatar, isGuest, logout}, ref) => {
 
   return (
     <>
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         <Text
           style={[
             styles.label,
@@ -82,17 +84,17 @@ const Header = React.forwardRef(({label, avatar, isGuest, logout}, ref) => {
         <AnimatedButton
           disabled={pressed}
           onPress={onAvatarPress}
-          style={[styles.avatarContainer]}>
-          <FastImage source={iconSource} style={styles.avatar} />
+          style={[styles.avatarContainer, {opacity: imgLoaded ? 1 : 0}]}>
+          <FastImage
+            onLoadEnd={onAvatarLoad}
+            source={iconSource}
+            style={styles.avatar}
+          />
         </AnimatedButton>
       </View>
 
       {/* MENU BOX */}
-      <AnimatedButton
-        style={[styles.box, {transform: [{translateX}]}]}
-        onPress={logout}>
-        <View style={styles.triangle} />
-        <View style={styles.triangle2} />
+      <AnimatedButton style={[styles.box, {opacity: fadeRef}]} onPress={logout}>
         <View style={styles.itemRow}>
           <FastImage
             source={require('../../assets/images/logout.png')}
@@ -110,12 +112,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingLeft: DimensionsUtils.getDP(16),
-    paddingHorizontal: DimensionsUtils.getDP(12),
+    paddingHorizontal: DimensionsUtils.getDP(16),
   },
   label: {
     color: Colors.appGreen,
-    marginLeft: DimensionsUtils.getDP(12),
     fontSize: DimensionsUtils.getFontSize(28),
     fontFamily: 'Poppins-Bold',
   },
@@ -138,9 +138,9 @@ const styles = StyleSheet.create({
   box: {
     position: 'absolute',
     alignSelf: 'flex-end',
-    top: DimensionsUtils.getDP(42),
-    right: DimensionsUtils.getDP(0),
-    padding: DimensionsUtils.getDP(8),
+    top: DimensionsUtils.getDP(-8),
+    right: DimensionsUtils.getDP(56),
+    padding: DimensionsUtils.getDP(4),
     backgroundColor: Colors.background,
     marginTop: DimensionsUtils.getDP(16),
     marginRight: DimensionsUtils.getDP(12),
@@ -148,41 +148,15 @@ const styles = StyleSheet.create({
     borderWidth: DimensionsUtils.getDP(2),
     borderRadius: DimensionsUtils.getDP(6),
   },
-  triangle: {
-    width: DimensionsUtils.getDP(12),
-    height: DimensionsUtils.getDP(12),
-    position: 'absolute',
-    top: -DimensionsUtils.getDP(12),
-    right: DimensionsUtils.getDP(8),
-    borderLeftWidth: DimensionsUtils.getDP(11),
-    borderLeftColor: 'transparent',
-    borderRightWidth: DimensionsUtils.getDP(11),
-    borderRightColor: 'transparent',
-    borderBottomWidth: DimensionsUtils.getDP(11),
-    borderBottomColor: Colors.white,
-  },
-  triangle2: {
-    width: DimensionsUtils.getDP(12),
-    height: DimensionsUtils.getDP(12),
-    position: 'absolute',
-    top: -DimensionsUtils.getDP(11),
-    right: DimensionsUtils.getDP(10),
-    borderLeftWidth: DimensionsUtils.getDP(9),
-    borderLeftColor: 'transparent',
-    borderRightWidth: DimensionsUtils.getDP(9),
-    borderRightColor: 'transparent',
-    borderBottomWidth: DimensionsUtils.getDP(9),
-    borderBottomColor: Colors.background,
-  },
   logoutIcon: {
     marginRight: DimensionsUtils.getDP(4),
-    width: DimensionsUtils.getDP(24),
-    height: DimensionsUtils.getDP(24),
+    width: DimensionsUtils.getDP(18),
+    height: DimensionsUtils.getDP(18),
   },
   logoutLabel: {
     color: Colors.appGreen,
     fontFamily: 'Poppins-Regular',
-    fontSize: DimensionsUtils.getFontSize(16),
+    fontSize: DimensionsUtils.getFontSize(14),
   },
 });
 
