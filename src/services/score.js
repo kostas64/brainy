@@ -1,11 +1,11 @@
 import {
   HOST,
+  SCORE,
   BEARER,
   EQUAL_MATH,
   GESTURE_IT,
   COLOR_CARDS,
   MATCH_CARDS,
-  SUBMIT_SCORE,
 } from '../Endpoints';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -21,12 +21,12 @@ export const submitScore = async (game, payload) => {
       ? GESTURE_IT
       : null;
 
-  console.log('API submitScore ', `${HOST}${SUBMIT_SCORE}${GAME}`, payload);
+  console.log('API submitScore ', `${HOST}${SCORE}${GAME}`, payload);
 
   try {
     const token = await AsyncStorage.getItem('token');
 
-    fetch(`${HOST}${SUBMIT_SCORE}${GAME}`, {
+    fetch(`${HOST}${SCORE}${GAME}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
