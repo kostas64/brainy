@@ -8,6 +8,7 @@ import {submitScore} from '../services/score';
 import dict from '../assets/values/dict.json';
 import {COLORS} from '../assets/values/colors';
 import Points from '../components/common/Points';
+import {AuthContext} from '../context/AuthProvider';
 import CountdownTimer from '../components/common/Timer';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import ColorCard from '../components/cardColor/ColorCard';
@@ -37,9 +38,12 @@ const BottomButton = ({label, onPress, disabled}) => {
 
 const ColorCardScreen = () => {
   const insets = useSafeAreaInsets();
+
   const timeRef = React.useRef();
   const lottieRef = React.useRef();
   const animAnswerRef = React.useRef();
+
+  const {user} = React.useContext(AuthContext);
 
   const [rand1, setRand1] = React.useState();
   const [rand2, setRand2] = React.useState();
@@ -48,7 +52,6 @@ const ColorCardScreen = () => {
   const [tries, setTries] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
   const [points, setPoints] = React.useState(0);
-
   const [tutOpen, setTutOpen] = React.useState(true);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
@@ -101,7 +104,7 @@ const ColorCardScreen = () => {
   React.useEffect(() => {
     if (isFinished) {
       lottieRef?.current?.play(0, 210);
-      sendScore();
+      !user?.isGuest && sendScore();
     }
   }, [isFinished]);
 

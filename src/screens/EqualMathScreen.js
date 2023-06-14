@@ -7,6 +7,7 @@ import {Colors} from '../utils/Colors';
 import dict from '../assets/values/dict.json';
 import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
+import {AuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import EqualButton from '../components/equalMath/EqualButton';
@@ -33,9 +34,13 @@ const Card = ({onPress, equation, disabled}) => {
 
 const EqualMathScreen = () => {
   const insets = useSafeAreaInsets();
+
   const timeRef = React.useRef();
   const lottieRef = React.useRef();
   const animAnswerRef = React.useRef();
+
+  const {user} = React.useContext(AuthContext);
+
   const [points, setPoints] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
   const [tutOpen, setTutOpen] = React.useState(true);
@@ -124,7 +129,7 @@ const EqualMathScreen = () => {
   React.useEffect(() => {
     if (isFinished) {
       lottieRef?.current?.play(0, 210);
-      sendScore();
+      !user?.isGuest && sendScore();
     }
   }, [isFinished]);
 

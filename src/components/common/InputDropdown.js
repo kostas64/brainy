@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   boldText: {
     fontSize: DimensionsUtils.getDP(16),
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
 });
 
