@@ -5,19 +5,39 @@ import Animated, {
 } from 'react-native-reanimated';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {Text, Pressable, StyleSheet, FlatList} from 'react-native';
+import {Text, Pressable, StyleSheet, FlatList, View} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import {GAMES} from '../../assets/values/games';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const InputDropdown = ({value, setValue, isFocused, onFieldPress}) => {
+const AnimatedIcon = Animated.createAnimatedComponent(FastImage);
+
+const InputDropdown = ({
+  value,
+  setValue,
+  isFocused,
+  onFieldPress,
+  placeholder,
+}) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const height = useSharedValue(0); //value is shared between worker threads
-  const animatedStyles = useAnimatedStyle(() => {
+  const icon = useSharedValue(0);
+  const height = useSharedValue(0);
+
+  const iconStyles = useAnimatedStyle(() => {
     return {
-      height: height.value, //change the height property of the component
+      transform: [
+        {
+          rotate: `${icon.value}deg`,
+        },
+      ],
+    };
+  });
+
+  const heightStyles = useAnimatedStyle(() => {
+    return {
+      height: height.value,
     };
   });
 
@@ -26,7 +46,9 @@ const InputDropdown = ({value, setValue, isFocused, onFieldPress}) => {
 
     if (isOpen) {
       height.value = withTiming(0);
+      icon.value = withTiming(0);
     } else {
+      icon.value = withTiming(180);
       height.value = withTiming(DimensionsUtils.getDP(200));
     }
 
@@ -62,16 +84,23 @@ const InputDropdown = ({value, setValue, isFocused, onFieldPress}) => {
   return (
     <>
       {/* Selected value */}
-      <Pressable onPress={toggleListItem} style={styles.choiceContainer}>
-        <Text style={styles.choiceLabel}>{value}</Text>
-        <FastImage
-          source={require('../../assets/images/arrow_down.png')}
-          style={styles.icon}
-        />
+      <Pressable onPress={toggleListItem} style={styles.inputContainer}>
+        <View style={styles.innerInput}>
+          <View>
+            <Text style={styles.placeholder}>{placeholder}</Text>
+            <View style={styles.choiceContainer}>
+              <Text style={styles.choiceLabel}>{value}</Text>
+            </View>
+          </View>
+          <AnimatedIcon
+            source={require('../../assets/images/arrow_down.png')}
+            style={[styles.icon, iconStyles]}
+          />
+        </View>
       </Pressable>
 
       {/* Animated Dropdown */}
-      <Animated.View style={[styles.listContainer, animatedStyles]}>
+      <Animated.View style={[styles.listContainer, heightStyles]}>
         <FlatList
           data={GAMES}
           bounces={false}
@@ -84,13 +113,16 @@ const InputDropdown = ({value, setValue, isFocused, onFieldPress}) => {
 };
 
 const styles = StyleSheet.create({
-  choiceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  inputContainer: {
     paddingVertical: DimensionsUtils.getDP(10),
     paddingHorizontal: DimensionsUtils.getDP(16),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.tabBarBg,
     borderRadius: DimensionsUtils.getDP(8),
+  },
+  innerInput: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   listContainer: {
     maxHeight: DimensionsUtils.getDP(200),
@@ -100,26 +132,41 @@ const styles = StyleSheet.create({
   },
   listStyle: {
     borderRadius: DimensionsUtils.getDP(8),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.tabBarBg,
   },
   listItemContainer: {
     height: DimensionsUtils.getDP(50),
     paddingHorizontal: DimensionsUtils.getDP(16),
     paddingVertical: DimensionsUtils.getDP(12),
   },
+  placeholder: {
+    position: 'absolute',
+    left: DimensionsUtils.getDP(-8),
+    top: DimensionsUtils.getDP(-4),
+    color: Colors.tabBarIcon,
+    fontSize: DimensionsUtils.getFontSize(12),
+    width: DimensionsUtils.getDP(120),
+  },
+  choiceContainer: {
+    top: DimensionsUtils.getDP(4),
+    paddingTop: DimensionsUtils.getDP(8),
+  },
   choiceLabel: {
+    color: Colors.tabBarIcon,
     fontSize: DimensionsUtils.getDP(16),
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'Poppins-Bold',
   },
   icon: {
-    width: DimensionsUtils.getDP(24),
-    height: DimensionsUtils.getDP(24),
+    width: DimensionsUtils.getDP(16),
+    height: DimensionsUtils.getDP(16),
   },
   regText: {
+    color: Colors.tabBarIcon,
     fontSize: DimensionsUtils.getDP(16),
     fontFamily: 'Poppins-Regular',
   },
   boldText: {
+    color: Colors.white,
     fontSize: DimensionsUtils.getDP(16),
     fontFamily: 'Poppins-SemiBold',
   },

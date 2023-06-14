@@ -59,6 +59,7 @@ const RankScreen = ({navigation}) => {
           setValue={setValue}
           isFocused={isFocused}
           onFieldPress={closeMenu}
+          placeholder={dict.rankDropdownPlaceholder}
         />
       </View>
     </View>
