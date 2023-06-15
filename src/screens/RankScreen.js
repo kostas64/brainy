@@ -27,9 +27,10 @@ const RankScreen = ({navigation}) => {
 
   const [query, setQuery] = React.useState(null);
   const [page, setPage] = React.useState(1);
+  const [force, setForce] = React.useState(false);
   const [gameInput, setGameInput] = React.useState(GAMES[0]);
 
-  const {status, data, error} = useFetch(query, 'GET', true, gameInput);
+  const {status, data, error} = useFetch(query, 'GET', true, gameInput, force);
 
   const closeMenu = () => menuRef.current?.closeMenu();
 
@@ -70,6 +71,8 @@ const RankScreen = ({navigation}) => {
 
   React.useEffect(() => {
     !isFocused && menuRef?.current?.closeMenu();
+    isFocused && setForce(true);
+    !isFocused && setForce(false);
   }, [isFocused]);
 
   React.useEffect(() => {

@@ -1,22 +1,18 @@
-import {
-  View,
-  Animated,
-  Platform,
-  FlatList,
-  StatusBar,
-  StyleSheet,
-} from 'react-native';
 import React from 'react';
 import {useIsFocused} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {View, Animated, Platform, StatusBar, StyleSheet} from 'react-native';
 
+import {SCORE} from '../Endpoints';
 import {Colors} from '../utils/Colors';
 import {signOut} from '../services/auth';
+import {useFetch} from '../hooks/useFetch';
 import dict from '../assets/values/dict.json';
 import Header from '../components/common/Header';
+import {GenericUtils} from '../utils/GenericUtils';
 import {AuthContext} from '../context/AuthProvider';
+import GamesList from '../components/common/GamesList';
 import {DimensionsUtils} from '../utils/DimensionUtils';
-import HomeGameCard from '../components/common/HomeGameCard';
 
 const GamesScreen = ({navigation, route}) => {
   const isFocused = useIsFocused();
@@ -26,36 +22,49 @@ const GamesScreen = ({navigation, route}) => {
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
   const {user, setUser, setToken} = React.useContext(AuthContext);
 
+  const scrollXIndex = React.useRef(new Animated.Value(0)).current;
+  const scrollXAnimated = React.useRef(new Animated.Value(0)).current;
+  const [force, setForce] = React.useState(false);
+  const [index, setIndex] = React.useState(0);
+  const setActiveIndex = React.useCallback(activeIndex => {
+    scrollXIndex.setValue(activeIndex);
+    setIndex(activeIndex);
+  });
+
+  const {status, data, error} = useFetch(
+    !user?.isGuest ? `${SCORE}${GenericUtils.getEndpoint('Best Of')}` : null,
+    'GET',
+    true,
+    'Best Of',
+    force,
+  );
+
   const GAMES = [
     {
-      label: dict.memoryCardsGameTitle,
-      image: require('../assets/images/memory_match.png'),
+      title: dict.memoryCardsGameTitle,
+      poster: require('../assets/images/memory_match.png'),
       onPress: () => navigation.navigate('MemoryCard'),
+      description: 'Match the pairs',
     },
     {
-      label: dict.colorMatchGameTitle,
-      image: require('../assets/images/color_match.png'),
+      title: dict.colorMatchGameTitle,
+      poster: require('../assets/images/color_match.png'),
       onPress: () => navigation.navigate('ColorCard'),
+      description: 'Mix up colors and text?',
     },
     {
-      label: dict.doTheMathGameTitle,
-      image: require('../assets/images/match_equal.png'),
+      title: dict.doTheMathGameTitle,
+      poster: require('../assets/images/match_equal.png'),
       onPress: () => navigation.navigate('EqualMath'),
+      description: 'Test your math skills',
     },
     {
-      label: dict.gestureItGameTitle,
-      image: require('../assets/images/gesture_it.png'),
+      title: dict.gestureItGameTitle,
+      poster: require('../assets/images/gesture_it.png'),
       onPress: () => navigation.navigate('GestureIt'),
+      description: 'Snap to the direction',
     },
   ];
-
-  const renderItem = ({item}) => (
-    <HomeGameCard
-      onPress={item?.onPress}
-      image={item?.image}
-      label={item?.label}
-    />
-  );
 
   const logout = async () => {
     !user?.isGuest && (await signOut(setToken, setUser));
@@ -76,7 +85,17 @@ const GamesScreen = ({navigation, route}) => {
 
   React.useEffect(() => {
     !isFocused && menuRef?.current?.closeMenu();
+    isFocused && setForce(true);
+    !isFocused && setForce(false);
   }, [isFocused]);
+
+  React.useEffect(() => {
+    Animated.spring(scrollXAnimated, {
+      friction: 10,
+      toValue: scrollXIndex,
+      useNativeDriver: true,
+    }).start();
+  });
 
   return (
     <View
@@ -100,15 +119,20 @@ const GamesScreen = ({navigation, route}) => {
           logout={logout}
         />
       </View>
-      <Animated.View style={[styles.gamesContainer, {opacity: opacityRef}]}>
-        <FlatList
+      <Animated.View
+        style={{
+          flex: 1,
+          opacity: opacityRef,
+        }}>
+        <GamesList
           data={GAMES}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={<View style={styles.seperator} />}
-          style={{
-            marginBottom: DimensionsUtils.getDP(8),
-          }}
+          index={index}
+          bestScores={data}
+          setIndex={setIndex}
+          scrollXIndex={scrollXIndex}
+          setActiveIndex={setActiveIndex}
+          scrollXAnimated={scrollXAnimated}
+          loadingScores={status === 'fetching'}
         />
       </Animated.View>
     </View>
@@ -119,17 +143,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-  },
-  scrollContainer: {
-    flexGrow: 1,
-  },
-  gamesContainer: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: Colors.background,
-  },
-  seperator: {
-    marginVertical: DimensionsUtils.getDP(12),
   },
 });
 

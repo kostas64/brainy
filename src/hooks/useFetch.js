@@ -1,9 +1,15 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {BEARER} from '../Endpoints';
+import {BEARER, HOST} from '../Endpoints';
 
-export const useFetch = (url, method, needsAuth = true, game) => {
+export const useFetch = (
+  url,
+  method,
+  needsAuth = true,
+  game,
+  force = false,
+) => {
   const cache = React.useRef({});
   let token = null;
 
@@ -54,7 +60,7 @@ export const useFetch = (url, method, needsAuth = true, game) => {
             'Content-Type': 'application/json',
           };
 
-          const response = await fetch(url, {
+          const response = await fetch(`${HOST}${url}`, {
             method,
             headers: needsAuth
               ? {
@@ -85,7 +91,7 @@ export const useFetch = (url, method, needsAuth = true, game) => {
     return function cleanup() {
       cancelRequest = true;
     };
-  }, [url]);
+  }, [url, force]);
 
   return state;
 };
