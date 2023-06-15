@@ -30,9 +30,7 @@ const ITEM_HEIGHT = ITEM_WIDTH * 1.7;
 const SPACING = DimensionsUtils.getDP(10);
 const OVERFLOW_HEIGHT = DimensionsUtils.getDP(72);
 
-const OverflowItems = ({data, bestScores, loadingScores, scrollXAnimated}) => {
-  const {user} = React.useContext(AuthContext);
-
+const OverflowItems = ({data, bestScores, scrollXAnimated}) => {
   const inputRange = [-1, 0, 1];
 
   const translateY = scrollXAnimated.interpolate({
@@ -51,19 +49,12 @@ const OverflowItems = ({data, bestScores, loadingScores, scrollXAnimated}) => {
           }`}`;
 
           return (
-            <View key={index} style={styles.itemContainer}>
+            <View key={index} style={styles.overflowItemContainer}>
               <Text style={[styles.title]} numberOfLines={1}>
                 {item.title}
               </Text>
-              <View style={styles.itemContainerRow}>
-                <Text style={[styles.location]}>{item.description}</Text>
-                {user?.isGuest ? null : loadingScores ? (
-                  <ActivityIndicator size={'small'} color={Colors.tabBarIcon} />
-                ) : (
-                  <Text style={[styles.date]}>
-                    {!!ms || !!points ? scoreLabel : dict?.gamesNoScore}
-                  </Text>
-                )}
+              <View style={styles.overflowItemContainerRow}>
+                <Text style={[styles.description]}>{item.description}</Text>
               </View>
             </View>
           );
@@ -83,6 +74,8 @@ const GamesList = ({
   setActiveIndex,
   scrollXAnimated,
 }) => {
+  const {user} = React.useContext(AuthContext);
+
   const onFlingLeft = e => {
     if (e.nativeEvent.state === State.END) {
       if (index === data.length - 1) return;
@@ -128,21 +121,37 @@ const GamesList = ({
       outputRange: [1 - 2 / VISIBLE_ITEMS, 1, 0],
     });
 
+    const ms = bestScores[item.title]?.[0]?.milliseconds;
+    const points = bestScores[item.title]?.[0]?.points;
+    const scoreLabel = `Best: ${`${!!ms ? `${ms} ms` : `${points} points`}`}`;
+
     return (
       <AnimPressable
         onPress={item?.onPress}
-        style={{
-          position: 'absolute',
-          left: -ITEM_WIDTH / 2,
-          opacity,
-          transform: [
-            {
-              translateX,
-            },
-            {scale},
-          ],
-        }}>
+        style={[
+          styles.cardContainer,
+          {
+            opacity,
+            transform: [
+              {
+                translateX,
+              },
+              {scale},
+            ],
+          },
+        ]}>
         <FastImage source={item.poster} style={styles.image} />
+        {user?.isGuest ? null : (
+          <View style={styles.scoreContainer}>
+            {loadingScores ? (
+              <ActivityIndicator size={'small'} color={Colors.tabBarBg} />
+            ) : (
+              <Text style={styles.score}>
+                {!!ms || !!points ? scoreLabel : dict?.gamesNoScore}
+              </Text>
+            )}
+          </View>
+        )}
       </AnimPressable>
     );
   };
@@ -160,7 +169,6 @@ const GamesList = ({
           <OverflowItems
             data={data}
             bestScores={bestScores}
-            loadingScores={loadingScores}
             scrollXAnimated={scrollXAnimated}
           />
           <FlatList
@@ -196,8 +204,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(22),
   },
-  location: {
-    color: Colors.tabBarIcon,
+  description: {
+    color: Colors.appGreen,
     fontFamily: 'Poppins-Medium',
     fontSize: DimensionsUtils.getFontSize(16),
   },
@@ -206,18 +214,37 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     fontSize: DimensionsUtils.getFontSize(14),
   },
-  itemContainer: {
-    height: OVERFLOW_HEIGHT,
-    paddingHorizontal: SPACING * 3,
+  cardContainer: {
+    position: 'absolute',
+    left: -ITEM_WIDTH / 2,
+    borderColor: Colors.tabBarIcon,
+    borderRadius: DimensionsUtils.getDP(20),
+    borderWidth: DimensionsUtils.getDP(3),
   },
-  itemContainerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  scoreContainer: {
+    position: 'absolute',
+    left: DimensionsUtils.getDP(16),
+    top: DimensionsUtils.getDP(16),
+    backgroundColor: Colors.tabBarIcon,
+    padding: DimensionsUtils.getDP(8),
+    borderRadius: DimensionsUtils.getDP(8),
+  },
+  score: {
+    color: Colors.black,
+    fontFamily: 'Poppins-Medium',
   },
   overflowContainer: {
     height: OVERFLOW_HEIGHT,
     overflow: 'hidden',
+  },
+  overflowItemContainerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  overflowItemContainer: {
+    height: OVERFLOW_HEIGHT,
+    paddingHorizontal: SPACING * 3,
   },
   image: {
     width: ITEM_WIDTH,
