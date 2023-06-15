@@ -9,3 +9,4 @@ export const MATCH_CARDS = '/matchCards';
 export const COLOR_CARDS = '/colorCards';
 export const EQUAL_MATH = '/equalMath';
 export const GESTURE_IT = '/gestureIt';
+export const BEST_OF = '/bestOf';

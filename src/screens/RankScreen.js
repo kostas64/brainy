@@ -4,8 +4,8 @@ import {useIsFocused} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
 
+import {SCORE} from '../Endpoints';
 import {Colors} from '../utils/Colors';
-import {HOST, SCORE} from '../Endpoints';
 import {signOut} from '../services/auth';
 import {useFetch} from '../hooks/useFetch';
 import {GAMES} from '../assets/values/games';
@@ -73,9 +73,7 @@ const RankScreen = ({navigation}) => {
   }, [isFocused]);
 
   React.useEffect(() => {
-    setQuery(
-      `${HOST}${SCORE}${GenericUtils.getEndpoint(gameInput)}?page=${page}`,
-    );
+    setQuery(`${SCORE}${GenericUtils.getEndpoint(gameInput)}?page=${page}`);
   }, [gameInput]);
 
   return (
@@ -104,17 +102,18 @@ const RankScreen = ({navigation}) => {
           placeholder={dict.rankDropdownPlaceholder}
         />
       </View>
-      {status === 'fetching' && (
+      {status === 'fetching' ? (
         <View style={styles.activityIndicator}>
           <ActivityIndicator size={'small'} color={Colors.tabBarIcon} />
         </View>
+      ) : (
+        <FlashList
+          data={data.scores}
+          keyExtractor={(_, index) => `index_${index}`}
+          renderItem={renderItem}
+          estimatedItemSize={DimensionsUtils.getDP(56)}
+        />
       )}
-      <FlashList
-        data={data.scores}
-        keyExtractor={(_, index) => `index_${index}`}
-        renderItem={renderItem}
-        estimatedItemSize={DimensionsUtils.getDP(56)}
-      />
     </View>
   );
 };

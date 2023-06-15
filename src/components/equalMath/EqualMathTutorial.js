@@ -75,7 +75,7 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
                 source={require('../../assets/images/tutorial.png')}
                 style={styles.icon}
               />
-              <Text style={styles.title}>{dict.colorMatcTutTitle}</Text>
+              <Text style={styles.title}>{dict.doTheMathTutTitle}</Text>
             </View>
             <TouchableOpacity onPress={closeModal}>
               <FastImage

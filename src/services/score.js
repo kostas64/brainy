@@ -26,7 +26,7 @@ export const submitScore = async (game, payload) => {
   try {
     const token = await AsyncStorage.getItem('token');
 
-    fetch(`${HOST}${SCORE}${GAME}`, {
+    return fetch(`${HOST}${SCORE}${GAME}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

@@ -1,5 +1,11 @@
+import {
+  BEST_OF,
+  EQUAL_MATH,
+  GESTURE_IT,
+  COLOR_CARDS,
+  MATCH_CARDS,
+} from '../Endpoints';
 import {Dimensions, Platform} from 'react-native';
-import {COLOR_CARDS, MATCH_CARDS, EQUAL_MATH, GESTURE_IT} from '../Endpoints';
 
 const {height: HEIGHT} = Dimensions.get('window');
 export class GenericUtils {
@@ -16,6 +22,8 @@ export class GenericUtils {
       ? EQUAL_MATH
       : game === 'Gesture It'
       ? GESTURE_IT
+      : game === 'Best Of'
+      ? BEST_OF
       : null;
 
   static isIos = () => Platform.OS === 'ios';
