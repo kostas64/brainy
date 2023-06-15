@@ -164,7 +164,7 @@ const EqualMathScreen = () => {
         <AnimatedAnswer ref={animAnswerRef} />
         <CountdownTimer
           ref={timeRef}
-          seconds={120}
+          seconds={60}
           setIsFinished={() => {
             setModalOpen(true);
             setIsFinished(true);
