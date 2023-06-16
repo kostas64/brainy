@@ -11,7 +11,7 @@ const Card = React.forwardRef(
     return (
       <View style={styles.rowCenter}>
         <Animated.View style={[styles.back, flipToFrontStyle(ref)]}>
-          <Text style={styles.cardLabel}>{value}</Text>
+          <Text style={styles.cardLabel}>{'?'}</Text>
         </Animated.View>
         <View style={{marginRight: DimensionsUtils.getDP(8)}} />
         <Animated.View style={[styles.front, flipToBackStyle(ref)]}>
@@ -30,7 +30,7 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
 
   const opacityRef = React.useRef(new Animated.Value(1)).current;
 
-  const flipToFrontStyle = ref => {
+  const flipToFrontStyle = React.useCallback(ref => {
     return {
       transform: [
         {
@@ -41,9 +41,9 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
         },
       ],
     };
-  };
+  }, []);
 
-  const flipToBackStyle = ref => {
+  const flipToBackStyle = React.useCallback(ref => {
     return {
       transform: [
         {
@@ -54,15 +54,15 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
         },
       ],
     };
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = React.useCallback(() => {
     Animated.timing(opacityRef, {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
     }).start(() => setModalOpen(false));
-  };
+  }, []);
 
   React.useEffect(() => {
     Animated.loop(
@@ -210,7 +210,7 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    backgroundColor: 'rgba(0,0,0,0.75)',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',

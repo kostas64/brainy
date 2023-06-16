@@ -30,7 +30,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
 
   const [designState, setDesignState] = React.useState(1);
 
-  const designOne = () => (
+  const designOne = React.useCallback(() => (
     <>
       <AnimatedImage
         source={require('../../assets/images/tap.png')}
@@ -69,9 +69,9 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         />
       </View>
     </>
-  );
+  ));
 
-  const designTwo = () => (
+  const designTwo = React.useCallback(() => (
     <>
       <AnimatedImage
         source={require('../../assets/images/tap.png')}
@@ -119,9 +119,9 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         />
       </View>
     </>
-  );
+  ));
 
-  const swipeHandler = e => {
+  const swipeHandler = React.useCallback(e => {
     const event = e.nativeEvent;
 
     if (
@@ -157,20 +157,23 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         }
       }
     }
-  };
+  });
 
-  const swipeValidation = direction => {
-    designState === 1 && direction === 'DOWN' && setDesignState(2);
-    designState === 2 && direction === 'LEFT' && setDesignState(1);
-  };
+  const swipeValidation = React.useCallback(
+    direction => {
+      designState === 1 && direction === 'DOWN' && setDesignState(2);
+      designState === 2 && direction === 'LEFT' && setDesignState(1);
+    },
+    [designState],
+  );
 
-  const closeModal = () => {
+  const closeModal = React.useCallback(() => {
     Animated.timing(opacityRef, {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
     }).start(() => setModalOpen(false));
-  };
+  }, []);
 
   React.useEffect(() => {
     Animated.timing(designState === 1 ? tapOpacity2 : tapOpacity1, {
@@ -251,7 +254,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    backgroundColor: 'rgba(0,0,0,0.75)',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',

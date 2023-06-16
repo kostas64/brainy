@@ -16,10 +16,6 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimatedImage = Animated.createAnimatedComponent(FastImage);
 
-const generateNum = () => Math.floor(Math.random() * 5) + 1;
-
-const generateOper = () => (Math.random() > 0.5 ? '/' : 'x');
-
 const Card = ({value}) => {
   return (
     <View style={styles.cardContainer}>
@@ -34,6 +30,10 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
 
   const scaleRef = React.useRef(new Animated.Value(1)).current;
   const opacityRef = React.useRef(new Animated.Value(1)).current;
+
+  const generateNum = () => Math.floor(Math.random() * 5) + 1;
+
+  const generateOper = () => (Math.random() > 0.5 ? '/' : 'x');
 
   const closeModal = () => {
     Animated.timing(opacityRef, {
@@ -168,7 +168,7 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    backgroundColor: 'rgba(0,0,0,0.75)',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',

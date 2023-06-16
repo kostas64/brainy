@@ -30,7 +30,7 @@ const ITEM_HEIGHT = ITEM_WIDTH * 1.7;
 const SPACING = DimensionsUtils.getDP(10);
 const OVERFLOW_HEIGHT = DimensionsUtils.getDP(72);
 
-const OverflowItems = ({data, bestScores, scrollXAnimated}) => {
+const OverflowItems = ({data, scrollXAnimated}) => {
   const inputRange = [-1, 0, 1];
 
   const translateY = scrollXAnimated.interpolate({
@@ -42,12 +42,6 @@ const OverflowItems = ({data, bestScores, scrollXAnimated}) => {
     <View style={styles.overflowContainer}>
       <Animated.View style={{transform: [{translateY}]}}>
         {data.map((item, index) => {
-          const ms = bestScores[item.title]?.[0]?.milliseconds;
-          const points = bestScores[item.title]?.[0]?.points;
-          const scoreLabel = `Best: ${`${
-            !!ms ? `${ms} ms` : `${points} points`
-          }`}`;
-
           return (
             <View key={index} style={styles.overflowItemContainer}>
               <Text style={[styles.title]} numberOfLines={1}>
@@ -166,11 +160,7 @@ const GamesList = ({
         direction={Directions.RIGHT}
         onHandlerStateChange={onFlingRight}>
         <View style={styles.container}>
-          <OverflowItems
-            data={data}
-            bestScores={bestScores}
-            scrollXAnimated={scrollXAnimated}
-          />
+          <OverflowItems data={data} scrollXAnimated={scrollXAnimated} />
           <FlatList
             data={data}
             inverted

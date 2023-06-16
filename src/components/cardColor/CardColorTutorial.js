@@ -33,27 +33,27 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
   const scaleRef = React.useRef(new Animated.Value(1)).current;
   const opacityRef = React.useRef(new Animated.Value(1)).current;
 
-  const closeModal = () => {
+  const closeModal = React.useCallback(() => {
     Animated.timing(opacityRef, {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
     }).start(() => setModalOpen(false));
-  };
+  }, []);
 
-  const changeColors1 = () => {
+  const changeColors1 = React.useCallback(() => {
     setCardCol1(Colors.black);
     setCardVal1('red');
     setCardCol2(Colors.red);
     setCardVal2('blue');
-  };
+  });
 
-  const changeColors2 = () => {
+  const changeColors2 = React.useCallback(() => {
     setCardCol1(Colors.appGreen);
     setCardVal1('yellow');
     setCardCol2(Colors.black);
     setCardVal2('black');
-  };
+  });
 
   React.useEffect(() => {
     Animated.loop(
@@ -162,7 +162,7 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    backgroundColor: 'rgba(0,0,0,0.75)',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
