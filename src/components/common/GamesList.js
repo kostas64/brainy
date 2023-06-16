@@ -117,7 +117,11 @@ const GamesList = ({
 
     const ms = bestScores[item.title]?.[0]?.milliseconds;
     const points = bestScores[item.title]?.[0]?.points;
-    const scoreLabel = `Best: ${`${!!ms ? `${ms} ms` : `${points} points`}`}`;
+    const scoreLabel = `Best: ${`${
+      !!ms
+        ? `${ms} ms (${bestScores[item.title]?.[0]?.flips} flips)`
+        : `${points} points (${bestScores[item.title]?.[0]?.correctness}%)`
+    }`}`;
 
     return (
       <AnimPressable
