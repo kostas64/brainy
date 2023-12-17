@@ -39,7 +39,7 @@ const Header = React.forwardRef(({label, avatar, isGuest, logout}, ref) => {
 
   const onAvatarLoad = useCallback(() => {
     setImgLoaded(true);
-  });
+  }, []);
 
   const onAvatarPress = useCallback(() => {
     if (!pressed) {

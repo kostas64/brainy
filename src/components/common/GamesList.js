@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import {
   View,
   Text,
@@ -72,18 +73,21 @@ const GamesList = ({
 
   const onFlingLeft = e => {
     if (e.nativeEvent.state === State.END) {
-      if (index === data.length - 1) return;
+      if (index === data.length - 1) {
+        return;
+      }
 
       setIndex(oldInd => oldInd + 1);
       scrollXIndex.setValue(index + 1);
     }
   };
 
-  const onFlingRight = ev => {
-    if (ev.nativeEvent.state === State.END) {
+  const onFlingRight = e => {
+    if (e.nativeEvent.state === State.END) {
       if (index === 0) {
         return;
       }
+
       setActiveIndex(index - 1);
     }
   };
@@ -107,7 +111,7 @@ const GamesList = ({
 
     const scale = scrollXAnimated.interpolate({
       inputRange,
-      outputRange: [0.8, 1, 1.3],
+      outputRange: [0.8, 1, 1],
     });
 
     const opacity = scrollXAnimated.interpolate({
@@ -118,7 +122,7 @@ const GamesList = ({
     const ms = bestScores[item.title]?.[0]?.milliseconds;
     const points = bestScores[item.title]?.[0]?.points;
     const scoreLabel = `Best: ${`${
-      !!ms
+      ms
         ? `${ms} ms (${bestScores[item.title]?.[0]?.flips} flips)`
         : `${points} points (${bestScores[item.title]?.[0]?.correctness}%)`
     }`}`;
@@ -203,11 +207,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     fontSize: DimensionsUtils.getFontSize(16),
   },
-  date: {
-    color: Colors.appGreen,
-    fontFamily: 'Poppins-Medium',
-    fontSize: DimensionsUtils.getFontSize(14),
-  },
   cardContainer: {
     position: 'absolute',
     left: -ITEM_WIDTH / 2,
@@ -226,6 +225,7 @@ const styles = StyleSheet.create({
   score: {
     color: Colors.black,
     fontFamily: 'Poppins-Medium',
+    fontSize: DimensionsUtils.getFontSize(14),
   },
   overflowContainer: {
     height: OVERFLOW_HEIGHT,

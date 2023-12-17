@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {useIsFocused} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -17,19 +18,20 @@ import {DimensionsUtils} from '../utils/DimensionUtils';
 const GamesScreen = ({navigation, route}) => {
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
+  const {user, setUser, setToken} = React.useContext(AuthContext);
 
   const menuRef = React.useRef();
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
-  const {user, setUser, setToken} = React.useContext(AuthContext);
-
   const scrollXIndex = React.useRef(new Animated.Value(0)).current;
   const scrollXAnimated = React.useRef(new Animated.Value(0)).current;
+
   const [force, setForce] = React.useState(false);
   const [index, setIndex] = React.useState(0);
+
   const setActiveIndex = React.useCallback(activeIndex => {
     scrollXIndex.setValue(activeIndex);
     setIndex(activeIndex);
-  });
+  }, []);
 
   const {status, data, error} = useFetch(
     !user?.isGuest ? `${SCORE}${GenericUtils.getEndpoint('Best Of')}` : null,
@@ -99,17 +101,17 @@ const GamesScreen = ({navigation, route}) => {
 
   return (
     <View
-      style={styles.container}
+      style={[styles.container, styles.flex]}
       onStartShouldSetResponder={() => menuRef?.current?.closeMenu()}>
       <StatusBar
         barStyle={'light-content'}
         backgroundColor={Colors.background}
       />
       <View
-        style={{
-          zIndex: 10000,
-          marginTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24),
-        }}>
+        style={[
+          styles.zIndex,
+          {marginTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24)},
+        ]}>
         <Header
           ref={menuRef}
           insets={insets}
@@ -119,11 +121,7 @@ const GamesScreen = ({navigation, route}) => {
           logout={logout}
         />
       </View>
-      <Animated.View
-        style={{
-          flex: 1,
-          opacity: opacityRef,
-        }}>
+      <Animated.View style={[styles.flex, {opacity: opacityRef}]}>
         <GamesList
           data={GAMES}
           index={index}
@@ -140,9 +138,14 @@ const GamesScreen = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  flex: {
     flex: 1,
+  },
+  container: {
     backgroundColor: Colors.background,
+  },
+  zIndex: {
+    zIndex: 10000,
   },
 });
 

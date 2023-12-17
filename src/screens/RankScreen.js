@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {FlashList} from '@shopify/flash-list';
 import {useIsFocused} from '@react-navigation/native';
@@ -13,6 +14,7 @@ import dict from '../assets/values/dict.json';
 import Header from '../components/common/Header';
 import {GenericUtils} from '../utils/GenericUtils';
 import {AuthContext} from '../context/AuthProvider';
+import EmptyList from '../components/common/EmptyList';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import InputDropdown from '../components/common/InputDropdown';
 import RankFlipListItem from '../components/rank/RankFlipListItem';
@@ -42,7 +44,7 @@ const RankScreen = ({navigation}) => {
   const logout = React.useCallback(async () => {
     !user?.isGuest && (await signOut(setToken, setUser));
     navigation.pop();
-  });
+  }, [user?.isGuest]);
 
   const renderItem = ({item, index}) => {
     switch (gameInput) {
@@ -109,14 +111,16 @@ const RankScreen = ({navigation}) => {
         <View style={styles.activityIndicator}>
           <ActivityIndicator size={'small'} color={Colors.tabBarIcon} />
         </View>
-      ) : (
+      ) : status === 'fetched' && data.scores?.length > 0 ? (
         <FlashList
           data={data.scores}
           keyExtractor={(_, index) => `index_${index}`}
           renderItem={renderItem}
           estimatedItemSize={DimensionsUtils.getDP(56)}
         />
-      )}
+      ) : status === 'fetched' ? (
+        <EmptyList />
+      ) : null}
     </View>
   );
 };

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   View,
   Text,
@@ -17,7 +18,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Colors} from '../utils/Colors';
 import {signIn} from '../services/auth';
 import dict from '../assets/values/dict.json';
-import {GenericUtils} from '../utils/GenericUtils';
 import {AuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CircularTransition from '../components/transitions/CircularTransition';
@@ -46,6 +46,7 @@ const GetStartedScreen = () => {
   const navigate = async (e, type) => {
     if (type === 'login') {
       let logged = false;
+
       if (!token) {
         logged = await signIn(setToken, setUser, setLoading);
       } else {
@@ -141,34 +142,13 @@ const GetStartedScreen = () => {
             bottom: insets.bottom + DimensionsUtils.getDP(24),
           },
         ]}>
-        <Text
-          style={[
-            styles.subtitle,
-            {
-              fontSize: GenericUtils.adaptLayout(
-                DimensionsUtils.getFontSize(18),
-                DimensionsUtils.getFontSize(22),
-              ),
-            },
-          ]}>
-          {dict.getStartedSub}
-        </Text>
         <Pressable
           disabled={loading}
-          style={[styles.buttonContainer, loading && {opacity: 0.4}]}
+          style={[styles.buttonContainer, loading && styles.lowOpacity]}
           onPress={e => navigate(e, 'login')}>
           {!loading ? (
-            <Text
-              style={[
-                styles.buttonLabel,
-                {
-                  fontSize: GenericUtils.adaptLayout(
-                    DimensionsUtils.getFontSize(18),
-                    DimensionsUtils.getFontSize(20),
-                  ),
-                },
-              ]}>
-              {!!token
+            <Text style={[styles.buttonLabel]}>
+              {token
                 ? dict?.getStartedLoggedInButton
                 : dict?.getStartedLoginButton}
             </Text>
@@ -183,7 +163,7 @@ const GetStartedScreen = () => {
           disabled={loading}
           style={[
             styles.buttonContainer,
-            loading && {opacity: 0.4},
+            loading && styles.lowOpacity,
             {backgroundColor: Colors.white},
           ]}
           onPress={e => navigate(e, 'guest')}>
@@ -192,10 +172,6 @@ const GetStartedScreen = () => {
               styles.buttonLabel,
               {
                 color: Colors.appGreen,
-                fontSize: GenericUtils.adaptLayout(
-                  DimensionsUtils.getFontSize(18),
-                  DimensionsUtils.getFontSize(20),
-                ),
               },
             ]}>
             {dict?.getStartedGuestButton}
@@ -225,37 +201,33 @@ const styles = StyleSheet.create({
   name: {
     color: Colors.white,
     fontFamily: 'Poppins-SemiBold',
-    fontSize: DimensionsUtils.getFontSize(32),
+    fontSize: DimensionsUtils.getFontSize(26),
   },
   subContainer: {
     alignSelf: 'center',
     position: 'absolute',
   },
-  subtitle: {
-    color: Colors.white,
-    fontFamily: 'Poppins-Regular',
-    fontSize: DimensionsUtils.getFontSize(22),
-    marginHorizontal: DimensionsUtils.getDP(16),
-  },
   buttonContainer: {
-    minHeight: DimensionsUtils.getDP(52),
+    minHeight: DimensionsUtils.getDP(50),
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: DimensionsUtils.getDP(8),
     backgroundColor: Colors.appGreen,
     borderRadius: DimensionsUtils.getDP(12),
-    paddingVertical: DimensionsUtils.getDP(12),
     width: WIDTH - DimensionsUtils.getDP(40),
   },
   buttonLabel: {
     color: Colors.white,
     fontFamily: 'Poppins-SemiBold',
-    fontSize: DimensionsUtils.getFontSize(20),
+    fontSize: DimensionsUtils.getFontSize(16),
   },
   loggedName: {
     color: Colors.white,
     fontSize: DimensionsUtils.getFontSize(12),
+  },
+  lowOpacity: {
+    opacity: 0.4,
   },
 });
 
