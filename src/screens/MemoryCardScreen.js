@@ -67,6 +67,7 @@ const MemoryCardScreen = () => {
 
   const isGameOver = () => {
     const sum = cards.reduce((acc, cur) => acc + (cur.isMatched ? 1 : 0), 0);
+
     if (sum === MemoryValues.length - 1 || sum === MemoryValues.length) {
       setCardsDisabled(true);
       return true;
@@ -139,6 +140,7 @@ const MemoryCardScreen = () => {
         //Start timer
         timeRef.current.start();
       }
+
       setGameOver(false);
     }
   }, [cards]);
@@ -227,10 +229,9 @@ const MemoryCardScreen = () => {
       <View
         style={[
           styles.newGameCont,
-          {
-            bottom:
-              insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(24),
-          },
+          insets.bottom > 0
+            ? {bottom: insets.bottom}
+            : {bottom: DimensionsUtils.getDP(24)},
         ]}>
         <NewGameButton gameFinished={gameOver} setNewGame={setNewGame} />
       </View>

@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import moment from 'moment';
 import React, {useImperativeHandle} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
@@ -92,11 +93,11 @@ export default StopWatch;
 
 const styles = StyleSheet.create({
   container: {
+    height: DimensionsUtils.getDP(50),
     paddingVertical: DimensionsUtils.getDP(8),
     paddingHorizontal: DimensionsUtils.getDP(12),
     borderRadius: DimensionsUtils.getDP(8),
     backgroundColor: 'rgba(0,0,0,0.5)',
-    width: DimensionsUtils.getDP(120),
   },
   timer: {
     color: Colors.white,

@@ -20,10 +20,9 @@ const Points = ({points}) => {
 
 const styles = StyleSheet.create({
   counterContainer: {
-    paddingLeft: DimensionsUtils.getDP(12),
+    paddingHorizontal: DimensionsUtils.getDP(12),
     paddingVertical: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
-    width: DimensionsUtils.getDP(138),
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   counterLabel: {

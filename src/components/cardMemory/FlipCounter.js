@@ -18,9 +18,10 @@ const FlipCounter = ({flipCounter}) => {
 
 const styles = StyleSheet.create({
   flipContainer: {
-    padding: DimensionsUtils.getDP(8),
+    height: DimensionsUtils.getDP(50),
+    paddingVertical: DimensionsUtils.getDP(8),
+    paddingHorizontal: DimensionsUtils.getDP(12),
     borderRadius: DimensionsUtils.getDP(8),
-    width: DimensionsUtils.getDP(112),
     backgroundColor: 'rgba(0,0,0,0.5)',
     alignItems: 'center',
   },

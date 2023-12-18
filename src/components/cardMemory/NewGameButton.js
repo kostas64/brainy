@@ -11,7 +11,7 @@ const NewGameButton = ({gameFinished, setNewGame}) => {
       onPress={setNewGame}
       style={[
         styles.container,
-        Platform.OS === 'android' && {height: DimensionsUtils.getDP(64)},
+        Platform.OS === 'android' && {height: DimensionsUtils.getDP(58)},
       ]}>
       <Text style={styles.label}>
         {gameFinished ? dict.playAgainLabel : dict.newGameLabel}
@@ -22,7 +22,8 @@ const NewGameButton = ({gameFinished, setNewGame}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: DimensionsUtils.getDP(12),
+    paddingHorizontal: DimensionsUtils.getDP(24),
+    paddingVertical: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(12),
     backgroundColor: 'rgba(255,255,255,0.8)',
     justifyContent: 'flex-end',
