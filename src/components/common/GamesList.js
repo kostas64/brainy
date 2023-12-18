@@ -70,25 +70,34 @@ const GamesList = ({
   scrollXAnimated,
 }) => {
   const {user} = React.useContext(AuthContext);
+  const [flinged, setFlinged] = React.useState(0);
 
   const onFlingLeft = e => {
     if (e.nativeEvent.state === State.END) {
       if (index === data.length - 1) {
+        setFlinged(0);
         return;
       }
 
       setIndex(oldInd => oldInd + 1);
       scrollXIndex.setValue(index + 1);
+      setFlinged(0);
+    } else if (e.nativeEvent.state === State.ACTIVE) {
+      setFlinged(1);
     }
   };
 
   const onFlingRight = e => {
     if (e.nativeEvent.state === State.END) {
       if (index === 0) {
+        setFlinged(0);
         return;
       }
 
       setActiveIndex(index - 1);
+      setFlinged(0);
+    } else if (e.nativeEvent.state === State.ACTIVE) {
+      setFlinged(1);
     }
   };
 
@@ -100,6 +109,21 @@ const GamesList = ({
       </View>
     );
   };
+
+  const getItemLayout = (_, index) => ({
+    index,
+    length: width * 0.76,
+    offset: width * 0.76 * index,
+  });
+
+  const onItemPress = React.useCallback(
+    item => {
+      if (flinged === 0) {
+        !!item?.onPress && item?.onPress();
+      }
+    },
+    [flinged],
+  );
 
   const renderItem = ({item, index}) => {
     const inputRange = [index - 1, index, index + 1];
@@ -129,7 +153,7 @@ const GamesList = ({
 
     return (
       <AnimPressable
-        onPress={item?.onPress}
+        onPress={() => onItemPress(item)}
         style={[
           styles.cardContainer,
           {
@@ -174,11 +198,12 @@ const GamesList = ({
             inverted
             horizontal
             scrollEnabled={false}
+            renderItem={renderItem}
+            getItemLayout={getItemLayout}
             removeClippedSubviews={false}
             contentContainerStyle={styles.listContainer}
             CellRendererComponent={cellRenderedComponent}
             keyExtractor={(_, index) => String(index)}
-            renderItem={renderItem}
           />
         </View>
       </FlingGestureHandler>
