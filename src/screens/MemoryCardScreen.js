@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {View, Dimensions, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -45,7 +47,9 @@ const MemoryCardScreen = () => {
   const setIsFlipped = index => {
     //Keep flipped cards
     const tempCards = cards.map((card, i) => {
-      if (i !== index) return card;
+      if (i !== index) {
+        return card;
+      }
 
       if (i === index) {
         const cardToPush = {
@@ -62,7 +66,7 @@ const MemoryCardScreen = () => {
   };
 
   const isGameOver = () => {
-    const sum = cards.reduce((acc, cur) => acc + (!!cur.isMatched ? 1 : 0), 0);
+    const sum = cards.reduce((acc, cur) => acc + (cur.isMatched ? 1 : 0), 0);
     if (sum === MemoryValues.length - 1 || sum === MemoryValues.length) {
       setCardsDisabled(true);
       return true;
@@ -127,7 +131,7 @@ const MemoryCardScreen = () => {
       setModalOpen(true);
     } else {
       const sumFlipped = cards.reduce(
-        (acc, cur) => acc + (!!cur.isFlipped ? 1 : 0),
+        (acc, cur) => acc + (cur.isFlipped ? 1 : 0),
         0,
       );
 
@@ -251,7 +255,7 @@ const styles = StyleSheet.create({
         DimensionsUtils.getDP(80)) /
         2,
     ),
-    marginHorizontal: DimensionsUtils.getDP(WIDTH / 16),
+    marginHorizontal: WIDTH / 16,
     zIndex: 100,
   },
   flipContainer: {

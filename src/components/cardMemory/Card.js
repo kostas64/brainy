@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import {
   Text,
   Easing,
@@ -60,7 +61,7 @@ const Card = React.forwardRef(
       setIsFlipped(index);
       Animated.timing(flipAnimation, {
         toValue: 0,
-        duration: 200,
+        duration: 150,
         useNativeDriver: true,
       }).start();
     };
@@ -94,22 +95,22 @@ const Card = React.forwardRef(
 
 const styles = StyleSheet.create({
   front: {
-    height: DimensionsUtils.getDP(WIDTH / 5),
-    width: DimensionsUtils.getDP(WIDTH / 5),
+    height: WIDTH / 5,
+    width: WIDTH / 5,
     backgroundColor: 'rgba(255,255,255,1)',
     borderRadius: DimensionsUtils.getDP(16),
-    marginBottom: DimensionsUtils.getDP(WIDTH / 16),
+    marginBottom: (WIDTH - WIDTH / 8 - (4 * WIDTH) / 5) / 3,
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
     backfaceVisibility: 'hidden',
   },
   back: {
-    height: DimensionsUtils.getDP(WIDTH / 5),
-    width: DimensionsUtils.getDP(WIDTH / 5),
+    height: WIDTH / 5,
+    width: WIDTH / 5,
     backgroundColor: 'rgba(255,135,135,0.9)',
     borderRadius: DimensionsUtils.getDP(16),
-    marginBottom: DimensionsUtils.getDP(WIDTH / 16),
+    marginBottom: (WIDTH - WIDTH / 8 - (4 * WIDTH) / 5) / 3,
     backfaceVisibility: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
