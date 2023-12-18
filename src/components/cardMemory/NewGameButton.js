@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: 'Poppins-Bold',
-    fontSize: DimensionsUtils.getFontSize(28),
+    fontSize: DimensionsUtils.getFontSize(24),
     color: Colors.black,
     alignSelf: 'center',
   },
