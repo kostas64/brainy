@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   View,
   Text,
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: Colors.appGreen,
-    fontSize: DimensionsUtils.getFontSize(28),
+    fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: 'Poppins-Bold',
   },
   avatarContainer: {

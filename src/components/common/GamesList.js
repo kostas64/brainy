@@ -2,6 +2,7 @@
 import {
   View,
   Text,
+  Image,
   Animated,
   FlatList,
   Pressable,
@@ -15,22 +16,23 @@ import {
   FlingGestureHandler,
 } from 'react-native-gesture-handler';
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
 import {AuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const {width} = Dimensions.get('window');
+const SPACING = DimensionsUtils.getDP(10);
+const OVERFLOW_HEIGHT = DimensionsUtils.getDP(46);
+const {width, height} = Dimensions.get('window');
 const AnimPressable = Animated.createAnimatedComponent(Pressable);
 
 const VISIBLE_ITEMS = 3;
-const ITEM_WIDTH = width * 0.76;
-const ITEM_HEIGHT = ITEM_WIDTH * 1.7;
-const SPACING = DimensionsUtils.getDP(10);
-const OVERFLOW_HEIGHT = DimensionsUtils.getDP(72);
+const ITEM_WIDTH = height <= 700 ? (width * 0.88) / 1.4 : width * 0.75;
+const ITEM_HEIGHT =
+  height <= 600 ? width * 0.88 : height <= 700 ? width : height * 0.6;
 
+console.log('height ', ITEM_WIDTH, ITEM_HEIGHT);
 const OverflowItems = ({data, scrollXAnimated}) => {
   const inputRange = [-1, 0, 1];
 
@@ -45,11 +47,11 @@ const OverflowItems = ({data, scrollXAnimated}) => {
         {data.map((item, index) => {
           return (
             <View key={index} style={styles.overflowItemContainer}>
-              <Text style={[styles.title]} numberOfLines={1}>
+              <Text style={styles.title} numberOfLines={1}>
                 {item.title}
               </Text>
               <View style={styles.overflowItemContainerRow}>
-                <Text style={[styles.description]}>{item.description}</Text>
+                <Text style={styles.description}>{item.description}</Text>
               </View>
             </View>
           );
@@ -166,7 +168,7 @@ const GamesList = ({
             ],
           },
         ]}>
-        <FastImage source={item.poster} style={styles.image} />
+        <Image source={item.poster} style={styles.image} />
         {user?.isGuest ? null : (
           <View style={styles.scoreContainer}>
             {loadingScores ? (
@@ -214,18 +216,20 @@ const GamesList = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: DimensionsUtils.getDP(8),
   },
   listContainer: {
     flexGrow: 1,
+    height: ITEM_HEIGHT + SPACING * 2 + 4,
+    alignSelf: 'center',
     justifyContent: 'center',
     paddingVertical: SPACING * 2,
   },
   title: {
+    height: 22,
     color: Colors.tabBarIcon,
     textTransform: 'uppercase',
     fontFamily: 'Poppins-Bold',
-    fontSize: DimensionsUtils.getFontSize(22),
+    fontSize: DimensionsUtils.getFontSize(18),
   },
   description: {
     color: Colors.appGreen,
@@ -237,20 +241,21 @@ const styles = StyleSheet.create({
     left: -ITEM_WIDTH / 2,
     borderColor: Colors.tabBarIcon,
     borderRadius: DimensionsUtils.getDP(20),
-    borderWidth: DimensionsUtils.getDP(3),
+    borderWidth: DimensionsUtils.getDP(2),
   },
   scoreContainer: {
     position: 'absolute',
     left: DimensionsUtils.getDP(16),
     top: DimensionsUtils.getDP(16),
     backgroundColor: Colors.tabBarIcon,
-    padding: DimensionsUtils.getDP(8),
+    padding: DimensionsUtils.getDP(6),
     borderRadius: DimensionsUtils.getDP(8),
   },
   score: {
     color: Colors.black,
     fontFamily: 'Poppins-Medium',
-    fontSize: DimensionsUtils.getFontSize(14),
+    fontSize: 14,
+    height: 20,
   },
   overflowContainer: {
     height: OVERFLOW_HEIGHT,
@@ -268,7 +273,7 @@ const styles = StyleSheet.create({
   image: {
     width: ITEM_WIDTH,
     height: ITEM_HEIGHT,
-    borderRadius: DimensionsUtils.getDP(16),
+    borderRadius: DimensionsUtils.getDP(18),
   },
 });
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   View,
   Text,
@@ -129,15 +130,14 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.tabBarBg,
-    alignItems: 'flex-start',
     justifyContent: 'center',
-    height: DimensionsUtils.getDP(54),
+    height: DimensionsUtils.getDP(52),
     borderRadius: DimensionsUtils.getDP(16),
     marginHorizontal: DimensionsUtils.getDP(16),
   },
   pose: {
     backgroundColor: Colors.appGreen,
-    height: DimensionsUtils.getDP(54),
+    height: DimensionsUtils.getDP(52),
     borderRadius: DimensionsUtils.getDP(16),
   },
   tabButton: {
@@ -147,16 +147,16 @@ const styles = StyleSheet.create({
     marginTop: DimensionsUtils.getDP(6),
   },
   gamesIcon: {
-    width: DimensionsUtils.getIconSize(36),
-    height: DimensionsUtils.getIconSize(25),
+    width: 31,
+    height: 21,
   },
   rankIcon: {
-    width: DimensionsUtils.getIconSize(36),
-    height: DimensionsUtils.getIconSize(27),
+    width: 32,
+    height: 24,
   },
   text: {
     marginTop: DimensionsUtils.getDP(4),
-    fontSize: DimensionsUtils.getFontSize(14),
+    fontSize: DimensionsUtils.getFontSize(12),
     fontFamily: 'Poppins-Medium',
   },
 });
