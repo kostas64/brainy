@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: DimensionsUtils.getDP(12),
     paddingVertical: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: Colors.background,
+    borderWidth: 1,
+    borderColor: Colors.appGreen,
   },
   counterLabel: {
     color: Colors.white,

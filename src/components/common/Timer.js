@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {View, Text, StyleSheet, Platform} from 'react-native';
 
@@ -91,8 +93,10 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(8),
-    backgroundColor: 'rgba(0,0,0,0.5)',
     width: DimensionsUtils.getDP(120),
+    backgroundColor: Colors.background,
+    borderWidth: 1,
+    borderColor: Colors.appGreen,
   },
   timerContainer: {
     flexDirection: 'row',

@@ -97,7 +97,9 @@ const styles = StyleSheet.create({
     paddingVertical: DimensionsUtils.getDP(8),
     paddingHorizontal: DimensionsUtils.getDP(12),
     borderRadius: DimensionsUtils.getDP(8),
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderWidth: 1,
+    borderColor: Colors.appGreen,
+    backgroundColor: Colors.background,
   },
   timer: {
     color: Colors.white,
