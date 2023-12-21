@@ -7,7 +7,7 @@ import {name as appName} from './app.json';
 import Bugsnag from '@bugsnag/react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
-Bugsnag.start();
+!__DEV__ && Bugsnag.start();
 
 GoogleSignin.configure({
   offlineAccess: true,
