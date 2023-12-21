@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {Animated, StyleSheet, Pressable} from 'react-native';
 
@@ -54,13 +55,7 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
       <AnimPress
         disabled={!animFinished}
         onPress={closeAnimation}
-        style={[
-          styles.container,
-          {
-            zIndex: 1000,
-            opacity: opacityRef,
-          },
-        ]}>
+        style={[styles.container, {opacity: opacityRef}]}>
         <Animated.View
           style={{
             backgroundColor: Colors.white,
@@ -85,6 +80,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    zIndex: 1000,
   },
 });
 

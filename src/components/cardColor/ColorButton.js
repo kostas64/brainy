@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Pressable, StyleSheet, Dimensions} from 'react-native';
+import {Text, Pressable, StyleSheet, Dimensions, Platform} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
@@ -13,11 +13,11 @@ const ColorButton = ({onPress, disabled, label, insets}) => {
       onPress={onPress}
       style={[
         styles.buttonContainer,
+        Platform.OS === 'android' && {height: DimensionsUtils.getDP(58)},
         {
           opacity: disabled ? 0.4 : 1,
           marginBottom:
             insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(16),
-          height: DimensionsUtils.getDP(52),
         },
       ]}>
       <Text style={styles.buttonLabel}>{label}</Text>
@@ -30,14 +30,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: DimensionsUtils.getDP(8),
+    borderRadius: DimensionsUtils.getDP(12),
     marginHorizontal: DimensionsUtils.getDP(16),
     width: WIDTH / 2 - DimensionsUtils.getDP(32),
+    paddingVertical: DimensionsUtils.getDP(8),
   },
   buttonLabel: {
-    color: Colors.black,
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(24),
+    color: Colors.black,
+    alignSelf: 'center',
   },
 });
 

@@ -25,13 +25,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: DimensionsUtils.getDP(24),
     paddingVertical: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(12),
-    backgroundColor: 'rgba(255,255,255,0.8)',
+    backgroundColor: Colors.background,
+    borderWidth: 1,
+    borderColor: Colors.appGreen,
     justifyContent: 'flex-end',
   },
   label: {
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(24),
-    color: Colors.black,
+    color: Colors.white,
     alignSelf: 'center',
   },
 });
