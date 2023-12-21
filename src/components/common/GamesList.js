@@ -32,7 +32,6 @@ const ITEM_WIDTH = height <= 700 ? (width * 0.88) / 1.4 : width * 0.75;
 const ITEM_HEIGHT =
   height <= 600 ? width * 0.88 : height <= 700 ? width : height * 0.6;
 
-console.log('height ', ITEM_WIDTH, ITEM_HEIGHT);
 const OverflowItems = ({data, scrollXAnimated}) => {
   const inputRange = [-1, 0, 1];
 
