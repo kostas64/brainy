@@ -71,7 +71,7 @@ export const signIn = async (setToken, setUser, setLoading) => {
     setLoading(false);
     return logged;
   } catch (e) {
-    console.log('Error ', e);
+    console.log('Error on signIn ', e);
     return false;
   }
 };
