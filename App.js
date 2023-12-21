@@ -14,15 +14,15 @@ function App() {
     'Non-serializable values were found in the navigation state',
   ]);
 
-  React.useEffect(() => {
+  const onNavigationReady = () => {
     RNBootSplash.hide({fade: true, duration: 300});
-  });
+  };
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaProvider>
         <AuthProvider>
-          <Router />
+          <Router onNavigationReady={onNavigationReady} />
         </AuthProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

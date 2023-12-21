@@ -16,9 +16,9 @@ const screenConfig = {
   customAnimationOnGesture: true,
 };
 
-const Router = () => {
+const Router = ({onNavigationReady}) => {
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={onNavigationReady}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,

@@ -14,7 +14,7 @@ export const AuthProvider = ({children}) => {
   React.useEffect(() => {
     // Fetch token and user's data
     const bootstrapAsync = async () => {
-      let userToken, userEmail;
+      let userToken, userEmail, userAvatar;
 
       try {
         userToken = await AsyncStorage.getItem('token');
