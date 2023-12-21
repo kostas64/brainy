@@ -1,10 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import {
+  View,
+  Text,
+  Animated,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {View, Text, StyleSheet, Animated, TouchableOpacity} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
+
+const AnimPress = Animated.createAnimatedComponent(Pressable);
 
 const Card = React.forwardRef(
   ({value, flipToFrontStyle, flipToBackStyle}, ref) => {
@@ -61,7 +71,7 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
-    }).start(() => setModalOpen(false));
+    }).start(() => modalOpen && setModalOpen(false));
   }, []);
 
   React.useEffect(() => {
@@ -155,59 +165,72 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
 
   return (
     modalOpen && (
-      <Animated.View style={[styles.container, {opacity: opacityRef}]}>
-        <View style={styles.innerContainer}>
-          <View style={styles.titleContainer}>
-            <View style={styles.innerTitleContainer}>
-              <FastImage
-                source={require('../../assets/images/tutorial.png')}
-                style={styles.icon}
-              />
-              <Text style={styles.title}>{dict.memoryCardTutTitle}</Text>
+      <>
+        <Animated.View style={[styles.container, {opacity: opacityRef}]}>
+          <AnimPress onPress={closeModal} style={styles.backgroundContainer} />
+          <View style={styles.innerContainer}>
+            <View style={styles.titleContainer}>
+              <View style={styles.innerTitleContainer}>
+                <FastImage
+                  source={require('../../assets/images/tutorial.png')}
+                  style={styles.icon}
+                />
+                <Text style={styles.title}>{dict.memoryCardTutTitle}</Text>
+              </View>
+              <TouchableOpacity onPress={closeModal}>
+                <FastImage
+                  source={require('../../assets/images/close.png')}
+                  style={styles.closeIcon}
+                />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={closeModal}>
-              <FastImage
-                source={require('../../assets/images/close.png')}
-                style={styles.closeIcon}
+            <View style={styles.rowCenter}>
+              <Card
+                value={'A'}
+                ref={rotateRef1}
+                flipToFrontStyle={flipToFrontStyle}
+                flipToBackStyle={flipToBackStyle}
               />
-            </TouchableOpacity>
+              <Card
+                value={'B'}
+                ref={rotateRef2}
+                flipToFrontStyle={flipToFrontStyle}
+                flipToBackStyle={flipToBackStyle}
+              />
+            </View>
+            <View style={styles.rowCenter}>
+              <Card
+                value={'B'}
+                ref={rotateRef3}
+                flipToFrontStyle={flipToFrontStyle}
+                flipToBackStyle={flipToBackStyle}
+              />
+              <Card
+                value={'A'}
+                ref={rotateRef4}
+                flipToFrontStyle={flipToFrontStyle}
+                flipToBackStyle={flipToBackStyle}
+              />
+            </View>
+            <Text style={styles.text}>{dict.memoryCardTutContent}</Text>
           </View>
-          <View style={styles.rowCenter}>
-            <Card
-              value={'A'}
-              ref={rotateRef1}
-              flipToFrontStyle={flipToFrontStyle}
-              flipToBackStyle={flipToBackStyle}
-            />
-            <Card
-              value={'B'}
-              ref={rotateRef2}
-              flipToFrontStyle={flipToFrontStyle}
-              flipToBackStyle={flipToBackStyle}
-            />
-          </View>
-          <View style={styles.rowCenter}>
-            <Card
-              value={'B'}
-              ref={rotateRef3}
-              flipToFrontStyle={flipToFrontStyle}
-              flipToBackStyle={flipToBackStyle}
-            />
-            <Card
-              value={'A'}
-              ref={rotateRef4}
-              flipToFrontStyle={flipToFrontStyle}
-              flipToBackStyle={flipToBackStyle}
-            />
-          </View>
-          <Text style={styles.text}>{dict.memoryCardTutContent}</Text>
-        </View>
-      </Animated.View>
+        </Animated.View>
+      </>
     )
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'transparent',
+  },
   container: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.75)',

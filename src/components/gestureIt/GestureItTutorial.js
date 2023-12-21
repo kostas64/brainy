@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   View,
   Text,
   Animated,
+  Pressable,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
@@ -17,6 +19,7 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 
 const {width: WIDTH} = Dimensions.get('window');
+const AnimPress = Animated.createAnimatedComponent(Pressable);
 const AnimatedImage = Animated.createAnimatedComponent(FastImage);
 
 const GestureItTutorial = ({modalOpen, setModalOpen}) => {
@@ -36,15 +39,8 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         source={require('../../assets/images/tap.png')}
         style={[
           styles.closeIcon,
-          {
-            left:
-              (WIDTH - DimensionsUtils.getDP(124)) / 2 -
-              DimensionsUtils.getDP(86),
-            position: 'absolute',
-            top: DimensionsUtils.getDP(16),
-            opacity: tapOpacity1,
-            transform: [{translateY: translateYRef}],
-          },
+          styles.designOne,
+          {opacity: tapOpacity1, transform: [{translateY: translateYRef}]},
         ]}
       />
       <View style={styles.rowCenter}>
@@ -77,13 +73,8 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         source={require('../../assets/images/tap.png')}
         style={[
           styles.closeIcon,
-          {
-            opacity: tapOpacity2,
-            top: DimensionsUtils.getDP(42),
-            left: WIDTH / 2 - DimensionsUtils.getDP(108),
-            position: 'absolute',
-            transform: [{translateX: translateXRef}],
-          },
+          styles.designTwo,
+          {opacity: tapOpacity2, transform: [{translateX: translateXRef}]},
         ]}
       />
       <View style={{alignSelf: 'center'}}>
@@ -212,6 +203,8 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
     modalOpen && (
       <PanGestureHandler ref={swipeRef} onHandlerStateChange={swipeHandler}>
         <Animated.View style={[styles.container, {opacity: opacityRef}]}>
+          <AnimPress onPress={closeModal} style={styles.backgroundContainer} />
+
           <View style={styles.innerContainer}>
             <View style={styles.titleContainer}>
               <View style={styles.innerTitleContainer}>
@@ -253,6 +246,16 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
 };
 
 const styles = StyleSheet.create({
+  backgroundContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'transparent',
+  },
   container: {
     backgroundColor: 'rgba(0,0,0,0.75)',
     justifyContent: 'center',
@@ -316,6 +319,16 @@ const styles = StyleSheet.create({
   },
   rightSpacer: {
     marginRight: DimensionsUtils.getDP(4),
+  },
+  designOne: {
+    left: (WIDTH - DimensionsUtils.getDP(124)) / 2 - DimensionsUtils.getDP(86),
+    position: 'absolute',
+    top: DimensionsUtils.getDP(16),
+  },
+  designTwo: {
+    top: DimensionsUtils.getDP(42),
+    left: WIDTH / 2 - DimensionsUtils.getDP(108),
+    position: 'absolute',
   },
 });
 
