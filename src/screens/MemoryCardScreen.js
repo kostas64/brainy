@@ -191,7 +191,7 @@ const MemoryCardScreen = () => {
       );
       setCurrentFlipped([]);
     }
-  }, [currentFlipped]);
+  }, [cards, currentFlipped]);
 
   return (
     <>

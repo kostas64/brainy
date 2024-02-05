@@ -77,14 +77,14 @@ const EqualMathScreen = () => {
     setQuestion(oldQuestion => oldQuestion + 1);
   };
 
-  const generateRandoms = () => {
+  const generateRandoms = React.useCallback(() => {
     setNumber1(Math.floor(Math.random() * 9) + 1);
     setNumber2(Math.floor(Math.random() * 9) + 1);
     question >= 10 && setNumber3(Math.floor(Math.random() * 9) + 1);
     setNumber4(Math.floor(Math.random() * 9) + 1);
     setNumber5(Math.floor(Math.random() * 9) + 1);
     question >= 10 && setNumber6(Math.floor(Math.random() * 9) + 1);
-  };
+  }, [question]);
 
   const generateOperators = () => {
     const posibility1 = question <= 5 ? 0.5 : question <= 10 ? 0 : 0.1;
@@ -100,8 +100,8 @@ const EqualMathScreen = () => {
       : '/';
   };
 
-  const generateEquationEasy = (number1, number2) => {
-    return `${number1} ${generateOperators()} ${number2}`;
+  const generateEquationEasy = (num1, num2) => {
+    return `${num1} ${generateOperators()} ${num2}`;
   };
 
   const setNewGame = () => {
@@ -112,11 +112,14 @@ const EqualMathScreen = () => {
     timeRef.current?.resetTime();
   };
 
-  const sendScore = () =>
-    submitScore('equal_math', {
-      points,
-      correctness: Math.floor((correct / question) * 100),
-    });
+  const sendScore = React.useCallback(
+    () =>
+      submitScore('equal_math', {
+        points,
+        correctness: Math.floor((correct / question) * 100),
+      }),
+    [correct, points, question],
+  );
 
   const successContent = () => (
     <EqualMathModal correct={correct} total={question} points={points} />
@@ -124,14 +127,14 @@ const EqualMathScreen = () => {
 
   React.useEffect(() => {
     generateRandoms();
-  }, [question]);
+  }, [generateRandoms]);
 
   React.useEffect(() => {
     if (isFinished) {
       lottieRef?.current?.play(0, 210);
       !user?.isGuest && sendScore();
     }
-  }, [isFinished]);
+  }, [isFinished, user?.isGuest, sendScore]);
 
   const equationEasyMed1 = generateEquationEasy(number1, number2);
   const equationEasyMed2 = generateEquationEasy(number4, number5);
