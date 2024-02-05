@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {View, Dimensions, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -44,28 +42,31 @@ const MemoryCardScreen = () => {
   const duration = timeRef?.current?.extractTime();
   const centiseconds = Math.floor(duration?.milliseconds() / 10);
 
-  const setIsFlipped = index => {
-    //Keep flipped cards
-    const tempCards = cards.map((card, i) => {
-      if (i !== index) {
-        return card;
-      }
+  const setIsFlipped = React.useCallback(
+    index => {
+      //Keep flipped cards
+      const tempCards = cards.map((card, i) => {
+        if (i !== index) {
+          return card;
+        }
 
-      if (i === index) {
-        const cardToPush = {
-          ...card,
-          isFlipped: !card.isFlipped,
-        };
-        setCurrentFlipped(curF => [...curF, cardToPush]);
+        if (i === index) {
+          const cardToPush = {
+            ...card,
+            isFlipped: !card.isFlipped,
+          };
+          setCurrentFlipped(curF => [...curF, cardToPush]);
 
-        return cardToPush;
-      }
-    });
+          return cardToPush;
+        }
+      });
 
-    setCards(tempCards);
-  };
+      setCards(tempCards);
+    },
+    [cards],
+  );
 
-  const isGameOver = () => {
+  const isGameOver = React.useCallback(() => {
     const sum = cards.reduce((acc, cur) => acc + (cur.isMatched ? 1 : 0), 0);
 
     if (sum === MemoryValues.length - 1 || sum === MemoryValues.length) {
@@ -75,9 +76,9 @@ const MemoryCardScreen = () => {
       setCardsDisabled(false);
       return false;
     }
-  };
+  }, [cards]);
 
-  const setNewGame = () => {
+  const setNewGame = React.useCallback(() => {
     setCards([]);
     setFlipCounter(0);
     setCurrentFlipped([]);
@@ -85,9 +86,9 @@ const MemoryCardScreen = () => {
     setGameOver(false);
     timeRef.current.stop();
     timeRef.current.reset();
-  };
+  }, []);
 
-  const successContent = () => {
+  const successContent = React.useCallback(() => {
     return (
       <MemorySuccessModal
         pad={pad}
@@ -96,13 +97,14 @@ const MemoryCardScreen = () => {
         centiseconds={centiseconds}
       />
     );
-  };
+  }, [duration, centiseconds, flipCounter]);
 
-  const sendScore = () =>
+  const sendScore = React.useCallback(() => {
     submitScore('match_cards', {
       flips: flipCounter,
       milliseconds: duration?.seconds() * 1000 + duration?.milliseconds(),
     });
+  }, [duration, flipCounter]);
 
   React.useEffect(() => {
     if (cards.length === 0) {
@@ -143,14 +145,14 @@ const MemoryCardScreen = () => {
 
       setGameOver(false);
     }
-  }, [cards]);
+  }, [cards, isGameOver]);
 
   React.useEffect(() => {
     if (gameOver) {
       lottieRef?.current?.play(0, 210);
       !user?.isGuest && sendScore();
     }
-  }, [gameOver]);
+  }, [gameOver, user?.isGuest, sendScore]);
 
   React.useEffect(() => {
     const flippedEqual =
