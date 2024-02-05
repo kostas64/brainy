@@ -86,7 +86,7 @@ const Card = React.forwardRef(
             },
             styles.back,
           ]}>
-          <Text style={styles.label}>?</Text>
+          <Text style={styles.labelBack}>?</Text>
         </Animated.View>
       </Pressable>
     );
@@ -97,8 +97,10 @@ const styles = StyleSheet.create({
   front: {
     height: WIDTH / 5,
     width: WIDTH / 5,
-    backgroundColor: 'rgba(255,255,255,1)',
+    backgroundColor: Colors.background,
     borderRadius: DimensionsUtils.getDP(16),
+    borderWidth: 1,
+    borderColor: Colors.appGreen,
     marginBottom: (WIDTH - WIDTH / 8 - (4 * WIDTH) / 5) / 3,
     position: 'absolute',
     alignItems: 'center',
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
   back: {
     height: WIDTH / 5,
     width: WIDTH / 5,
-    backgroundColor: 'rgba(255,135,135,0.9)',
+    backgroundColor: Colors.white,
     borderRadius: DimensionsUtils.getDP(16),
     marginBottom: (WIDTH - WIDTH / 8 - (4 * WIDTH) / 5) / 3,
     backfaceVisibility: 'hidden',
@@ -116,6 +118,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: DimensionsUtils.getFontSize(48),
+    color: Colors.white,
+  },
+  labelBack: {
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(48),
     color: Colors.black,
