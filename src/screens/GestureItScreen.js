@@ -57,11 +57,14 @@ const GestureItScreen = () => {
     <CardSuccessModal correct={correct} points={points} tries={tries} />
   );
 
-  const sendScore = () =>
-    submitScore('gesture_it', {
-      points,
-      correctness: Math.floor((correct / tries) * 100),
-    });
+  const sendScore = React.useCallback(
+    () =>
+      submitScore('gesture_it', {
+        points,
+        correctness: Math.floor((correct / tries) * 100),
+      }),
+    [correct, tries, points],
+  );
 
   const setNewGame = () => {
     setTries(0);
@@ -72,7 +75,7 @@ const GestureItScreen = () => {
     generateNext();
   };
 
-  const generatePosition = () => {
+  const generatePosition = React.useCallback(() => {
     setDesPos({
       left: GenericUtils.isIos()
         ? Math.floor(Math.random() * availableWidth)
@@ -81,7 +84,7 @@ const GestureItScreen = () => {
           ),
       top: DimensionsUtils.getDP(Math.floor(Math.random() * availableHeight)),
     });
-  };
+  }, [availableHeight, availableWidth, setDesPos]);
 
   const swipeHandler = e => {
     if (!timeRef.current.isRunning) {
@@ -127,17 +130,17 @@ const GestureItScreen = () => {
     generateNext();
   };
 
-  const generateNext = () => {
+  const generateNext = React.useCallback(() => {
     const arrayLen = designs.length;
     const randIndex = Math.floor(Math.random() * arrayLen);
 
     generatePosition();
     setCurrentDesign(GEST_DESIGNS[designs[randIndex]]);
-  };
+  }, [designs, generatePosition, setCurrentDesign]);
 
   React.useEffect(() => {
     generateNext();
-  }, []);
+  }, [generateNext]);
 
   React.useEffect(() => {
     if (isFinished) {
@@ -145,7 +148,7 @@ const GestureItScreen = () => {
       lottieRef?.current?.play(0, 210);
       !user?.isGuest && sendScore();
     }
-  }, [isFinished]);
+  }, [isFinished, user?.isGuest, sendScore]);
 
   return (
     <>
