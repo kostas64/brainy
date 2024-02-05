@@ -24,7 +24,7 @@ export const useFetch = (
     return (new Date().getTime() - new Date(date).getTime()) / minutes > 1;
   };
 
-  const [state, dispatch] = React.useReducer((state, action) => {
+  const [state, dispatch] = React.useReducer((data, action) => {
     switch (action.type) {
       case 'FETCHING':
         return {...initialState, status: 'fetching'};
@@ -33,13 +33,15 @@ export const useFetch = (
       case 'FETCH_ERROR':
         return {...initialState, status: 'error', error: action.payload};
       default:
-        return state;
+        return data;
     }
   }, initialState);
 
   React.useEffect(() => {
     let cancelRequest = false;
-    if (!url || !url.trim()) return;
+    if (!url || !url.trim()) {
+      return;
+    }
 
     const fetchData = async () => {
       //Start fetch proccess
@@ -74,13 +76,19 @@ export const useFetch = (
 
           cache.current[game] = {...data, date: new Date().toISOString()};
 
-          if (cancelRequest) return;
+          if (cancelRequest) {
+            return;
+          }
+
           dispatch({
             type: 'FETCHED',
             payload: {...data, date: new Date().toISOString()},
           });
         } catch (error) {
-          if (cancelRequest) return;
+          if (cancelRequest) {
+            return;
+          }
+
           dispatch({type: 'FETCH_ERROR', payload: error.message});
         }
       }
