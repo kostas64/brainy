@@ -148,7 +148,7 @@ const GamesList = ({
     const points = bestScores[item.title]?.[0]?.points;
     const scoreLabel = `Best: ${`${
       ms
-        ? `${ms} ms (${bestScores[item.title]?.[0]?.flips} flips)`
+        ? `${ms / 1000}s (${bestScores[item.title]?.[0]?.flips} flips)`
         : `${points} points (${bestScores[item.title]?.[0]?.correctness}%)`
     }`}`;
 
