@@ -64,7 +64,7 @@ const GamesScreen = ({navigation, route}) => {
       title: dict.gestureItGameTitle,
       poster: require('../assets/images/gesture_it.png'),
       onPress: () => navigation.navigate('GestureIt'),
-      description: 'Snap to the direction',
+      description: 'Swipe to the right direction',
     },
   ];
 
