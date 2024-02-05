@@ -10,16 +10,18 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
+
 import {
   State,
   Directions,
   FlingGestureHandler,
 } from 'react-native-gesture-handler';
-import React from 'react';
 
+import React from 'react';
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
 import {AuthContext} from '../../context/AuthProvider';
+import {useNavigation} from '@react-navigation/native';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const SPACING = DimensionsUtils.getDP(10);
@@ -70,6 +72,7 @@ const GamesList = ({
   setActiveIndex,
   scrollXAnimated,
 }) => {
+  const navigation = useNavigation();
   const {user} = React.useContext(AuthContext);
   const [flinged, setFlinged] = React.useState(0);
 
@@ -120,10 +123,10 @@ const GamesList = ({
   const onItemPress = React.useCallback(
     item => {
       if (flinged === 0) {
-        !!item?.onPress && item?.onPress();
+        navigation.navigate(item.screen);
       }
     },
-    [flinged],
+    [flinged, navigation],
   );
 
   const renderItem = ({item, index}) => {
