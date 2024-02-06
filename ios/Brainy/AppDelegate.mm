@@ -1,4 +1,3 @@
-#import <Bugsnag/Bugsnag.h>
 #import "AppDelegate.h"
 #import "RNBootSplash.h"
 #import <React/RCTBundleURLProvider.h>
@@ -16,8 +15,6 @@
       FlipperClient *client = [FlipperClient sharedClient];
       [client addPlugin:[FlipperPerformancePlugin new]];
     #endif
-  
-    [Bugsnag start];
 
 self.moduleName = @"Brainy";
   // You can add your custom initial props in the dictionary below.
