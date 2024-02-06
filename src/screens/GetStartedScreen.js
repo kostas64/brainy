@@ -53,6 +53,8 @@ const GetStartedScreen = ({navigation}) => {
           email: user?.email,
           avatar: user?.avatar,
           isGuest: false,
+          name: user?.name,
+          surname: user?.surname,
         });
       }
       logged && setOutCircle(Colors.appGreen);
@@ -62,6 +64,8 @@ const GetStartedScreen = ({navigation}) => {
         email: user?.email,
         avatar: user?.avatar,
         isGuest: true,
+        name: user?.name,
+        surname: user?.surname,
       });
       setOutCircle(Colors.white);
       setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);

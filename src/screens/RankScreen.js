@@ -32,12 +32,17 @@ const RankScreen = ({navigation}) => {
 
   const {status, data} = useFetch(query, 'GET', true, gameInput, force);
 
-  const closeMenu = () => menuRef.current?.closeMenu();
-
-  const setValue = React.useCallback(item => {
-    closeMenu();
-    setGameInput(item);
+  const closeMenu = React.useCallback(() => {
+    menuRef.current?.closeMenu();
   }, []);
+
+  const setValue = React.useCallback(
+    item => {
+      closeMenu();
+      setGameInput(item);
+    },
+    [closeMenu],
+  );
 
   const logout = React.useCallback(async () => {
     !user?.isGuest && (await signOut(setToken, setUser));

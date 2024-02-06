@@ -62,10 +62,15 @@ export const signIn = async (setToken, setUser, setLoading) => {
         email: data?.user?.email,
         avatar: data?.user?.avatar,
         isGuest: false,
+        name: data?.user?.name,
+        surname: data?.user?.surname,
       });
+
       await AsyncStorage.setItem('token', data?.token);
       await AsyncStorage.setItem('email', data?.user?.email);
       await AsyncStorage.setItem('avatar', data?.user?.avatar);
+      await AsyncStorage.setItem('name', data?.user?.name);
+      await AsyncStorage.setItem('surname', data?.user?.surname);
     }
 
     setLoading(false);
@@ -83,8 +88,13 @@ export const signOut = async (setToken, setUser) => {
     email: null,
     avatar: old?.avatar,
     isGuest: null,
+    name: null,
+    surname: null,
   }));
+
   await AsyncStorage.removeItem('token');
   await AsyncStorage.removeItem('email');
   await AsyncStorage.removeItem('avatar');
+  await AsyncStorage.removeItem('name');
+  await AsyncStorage.removeItem('surname');
 };
