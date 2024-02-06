@@ -25,7 +25,7 @@ const RankFlipListItem = ({item, index, isMe}) => {
         <Text style={styles.textGreenBold}>
           {Math.floor(item?.milliseconds / 1000)}
         </Text>
-        <Text style={styles.textGreyReg}>{`s `}</Text>
+        <Text style={styles.textGreyReg}>{'s '}</Text>
         <Text style={styles.textGreenBold}>
           {Math.floor(item?.milliseconds % 1000)}
         </Text>

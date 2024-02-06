@@ -1,3 +1,6 @@
+import {Dimensions, Platform} from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
+
 import {
   BEST_OF,
   EQUAL_MATH,
@@ -5,10 +8,9 @@ import {
   COLOR_CARDS,
   MATCH_CARDS,
 } from '../Endpoints';
-import {Dimensions, Platform} from 'react-native';
-import RNBootSplash from 'react-native-bootsplash';
 
-const {height: HEIGHT} = Dimensions.get('window');
+export const WIDTH = Dimensions.get('window').width;
+export const HEIGHT = Dimensions.get('window').height;
 export class GenericUtils {
   static adaptLayout = (small, big) => {
     return HEIGHT <= 720 ? small : big;
