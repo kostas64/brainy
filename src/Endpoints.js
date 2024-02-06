@@ -10,3 +10,6 @@ export const COLOR_CARDS = '/colorCards';
 export const EQUAL_MATH = '/equalMath';
 export const GESTURE_IT = '/gestureIt';
 export const BEST_OF = '/bestOf';
+export const FRIENDS_REQUEST = '/friends/request';
+export const CANCEL_FRIENDS_REQUEST = '/friends/cancel-request';
+export const ACCEPT_FRIENDS_REQUEST = '/friends/accept-request';
