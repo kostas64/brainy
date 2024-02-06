@@ -3,6 +3,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {Text, Pressable, StyleSheet, FlatList, View} from 'react-native';
@@ -27,11 +28,7 @@ const InputDropdown = ({
 
   const iconStyles = useAnimatedStyle(() => {
     return {
-      transform: [
-        {
-          rotate: `${icon.value}deg`,
-        },
-      ],
+      transform: [{rotate: `${icon.value}deg`}],
     };
   });
 

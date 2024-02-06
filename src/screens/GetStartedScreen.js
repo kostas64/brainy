@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
@@ -24,9 +23,8 @@ import CircularTransition from '../components/transitions/CircularTransition';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 
-const GetStartedScreen = () => {
+const GetStartedScreen = ({navigation}) => {
   const insets = useSafeAreaInsets();
-  const {setOptions} = useNavigation();
   const {token, setToken, user, setUser} = useAuthContext();
 
   const opacityRef = React.useRef(new Animated.Value(0)).current;
@@ -40,8 +38,8 @@ const GetStartedScreen = () => {
   });
 
   React.useEffect(() => {
-    setOptions({gestureEnabled: false});
-  }, [setOptions]);
+    navigation.setOptions({gestureEnabled: false});
+  }, [navigation]);
 
   const navigate = async (e, type) => {
     if (type === 'login') {

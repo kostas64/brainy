@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {Animated} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const CircularTransition = ({posX, posY, outCircleColor, inCircleColor}) => {
+const CircularTransition = ({posX, posY, inCircleColor, outCircleColor}) => {
   const navigation = useNavigation();
   const scaleRef = React.useRef(new Animated.Value(0)).current;
 
@@ -28,7 +29,7 @@ const CircularTransition = ({posX, posY, outCircleColor, inCircleColor}) => {
         });
       });
     }
-  }, [posX, posY]);
+  }, [posX, posY, scaleRef]);
 
   return (
     <>

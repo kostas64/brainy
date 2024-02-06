@@ -60,7 +60,9 @@ const RankScreen = ({navigation}) => {
     !isFocused && menuRef?.current?.closeMenu();
     isFocused && setForce(true);
     !isFocused && setForce(false);
-  }, [isFocused]);
+    isFocused && navigation.getParent()?.setOptions({gestureEnabled: false});
+    !isFocused && navigation.getParent()?.setOptions({gestureEnabled: true});
+  }, [isFocused, navigation]);
 
   React.useEffect(() => {
     setQuery(`${SCORE}${GenericUtils.getEndpoint(gameInput)}?page=${page}`);

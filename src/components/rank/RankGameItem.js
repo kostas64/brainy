@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {GAMES} from '../../assets/values/games';
 import RankFlipListItem from './RankFlipListItem';
 import RankPointListItem from './RankPointListItem';
