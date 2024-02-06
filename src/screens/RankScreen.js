@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {FlashList} from '@shopify/flash-list';
 import {useIsFocused} from '@react-navigation/native';
@@ -16,9 +15,8 @@ import {GenericUtils} from '../utils/GenericUtils';
 import {useAuthContext} from '../context/AuthProvider';
 import EmptyList from '../components/common/EmptyList';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import RankGameItem from '../components/rank/RankGameItem';
 import InputDropdown from '../components/common/InputDropdown';
-import RankFlipListItem from '../components/rank/RankFlipListItem';
-import RankPointListItem from '../components/rank/RankPointListItem';
 
 const RankScreen = ({navigation}) => {
   const isFocused = useIsFocused();
@@ -36,40 +34,27 @@ const RankScreen = ({navigation}) => {
 
   const closeMenu = () => menuRef.current?.closeMenu();
 
-  const setValue = item => {
+  const setValue = React.useCallback(item => {
     closeMenu();
     setGameInput(item);
-  };
+  }, []);
 
   const logout = React.useCallback(async () => {
     !user?.isGuest && (await signOut(setToken, setUser));
     navigation.pop();
-  }, [user?.isGuest]);
+  }, [user?.isGuest, navigation, setToken, setUser]);
 
-  const renderItem = ({item, index}) => {
-    switch (gameInput) {
-      case GAMES[0]:
-        return (
-          <RankFlipListItem
-            item={item}
-            index={index}
-            isMe={!user?.isGuest && user?.email === item?.user?.[0]?.email}
-          />
-        );
-      case GAMES[1]:
-      case GAMES[2]:
-      case GAMES[3]:
-        return (
-          <RankPointListItem
-            item={item}
-            index={index}
-            isMe={!user?.isGuest && user?.email === item?.user?.[0]?.email}
-          />
-        );
-      default:
-        return null;
-    }
-  };
+  const renderItem = React.useCallback(
+    ({item, index}) => (
+      <RankGameItem
+        item={item}
+        index={index}
+        gameInput={gameInput}
+        key={`rank-game-${index}`}
+      />
+    ),
+    [gameInput],
+  );
 
   React.useEffect(() => {
     !isFocused && menuRef?.current?.closeMenu();
@@ -79,7 +64,7 @@ const RankScreen = ({navigation}) => {
 
   React.useEffect(() => {
     setQuery(`${SCORE}${GenericUtils.getEndpoint(gameInput)}?page=${page}`);
-  }, [gameInput]);
+  }, [page, gameInput]);
 
   return (
     <View onStartShouldSetResponder={closeMenu} style={styles.container}>
