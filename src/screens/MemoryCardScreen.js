@@ -6,7 +6,7 @@ import MathUtils from '../utils/MathUtils';
 import {submitScore} from '../services/score';
 import Card from '../components/cardMemory/Card';
 import MemoryValues from '../assets/values/memory';
-import {AuthContext} from '../context/AuthProvider';
+import {useAuthContext} from '../context/AuthProvider';
 import StopWatch from '../components/common/StopWatch';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import AnimatedModal from '../components/common/AnimatedModal';
@@ -28,7 +28,7 @@ const MemoryCardScreen = () => {
   const animAnswerRef = React.useRef();
   const childRefs = React.useRef([]);
 
-  const {user} = React.useContext(AuthContext);
+  const {user} = useAuthContext();
 
   const [tutOpen, setTutOpen] = React.useState(true);
   const [modalOpen, setModalOpen] = React.useState(false);

@@ -10,7 +10,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -18,7 +18,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Colors} from '../utils/Colors';
 import {signIn} from '../services/auth';
 import dict from '../assets/values/dict.json';
-import {AuthContext} from '../context/AuthProvider';
+import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CircularTransition from '../components/transitions/CircularTransition';
 
@@ -27,7 +27,7 @@ const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 const GetStartedScreen = () => {
   const insets = useSafeAreaInsets();
   const {setOptions} = useNavigation();
-  const {token, setToken, user, setUser} = useContext(AuthContext);
+  const {token, setToken, user, setUser} = useAuthContext();
 
   const opacityRef = React.useRef(new Animated.Value(0)).current;
   const translateYRef = React.useRef(new Animated.Value(10)).current;

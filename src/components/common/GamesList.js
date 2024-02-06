@@ -2,13 +2,10 @@
 import {
   View,
   Text,
-  Image,
   Animated,
   FlatList,
-  Pressable,
   Dimensions,
   StyleSheet,
-  ActivityIndicator,
 } from 'react-native';
 
 import {
@@ -19,18 +16,14 @@ import {
 
 import React from 'react';
 import {Colors} from '../../utils/Colors';
-import dict from '../../assets/values/dict.json';
-import {AuthContext} from '../../context/AuthProvider';
+import GamesListItem from './GamesListItem';
 import {useNavigation} from '@react-navigation/native';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const SPACING = DimensionsUtils.getDP(10);
 const OVERFLOW_HEIGHT = DimensionsUtils.getDP(46);
 const {width, height} = Dimensions.get('window');
-const AnimPressable = Animated.createAnimatedComponent(Pressable);
 
-const VISIBLE_ITEMS = 3;
-const ITEM_WIDTH = height <= 700 ? (width * 0.88) / 1.4 : width * 0.75;
 const ITEM_HEIGHT =
   height <= 600 ? width * 0.88 : height <= 700 ? width : height * 0.6;
 
@@ -73,37 +66,42 @@ const GamesList = ({
   scrollXAnimated,
 }) => {
   const navigation = useNavigation();
-  const {user} = React.useContext(AuthContext);
   const [flinged, setFlinged] = React.useState(0);
 
-  const onFlingLeft = e => {
-    if (e.nativeEvent.state === State.END) {
-      if (index === data.length - 1) {
+  const onFlingLeft = React.useCallback(
+    e => {
+      if (e.nativeEvent.state === State.END) {
+        if (index === data.length - 1) {
+          setFlinged(0);
+          return;
+        }
+
+        setIndex(oldInd => oldInd + 1);
+        scrollXIndex.setValue(index + 1);
         setFlinged(0);
-        return;
+      } else if (e.nativeEvent.state === State.ACTIVE) {
+        setFlinged(1);
       }
+    },
+    [index, data.length, scrollXIndex, setIndex],
+  );
 
-      setIndex(oldInd => oldInd + 1);
-      scrollXIndex.setValue(index + 1);
-      setFlinged(0);
-    } else if (e.nativeEvent.state === State.ACTIVE) {
-      setFlinged(1);
-    }
-  };
+  const onFlingRight = React.useCallback(
+    e => {
+      if (e.nativeEvent.state === State.END) {
+        if (index === 0) {
+          setFlinged(0);
+          return;
+        }
 
-  const onFlingRight = e => {
-    if (e.nativeEvent.state === State.END) {
-      if (index === 0) {
+        setActiveIndex(index - 1);
         setFlinged(0);
-        return;
+      } else if (e.nativeEvent.state === State.ACTIVE) {
+        setFlinged(1);
       }
-
-      setActiveIndex(index - 1);
-      setFlinged(0);
-    } else if (e.nativeEvent.state === State.ACTIVE) {
-      setFlinged(1);
-    }
-  };
+    },
+    [index, setActiveIndex],
+  );
 
   const cellRenderedComponent = ({item, index, children, style, ...props}) => {
     const newStyle = [style, {zIndex: data.length - index}];
@@ -129,62 +127,20 @@ const GamesList = ({
     [flinged, navigation],
   );
 
-  const renderItem = ({item, index}) => {
-    const inputRange = [index - 1, index, index + 1];
-
-    const translateX = scrollXAnimated.interpolate({
-      inputRange,
-      outputRange: [50, 0, -width],
-    });
-
-    const scale = scrollXAnimated.interpolate({
-      inputRange,
-      outputRange: [0.8, 1, 1],
-    });
-
-    const opacity = scrollXAnimated.interpolate({
-      inputRange,
-      outputRange: [1 - 2 / VISIBLE_ITEMS, 1, 0],
-    });
-
-    const ms = bestScores[item.title]?.[0]?.milliseconds;
-    const points = bestScores[item.title]?.[0]?.points;
-    const scoreLabel = `Best: ${`${
-      ms
-        ? `${ms / 1000}s (${bestScores[item.title]?.[0]?.flips} flips)`
-        : `${points} points (${bestScores[item.title]?.[0]?.correctness}%)`
-    }`}`;
-
-    return (
-      <AnimPressable
-        onPress={() => onItemPress(item)}
-        style={[
-          styles.cardContainer,
-          {
-            opacity,
-            transform: [
-              {
-                translateX,
-              },
-              {scale},
-            ],
-          },
-        ]}>
-        <Image source={item.poster} style={styles.image} />
-        {user?.isGuest ? null : (
-          <View style={styles.scoreContainer}>
-            {loadingScores ? (
-              <ActivityIndicator size={'small'} color={Colors.tabBarBg} />
-            ) : (
-              <Text style={styles.score}>
-                {!!ms || !!points ? scoreLabel : dict?.gamesNoScore}
-              </Text>
-            )}
-          </View>
-        )}
-      </AnimPressable>
-    );
-  };
+  const renderItem = React.useCallback(
+    ({item, index}) => (
+      <GamesListItem
+        item={item}
+        index={index}
+        bestScores={bestScores}
+        onItemPress={onItemPress}
+        key={`game-list-${index}`}
+        loadingScores={loadingScores}
+        scrollXAnimated={scrollXAnimated}
+      />
+    ),
+    [bestScores, loadingScores, scrollXAnimated, onItemPress],
+  );
 
   return (
     <FlingGestureHandler
@@ -238,27 +194,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     fontSize: DimensionsUtils.getFontSize(16),
   },
-  cardContainer: {
-    position: 'absolute',
-    left: -ITEM_WIDTH / 2,
-    borderColor: Colors.tabBarIcon,
-    borderRadius: DimensionsUtils.getDP(20),
-    borderWidth: DimensionsUtils.getDP(2),
-  },
-  scoreContainer: {
-    position: 'absolute',
-    left: DimensionsUtils.getDP(16),
-    top: DimensionsUtils.getDP(16),
-    backgroundColor: Colors.tabBarIcon,
-    padding: DimensionsUtils.getDP(6),
-    borderRadius: DimensionsUtils.getDP(8),
-  },
-  score: {
-    color: Colors.black,
-    fontFamily: 'Poppins-Medium',
-    fontSize: 14,
-    height: 20,
-  },
   overflowContainer: {
     height: OVERFLOW_HEIGHT,
     overflow: 'hidden',
@@ -271,11 +206,6 @@ const styles = StyleSheet.create({
   overflowItemContainer: {
     height: OVERFLOW_HEIGHT,
     paddingHorizontal: SPACING * 3,
-  },
-  image: {
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
-    borderRadius: DimensionsUtils.getDP(18),
   },
 });
 

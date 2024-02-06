@@ -9,7 +9,7 @@ import {submitScore} from '../services/score';
 import dict from '../assets/values/dict.json';
 import {COLORS} from '../assets/values/colors';
 import Points from '../components/common/Points';
-import {AuthContext} from '../context/AuthProvider';
+import {useAuthContext} from '../context/AuthProvider';
 import CountdownTimer from '../components/common/Timer';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import ColorCard from '../components/cardColor/ColorCard';
@@ -44,7 +44,7 @@ const ColorCardScreen = () => {
   const lottieRef = React.useRef();
   const animAnswerRef = React.useRef();
 
-  const {user} = React.useContext(AuthContext);
+  const {user} = useAuthContext();
 
   const [rand1, setRand1] = React.useState();
   const [rand2, setRand2] = React.useState();

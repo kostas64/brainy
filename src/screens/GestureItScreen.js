@@ -6,7 +6,7 @@ import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
 import {GenericUtils} from '../utils/GenericUtils';
-import {AuthContext} from '../context/AuthProvider';
+import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import {GEST_DESIGNS} from '../assets/values/gestDesignes';
@@ -28,8 +28,7 @@ const GestureItScreen = () => {
   const lottieRef = React.useRef();
   const animAnswerRef = React.useRef();
 
-  const {user} = React.useContext(AuthContext);
-
+  const {user} = useAuthContext();
   const [tries, setTries] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
   const [points, setPoints] = React.useState(0);

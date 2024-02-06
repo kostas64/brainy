@@ -2,7 +2,7 @@
 import React from 'react';
 import {useIsFocused} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Animated, Platform, StatusBar, StyleSheet} from 'react-native';
+import {View, Animated, StatusBar, StyleSheet} from 'react-native';
 
 import {SCORE} from '../Endpoints';
 import {Colors} from '../utils/Colors';
@@ -10,15 +10,16 @@ import {signOut} from '../services/auth';
 import {useFetch} from '../hooks/useFetch';
 import dict from '../assets/values/dict.json';
 import Header from '../components/common/Header';
+import {LIST_GAMES} from '../assets/values/games';
 import {GenericUtils} from '../utils/GenericUtils';
-import {AuthContext} from '../context/AuthProvider';
+import {useAuthContext} from '../context/AuthProvider';
 import GamesList from '../components/common/GamesList';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 
 const GamesScreen = ({navigation, route}) => {
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
-  const {user, setUser, setToken} = React.useContext(AuthContext);
+  const {user, setUser, setToken} = useAuthContext();
 
   const menuRef = React.useRef();
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
@@ -33,40 +34,13 @@ const GamesScreen = ({navigation, route}) => {
     setIndex(activeIndex);
   }, []);
 
-  const {status, data, error} = useFetch(
+  const {status, data} = useFetch(
     !user?.isGuest ? `${SCORE}${GenericUtils.getEndpoint('Best Of')}` : null,
     'GET',
     true,
     'Best Of',
     force,
   );
-
-  const GAMES = [
-    {
-      title: dict.memoryCardsGameTitle,
-      poster: require('../assets/images/memory_match.png'),
-      onPress: () => navigation.navigate('MemoryCard'),
-      description: 'Match the pairs',
-    },
-    {
-      title: dict.colorMatchGameTitle,
-      poster: require('../assets/images/color_match.png'),
-      onPress: () => navigation.navigate('ColorCard'),
-      description: 'Mix up colors and text?',
-    },
-    {
-      title: dict.doTheMathGameTitle,
-      poster: require('../assets/images/match_equal.png'),
-      onPress: () => navigation.navigate('EqualMath'),
-      description: 'Test your math skills',
-    },
-    {
-      title: dict.gestureItGameTitle,
-      poster: require('../assets/images/gesture_it.png'),
-      onPress: () => navigation.navigate('GestureIt'),
-      description: 'Swipe to the right direction',
-    },
-  ];
 
   const logout = async () => {
     !user?.isGuest && (await signOut(setToken, setUser));
@@ -76,13 +50,15 @@ const GamesScreen = ({navigation, route}) => {
   React.useEffect(() => {
     Animated.timing(opacityRef, {
       toValue: 1,
-      duration: Platform.OS === 'ios' ? 1000 : 350,
+      duration: GenericUtils.isIos() ? 1000 : 350,
       useNativeDriver: true,
     }).start();
 
-    navigation.addListener('beforeRemove', () => {
+    const bfrRemove = navigation.addListener('beforeRemove', () => {
       route?.params?.backTransition();
     });
+
+    return bfrRemove;
   }, []);
 
   React.useEffect(() => {
@@ -97,7 +73,7 @@ const GamesScreen = ({navigation, route}) => {
       toValue: scrollXIndex,
       useNativeDriver: true,
     }).start();
-  });
+  }, []);
 
   return (
     <View
@@ -123,7 +99,7 @@ const GamesScreen = ({navigation, route}) => {
       </View>
       <Animated.View style={[styles.flex, {opacity: opacityRef}]}>
         <GamesList
-          data={GAMES}
+          data={LIST_GAMES}
           index={index}
           bestScores={data}
           setIndex={setIndex}

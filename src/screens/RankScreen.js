@@ -13,7 +13,7 @@ import {GAMES} from '../assets/values/games';
 import dict from '../assets/values/dict.json';
 import Header from '../components/common/Header';
 import {GenericUtils} from '../utils/GenericUtils';
-import {AuthContext} from '../context/AuthProvider';
+import {useAuthContext} from '../context/AuthProvider';
 import EmptyList from '../components/common/EmptyList';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import InputDropdown from '../components/common/InputDropdown';
@@ -25,14 +25,14 @@ const RankScreen = ({navigation}) => {
   const insets = useSafeAreaInsets();
 
   const menuRef = React.useRef();
-  const {user, setUser, setToken} = React.useContext(AuthContext);
+  const {user, setUser, setToken} = useAuthContext();
 
   const [query, setQuery] = React.useState(null);
   const [page, setPage] = React.useState(1);
   const [force, setForce] = React.useState(false);
   const [gameInput, setGameInput] = React.useState(GAMES[0]);
 
-  const {status, data, error} = useFetch(query, 'GET', true, gameInput, force);
+  const {status, data} = useFetch(query, 'GET', true, gameInput, force);
 
   const closeMenu = () => menuRef.current?.closeMenu();
 

@@ -7,7 +7,7 @@ import {Colors} from '../utils/Colors';
 import dict from '../assets/values/dict.json';
 import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
-import {AuthContext} from '../context/AuthProvider';
+import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import EqualButton from '../components/equalMath/EqualButton';
@@ -39,7 +39,7 @@ const EqualMathScreen = () => {
   const lottieRef = React.useRef();
   const animAnswerRef = React.useRef();
 
-  const {user} = React.useContext(AuthContext);
+  const {user} = useAuthContext();
 
   const [points, setPoints] = React.useState(0);
   const [correct, setCorrect] = React.useState(0);
