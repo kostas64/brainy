@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Animated} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
