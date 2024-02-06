@@ -6,6 +6,7 @@ import {
   MATCH_CARDS,
 } from '../Endpoints';
 import {Dimensions, Platform} from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
 
 const {height: HEIGHT} = Dimensions.get('window');
 export class GenericUtils {
@@ -27,4 +28,8 @@ export class GenericUtils {
       : null;
 
   static isIos = () => Platform.OS === 'ios';
+
+  static onNavigationReady = () => {
+    RNBootSplash.hide({fade: true, duration: 300});
+  };
 }
