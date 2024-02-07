@@ -1,7 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, Pressable, StyleSheet, Dimensions, Platform} from 'react-native';
+import {Text, Pressable, StyleSheet, Dimensions} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import {isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -13,7 +15,7 @@ const ColorButton = ({onPress, disabled, label, insets}) => {
       onPress={onPress}
       style={[
         styles.buttonContainer,
-        Platform.OS === 'android' && {height: DimensionsUtils.getDP(58)},
+        isAndroid && {height: DimensionsUtils.getDP(58)},
         {
           opacity: disabled ? 0.4 : 1,
           marginBottom:

@@ -1,6 +1,9 @@
-import {Pressable, Text, StyleSheet, Dimensions, Platform} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import {Pressable, Text, StyleSheet, Dimensions} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import {isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -12,7 +15,7 @@ const EqualButton = ({disabled = false, onPress, insets, label}) => {
       onPress={onPress}
       style={[
         styles.buttonContainer,
-        Platform.OS === 'android' && {height: DimensionsUtils.getDP(58)},
+        isAndroid && {height: DimensionsUtils.getDP(58)},
         {
           opacity: disabled ? 0.4 : 1,
           marginBottom:

@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet, Platform} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
+import {isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Points = ({points}) => {
@@ -10,7 +11,7 @@ const Points = ({points}) => {
     <View
       style={[
         styles.counterContainer,
-        Platform.OS === 'android' && {height: DimensionsUtils.getDP(50)},
+        isAndroid && {height: DimensionsUtils.getDP(50)},
       ]}>
       <Text
         style={styles.counterLabel}>{`${dict.pointsLabel}: ${points} `}</Text>

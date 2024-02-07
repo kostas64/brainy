@@ -11,6 +11,10 @@ import {
 
 export const WIDTH = Dimensions.get('window').width;
 export const HEIGHT = Dimensions.get('window').height;
+
+export const isIOS = Platform.OS === 'ios';
+export const isAndroid = Platform.OS === 'android';
+
 export class GenericUtils {
   static adaptLayout = (small, big) => {
     return HEIGHT <= 720 ? small : big;
@@ -28,8 +32,6 @@ export class GenericUtils {
       : game === 'Best Of'
       ? BEST_OF
       : null;
-
-  static isIos = () => Platform.OS === 'ios';
 
   static onNavigationReady = () => {
     RNBootSplash.hide({fade: true, duration: 300});

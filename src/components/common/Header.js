@@ -1,18 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  View,
-  Text,
-  Platform,
-  Animated,
-  Pressable,
-  StyleSheet,
-} from 'react-native';
 import React, {useCallback} from 'react';
 import FastImage from 'react-native-fast-image';
+import {View, Text, Animated, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
+import {isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimatedButton = Animated.createAnimatedComponent(Pressable);
@@ -75,7 +69,7 @@ const Header = React.forwardRef(({label, avatar, isGuest, logout}, ref) => {
         <Text
           style={[
             styles.label,
-            Platform.OS === 'android' && {
+            isAndroid && {
               marginTop: DimensionsUtils.getDP(2),
             },
           ]}>

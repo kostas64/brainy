@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import {View, Text, StyleSheet, Platform} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import {isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const CountdownTimer = React.forwardRef(({seconds, setIsFinished}, ref) => {
@@ -76,7 +77,7 @@ const CountdownTimer = React.forwardRef(({seconds, setIsFinished}, ref) => {
     <View
       style={[
         styles.container,
-        Platform.OS === 'android' && {height: DimensionsUtils.getDP(50)},
+        isAndroid && {height: DimensionsUtils.getDP(50)},
       ]}>
       <View style={styles.timerContainer}>
         <Text style={styles.timer}>{getTime().minutes}:</Text>

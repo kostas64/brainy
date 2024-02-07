@@ -2,7 +2,6 @@
 import {
   View,
   Text,
-  Platform,
   Animated,
   Pressable,
   StatusBar,
@@ -18,6 +17,7 @@ import {Colors} from '../utils/Colors';
 import {signIn} from '../services/auth';
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
+import {isAndroid} from '../utils/GenericUtils';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CircularTransition from '../components/transitions/CircularTransition';
@@ -111,9 +111,7 @@ const GetStartedScreen = ({navigation}) => {
         <FastImage
           source={images.logo}
           style={[
-            Platform.OS === 'android' && {
-              marginTop: DimensionsUtils.getDP(26),
-            },
+            isAndroid && {marginTop: DimensionsUtils.getDP(26)},
             styles.image,
           ]}
         />
