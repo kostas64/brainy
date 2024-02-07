@@ -8,6 +8,7 @@ import {
   COLOR_CARDS,
   MATCH_CARDS,
 } from '../Endpoints';
+import images from '../assets/images/images';
 
 export const WIDTH = Dimensions.get('window').width;
 export const HEIGHT = Dimensions.get('window').height;
@@ -35,5 +36,18 @@ export class GenericUtils {
 
   static onNavigationReady = () => {
     RNBootSplash.hide({fade: true, duration: 300});
+  };
+
+  static matchGameNameWithImg = game => {
+    switch (game) {
+      case 'Memory Cards':
+        return images.memoryMatch;
+      case 'Color Match':
+        return images.colorMatch;
+      case 'Do the math':
+        return images.matchEqual;
+      case 'Gesture It':
+        return images.gestureIt;
+    }
   };
 }
