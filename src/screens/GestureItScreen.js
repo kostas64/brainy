@@ -1,15 +1,15 @@
 import React from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 
-import {isIOS} from '../utils/GenericUtils';
 import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import {GEST_DESIGNS} from '../assets/values/gestDesignes';
+import {HEIGHT, WIDTH, isIOS} from '../utils/GenericUtils';
 import AnimatedModal from '../components/common/AnimatedModal';
 import AnimatedAnswer from '../components/common/AnimatedAnswer';
 import NewGameButton from '../components/cardMemory/NewGameButton';
@@ -17,8 +17,6 @@ import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import CardSuccessModal from '../components/cardColor/CardSuccessModal';
 import GestureItTutorial from '../components/gestureIt/GestureItTutorial';
-
-const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 
 const GestureItScreen = () => {
   const insets = useSafeAreaInsets();

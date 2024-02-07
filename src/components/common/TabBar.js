@@ -5,7 +5,6 @@ import {
   Easing,
   Animated,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
@@ -13,11 +12,10 @@ import FastImage from 'react-native-fast-image';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../../utils/Colors';
+import {WIDTH} from '../../utils/GenericUtils';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
-
-const {width: WIDTH} = Dimensions.get('window');
 
 const gamesI = images.gamesIcon;
 const gamesIO = images.gamesIconO;

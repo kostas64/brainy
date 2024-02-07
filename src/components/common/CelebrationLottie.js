@@ -1,11 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Dimensions} from 'react-native';
 import Lottie from 'lottie-react-native';
 
+import {HEIGHT, WIDTH} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
-
-const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 
 const CelebrationLottie = React.forwardRef(({}, ref) => {
   return (

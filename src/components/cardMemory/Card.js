@@ -1,18 +1,10 @@
 /* eslint-disable no-shadow */
-import {
-  Text,
-  Easing,
-  Animated,
-  Pressable,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
 import React, {useImperativeHandle} from 'react';
+import {Text, Easing, Animated, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import {WIDTH} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
-
-const {width: WIDTH} = Dimensions.get('window');
 
 const Card = React.forwardRef(
   ({value, index, cardsDisabled, isFlipped, setIsFlipped}, ref) => {

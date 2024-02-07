@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import {View, Dimensions, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
 import MathUtils from '../utils/MathUtils';
+import {WIDTH} from '../utils/GenericUtils';
 import {submitScore} from '../services/score';
 import dict from '../assets/values/dict.json';
 import {COLORS} from '../assets/values/colors';
@@ -21,8 +22,6 @@ import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import CardSuccessModal from '../components/cardColor/CardSuccessModal';
 import CardColorTutorial from '../components/cardColor/CardColorTutorial';
-
-const {width: WIDTH} = Dimensions.get('window');
 
 const BottomButton = ({label, onPress, disabled}) => {
   const insets = useSafeAreaInsets();

@@ -5,7 +5,6 @@ import {
   Animated,
   Pressable,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
@@ -14,12 +13,11 @@ import {useNavigation} from '@react-navigation/native';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 
 import {Colors} from '../../utils/Colors';
-import {isIOS} from '../../utils/GenericUtils';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
+import {WIDTH, isIOS} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const {width: WIDTH} = Dimensions.get('window');
 const AnimPress = Animated.createAnimatedComponent(Pressable);
 const AnimatedImage = Animated.createAnimatedComponent(FastImage);
 

@@ -1,12 +1,4 @@
 /* eslint-disable no-shadow */
-import {
-  View,
-  Text,
-  Animated,
-  FlatList,
-  Dimensions,
-  StyleSheet,
-} from 'react-native';
 
 import {
   State,
@@ -15,17 +7,19 @@ import {
 } from 'react-native-gesture-handler';
 
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {View, Text, Animated, FlatList, StyleSheet} from 'react-native';
+
 import {Colors} from '../../utils/Colors';
 import GamesListItem from './GamesListItem';
-import {useNavigation} from '@react-navigation/native';
+import {HEIGHT, WIDTH} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const SPACING = DimensionsUtils.getDP(10);
 const OVERFLOW_HEIGHT = DimensionsUtils.getDP(46);
-const {width, height} = Dimensions.get('window');
 
 const ITEM_HEIGHT =
-  height <= 600 ? width * 0.88 : height <= 700 ? width : height * 0.6;
+  HEIGHT <= 600 ? WIDTH * 0.88 : HEIGHT <= 700 ? WIDTH : HEIGHT * 0.6;
 
 const OverflowItems = ({data, scrollXAnimated}) => {
   const inputRange = [-1, 0, 1];
@@ -114,8 +108,8 @@ const GamesList = ({
 
   const getItemLayout = (_, index) => ({
     index,
-    length: width * 0.76,
-    offset: width * 0.76 * index,
+    length: WIDTH * 0.76,
+    offset: WIDTH * 0.76 * index,
   });
 
   const onItemPress = React.useCallback(

@@ -5,7 +5,6 @@ import {
   Animated,
   Pressable,
   StatusBar,
-  Dimensions,
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
@@ -17,12 +16,10 @@ import {Colors} from '../utils/Colors';
 import {signIn} from '../services/auth';
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
-import {isAndroid} from '../utils/GenericUtils';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import {HEIGHT, WIDTH, isAndroid} from '../utils/GenericUtils';
 import CircularTransition from '../components/transitions/CircularTransition';
-
-const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 
 const GetStartedScreen = ({navigation}) => {
   const insets = useSafeAreaInsets();

@@ -1,22 +1,15 @@
 import React from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import {WIDTH} from '../../utils/GenericUtils';
 import {COLORS} from '../../assets/values/colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
-
-const {width: WIDTH} = Dimensions.get('window');
 
 const ColorCard = ({number1, number2}) => {
   return (
     <View style={styles.cardContainer}>
-      <Text
-        style={[
-          styles.cardLabel,
-          {
-            color: COLORS[number1]?.value,
-          },
-        ]}>
+      <Text style={[styles.cardLabel, {color: COLORS[number1]?.value}]}>
         {COLORS[number2]?.color}
       </Text>
     </View>

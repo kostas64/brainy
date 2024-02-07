@@ -5,20 +5,21 @@ import {
   Animated,
   Pressable,
   StyleSheet,
-  Dimensions,
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
+
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
+import {HEIGHT, WIDTH} from '../../utils/GenericUtils';
 import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const VISIBLE_ITEMS = 3;
-const {width, height} = Dimensions.get('window');
-const ITEM_WIDTH = height <= 700 ? (width * 0.88) / 1.4 : width * 0.75;
+
+const ITEM_WIDTH = HEIGHT <= 700 ? (WIDTH * 0.88) / 1.4 : WIDTH * 0.75;
 const ITEM_HEIGHT =
-  height <= 600 ? width * 0.88 : height <= 700 ? width : height * 0.6;
+  HEIGHT <= 600 ? WIDTH * 0.88 : HEIGHT <= 700 ? WIDTH : HEIGHT * 0.6;
 
 const AnimPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -36,7 +37,7 @@ const GamesListItem = ({
 
   const translateX = scrollXAnimated.interpolate({
     inputRange,
-    outputRange: [50, 0, -width],
+    outputRange: [50, 0, -WIDTH],
   });
 
   const scale = scrollXAnimated.interpolate({
@@ -62,15 +63,7 @@ const GamesListItem = ({
       onPress={() => onItemPress(item)}
       style={[
         styles.cardContainer,
-        {
-          opacity,
-          transform: [
-            {
-              translateX,
-            },
-            {scale},
-          ],
-        },
+        {opacity, transform: [{translateX}, {scale}]},
       ]}>
       <Image source={item.poster} style={styles.image} />
       {user?.isGuest ? null : (

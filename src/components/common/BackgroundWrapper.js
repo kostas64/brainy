@@ -1,13 +1,13 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {Dimensions, StatusBar, StyleSheet, View} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
+import {HEIGHT, WIDTH} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const image = images.splash;
-const {width, height} = Dimensions.get('window');
 
 const BackgroundWrapper = ({statusBar}) => {
   return (
@@ -55,8 +55,8 @@ const BackgroundWrapper = ({statusBar}) => {
 
 const styles = StyleSheet.create({
   background: {
-    width,
-    height,
+    width: WIDTH,
+    height: HEIGHT,
     backgroundColor: Colors.background,
     position: 'absolute',
     top: 0,

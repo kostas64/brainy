@@ -1,11 +1,12 @@
 import React from 'react';
-import {View, Dimensions, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import MathUtils from '../utils/MathUtils';
 import {submitScore} from '../services/score';
 import Card from '../components/cardMemory/Card';
 import MemoryValues from '../assets/values/memory';
+import {HEIGHT, WIDTH} from '../utils/GenericUtils';
 import {useAuthContext} from '../context/AuthProvider';
 import StopWatch from '../components/common/StopWatch';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -17,8 +18,6 @@ import CelebrationLottie from '../components/common/CelebrationLottie';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import MemorySuccessModal from '../components/cardMemory/MemorySuccessModal';
 import CardMemoryTutorial from '../components/cardMemory/CardMemoryTutorial';
-
-const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 
 const MemoryCardScreen = () => {
   const insets = useSafeAreaInsets();

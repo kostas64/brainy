@@ -1,12 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, Pressable, StyleSheet, Dimensions} from 'react-native';
+import {Text, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
-import {isAndroid} from '../../utils/GenericUtils';
+import {WIDTH, isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
-
-const {width: WIDTH} = Dimensions.get('window');
 
 const ColorButton = ({onPress, disabled, label, insets}) => {
   return (

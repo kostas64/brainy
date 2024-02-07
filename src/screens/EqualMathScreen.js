@@ -1,9 +1,10 @@
 import React from 'react';
 import {evaluate} from 'mathjs';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Text, StyleSheet, Dimensions, Pressable} from 'react-native';
 
 import {Colors} from '../utils/Colors';
+import {WIDTH} from '../utils/GenericUtils';
 import dict from '../assets/values/dict.json';
 import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
@@ -18,8 +19,6 @@ import EqualMathModal from '../components/equalMath/EqualMathModal';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import EqualMathTutorial from '../components/equalMath/EqualMathTutorial';
-
-const {width: WIDTH} = Dimensions.get('window');
 
 const Card = ({onPress, equation, disabled}) => {
   return (
