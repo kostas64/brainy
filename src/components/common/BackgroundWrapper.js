@@ -3,10 +3,11 @@ import FastImage from 'react-native-fast-image';
 import {Dimensions, StatusBar, StyleSheet, View} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import images from '../../assets/images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
+const image = images.splash;
 const {width, height} = Dimensions.get('window');
-const image = require('../../assets/images/splash.png');
 
 const BackgroundWrapper = ({statusBar}) => {
   return (

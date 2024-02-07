@@ -1,3 +1,4 @@
+import images from '../images/images';
 import dict from '../values/dict.json';
 
 export const GAMES = [
@@ -10,25 +11,25 @@ export const GAMES = [
 export const LIST_GAMES = [
   {
     title: dict.memoryCardsGameTitle,
-    poster: require('../images/memory_match.png'),
+    poster: images.memoryMatch,
     screen: 'MemoryCard',
     description: 'Match the pairs',
   },
   {
     title: dict.colorMatchGameTitle,
-    poster: require('../images/color_match.png'),
+    poster: images.colorMatch,
     screen: 'ColorCard',
     description: 'Mix up colors and text?',
   },
   {
     title: dict.doTheMathGameTitle,
-    poster: require('../images/match_equal.png'),
+    poster: images.matchEqual,
     screen: 'EqualMath',
     description: 'Test your math skills',
   },
   {
     title: dict.gestureItGameTitle,
-    poster: require('../images/gesture_it.png'),
+    poster: images.gestureIt,
     screen: 'GestureIt',
     description: 'Swipe to the right direction',
   },

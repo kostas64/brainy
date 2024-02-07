@@ -11,6 +11,7 @@ import React, {useCallback} from 'react';
 import FastImage from 'react-native-fast-image';
 
 import {Colors} from '../../utils/Colors';
+import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
@@ -23,9 +24,7 @@ const Header = React.forwardRef(({label, avatar, isGuest, logout}, ref) => {
   const [pressed, setPressed] = React.useState(false);
   const [imgLoaded, setImgLoaded] = React.useState(isGuest ? true : false);
 
-  const iconSource = isGuest
-    ? require('../../assets/images/guest.png')
-    : {uri: avatar};
+  const iconSource = isGuest ? images.guest : {uri: avatar};
 
   const closeMenu = () => {
     Animated.timing(fadeRef, {
@@ -97,10 +96,7 @@ const Header = React.forwardRef(({label, avatar, isGuest, logout}, ref) => {
       {/* MENU BOX */}
       <AnimatedButton style={[styles.box, {opacity: fadeRef}]} onPress={logout}>
         <View style={styles.itemRow}>
-          <FastImage
-            source={require('../../assets/images/logout.png')}
-            style={styles.logoutIcon}
-          />
+          <FastImage source={images.logout} style={styles.logoutIcon} />
           <Text style={styles.logoutLabel}>{dict?.logout}</Text>
         </View>
       </AnimatedButton>

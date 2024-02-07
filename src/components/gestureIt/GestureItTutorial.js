@@ -11,12 +11,13 @@ import {
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
+import {PanGestureHandler, State} from 'react-native-gesture-handler';
 
 import {Colors} from '../../utils/Colors';
+import {isIOS} from '../../utils/GenericUtils';
+import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
-import {PanGestureHandler, State} from 'react-native-gesture-handler';
 
 const {width: WIDTH} = Dimensions.get('window');
 const AnimPress = Animated.createAnimatedComponent(Pressable);
@@ -36,7 +37,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
   const designOne = React.useCallback(() => (
     <>
       <AnimatedImage
-        source={require('../../assets/images/tap.png')}
+        source={images.tap}
         style={[
           styles.closeIcon,
           styles.designOne,
@@ -44,25 +45,14 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         ]}
       />
       <View style={styles.rowCenter}>
-        <FastImage
-          source={require('../../assets/images/arrow_black.png')}
-          style={styles.smallImg}
-        />
+        <FastImage source={images.arrowBlack} style={styles.smallImg} />
         <View style={styles.rightSpacer} />
         <FastImage
-          source={require('../../assets/images/arrow_black.png')}
-          style={[
-            styles.smallImg,
-            {
-              transform: [{rotate: '180deg'}],
-            },
-          ]}
+          source={images.arrowBlack}
+          style={[styles.smallImg, {transform: [{rotate: '180deg'}]}]}
         />
         <View style={styles.rightSpacer} />
-        <FastImage
-          source={require('../../assets/images/arrow_black.png')}
-          style={styles.smallImg}
-        />
+        <FastImage source={images.arrowBlack} style={styles.smallImg} />
       </View>
     </>
   ));
@@ -70,26 +60,21 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
   const designTwo = React.useCallback(() => (
     <>
       <AnimatedImage
-        source={require('../../assets/images/tap.png')}
+        source={images.tap}
         style={[
           styles.closeIcon,
           styles.designTwo,
           {opacity: tapOpacity2, transform: [{translateX: translateXRef}]},
         ]}
       />
-      <View style={{alignSelf: 'center'}}>
+      <View style={styles.selfCenter}>
         <FastImage
-          source={require('../../assets/images/arrow_black.png')}
-          style={[
-            styles.smallImg,
-            {
-              transform: [{rotate: '90deg'}],
-            },
-          ]}
+          source={images.arrowBlack}
+          style={[styles.smallImg, {transform: [{rotate: '90deg'}]}]}
         />
         <View style={styles.rightSpacer} />
         <FastImage
-          source={require('../../assets/images/arrow_black.png')}
+          source={images.arrowBlack}
           style={[
             styles.smallImg,
             {
@@ -100,13 +85,8 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         />
         <View style={styles.rightSpacer} />
         <FastImage
-          source={require('../../assets/images/arrow_black.png')}
-          style={[
-            styles.smallImg,
-            {
-              transform: [{rotate: '90deg'}],
-            },
-          ]}
+          source={images.arrowBlack}
+          style={[styles.smallImg, {transform: [{rotate: '90deg'}]}]}
         />
       </View>
     </>
@@ -115,11 +95,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
   const swipeHandler = React.useCallback(e => {
     const event = e.nativeEvent;
 
-    if (
-      event.oldState === State.UNDETERMINED &&
-      event.x < 10 &&
-      GenericUtils.isIos()
-    ) {
+    if (event.oldState === State.UNDETERMINED && event.x < 10 && isIOS) {
       setTimeout(() => {
         navigation.pop();
       }, 100);
@@ -208,17 +184,11 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
           <View style={styles.innerContainer}>
             <View style={styles.titleContainer}>
               <View style={styles.innerTitleContainer}>
-                <FastImage
-                  source={require('../../assets/images/tutorial.png')}
-                  style={styles.icon}
-                />
+                <FastImage source={images.tutorial} style={styles.icon} />
                 <Text style={styles.title}>{dict.gestureItTutTitle}</Text>
               </View>
               <TouchableOpacity onPress={closeModal}>
-                <FastImage
-                  source={require('../../assets/images/close.png')}
-                  style={styles.closeIcon}
-                />
+                <FastImage source={images.close} style={styles.closeIcon} />
               </TouchableOpacity>
             </View>
             <View style={styles.gameContainer}>
@@ -246,6 +216,9 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
 };
 
 const styles = StyleSheet.create({
+  selfCenter: {
+    alignSelf: 'center',
+  },
   backgroundContainer: {
     position: 'absolute',
     top: 0,

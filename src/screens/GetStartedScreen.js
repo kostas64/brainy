@@ -16,6 +16,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
 import {signIn} from '../services/auth';
+import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -108,7 +109,7 @@ const GetStartedScreen = ({navigation}) => {
       />
       <View style={styles.imageContainer}>
         <FastImage
-          source={require('../assets/images/logo.png')}
+          source={images.logo}
           style={[
             Platform.OS === 'android' && {
               marginTop: DimensionsUtils.getDP(26),
@@ -120,14 +121,7 @@ const GetStartedScreen = ({navigation}) => {
       <Animated.View
         style={[
           styles.nameContainer,
-          {
-            opacity: opacityRef,
-            transform: [
-              {
-                translateY: translateYRef,
-              },
-            ],
-          },
+          {opacity: opacityRef, transform: [{translateY: translateYRef}]},
         ]}>
         <Text style={styles.name}>{dict.appName}</Text>
       </Animated.View>
@@ -136,11 +130,7 @@ const GetStartedScreen = ({navigation}) => {
           styles.subContainer,
           {
             opacity: opacityRef,
-            transform: [
-              {
-                translateY: translateYRef,
-              },
-            ],
+            transform: [{translateY: translateYRef}],
             bottom: insets.bottom + DimensionsUtils.getDP(24),
           },
         ]}>
@@ -169,13 +159,7 @@ const GetStartedScreen = ({navigation}) => {
             {backgroundColor: Colors.white},
           ]}
           onPress={e => navigate(e, 'guest')}>
-          <Text
-            style={[
-              styles.buttonLabel,
-              {
-                color: Colors.appGreen,
-              },
-            ]}>
+          <Text style={[styles.buttonLabel, {color: Colors.appGreen}]}>
             {dict?.getStartedGuestButton}
           </Text>
         </Pressable>

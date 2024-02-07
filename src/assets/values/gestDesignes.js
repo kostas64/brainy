@@ -1,5 +1,8 @@
+import React from 'react';
 import {View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+
+import images from '../images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const row = {
@@ -27,7 +30,7 @@ const verSpace = {
   marginVertical: DimensionsUtils.getDP(4),
 };
 
-const gestImg = require('../images/arrow.png');
+const gestImg = images.arrow;
 
 const transform = deg => {
   return {transform: [{rotate: `${deg}deg`}]};

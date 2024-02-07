@@ -3,9 +3,9 @@ import {Dimensions, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 
+import {isIOS} from '../utils/GenericUtils';
 import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
-import {GenericUtils} from '../utils/GenericUtils';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
@@ -76,7 +76,7 @@ const GestureItScreen = () => {
 
   const generatePosition = React.useCallback(() => {
     setDesPos({
-      left: GenericUtils.isIos()
+      left: isIOS
         ? Math.floor(Math.random() * availableWidth)
         : DimensionsUtils.getDP(
             Math.floor(Math.random() * availableWidth) + 30,

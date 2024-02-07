@@ -11,10 +11,10 @@ import {useFetch} from '../hooks/useFetch';
 import dict from '../assets/values/dict.json';
 import Header from '../components/common/Header';
 import {LIST_GAMES} from '../assets/values/games';
-import {GenericUtils} from '../utils/GenericUtils';
 import {useAuthContext} from '../context/AuthProvider';
 import GamesList from '../components/common/GamesList';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import {GenericUtils, isIOS} from '../utils/GenericUtils';
 
 const GamesScreen = ({navigation, route}) => {
   const isFocused = useIsFocused();
@@ -50,7 +50,7 @@ const GamesScreen = ({navigation, route}) => {
   React.useEffect(() => {
     Animated.timing(opacityRef, {
       toValue: 1,
-      duration: GenericUtils.isIos() ? 1000 : 350,
+      duration: isIOS ? 1000 : 350,
       useNativeDriver: true,
     }).start();
 

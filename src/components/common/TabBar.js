@@ -13,15 +13,16 @@ import FastImage from 'react-native-fast-image';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../../utils/Colors';
+import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const {width: WIDTH} = Dimensions.get('window');
 
-const gamesI = require('../../assets/images/games_icon.png');
-const gamesIO = require('../../assets/images/games_icon_outline.png');
-const rankI = require('../../assets/images/rank_icon.png');
-const rankIO = require('../../assets/images/rank_icon_outline.png');
+const gamesI = images.gamesIcon;
+const gamesIO = images.gamesIconO;
+const rankI = images.rankIcon;
+const rankIO = images.rankIconO;
 
 const TabBar = props => {
   const insets = useSafeAreaInsets();
@@ -91,11 +92,7 @@ const TabBar = props => {
               styles.pose,
               {
                 width: (WIDTH - DimensionsUtils.getDP(32)) / routes.length,
-                transform: [
-                  {
-                    translateX,
-                  },
-                ],
+                transform: [{translateX}],
               },
             ]}
           />

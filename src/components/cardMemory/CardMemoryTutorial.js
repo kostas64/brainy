@@ -11,6 +11,7 @@ import React from 'react';
 import FastImage from 'react-native-fast-image';
 
 import {Colors} from '../../utils/Colors';
+import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
@@ -171,17 +172,11 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
           <View style={styles.innerContainer}>
             <View style={styles.titleContainer}>
               <View style={styles.innerTitleContainer}>
-                <FastImage
-                  source={require('../../assets/images/tutorial.png')}
-                  style={styles.icon}
-                />
+                <FastImage source={images.tutorial} style={styles.icon} />
                 <Text style={styles.title}>{dict.memoryCardTutTitle}</Text>
               </View>
               <TouchableOpacity onPress={closeModal}>
-                <FastImage
-                  source={require('../../assets/images/close.png')}
-                  style={styles.closeIcon}
-                />
+                <FastImage source={images.close} style={styles.closeIcon} />
               </TouchableOpacity>
             </View>
             <View style={styles.rowCenter}>

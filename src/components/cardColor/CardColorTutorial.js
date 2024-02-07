@@ -11,6 +11,7 @@ import React from 'react';
 import FastImage from 'react-native-fast-image';
 
 import {Colors} from '../../utils/Colors';
+import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
@@ -89,39 +90,24 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
         <View style={styles.innerContainer}>
           <View style={styles.titleContainer}>
             <View style={styles.innerTitleContainer}>
-              <FastImage
-                source={require('../../assets/images/tutorial.png')}
-                style={styles.icon}
-              />
+              <FastImage source={images.tutorial} style={styles.icon} />
               <Text style={styles.title}>{dict.colorMatcTutTitle}</Text>
             </View>
             <TouchableOpacity onPress={closeModal}>
-              <FastImage
-                source={require('../../assets/images/close.png')}
-                style={styles.closeIcon}
-              />
+              <FastImage source={images.close} style={styles.closeIcon} />
             </TouchableOpacity>
           </View>
           <View style={styles.gameContainer}>
             <TouchableOpacity
               onPress={changeColors1}
               disabled={cardVal1 === cardCol2}>
-              <FastImage
-                source={require('../../assets/images/no.png')}
-                style={styles.image}
-              />
+              <FastImage source={images.no} style={styles.image} />
               {cardVal1 !== cardCol2 && (
                 <AnimatedImage
-                  source={require('../../assets/images/tap.png')}
+                  source={images.tap}
                   style={[
                     styles.animatedIcon,
-                    {
-                      transform: [
-                        {
-                          scale: scaleRef,
-                        },
-                      ],
-                    },
+                    {transform: [{scale: scaleRef}]},
                   ]}
                 />
               )}
@@ -134,22 +120,13 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
             <TouchableOpacity
               onPress={changeColors2}
               disabled={cardVal1 !== cardCol2}>
-              <FastImage
-                source={require('../../assets/images/yes.png')}
-                style={styles.image}
-              />
+              <FastImage source={images.yes} style={styles.image} />
               {cardVal1 === cardCol2 && (
                 <AnimatedImage
-                  source={require('../../assets/images/tap.png')}
+                  source={images.tap}
                   style={[
                     styles.animatedIcon,
-                    {
-                      transform: [
-                        {
-                          scale: scaleRef,
-                        },
-                      ],
-                    },
+                    {transform: [{scale: scaleRef}]},
                   ]}
                 />
               )}

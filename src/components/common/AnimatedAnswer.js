@@ -2,6 +2,7 @@ import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {Animated, StyleSheet} from 'react-native';
 
+import images from '../../assets/images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimatedAnswer = React.forwardRef(({}, ref) => {
@@ -10,15 +11,9 @@ const AnimatedAnswer = React.forwardRef(({}, ref) => {
   const [isCorrect, setIsCorrect] = React.useState(false);
 
   const iconComp = isCorrect ? (
-    <FastImage
-      source={require('../../assets/images/correct.png')}
-      style={styles.icon}
-    />
+    <FastImage source={images.correct} style={styles.icon} />
   ) : (
-    <FastImage
-      source={require('../../assets/images/wrong.png')}
-      style={styles.icon}
-    />
+    <FastImage source={images.wrong} style={styles.icon} />
   );
 
   React.useImperativeHandle(ref, () => ({
@@ -62,11 +57,7 @@ const AnimatedAnswer = React.forwardRef(({}, ref) => {
     <Animated.View
       style={{
         opacity: opacityRef,
-        transform: [
-          {
-            translateY,
-          },
-        ],
+        transform: [{translateY}],
       }}>
       {iconComp}
     </Animated.View>

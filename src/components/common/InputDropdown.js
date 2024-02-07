@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Animated, {
   withTiming,
   useSharedValue,
@@ -10,6 +11,7 @@ import {Text, Pressable, StyleSheet, FlatList, View} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import {GAMES} from '../../assets/values/games';
+import images from '../../assets/images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimatedIcon = Animated.createAnimatedComponent(FastImage);
@@ -38,7 +40,7 @@ const InputDropdown = ({
     };
   });
 
-  const toggleListItem = () => {
+  const toggleListItem = React.useCallback(() => {
     !!onFieldPress && onFieldPress();
 
     if (isOpen) {
@@ -50,7 +52,7 @@ const InputDropdown = ({
     }
 
     setIsOpen(open => !open);
-  };
+  }, [isOpen, icon, height, onFieldPress]);
 
   const renderItem = ({item, index}) => {
     const isSelected = value === GAMES[index];
@@ -76,7 +78,7 @@ const InputDropdown = ({
 
   React.useEffect(() => {
     !isFocused && isOpen && toggleListItem();
-  }, [isFocused]);
+  }, [isOpen]);
 
   return (
     <>
@@ -90,7 +92,7 @@ const InputDropdown = ({
             </View>
           </View>
           <AnimatedIcon
-            source={require('../../assets/images/arrow_down.png')}
+            source={images.arrowDown}
             style={[styles.icon, iconStyles]}
           />
         </View>
