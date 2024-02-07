@@ -40,5 +40,6 @@
   "equalLabel": "Equal",
   "noLabel": "NO",
   "yesLabel": "YES",
-  "logout": "Logout"
+  "logout": "Logout",
+  "viewProfile": "View profile"
 }
