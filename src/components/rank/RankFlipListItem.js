@@ -1,14 +1,26 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
+import {useModalContext} from '../../context/ModalProvider';
+import UserProfileModal from '../userProfileModal/UserProfileModal';
 
 const RankFlipListItem = ({item, index, isMe}) => {
+  const {setModalInfo} = useModalContext();
+
+  const onPress = React.useCallback(() => {
+    setModalInfo({
+      height: 420,
+      content: <UserProfileModal isMe={isMe} item={item} />,
+    });
+  }, [item, isMe, setModalInfo]);
+
   return (
-    <View
+    <Pressable
+      onPress={onPress}
       style={[
         styles.container,
         styles.rowCenter,
@@ -36,7 +48,7 @@ const RankFlipListItem = ({item, index, isMe}) => {
         <Text style={styles.textGreenBold}>{item?.flips}</Text>
         <Text style={styles.textGreyReg}>{dict?.rankFlipListLabel2}</Text>
       </Text>
-    </View>
+    </Pressable>
   );
 };
 
