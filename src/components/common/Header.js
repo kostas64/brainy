@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useCallback} from 'react';
+import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {View, Text, Animated, Pressable, StyleSheet} from 'react-native';
 
@@ -32,11 +32,11 @@ const Header = React.forwardRef(
       });
     };
 
-    const onAvatarLoad = useCallback(() => {
+    const onAvatarLoad = React.useCallback(() => {
       setImgLoaded(true);
     }, []);
 
-    const onAvatarPress = useCallback(() => {
+    const onAvatarPress = React.useCallback(() => {
       if (!pressed) {
         setPressed(true);
       }
