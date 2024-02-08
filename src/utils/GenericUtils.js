@@ -33,21 +33,34 @@ export class GenericUtils {
       : game === 'Best Of'
       ? BEST_OF
       : null;
-
-  static onNavigationReady = () => {
-    RNBootSplash.hide({fade: true, duration: 300});
-  };
-
-  static matchGameNameWithImg = game => {
-    switch (game) {
-      case 'Memory Cards':
-        return images.memoryMatch;
-      case 'Color Match':
-        return images.colorMatch;
-      case 'Do the math':
-        return images.matchEqual;
-      case 'Gesture It':
-        return images.gestureIt;
-    }
-  };
 }
+
+export const matchGameNameWithImg = game => {
+  switch (game) {
+    case 'Memory Cards':
+      return images.memoryMatch;
+    case 'Color Match':
+      return images.colorMatch;
+    case 'Do the math':
+      return images.matchEqual;
+    case 'Gesture It':
+      return images.gestureIt;
+  }
+};
+
+export const onNavigationReady = () => {
+  RNBootSplash.hide({fade: true, duration: 300});
+};
+
+export const matchGameWithScreenName = game => {
+  switch (game) {
+    case 'Memory Cards':
+      return 'MemoryCard';
+    case 'Color Match':
+      return 'ColorCard';
+    case 'Do the math':
+      return 'EqualMath';
+    case 'Gesture It':
+      return 'GestureIt';
+  }
+};

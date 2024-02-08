@@ -5,13 +5,24 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TabStack from './TabRouter';
 import ColorCardScreen from '../screens/ColorCardScreen';
 import EqualMathScreen from '../screens/EqualMathScreen';
+import GestureItScreen from '../screens/GestureItScreen';
 import MemoryCardScreen from '../screens/MemoryCardScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
-import GestureItScreen from '../screens/GestureItScreen';
 
 const Stack = createNativeStackNavigator();
 
+const navigatorScreenOptions = {
+  headerShown: false,
+  animationTypeForReplace: 'pop',
+};
+
 const screenConfig = {
+  animation: 'fade',
+  customAnimationOnGesture: true,
+};
+
+const gameStackOptions = {
+  animationDuration: 550,
   animation: 'fade',
   customAnimationOnGesture: true,
 };
@@ -19,20 +30,12 @@ const screenConfig = {
 const Router = ({onNavigationReady}) => {
   return (
     <NavigationContainer onReady={onNavigationReady}>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          animationTypeForReplace: 'pop',
-        }}>
+      <Stack.Navigator screenOptions={navigatorScreenOptions}>
         <Stack.Screen name="GetStarted" component={GetStartedScreen} />
         <Stack.Screen
           name="GamesStack"
           component={TabStack}
-          options={{
-            animationDuration: 550,
-            animation: 'fade',
-            customAnimationOnGesture: true,
-          }}
+          options={gameStackOptions}
         />
         <Stack.Screen
           name="ColorCard"

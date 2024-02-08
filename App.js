@@ -3,13 +3,13 @@
 //Libs
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 //Router
 import Router from './src/routes/Router';
-import {GenericUtils} from './src/utils/GenericUtils';
 import {AuthProvider} from './src/context/AuthProvider';
 import {ModalProvider} from './src/context/ModalProvider';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {onNavigationReady} from './src/utils/GenericUtils';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
       <SafeAreaProvider>
         <AuthProvider>
           <ModalProvider>
-            <Router onNavigationReady={GenericUtils.onNavigationReady} />
+            <Router onNavigationReady={onNavigationReady} />
           </ModalProvider>
         </AuthProvider>
       </SafeAreaProvider>
