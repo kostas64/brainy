@@ -57,7 +57,7 @@ export const ToastProvider = ({children}) => {
             done && runOnJS(setToast)(initialState);
           },
         );
-      }, 3000);
+      }, 4500);
     }
   }, [toast.message, topPosition]);
 
