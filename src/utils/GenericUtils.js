@@ -1,5 +1,6 @@
 import {Dimensions, Platform} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 import {
   BEST_OF,
@@ -15,6 +16,16 @@ export const HEIGHT = Dimensions.get('window').height;
 
 export const isIOS = Platform.OS === 'ios';
 export const isAndroid = Platform.OS === 'android';
+
+const haptikSettings = {
+  enableVibrateFallback: true,
+  ignoreAndroidSystemSettings: true,
+};
+
+export const triggerHaptik = () => {
+  const type = isIOS ? 'impactHeavy' : 'impactMedium';
+  ReactNativeHapticFeedback.trigger(type, haptikSettings);
+};
 
 export class GenericUtils {
   static adaptLayout = (small, big) => {

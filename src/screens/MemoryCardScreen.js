@@ -6,13 +6,13 @@ import MathUtils from '../utils/MathUtils';
 import {submitScore} from '../services/score';
 import Card from '../components/cardMemory/Card';
 import MemoryValues from '../assets/values/memory';
-import {HEIGHT, WIDTH} from '../utils/GenericUtils';
 import {useAuthContext} from '../context/AuthProvider';
 import StopWatch from '../components/common/StopWatch';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import AnimatedModal from '../components/common/AnimatedModal';
 import FlipCounter from '../components/cardMemory/FlipCounter';
 import AnimatedAnswer from '../components/common/AnimatedAnswer';
+import {HEIGHT, WIDTH, triggerHaptik} from '../utils/GenericUtils';
 import NewGameButton from '../components/cardMemory/NewGameButton';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
@@ -159,6 +159,7 @@ const MemoryCardScreen = () => {
 
     //Check if cards match and flip back if not
     if (currentFlipped.length === 2 && !flippedEqual) {
+      triggerHaptik();
       animAnswerRef.current.animateAnswer(false);
       setFlipCounter(oldCounter => oldCounter + 1);
       setCardsDisabled(true);
@@ -197,12 +198,7 @@ const MemoryCardScreen = () => {
       <BackgroundWrapper statusBar={'light-content'} />
       <CardMemoryTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View
-        style={[
-          styles.header,
-          {
-            top: insets.top + DimensionsUtils.getDP(24),
-          },
-        ]}>
+        style={[styles.header, {top: insets.top + DimensionsUtils.getDP(24)}]}>
         <FlipCounter flipCounter={flipCounter} />
         <AnimatedAnswer ref={animAnswerRef} />
         <StopWatch ref={timeRef} />

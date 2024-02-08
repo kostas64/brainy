@@ -4,13 +4,13 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
-import {WIDTH} from '../utils/GenericUtils';
 import dict from '../assets/values/dict.json';
 import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
+import {WIDTH, triggerHaptik} from '../utils/GenericUtils';
 import EqualButton from '../components/equalMath/EqualButton';
 import AnimatedModal from '../components/common/AnimatedModal';
 import AnimatedAnswer from '../components/common/AnimatedAnswer';
@@ -72,6 +72,7 @@ const EqualMathScreen = () => {
 
     !isCorrect && setPoints(oldPoints => (oldPoints >= 3 ? oldPoints - 3 : 0));
     !isCorrect && animAnswerRef.current.animateAnswer(false);
+    !isCorrect && triggerHaptik();
 
     setQuestion(oldQuestion => oldQuestion + 1);
   };

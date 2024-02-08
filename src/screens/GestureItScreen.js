@@ -9,7 +9,6 @@ import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
 import {GEST_DESIGNS} from '../assets/values/gestDesignes';
-import {HEIGHT, WIDTH, isIOS} from '../utils/GenericUtils';
 import AnimatedModal from '../components/common/AnimatedModal';
 import AnimatedAnswer from '../components/common/AnimatedAnswer';
 import NewGameButton from '../components/cardMemory/NewGameButton';
@@ -17,6 +16,7 @@ import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import CardSuccessModal from '../components/cardColor/CardSuccessModal';
 import GestureItTutorial from '../components/gestureIt/GestureItTutorial';
+import {HEIGHT, WIDTH, isIOS, triggerHaptik} from '../utils/GenericUtils';
 
 const GestureItScreen = () => {
   const insets = useSafeAreaInsets();
@@ -115,14 +115,17 @@ const GestureItScreen = () => {
   };
 
   const statsHandler = direction => {
-    if (currentDesign?.designDirection === direction) {
+    const isCorrect = currentDesign?.designDirection === direction;
+
+    if (isCorrect) {
       animAnswerRef?.current?.animateAnswer(true);
       setCorrect(oldCorrect => oldCorrect + 1);
       setPoints(oldPoints => oldPoints + 1);
     }
 
-    currentDesign?.designDirection !== direction &&
-      animAnswerRef?.current?.animateAnswer(false);
+    !isCorrect && animAnswerRef?.current?.animateAnswer(false);
+    !isCorrect && triggerHaptik();
+
     setTries(oldTries => oldTries + 1);
     generateNext();
   };
@@ -198,9 +201,7 @@ const GestureItScreen = () => {
         <View
           style={[
             styles.newGameCont,
-            {
-              bottom: insets.bottom > 0 ? insets.bottom : 24,
-            },
+            {bottom: insets.bottom > 0 ? insets.bottom : 24},
           ]}>
           <NewGameButton gameFinished={isFinished} setNewGame={setNewGame} />
         </View>

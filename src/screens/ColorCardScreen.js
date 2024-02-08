@@ -5,7 +5,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
 import MathUtils from '../utils/MathUtils';
-import {WIDTH} from '../utils/GenericUtils';
 import {submitScore} from '../services/score';
 import dict from '../assets/values/dict.json';
 import {COLORS} from '../assets/values/colors';
@@ -14,6 +13,7 @@ import {useAuthContext} from '../context/AuthProvider';
 import CountdownTimer from '../components/common/Timer';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import ColorCard from '../components/cardColor/ColorCard';
+import {WIDTH, triggerHaptik} from '../utils/GenericUtils';
 import ColorButton from '../components/cardColor/ColorButton';
 import AnimatedModal from '../components/common/AnimatedModal';
 import AnimatedAnswer from '../components/common/AnimatedAnswer';
@@ -66,6 +66,7 @@ const ColorCardScreen = () => {
       setCorrect(oldCorrect => oldCorrect + 1);
     } else {
       animAnswerRef.current.animateAnswer(false);
+      triggerHaptik();
       setPoints(oldPoints => (oldPoints - 3 > 0 ? oldPoints - 3 : 0));
     }
     setTries(oldTries => oldTries + 1);
