@@ -1,25 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
+import {Animated, StyleSheet} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Animated, StatusBar, StyleSheet} from 'react-native';
 
 import {SCORE} from '../Endpoints';
-import {Colors} from '../utils/Colors';
-import {signOut} from '../services/auth';
 import {useFetch} from '../hooks/useFetch';
 import dict from '../assets/values/dict.json';
-import Header from '../components/common/Header';
+import Screen from '../components/common/Screen';
 import {LIST_GAMES} from '../assets/values/games';
 import {useAuthContext} from '../context/AuthProvider';
 import GamesList from '../components/common/GamesList';
-import {DimensionsUtils} from '../utils/DimensionUtils';
 import {GenericUtils, isIOS} from '../utils/GenericUtils';
 
 const GamesScreen = ({navigation, route}) => {
+  const {user} = useAuthContext();
   const isFocused = useIsFocused();
-  const insets = useSafeAreaInsets();
-  const {user, setUser, setToken} = useAuthContext();
 
   const menuRef = React.useRef();
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
@@ -34,10 +29,6 @@ const GamesScreen = ({navigation, route}) => {
     setIndex(activeIndex);
   }, []);
 
-  const closeMenu = React.useCallback(() => {
-    menuRef.current?.closeMenu();
-  }, []);
-
   const {status, data} = useFetch(
     !user?.isGuest ? `${SCORE}${GenericUtils.getEndpoint('Best Of')}` : null,
     'GET',
@@ -45,11 +36,6 @@ const GamesScreen = ({navigation, route}) => {
     'Best Of',
     force,
   );
-
-  const logout = async () => {
-    !user?.isGuest && (await signOut(setToken, setUser));
-    navigation.pop();
-  };
 
   React.useEffect(() => {
     Animated.timing(opacityRef, {
@@ -81,25 +67,7 @@ const GamesScreen = ({navigation, route}) => {
   }, [scrollXIndex, scrollXAnimated]);
 
   return (
-    <View style={styles.container} onStartShouldSetResponder={closeMenu}>
-      <StatusBar
-        barStyle={'light-content'}
-        backgroundColor={Colors.background}
-      />
-      <View
-        style={[
-          styles.zIndex,
-          {marginTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24)},
-        ]}>
-        <Header
-          ref={menuRef}
-          insets={insets}
-          isGuest={user?.isGuest}
-          label={dict?.gamesScrTitle}
-          avatar={user?.avatar}
-          logout={logout}
-        />
-      </View>
+    <Screen navigation={navigation} label={dict?.gamesScrTitle}>
       <Animated.View style={[styles.flex, {opacity: opacityRef}]}>
         <GamesList
           data={LIST_GAMES}
@@ -112,17 +80,13 @@ const GamesScreen = ({navigation, route}) => {
           loadingScores={status === 'fetching'}
         />
       </Animated.View>
-    </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
   },
   zIndex: {
     zIndex: 10000,

@@ -11,92 +11,100 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimatedButton = Animated.createAnimatedComponent(Pressable);
 
-const Header = React.forwardRef(({label, avatar, isGuest, logout}, ref) => {
-  const fadeRef = React.useRef(new Animated.Value(0)).current;
+const Header = React.forwardRef(
+  ({noIcon = false, label, avatar, isGuest, logout}, ref) => {
+    const fadeRef = React.useRef(new Animated.Value(0)).current;
 
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [pressed, setPressed] = React.useState(false);
-  const [imgLoaded, setImgLoaded] = React.useState(isGuest ? true : false);
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [pressed, setPressed] = React.useState(false);
+    const [imgLoaded, setImgLoaded] = React.useState(isGuest ? true : false);
 
-  const iconSource = isGuest ? images.guest : {uri: avatar};
+    const iconSource = isGuest ? images.guest : {uri: avatar};
 
-  const closeMenu = () => {
-    Animated.timing(fadeRef, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start(() => {
-      setIsOpen(false);
-      setPressed(false);
-    });
-  };
-
-  const onAvatarLoad = useCallback(() => {
-    setImgLoaded(true);
-  }, []);
-
-  const onAvatarPress = useCallback(() => {
-    if (!pressed) {
-      setPressed(true);
-    }
-  }, [pressed]);
-
-  React.useEffect(() => {
-    if (isOpen) {
+    const closeMenu = () => {
       Animated.timing(fadeRef, {
-        toValue: 1,
-        duration: 250,
+        toValue: 0,
+        duration: 200,
         useNativeDriver: true,
-      }).start();
-    } else {
-      closeMenu();
-    }
-  }, [isOpen]);
+      }).start(() => {
+        setIsOpen(false);
+        setPressed(false);
+      });
+    };
 
-  React.useEffect(() => {
-    if (pressed) {
-      setIsOpen(true);
-    }
-  }, [pressed]);
+    const onAvatarLoad = useCallback(() => {
+      setImgLoaded(true);
+    }, []);
 
-  React.useImperativeHandle(ref, () => ({
-    closeMenu,
-  }));
+    const onAvatarPress = useCallback(() => {
+      if (!pressed) {
+        setPressed(true);
+      }
+    }, [pressed]);
 
-  return (
-    <>
-      <View style={styles.container}>
-        <Text
-          style={[
-            styles.label,
-            isAndroid && {
-              marginTop: DimensionsUtils.getDP(2),
-            },
-          ]}>
-          {label}
-        </Text>
-        <AnimatedButton
-          disabled={pressed}
-          onPress={onAvatarPress}
-          style={[styles.avatarContainer, {opacity: imgLoaded ? 1 : 0}]}>
-          <FastImage
-            onLoadEnd={onAvatarLoad}
-            source={iconSource}
-            style={styles.avatar}
-          />
-        </AnimatedButton>
-      </View>
+    React.useEffect(() => {
+      if (isOpen) {
+        Animated.timing(fadeRef, {
+          toValue: 1,
+          duration: 250,
+          useNativeDriver: true,
+        }).start();
+      } else {
+        closeMenu();
+      }
+    }, [isOpen]);
 
-      {/* MENU BOX */}
-      <AnimatedButton style={[styles.box, {opacity: fadeRef}]} onPress={logout}>
-        <View style={styles.itemRow}>
-          <FastImage source={images.logout} style={styles.logoutIcon} />
-          <Text style={styles.logoutLabel}>{dict?.logout}</Text>
+    React.useEffect(() => {
+      if (pressed) {
+        setIsOpen(true);
+      }
+    }, [pressed]);
+
+    React.useImperativeHandle(ref, () => ({
+      closeMenu,
+    }));
+
+    return (
+      <>
+        <View style={styles.container}>
+          <Text
+            style={[
+              styles.label,
+              isAndroid && {
+                marginTop: DimensionsUtils.getDP(2),
+              },
+            ]}>
+            {label}
+          </Text>
+          {!noIcon && (
+            <AnimatedButton
+              disabled={pressed}
+              onPress={onAvatarPress}
+              style={[styles.avatarContainer, {opacity: imgLoaded ? 1 : 0}]}>
+              <FastImage
+                onLoadEnd={onAvatarLoad}
+                source={iconSource}
+                style={styles.avatar}
+              />
+            </AnimatedButton>
+          )}
         </View>
-      </AnimatedButton>
-    </>
-  );
-});
+
+        {/* MENU BOX */}
+        {!noIcon && (
+          <AnimatedButton
+            onPress={logout}
+            style={[styles.box, {opacity: fadeRef}]}>
+            <View style={styles.itemRow}>
+              <FastImage source={images.logout} style={styles.logoutIcon} />
+              <Text style={styles.logoutLabel}>{dict?.logout}</Text>
+            </View>
+          </AnimatedButton>
+        )}
+      </>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

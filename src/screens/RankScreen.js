@@ -1,18 +1,15 @@
 import React from 'react';
 import {FlashList} from '@shopify/flash-list';
 import {useIsFocused} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
 
 import {SCORE} from '../Endpoints';
 import {Colors} from '../utils/Colors';
-import {signOut} from '../services/auth';
 import {useFetch} from '../hooks/useFetch';
 import {GAMES} from '../assets/values/games';
 import dict from '../assets/values/dict.json';
-import Header from '../components/common/Header';
+import Screen from '../components/common/Screen';
 import {GenericUtils} from '../utils/GenericUtils';
-import {useAuthContext} from '../context/AuthProvider';
 import EmptyList from '../components/common/EmptyList';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import RankGameItem from '../components/rank/RankGameItem';
@@ -20,10 +17,8 @@ import InputDropdown from '../components/common/InputDropdown';
 
 const RankScreen = ({navigation}) => {
   const isFocused = useIsFocused();
-  const insets = useSafeAreaInsets();
 
   const menuRef = React.useRef();
-  const {user, setUser, setToken} = useAuthContext();
 
   const [query, setQuery] = React.useState(null);
   const [page, setPage] = React.useState(1);
@@ -43,11 +38,6 @@ const RankScreen = ({navigation}) => {
     },
     [closeMenu],
   );
-
-  const logout = React.useCallback(async () => {
-    !user?.isGuest && (await signOut(setToken, setUser));
-    navigation.pop();
-  }, [user?.isGuest, navigation, setToken, setUser]);
 
   const renderItem = React.useCallback(
     ({item, index}) => (
@@ -73,20 +63,7 @@ const RankScreen = ({navigation}) => {
   }, [page, gameInput]);
 
   return (
-    <View onStartShouldSetResponder={closeMenu} style={styles.container}>
-      <View
-        style={{
-          marginTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24),
-        }}>
-        <Header
-          ref={menuRef}
-          insets={insets}
-          isGuest={user?.isGuest}
-          label={dict.rankScrTitle}
-          avatar={user?.avatar}
-          logout={logout}
-        />
-      </View>
+    <Screen label={dict.rankScrTitle} navigation={navigation}>
       <View
         style={styles.dropdownContainer}
         onStartShouldSetResponder={closeMenu}>
@@ -112,15 +89,11 @@ const RankScreen = ({navigation}) => {
       ) : status === 'fetched' ? (
         <EmptyList />
       ) : null}
-    </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
   dropdownContainer: {
     paddingHorizontal: DimensionsUtils.getDP(16),
     paddingVertical: DimensionsUtils.getDP(12),
