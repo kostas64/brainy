@@ -14,6 +14,7 @@ import dict from '../../assets/values/dict.json';
 import {capFirstLet} from '../../utils/StringUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {getBestOfScoresForUser} from '../../services/score';
+import {useToastContext} from '../../context/ToastProvider';
 import UserProfileModalAvatar from './UserProfileModalAvatar';
 import UserProfileModalScoreItem from './UserProfileModalScoreItem';
 import UserProfileModalFooterButtons from './UserProfileModalFooterButtons';
@@ -25,6 +26,8 @@ const Loader = () => (
 );
 
 const UserProfileModal = ({isMe, item, onGamePress}) => {
+  const {setToast} = useToastContext();
+
   const [scores, setScores] = React.useState({});
   const [loading, setLoading] = React.useState(true);
   const [loadingButton, setLoadingButton] = React.useState(false);
@@ -115,6 +118,10 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
       setLoadingButton(true);
       sendFriendsRequest(user?._id)
         .then(() => {
+          setToast({
+            message: dict.friendRequestSent,
+            icon: {uri: user?.avatar},
+          });
           setLoadingButton(false);
           setHasRequest(true);
         })
@@ -122,7 +129,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
           setLoadingButton(false);
         });
     }
-  }, [user?._id, hasFriendship, hasRequest]);
+  }, [user, hasFriendship, hasRequest, setToast]);
 
   React.useEffect(() => {
     Promise.all([getScores(), getFriendship(), checkFriendRequest()]).then(
@@ -135,7 +142,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   }, [getScores, getFriendship, checkFriendRequest]);
 
   return (
-    <View>
+    <>
       <UserProfileModalAvatar name={name} user={user} />
 
       {loading && <Loader />}
@@ -159,7 +166,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
           />
         </Animated.View>
       )}
-    </View>
+    </>
   );
 };
 
@@ -172,7 +179,7 @@ const styles = StyleSheet.create({
   listStyle: {
     paddingVertical: DimensionsUtils.getDP(10),
     marginBottom: DimensionsUtils.getDP(24),
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: Colors.lightGrey,
   },
   indicatorContainer: {
     height: 200,

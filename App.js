@@ -9,6 +9,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Router from './src/routes/Router';
 import {AuthProvider} from './src/context/AuthProvider';
 import {ModalProvider} from './src/context/ModalProvider';
+import {ToastProvider} from './src/context/ToastProvider';
 import {onNavigationReady} from './src/utils/GenericUtils';
 
 function App() {
@@ -16,9 +17,11 @@ function App() {
     <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaProvider>
         <AuthProvider>
-          <ModalProvider>
-            <Router onNavigationReady={onNavigationReady} />
-          </ModalProvider>
+          <ToastProvider>
+            <ModalProvider>
+              <Router onNavigationReady={onNavigationReady} />
+            </ModalProvider>
+          </ToastProvider>
         </AuthProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

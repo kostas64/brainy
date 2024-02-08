@@ -5,15 +5,25 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const UserProfileModalAvatar = ({user, name}) => {
+const UserProfileModalAvatar = ({
+  user,
+  icon,
+  name,
+  imgStyle,
+  nameStyle,
+  contStyle,
+  imgContStyle,
+}) => {
+  const source = icon ? icon : {uri: user?.avatar};
+
   return (
     <>
-      <View style={styles.avatarContainer}>
-        <View style={styles.avatarInnerContainer}>
-          <FastImage source={{uri: user?.avatar}} style={styles.avatar} />
+      <View style={[styles.avatarContainer, contStyle]}>
+        <View style={[styles.avatarInnerContainer, imgContStyle]}>
+          <FastImage source={source} style={[styles.avatar, imgStyle]} />
         </View>
       </View>
-      <Text style={styles.name}>{name}</Text>
+      <Text style={[styles.name, nameStyle]}>{name}</Text>
     </>
   );
 };
