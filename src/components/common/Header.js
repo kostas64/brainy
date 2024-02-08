@@ -1,7 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import Animated, {
+  runOnJS,
+  withTiming,
+  useSharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+
 import React from 'react';
-import FastImage from 'react-native-fast-image';
-import {View, Text, Animated, Pressable, StyleSheet} from 'react-native';
+import {View, Text, Pressable, StyleSheet, Image} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
@@ -9,11 +15,16 @@ import dict from '../../assets/values/dict.json';
 import {isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
+const AnimatedImage = Animated.createAnimatedComponent(Image);
 const AnimatedButton = Animated.createAnimatedComponent(Pressable);
 
 const Header = React.forwardRef(
   ({noIcon = false, label, avatar, isGuest, logout}, ref) => {
-    const fadeRef = React.useRef(new Animated.Value(0)).current;
+    const fadeRef = useSharedValue(0);
+    const height = useSharedValue(32);
+    const padding = useSharedValue(4);
+    const dimension = useSharedValue(18);
+    const borderWidth = useSharedValue(2);
 
     const [isOpen, setIsOpen] = React.useState(false);
     const [pressed, setPressed] = React.useState(false);
@@ -21,43 +32,57 @@ const Header = React.forwardRef(
 
     const iconSource = isGuest ? images.guest : {uri: avatar};
 
-    const closeMenu = () => {
-      Animated.timing(fadeRef, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }).start(() => {
-        setIsOpen(false);
-        setPressed(false);
+    const boxStyle = useAnimatedStyle(
+      () => ({
+        opacity: fadeRef.value,
+        height: height.value,
+        padding: padding.value,
+        borderWidth: borderWidth.value,
+      }),
+      [],
+    );
+
+    const imgStyle = useAnimatedStyle(
+      () => ({
+        width: dimension.value,
+        height: dimension.value,
+      }),
+      [],
+    );
+
+    const closeMenu = React.useCallback(() => {
+      fadeRef.value = withTiming(0, {duration: 200}, () => {
+        height.value = 0;
+        padding.value = 0;
+        dimension.value = 0;
+        borderWidth.value = 0;
+        runOnJS(setIsOpen)(false);
+        runOnJS(setPressed)(false);
       });
-    };
+    }, []);
 
     const onAvatarLoad = React.useCallback(() => {
       setImgLoaded(true);
     }, []);
 
     const onAvatarPress = React.useCallback(() => {
-      if (!pressed) {
-        setPressed(true);
-      }
+      !pressed && setPressed(true);
     }, [pressed]);
 
     React.useEffect(() => {
       if (isOpen) {
-        Animated.timing(fadeRef, {
-          toValue: 1,
-          duration: 250,
-          useNativeDriver: true,
-        }).start();
+        height.value = 32;
+        padding.value = 4;
+        dimension.value = 18;
+        borderWidth.value = 2;
+        fadeRef.value = withTiming(1, {duration: 250});
       } else {
         closeMenu();
       }
     }, [isOpen]);
 
     React.useEffect(() => {
-      if (pressed) {
-        setIsOpen(true);
-      }
+      pressed && setIsOpen(true);
     }, [pressed]);
 
     React.useImperativeHandle(ref, () => ({
@@ -81,10 +106,10 @@ const Header = React.forwardRef(
               disabled={pressed}
               onPress={onAvatarPress}
               style={[styles.avatarContainer, {opacity: imgLoaded ? 1 : 0}]}>
-              <FastImage
-                onLoadEnd={onAvatarLoad}
+              <Image
                 source={iconSource}
                 style={styles.avatar}
+                onLoadEnd={onAvatarLoad}
               />
             </AnimatedButton>
           )}
@@ -92,11 +117,12 @@ const Header = React.forwardRef(
 
         {/* MENU BOX */}
         {!noIcon && (
-          <AnimatedButton
-            onPress={logout}
-            style={[styles.box, {opacity: fadeRef}]}>
+          <AnimatedButton onPress={logout} style={[styles.box, boxStyle]}>
             <View style={styles.itemRow}>
-              <FastImage source={images.logout} style={styles.logoutIcon} />
+              <AnimatedImage
+                source={images.logout}
+                style={[styles.logoutIcon, imgStyle]}
+              />
               <Text style={styles.logoutLabel}>{dict?.logout}</Text>
             </View>
           </AnimatedButton>
@@ -139,18 +165,14 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     top: DimensionsUtils.getDP(-8),
     right: DimensionsUtils.getDP(56),
-    padding: DimensionsUtils.getDP(4),
     backgroundColor: Colors.background,
     marginTop: DimensionsUtils.getDP(16),
     marginRight: DimensionsUtils.getDP(12),
     borderColor: Colors.white,
-    borderWidth: DimensionsUtils.getDP(2),
     borderRadius: DimensionsUtils.getDP(6),
   },
   logoutIcon: {
     marginRight: DimensionsUtils.getDP(4),
-    width: DimensionsUtils.getDP(18),
-    height: DimensionsUtils.getDP(18),
   },
   logoutLabel: {
     color: Colors.appGreen,
