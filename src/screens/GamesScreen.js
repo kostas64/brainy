@@ -34,6 +34,10 @@ const GamesScreen = ({navigation, route}) => {
     setIndex(activeIndex);
   }, []);
 
+  const closeMenu = React.useCallback(() => {
+    menuRef.current?.closeMenu();
+  }, []);
+
   const {status, data} = useFetch(
     !user?.isGuest ? `${SCORE}${GenericUtils.getEndpoint('Best Of')}` : null,
     'GET',
@@ -77,9 +81,7 @@ const GamesScreen = ({navigation, route}) => {
   }, [scrollXIndex, scrollXAnimated]);
 
   return (
-    <View
-      style={[styles.container, styles.flex]}
-      onStartShouldSetResponder={() => menuRef?.current?.closeMenu()}>
+    <View style={styles.container} onStartShouldSetResponder={closeMenu}>
       <StatusBar
         barStyle={'light-content'}
         backgroundColor={Colors.background}
@@ -119,6 +121,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
+    flex: 1,
     backgroundColor: Colors.background,
   },
   zIndex: {
