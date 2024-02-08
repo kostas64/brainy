@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import RankScreen from '../screens/RankScreen';
 import TabBar from '../components/common/TabBar';
 import GamesScreen from '../screens/GamesScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,6 +17,7 @@ const TabStack = () => {
       })}>
       <Tab.Screen name="Games" component={GamesScreen} />
       <Tab.Screen name="Rank" component={RankScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 };
