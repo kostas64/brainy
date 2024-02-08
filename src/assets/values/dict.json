@@ -41,5 +41,8 @@
   "noLabel": "NO",
   "yesLabel": "YES",
   "logout": "Logout",
-  "viewProfile": "View profile"
+  "viewProfile": "View profile",
+  "addFriend": "Add friend",
+  "removeFriend": "Remove friend",
+  "cancelRequest": "Cancel request"
 }
