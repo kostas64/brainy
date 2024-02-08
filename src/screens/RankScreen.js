@@ -1,7 +1,7 @@
 import React from 'react';
 import {FlashList} from '@shopify/flash-list';
 import {useIsFocused} from '@react-navigation/native';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, Text} from 'react-native';
 
 import {SCORE} from '../Endpoints';
 import {Colors} from '../utils/Colors';
@@ -12,14 +12,15 @@ import Screen from '../components/common/Screen';
 import {GenericUtils} from '../utils/GenericUtils';
 import EmptyList from '../components/common/EmptyList';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import {useAuthContext} from '../context/AuthProvider';
 import RankGameItem from '../components/rank/RankGameItem';
 import InputDropdown from '../components/common/InputDropdown';
 
 const RankScreen = ({navigation}) => {
+  const {user} = useAuthContext();
   const isFocused = useIsFocused();
 
   const menuRef = React.useRef();
-
   const [query, setQuery] = React.useState(null);
   const [page, setPage] = React.useState(1);
   const [force, setForce] = React.useState(false);
@@ -64,36 +65,58 @@ const RankScreen = ({navigation}) => {
 
   return (
     <Screen label={dict.rankScrTitle} navigation={navigation}>
-      <View
-        style={styles.dropdownContainer}
-        onStartShouldSetResponder={closeMenu}>
-        <InputDropdown
-          value={gameInput}
-          setValue={setValue}
-          isFocused={isFocused}
-          onFieldPress={closeMenu}
-          placeholder={dict.rankDropdownPlaceholder}
-        />
-      </View>
-      {status === 'fetching' ? (
-        <View style={styles.activityIndicator}>
-          <ActivityIndicator size={'small'} color={Colors.tabBarIcon} />
+      {user?.isGuest ? (
+        <View style={styles.guestMessageContainer}>
+          <Text style={styles.guestMessage}>{dict.guestRankMessage}</Text>
         </View>
-      ) : status === 'fetched' && data.scores?.length > 0 ? (
-        <FlashList
-          data={data.scores}
-          keyExtractor={(_, index) => `index_${index}`}
-          renderItem={renderItem}
-          estimatedItemSize={DimensionsUtils.getDP(56)}
-        />
-      ) : status === 'fetched' ? (
-        <EmptyList />
-      ) : null}
+      ) : (
+        !user?.isGuest && (
+          <>
+            <View
+              style={styles.dropdownContainer}
+              onStartShouldSetResponder={closeMenu}>
+              <InputDropdown
+                value={gameInput}
+                setValue={setValue}
+                isFocused={isFocused}
+                onFieldPress={closeMenu}
+                placeholder={dict.rankDropdownPlaceholder}
+              />
+            </View>
+            {status === 'fetching' ? (
+              <View style={styles.activityIndicator}>
+                <ActivityIndicator size={'small'} color={Colors.tabBarIcon} />
+              </View>
+            ) : status === 'fetched' && data.scores?.length > 0 ? (
+              <FlashList
+                data={data.scores}
+                keyExtractor={(_, index) => `index_${index}`}
+                renderItem={renderItem}
+                estimatedItemSize={DimensionsUtils.getDP(56)}
+              />
+            ) : status === 'fetched' ? (
+              <EmptyList />
+            ) : null}
+          </>
+        )
+      )}
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+  guestMessageContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  guestMessage: {
+    width: 280,
+    textAlign: 'center',
+    color: Colors.white,
+    fontFamily: 'Poppins-Regular',
+    fontSize: DimensionsUtils.getFontSize(18),
+  },
   dropdownContainer: {
     paddingHorizontal: DimensionsUtils.getDP(16),
     paddingVertical: DimensionsUtils.getDP(12),
