@@ -65,7 +65,8 @@ const GamesScreen = ({navigation, route}) => {
     !isFocused && menuRef?.current?.closeMenu();
     isFocused && setForce(true);
     !isFocused && setForce(false);
-  }, [isFocused]);
+    isFocused && navigation.getParent()?.setOptions({gestureEnabled: true});
+  }, [isFocused, navigation]);
 
   React.useEffect(() => {
     Animated.spring(scrollXAnimated, {
@@ -73,7 +74,7 @@ const GamesScreen = ({navigation, route}) => {
       toValue: scrollXIndex,
       useNativeDriver: true,
     }).start();
-  }, []);
+  }, [scrollXIndex, scrollXAnimated]);
 
   return (
     <View
