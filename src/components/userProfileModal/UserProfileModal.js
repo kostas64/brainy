@@ -24,7 +24,7 @@ const Loader = () => (
   </View>
 );
 
-const UserProfileModal = ({isMe, item}) => {
+const UserProfileModal = ({isMe, item, onGamePress}) => {
   const [scores, setScores] = React.useState({});
   const [loading, setLoading] = React.useState(true);
   const [loadingButton, setLoadingButton] = React.useState(false);
@@ -51,11 +51,12 @@ const UserProfileModal = ({isMe, item}) => {
   const renderItem = React.useCallback(
     game => (
       <UserProfileModalScoreItem
-        key={`game-score-${game.index}`}
         item={game.item}
+        onGamePress={onGamePress}
+        key={`game-score-${game.index}`}
       />
     ),
-    [],
+    [onGamePress],
   );
 
   const getScores = React.useCallback(() => {

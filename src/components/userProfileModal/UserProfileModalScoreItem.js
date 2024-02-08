@@ -1,12 +1,12 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
-import {GenericUtils} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
+import {matchGameNameWithImg} from '../../utils/GenericUtils';
 
-const UserProfileModalScoreItem = ({item}) => {
+const UserProfileModalScoreItem = ({item, onGamePress}) => {
   const gameData = item?.data?.[0];
 
   const score = !gameData
@@ -16,12 +16,12 @@ const UserProfileModalScoreItem = ({item}) => {
     : `${gameData?.milliseconds / 1000}s\nin ${gameData?.flips} flips`;
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={() => onGamePress(item.game)}>
       <Text style={styles.gameName}>{item.game}</Text>
 
       <FastImage
         style={styles.gameImg}
-        source={GenericUtils.matchGameNameWithImg(item.game)}
+        source={matchGameNameWithImg(item.game)}
       />
 
       <Text
@@ -31,7 +31,7 @@ const UserProfileModalScoreItem = ({item}) => {
         ]}>
         {score}
       </Text>
-    </View>
+    </Pressable>
   );
 };
 

@@ -1,22 +1,35 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
+import {useNavigation} from '@react-navigation/native';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useModalContext} from '../../context/ModalProvider';
+import {matchGameWithScreenName} from '../../utils/GenericUtils';
 import UserProfileModal from '../userProfileModal/UserProfileModal';
 
 const RankFlipListItem = ({item, index, isMe}) => {
-  const {setModalInfo} = useModalContext();
+  const navigation = useNavigation();
+  const {closeModal, setModalInfo} = useModalContext();
 
   const onPress = React.useCallback(() => {
     setModalInfo({
       height: 420,
-      content: <UserProfileModal isMe={isMe} item={item} />,
+      content: (
+        <UserProfileModal isMe={isMe} item={item} onGamePress={onGamePress} />
+      ),
     });
-  }, [item, isMe, setModalInfo]);
+  }, [item, isMe, onGamePress, setModalInfo]);
+
+  const onGamePress = React.useCallback(
+    game => {
+      closeModal();
+      navigation.navigate(matchGameWithScreenName(game));
+    },
+    [closeModal, navigation],
+  );
 
   return (
     <Pressable
