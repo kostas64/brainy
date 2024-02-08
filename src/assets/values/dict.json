@@ -48,5 +48,6 @@
   "cancelRequest": "Cancel request",
   "guest": "Guest",
   "friendRequestSent": "Friend request has been sent  ✓",
-  "guestRankMessage": "Log in to access leaderboards and discover the best scores."
+  "guestRankMessage": "Log in to access leaderboards and discover the best scores.",
+  "authFailed": "Authentication failed"
 }

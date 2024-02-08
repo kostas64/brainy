@@ -35,6 +35,7 @@ const GamesScreen = ({navigation, route}) => {
     true,
     'Best Of',
     force,
+    user,
   );
 
   React.useEffect(() => {

@@ -26,7 +26,7 @@ const RankScreen = ({navigation}) => {
   const [force, setForce] = React.useState(false);
   const [gameInput, setGameInput] = React.useState(GAMES[0]);
 
-  const {status, data} = useFetch(query, 'GET', true, gameInput, force);
+  const {status, data} = useFetch(query, 'GET', true, gameInput, force, user);
 
   const closeMenu = React.useCallback(() => {
     menuRef.current?.closeMenu();
