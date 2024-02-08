@@ -15,6 +15,8 @@ const logout = require('./logout.png');
 const matchEqual = require('./match_equal.png');
 const memoryMatch = require('./memory_match.png');
 const no = require('./no.png');
+const profile = require('./profile.png');
+const profile_o = require('./profile_o.png');
 const rankIconO = require('./rank_icon_outline.png');
 const rankIcon = require('./rank_icon.png');
 const splash = require('./splash.png');
@@ -41,6 +43,8 @@ export default {
   matchEqual,
   memoryMatch,
   no,
+  profile,
+  profile_o,
   rankIconO,
   rankIcon,
   splash,
