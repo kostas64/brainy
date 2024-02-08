@@ -23,8 +23,8 @@ export const useFetch = (
   };
 
   const isExpired = date => {
-    const minutes = 1000 * 60;
-    return (new Date().getTime() - new Date(date).getTime()) / minutes > 1;
+    const MS_PER_SEC = 1000;
+    return (new Date().getTime() - new Date(date).getTime()) / MS_PER_SEC > 30;
   };
 
   const [state, dispatch] = React.useReducer((data, action) => {
@@ -60,6 +60,7 @@ export const useFetch = (
         const data = cache?.current?.[game];
         dispatch({type: 'FETCHED', payload: data});
       } else if (!token?.current && Object.keys(cache?.current).length === 0) {
+        //Case token expired
         token.current = await AsyncStorage.getItem('token');
 
         requestAccess({
@@ -110,6 +111,7 @@ export const useFetch = (
           }
         });
       } else {
+        //Case 30secs passed - Update data
         try {
           if (!token?.current && needsAuth) {
             token.current = await AsyncStorage.getItem('token');
