@@ -69,7 +69,7 @@ export const useFetch = (
           },
         }).then(async res => {
           const dataTemp = await res.json();
-          console.log('dataTemp ', dataTemp);
+
           token.current = dataTemp?.token;
           await AsyncStorage.setItem('token', dataTemp?.token);
 
