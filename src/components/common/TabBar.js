@@ -1,15 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import {
-  View,
-  Text,
-  Easing,
-  Animated,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import {WIDTH} from '../../utils/GenericUtils';
@@ -21,6 +13,8 @@ const gamesI = images.gamesIcon;
 const gamesIO = images.gamesIconO;
 const rankI = images.rankIcon;
 const rankIO = images.rankIconO;
+const profileI = images.profile;
+const profileIO = images.profile_o;
 
 const TabBar = props => {
   const insets = useSafeAreaInsets();
@@ -28,8 +22,29 @@ const TabBar = props => {
 
   const {routes, index: activeRouteIndex} = props.state;
 
-  const renderIcon = ({route, focused}) => {
-    let iconName;
+  const translateX = translateRef.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, (WIDTH - DimensionsUtils.getDP(32)) / routes.length],
+  });
+
+  const poseStyles = [
+    styles.pose,
+    {transform: [{translateX}]},
+    {width: (WIDTH - DimensionsUtils.getDP(32)) / routes.length},
+  ];
+
+  const innerStyles = [
+    styles.innerContainer,
+    insets.bottom > 0 ? {marginBottom: insets.bottom} : styles.spaceBottom,
+  ];
+
+  const touchableStyles = [
+    styles.tabButton,
+    insets.bottom !== 0 && styles.height80,
+  ];
+
+  const renderIcon = React.useCallback(({route, focused}) => {
+    let iconName, style;
 
     iconName =
       route.name === dict.gamesScrTitle && focused
@@ -38,62 +53,44 @@ const TabBar = props => {
         ? gamesIO
         : route.name === dict.rankScrTitle && focused
         ? rankI
-        : rankIO;
+        : route.name === dict.rankScrTitle
+        ? rankIO
+        : route.name === dict.profileScrTitle && focused
+        ? profileIO
+        : profileI;
 
-    return (
-      <FastImage
-        source={iconName}
-        style={
-          route.name === dict.gamesScrTitle ? styles.gamesIcon : styles.rankIcon
-        }
-      />
-    );
-  };
+    style =
+      route.name === dict.gamesScrTitle
+        ? styles.gamesIcon
+        : route.name === dict.rankScrTitle
+        ? styles.rankIcon
+        : styles.profileIcon;
 
-  const getLabel = (name, focused) => {
+    return <FastImage source={iconName} style={style} />;
+  }, []);
+
+  const getLabel = React.useCallback((name, focused) => {
     const style = {
       color: focused ? Colors.white : Colors.tabBarIcon,
       fontFamily: focused ? 'Poppins-SemiBold' : 'Poppins-Medium',
     };
 
     return <Text style={[styles.text, style]}>{name}</Text>;
-  };
-
-  const translateX = translateRef.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, (WIDTH - DimensionsUtils.getDP(32)) / 2],
-  });
+  }, []);
 
   React.useEffect(() => {
-    const toValue = activeRouteIndex === 1 ? 1 : 0;
     Animated.timing(translateRef, {
-      toValue,
-      duration: 250,
-      easing: Easing.ease,
+      duration: 200,
+      toValue: activeRouteIndex,
       useNativeDriver: true,
     }).start();
-  }, [activeRouteIndex]);
+  }, [translateRef, activeRouteIndex]);
 
   return (
     <View style={styles.container}>
-      <View
-        style={[
-          styles.innerContainer,
-          {
-            marginBottom:
-              insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(16),
-          },
-        ]}>
+      <View style={innerStyles}>
         <View style={{...StyleSheet.absoluteFillObject}}>
-          <Animated.View
-            style={[
-              styles.pose,
-              {
-                width: (WIDTH - DimensionsUtils.getDP(32)) / routes.length,
-                transform: [{translateX}],
-              },
-            ]}
-          />
+          <Animated.View style={poseStyles} />
         </View>
         {routes.map((route, routeIndex) => {
           const isRouteActive = routeIndex === activeRouteIndex;
@@ -101,7 +98,7 @@ const TabBar = props => {
           return (
             <TouchableOpacity
               key={routeIndex}
-              style={[styles.tabButton, insets.bottom !== 0 && {height: '80%'}]}
+              style={touchableStyles}
               activeOpacity={0.4}
               onPress={() => {
                 props.navigation.navigate(routes?.[routeIndex].name);
@@ -149,10 +146,20 @@ const styles = StyleSheet.create({
     width: 32,
     height: 24,
   },
+  profileIcon: {
+    width: 24,
+    height: 24,
+  },
   text: {
     marginTop: DimensionsUtils.getDP(4),
     fontSize: DimensionsUtils.getFontSize(12),
     fontFamily: 'Poppins-Medium',
+  },
+  height80: {
+    height: '80%',
+  },
+  spaceBottom: {
+    marginBottom: DimensionsUtils.getDP(16),
   },
 });
 
