@@ -6,6 +6,7 @@ import {
   GESTURE_IT,
   COLOR_CARDS,
   MATCH_CARDS,
+  BEST_OF_USER,
 } from '../Endpoints';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -37,5 +38,29 @@ export const submitScore = async (game, payload) => {
     });
   } catch (e) {
     console.log('API submitScore failed ', e);
+  }
+};
+
+export const getBestOfScoresForUser = async _id => {
+  console.log(
+    'API getBestOfScoresForUser ',
+    `${HOST}${SCORE}${BEST_OF_USER}`,
+    _id,
+  );
+
+  try {
+    const token = await AsyncStorage.getItem('token');
+
+    return fetch(`${HOST}${SCORE}${BEST_OF_USER}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+      body: JSON.stringify({_id}),
+    });
+  } catch (e) {
+    console.log('API getBestOfScoresForUser failed ', e);
   }
 };
