@@ -40,6 +40,21 @@ const ProfileScreen = ({navigation}) => {
         contStyle={contStyle}
         imgContStyle={imgContStyle}
       />
+
+      {/*
+         Account
+         Friends
+         Reminder
+         Notifications
+         Invite friend
+         Logout
+
+         -------------
+         Leave feedback
+         FAQ
+
+         App Version
+      */}
     </Screen>
   );
 };
