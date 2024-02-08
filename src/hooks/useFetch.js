@@ -10,8 +10,8 @@ export const useFetch = (
   game,
   force = false,
 ) => {
+  const token = React.useRef();
   const cache = React.useRef({});
-  let token = null;
 
   const initialState = {
     status: 'idle',
@@ -48,13 +48,17 @@ export const useFetch = (
       dispatch({type: 'FETCHING'});
 
       //Check if data exist and if expired
-      if (cache.current[game] && !isExpired(cache.current[game].date)) {
+      if (
+        cache.current[game] &&
+        !isExpired(cache.current[game].date) &&
+        !!token.current
+      ) {
         const data = cache.current[game];
         dispatch({type: 'FETCHED', payload: data});
       } else {
         try {
-          if (!token && needsAuth) {
-            token = await AsyncStorage.getItem('token');
+          if (!token.current && needsAuth) {
+            token.current = await AsyncStorage.getItem('token');
           }
 
           let headers = {
@@ -67,7 +71,7 @@ export const useFetch = (
             headers: needsAuth
               ? {
                   ...headers,
-                  Authorization: `${BEARER}${token}`,
+                  Authorization: `${BEARER}${token.current}`,
                 }
               : headers,
           });
@@ -99,7 +103,7 @@ export const useFetch = (
     return function cleanup() {
       cancelRequest = true;
     };
-  }, [url, force]);
+  }, [url, force, game, method, needsAuth]);
 
   return state;
 };
