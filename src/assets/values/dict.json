@@ -49,5 +49,13 @@
   "guest": "Guest",
   "friendRequestSent": "Friend request has been sent  ✓",
   "guestRankMessage": "Log in to access leaderboards and discover the best scores.",
-  "authFailed": "Authentication failed"
+  "authFailed": "Authentication failed",
+  "profileAccount": "Account",
+  "profileFriends": "Friends",
+  "profileReminder": "Set reminder",
+  "profileNotifications": "Notifications",
+  "profileInvite": "Invite friend",
+  "profileLogout": "Logout",
+  "profileLeaveFeedback": "Leave feedback",
+  "profileFAQ": "FAQ"
 }
