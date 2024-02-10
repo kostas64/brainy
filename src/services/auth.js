@@ -81,16 +81,29 @@ export const signIn = async (setToken, setUser, setLoading) => {
   }
 };
 
-export const signOut = async (setToken, setUser) => {
+export const signOut = async (setToken, setUser, withDelay = false) => {
   await GoogleSignin.signOut();
   setToken(null);
-  setUser(old => ({
-    email: null,
-    avatar: old?.avatar,
-    isGuest: null,
-    name: null,
-    surname: null,
-  }));
+
+  if (withDelay) {
+    setTimeout(() => {
+      setUser(old => ({
+        email: null,
+        avatar: old?.avatar,
+        isGuest: null,
+        name: null,
+        surname: null,
+      }));
+    }, 500);
+  } else {
+    setUser(old => ({
+      email: null,
+      avatar: old?.avatar,
+      isGuest: null,
+      name: null,
+      surname: null,
+    }));
+  }
 
   await AsyncStorage.removeItem('token');
   await AsyncStorage.removeItem('email');
