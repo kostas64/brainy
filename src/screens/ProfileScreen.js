@@ -1,19 +1,22 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 
 import {Colors} from '../utils/Colors';
+import {signOut} from '../services/auth';
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import Screen from '../components/common/Screen';
 import {capFirstLet} from '../utils/StringUtils';
+import MenuItem from '../components/common/MenuItem';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import {PROFILE_SECTIONS} from '../assets/values/profile';
 import UserProfileModalAvatar from '../components/userProfileModal/UserProfileModalAvatar';
 
 const ProfileScreen = ({navigation}) => {
   const isFocused = useIsFocused();
-  const {user} = useAuthContext();
+  const {user, setToken, setUser} = useAuthContext();
 
   const name = user?.isGuest
     ? dict.guest
@@ -24,6 +27,15 @@ const ProfileScreen = ({navigation}) => {
   const imgContStyle = styles.imgCont;
   const imgStyle = styles.imgStyle;
   const icon = user?.isGuest ? images.guest : null;
+
+  const profileItems = user?.isGuest
+    ? PROFILE_SECTIONS?.slice(5, 6)
+    : PROFILE_SECTIONS;
+
+  const logout = React.useCallback(async () => {
+    !user?.isGuest && (await signOut(setToken, setUser, true));
+    navigation.pop();
+  }, [user?.isGuest, navigation, setToken, setUser]);
 
   React.useEffect(() => {
     isFocused && navigation.getParent()?.setOptions({gestureEnabled: false});
@@ -40,6 +52,25 @@ const ProfileScreen = ({navigation}) => {
         contStyle={contStyle}
         imgContStyle={imgContStyle}
       />
+
+      <ScrollView style={styles.spaceHor} showsVerticalScrollIndicator={false}>
+        {profileItems.map((item, key) => {
+          const isLast = key === profileItems.length - 1;
+          const iconStyle = isLast ? styles.smallIcon : styles.icon;
+
+          return (
+            <MenuItem
+              key={`profile-${key}`}
+              isLast={isLast}
+              icon={item.icon}
+              label={item.title}
+              iconStyle={iconStyle}
+              onPress={isLast ? logout : () => {}}
+              labelStyle={isLast && styles.logoutRed}
+            />
+          );
+        })}
+      </ScrollView>
 
       {/*
          Account
@@ -65,29 +96,49 @@ const styles = StyleSheet.create({
   avatarCont: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: DimensionsUtils.getDP(16),
-    width: DimensionsUtils.getDP(128),
-    height: DimensionsUtils.getDP(128),
-    borderRadius: DimensionsUtils.getDP(64),
+    marginTop: DimensionsUtils.getDP(8),
+    width: DimensionsUtils.getDP(112),
+    height: DimensionsUtils.getDP(112),
+    borderRadius: DimensionsUtils.getDP(56),
   },
   guestAvatarCont: {
-    marginTop: DimensionsUtils.getDP(16),
+    marginTop: DimensionsUtils.getDP(8),
     borderColor: Colors.white,
-    width: DimensionsUtils.getDP(128),
-    height: DimensionsUtils.getDP(128),
-    borderRadius: DimensionsUtils.getDP(64),
+    width: DimensionsUtils.getDP(112),
+    height: DimensionsUtils.getDP(112),
+    borderRadius: DimensionsUtils.getDP(56),
   },
   imgCont: {
-    width: DimensionsUtils.getDP(121),
-    height: DimensionsUtils.getDP(121),
-    borderRadius: DimensionsUtils.getDP(64),
+    width: DimensionsUtils.getDP(106),
+    height: DimensionsUtils.getDP(106),
+    borderRadius: DimensionsUtils.getDP(53),
   },
   imgStyle: {
-    width: DimensionsUtils.getDP(116),
-    height: DimensionsUtils.getDP(116),
-    borderRadius: DimensionsUtils.getDP(64),
+    width: DimensionsUtils.getDP(102),
+    height: DimensionsUtils.getDP(102),
+    borderRadius: DimensionsUtils.getDP(51),
   },
   whiteColor: {
     color: Colors.white,
+    marginBottom: DimensionsUtils.getDP(8),
+  },
+  icon: {
+    tintColor: Colors.appGreen,
+    width: DimensionsUtils.getDP(22),
+    height: DimensionsUtils.getDP(22),
+    marginRight: DimensionsUtils.getDP(8),
+  },
+  smallIcon: {
+    tintColor: Colors.fillRed,
+    width: DimensionsUtils.getDP(18),
+    height: DimensionsUtils.getDP(18),
+    marginLeft: DimensionsUtils.getDP(4),
+    marginRight: DimensionsUtils.getDP(8),
+  },
+  spaceHor: {
+    marginHorizontal: DimensionsUtils.getDP(16),
+  },
+  logoutRed: {
+    color: Colors.fillRed,
   },
 });
