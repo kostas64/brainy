@@ -11,12 +11,15 @@ import {capFirstLet} from '../utils/StringUtils';
 import MenuItem from '../components/common/MenuItem';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import {getAllFriendsRequest} from '../services/friends';
 import {PROFILE_SECTIONS} from '../assets/values/profile';
 import UserProfileModalAvatar from '../components/userProfileModal/UserProfileModalAvatar';
 
 const ProfileScreen = ({navigation}) => {
   const isFocused = useIsFocused();
   const {user, setToken, setUser} = useAuthContext();
+
+  const [friendRequests, setFriendRequests] = React.useState([]);
 
   const name = user?.isGuest
     ? dict.guest
@@ -38,6 +41,7 @@ const ProfileScreen = ({navigation}) => {
   }, [user?.isGuest, navigation, setToken, setUser]);
 
   React.useEffect(() => {
+    isFocused && getAllFriendsRequest().then(data => setFriendRequests(data));
     isFocused && navigation.getParent()?.setOptions({gestureEnabled: false});
   }, [isFocused, navigation]);
 
@@ -60,6 +64,7 @@ const ProfileScreen = ({navigation}) => {
         {profileItems.map((item, key) => {
           const isLast = key === profileItems.length - 1;
           const iconStyle = isLast ? styles.smallIcon : styles.icon;
+          const isRequestSection = item.title === dict.profileFriends;
 
           return (
             <MenuItem
@@ -68,8 +73,10 @@ const ProfileScreen = ({navigation}) => {
               icon={item.icon}
               label={item.title}
               iconStyle={iconStyle}
+              withChevron={!isLast}
               onPress={isLast ? logout : () => {}}
               labelStyle={isLast && styles.logoutRed}
+              counter={isRequestSection ? friendRequests.length : null}
             />
           );
         })}
