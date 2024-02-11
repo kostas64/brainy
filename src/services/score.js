@@ -59,7 +59,7 @@ export const getBestOfScoresForUser = async _id => {
         Authorization: `${BEARER}${token}`,
       },
       body: JSON.stringify({_id}),
-    });
+    }).then(res => res.json());
   } catch (e) {
     console.log('API getBestOfScoresForUser failed ', e);
   }

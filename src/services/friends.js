@@ -1,13 +1,15 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   HOST,
   BEARER,
   FRIENDSHIP,
   FRIENDS_REQUEST,
+  CHECK_FRIENDS_REQUEST,
   CANCEL_FRIENDS_REQUEST,
   ACCEPT_FRIENDS_REQUEST,
-  CHECK_FRIENDS_REQUEST,
+  CHECK_ALL_FRIENDS_REQUESTS,
 } from '../Endpoints';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const areWeFriends = async userId_requested => {
   console.log('API areWeFriends ', `${HOST}${FRIENDSHIP}`, userId_requested);
@@ -25,7 +27,7 @@ export const areWeFriends = async userId_requested => {
       body: JSON.stringify({
         userId_requested,
       }),
-    });
+    }).then(res => res.json());
   } catch (e) {
     console.log('API areWeFriends failed', e);
   }
@@ -117,8 +119,30 @@ export const getFriendsRequest = async userId_requested => {
       body: JSON.stringify({
         userId_requested,
       }),
-    });
+    }).then(res => res.json());
   } catch (e) {
     console.log('API getFriendsRequest failed', e);
+  }
+};
+
+export const getAllFriendsRequest = async () => {
+  console.log(
+    'API getAllFriendsRequest ',
+    `${HOST}${CHECK_ALL_FRIENDS_REQUESTS}`,
+  );
+
+  try {
+    const token = await AsyncStorage.getItem('token');
+
+    return fetch(`${HOST}${CHECK_ALL_FRIENDS_REQUESTS}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+    }).then(res => res.json());
+  } catch (e) {
+    console.log('API getAllFriendsRequest failed', e);
   }
 };

@@ -65,9 +65,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   const getScores = React.useCallback(() => {
     return new Promise((resolve, reject) => {
       getBestOfScoresForUser(user?._id)
-        .then(async res => {
-          const data = await res.json();
-
+        .then(data => {
           setScores(data);
           resolve();
         })
@@ -80,9 +78,8 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   const getFriendship = React.useCallback(() => {
     return new Promise((resolve, reject) => {
       areWeFriends(user?._id)
-        .then(async res => {
-          const response = await res.json();
-          resolve(response);
+        .then(data => {
+          resolve(data);
         })
         .catch(reject);
     });
@@ -91,9 +88,8 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   const checkFriendRequest = React.useCallback(() => {
     return new Promise((resolve, reject) => {
       getFriendsRequest(user?._id)
-        .then(async res => {
-          const response = await res.json();
-          resolve(response);
+        .then(data => {
+          resolve(data);
         })
         .catch(reject);
     });
