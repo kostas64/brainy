@@ -45,6 +45,8 @@
   "viewProfile": "View profile",
   "addFriend": "Add friend",
   "removeFriend": "Remove friend",
+  "acceptRequest": "✓   Accept request",
+  "rejectRequest": "✗   Reject request",
   "cancelRequest": "Cancel request",
   "guest": "Guest",
   "friendRequestSent": "Friend request has been sent  ✓",
