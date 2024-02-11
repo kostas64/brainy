@@ -9,6 +9,7 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 const UserProfileModalFooterButtons = ({
   isMe,
   firstLabel,
+  secondLabel,
   firstButtonIcon,
   onPressFirstButton,
   onPressSecondButton,
@@ -26,9 +27,10 @@ const UserProfileModalFooterButtons = ({
         />
       )}
       <ModalButton
-        label={dict.viewProfile}
         onPress={onPressSecondButton}
+        loading={loadingButton}
         containerStyle={!isMe && styles.buttonStyle}
+        label={isMe ? dict.viewProfile : secondLabel}
       />
     </View>
   );

@@ -4,8 +4,10 @@ import {View, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
 
 import {
   areWeFriends,
+  deleteFriend,
   getFriendsRequest,
   sendFriendsRequest,
+  acceptFriendsRequest,
   cancelFriendsRequest,
 } from '../../services/friends';
 import {Colors} from '../../utils/Colors';
@@ -40,9 +42,16 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   const firstLabelButton =
     !hasRequest && !hasFriendship
       ? dict.addFriend
-      : hasRequest
+      : hasRequest === 'Accept'
+      ? dict.acceptRequest
+      : hasRequest === 'Cancel'
       ? dict.cancelRequest
       : dict.removeFriend;
+
+  const secondLabelButton =
+    !hasRequest || hasRequest === 'Cancel'
+      ? dict.viewProfile
+      : dict.rejectRequest;
 
   const firstButtonIcon =
     !hasRequest && !hasFriendship
@@ -96,42 +105,82 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   }, [user?._id]);
 
   const onPressFirstButton = React.useCallback(() => {
+    setLoadingButton(true);
+
     if (hasFriendship) {
-      //Delete friends
-    } else if (hasRequest) {
+      //Delete friend
+      deleteFriend(user?._id)
+        .then(() => {
+          setToast({
+            message: dict.deleteFriend,
+            icon: {uri: user?.avatar},
+          });
+
+          setHasRequest(false);
+          setHasFriendship(false);
+        })
+        .finally(() => setLoadingButton(false));
+    } else if (hasRequest === 'Accept') {
+      //Accept Request
+      acceptFriendsRequest(user?._id)
+        .then(() => {
+          setToast({
+            message: dict.acceptedRequest,
+            icon: {uri: user?.avatar},
+          });
+
+          setHasRequest(false);
+          setHasFriendship(true);
+        })
+        .finally(() => setLoadingButton(false));
+    } else if (hasRequest === 'Cancel') {
       //Cancel Request
-      setLoadingButton(true);
       cancelFriendsRequest(user?._id)
         .then(() => {
-          setLoadingButton(false);
           setHasRequest(false);
         })
-        .catch(() => {
-          setLoadingButton(false);
-        });
+        .finally(() => setLoadingButton(false));
     } else {
       //Send friend Request
-      setLoadingButton(true);
       sendFriendsRequest(user?._id)
         .then(() => {
           setToast({
             message: dict.friendRequestSent,
             icon: {uri: user?.avatar},
           });
-          setLoadingButton(false);
-          setHasRequest(true);
+
+          setHasRequest('Cancel');
         })
-        .catch(() => {
-          setLoadingButton(false);
-        });
+        .finally(() => setLoadingButton(false));
     }
   }, [user, hasFriendship, hasRequest, setToast]);
+
+  const onPressSecondButton = React.useCallback(() => {
+    if (hasRequest === 'Accept') {
+      //Reject friend request
+      setLoadingButton(true);
+      cancelFriendsRequest(user?._id)
+        .then(() => {
+          setHasRequest(false);
+          setHasFriendship(false);
+        })
+        .finally(() => setLoadingButton(false));
+    }
+  }, [hasRequest, user?._id]);
 
   React.useEffect(() => {
     Promise.all([getScores(), getFriendship(), checkFriendRequest()]).then(
       ([_, res2, res3]) => {
-        res2 && setHasFriendship(true);
-        !res2 && res3 && setHasRequest(true);
+        if (res2) {
+          setHasFriendship(true);
+        }
+
+        if (!res2 && !!res3?.toAccept) {
+          setHasRequest('Accept');
+        } else if (!res2 && !!res3?.toCancel) {
+          setHasRequest('Cancel');
+        }
+
         setLoading(false);
       },
     );
@@ -155,10 +204,11 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
           <UserProfileModalFooterButtons
             isMe={isMe}
             firstLabel={firstLabelButton}
+            secondLabel={secondLabelButton}
             loadingButton={loadingButton}
             firstButtonIcon={firstButtonIcon}
             onPressFirstButton={onPressFirstButton}
-            onPressSecondButton={() => {}}
+            onPressSecondButton={onPressSecondButton}
           />
         </Animated.View>
       )}
