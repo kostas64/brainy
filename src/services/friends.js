@@ -4,6 +4,7 @@ import {
   HOST,
   BEARER,
   FRIENDSHIP,
+  DELETE_FRIEND,
   FRIENDS_REQUEST,
   CHECK_FRIENDS_REQUEST,
   CANCEL_FRIENDS_REQUEST,
@@ -30,6 +31,28 @@ export const areWeFriends = async userId_requested => {
     }).then(res => res.json());
   } catch (e) {
     console.log('API areWeFriends failed', e);
+  }
+};
+
+export const deleteFriend = async userIdDeleted => {
+  console.log('API deleteFriend ', `${HOST}${DELETE_FRIEND}`, userIdDeleted);
+
+  try {
+    const token = await AsyncStorage.getItem('token');
+
+    return fetch(`${HOST}${DELETE_FRIEND}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+      body: JSON.stringify({
+        userIdDeleted,
+      }),
+    }).then(res => res.json());
+  } catch (e) {
+    console.log('API deleteFriend failed', e);
   }
 };
 
@@ -60,7 +83,11 @@ export const sendFriendsRequest = async userId_requested => {
 };
 
 export const cancelFriendsRequest = async userId_requested => {
-  console.log('API cancelFriendsRequest ', `${HOST}${CANCEL_FRIENDS_REQUEST}`);
+  console.log(
+    'API cancelFriendsRequest ',
+    `${HOST}${CANCEL_FRIENDS_REQUEST}`,
+    userId_requested,
+  );
 
   try {
     const token = await AsyncStorage.getItem('token');
@@ -81,7 +108,7 @@ export const cancelFriendsRequest = async userId_requested => {
   }
 };
 
-export const acceptFriendsRequest = async userId_requested => {
+export const acceptFriendsRequest = async userId_request => {
   console.log('API acceptFriendsRequest ', `${HOST}${ACCEPT_FRIENDS_REQUEST}`);
 
   try {
@@ -95,7 +122,7 @@ export const acceptFriendsRequest = async userId_requested => {
         Authorization: `${BEARER}${token}`,
       },
       body: JSON.stringify({
-        userId_requested: '658063b79c12c6a21206895f',
+        userId_request,
       }),
     });
   } catch (e) {
