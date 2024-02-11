@@ -43,7 +43,7 @@ const Card = React.forwardRef(
       setIsFlipped(index);
       Animated.timing(flipAnimation, {
         toValue: 180,
-        duration: 300,
+        duration: 250,
         easing: Easing.linear,
         useNativeDriver: true,
       }).start();
@@ -53,7 +53,7 @@ const Card = React.forwardRef(
       setIsFlipped(index);
       Animated.timing(flipAnimation, {
         toValue: 0,
-        duration: 150,
+        duration: 125,
         useNativeDriver: true,
       }).start();
     };

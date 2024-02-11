@@ -168,7 +168,7 @@ const MemoryCardScreen = () => {
         childRefs.current?.[currentFlipped[1]?.id]?.flipToBack();
         setCurrentFlipped([]);
         setCardsDisabled(false);
-      }, 500);
+      }, 300);
     } else if (currentFlipped.length === 2 && flippedEqual) {
       animAnswerRef.current.animateAnswer(true);
       setFlipCounter(oldCounter => oldCounter + 1);

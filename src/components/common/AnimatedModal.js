@@ -47,7 +47,7 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
 
     setTimeout(() => {
       setModalOpen(false);
-    }, 200);
+    }, 150);
   };
 
   return (
