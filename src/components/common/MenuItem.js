@@ -1,15 +1,42 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
+import Chevron from './Chevron';
+import Counter from './Counter';
 import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const MenuItem = ({label, icon, isLast, iconStyle, labelStyle, onPress}) => {
+const NumIndicator = ({number}) => (
+  <View style={styles.spaceRight}>
+    <Counter counter={number} />
+  </View>
+);
+
+const MenuItem = ({
+  label,
+  icon,
+  isLast,
+  counter,
+  onPress,
+  iconStyle,
+  labelStyle,
+  withChevron,
+}) => {
+  const showCounter = counter > 0;
+
   return (
     <View style={[styles.menuItemCont, isLast && styles.noBorder]}>
-      <TouchableOpacity style={styles.rowCenter} onPress={onPress}>
-        <Image source={icon} style={iconStyle} />
-        <Text style={[styles.menuItemLabel, labelStyle]}>{label}</Text>
+      <TouchableOpacity
+        onPress={onPress}
+        style={[styles.rowCenter, styles.spaceBetween]}>
+        <View style={styles.rowCenter}>
+          <Image source={icon} style={iconStyle} />
+          <Text style={[styles.menuItemLabel, labelStyle]}>{label}</Text>
+        </View>
+        <View style={styles.rowCenter}>
+          {showCounter && <NumIndicator number={counter} />}
+          {withChevron && <Chevron />}
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -21,6 +48,9 @@ const styles = StyleSheet.create({
   rowCenter: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  spaceBetween: {
+    justifyContent: 'space-between',
   },
   menuItemCont: {
     borderBottomColor: Colors.lightAppGreen,
@@ -34,5 +64,8 @@ const styles = StyleSheet.create({
   },
   noBorder: {
     borderBottomWidth: 0,
+  },
+  spaceRight: {
+    marginRight: DimensionsUtils.getDP(16),
   },
 });
