@@ -12,33 +12,26 @@ const Screen = ({label, noIcon, navigation, children}) => {
   const insets = useSafeAreaInsets();
   const {user, setUser, setToken} = useAuthContext();
 
-  const menuRef = React.useRef();
+  const contStyles = [
+    styles.container,
+    {paddingTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24)},
+  ];
 
   const logout = React.useCallback(async () => {
     !user?.isGuest && (await signOut(setToken, setUser));
     navigation.pop();
   }, [user?.isGuest, navigation, setToken, setUser]);
 
-  const closeMenu = React.useCallback(() => {
-    menuRef.current?.closeMenu();
-  }, []);
-
   return (
-    <View onStartShouldSetResponder={closeMenu} style={styles.container}>
-      <View
-        style={{
-          marginTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24),
-        }}>
-        <Header
-          ref={menuRef}
-          label={label}
-          noIcon={noIcon}
-          insets={insets}
-          logout={logout}
-          avatar={user?.avatar}
-          isGuest={user?.isGuest}
-        />
-      </View>
+    <View style={contStyles}>
+      <Header
+        label={label}
+        noIcon={noIcon}
+        insets={insets}
+        logout={logout}
+        avatar={user?.avatar}
+        isGuest={user?.isGuest}
+      />
       {children}
     </View>
   );
