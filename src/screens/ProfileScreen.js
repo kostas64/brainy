@@ -53,7 +53,10 @@ const ProfileScreen = ({navigation}) => {
         imgContStyle={imgContStyle}
       />
 
-      <ScrollView style={styles.spaceHor} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.spaceHor}
+        scrollEnabled={!user?.isGuest}
+        showsVerticalScrollIndicator={false}>
         {profileItems.map((item, key) => {
           const isLast = key === profileItems.length - 1;
           const iconStyle = isLast ? styles.smallIcon : styles.icon;
