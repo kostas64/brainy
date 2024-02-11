@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -21,6 +22,10 @@ export const useFetch = (
     error: null,
     data: [],
   };
+
+  if (user?.isGuest) {
+    return initialState;
+  }
 
   const isExpired = date => {
     const MS_PER_SEC = 1000;
