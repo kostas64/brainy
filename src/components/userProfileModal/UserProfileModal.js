@@ -1,6 +1,7 @@
 import React from 'react';
+import {FlatList} from 'react-native-gesture-handler';
 import Animated, {FadeInDown} from 'react-native-reanimated';
-import {View, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
 
 import {
   areWeFriends,
