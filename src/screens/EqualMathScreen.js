@@ -7,6 +7,7 @@ import {Colors} from '../utils/Colors';
 import dict from '../assets/values/dict.json';
 import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
+import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
@@ -54,6 +55,7 @@ const EqualMathScreen = () => {
   const [number6, setNumber6] = React.useState();
   const [question, setQuestion] = React.useState(0);
 
+  //** ----- FUNCTIONS -----
   const onCardPress = (firstCardPressed, isEqual = false, eq1, eq2) => {
     if (!timeRef.current.isRunning) {
       timeRef.current.start();
@@ -124,6 +126,14 @@ const EqualMathScreen = () => {
   const successContent = () => (
     <EqualMathModal correct={correct} total={question} points={points} />
   );
+
+  //** ----- EFFECTS -----
+  useBackAction(() => {
+    if (tutOpen) {
+      setTutOpen(false);
+      return true;
+    }
+  });
 
   React.useEffect(() => {
     generateRandoms();

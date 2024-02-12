@@ -6,6 +6,7 @@ import MathUtils from '../utils/MathUtils';
 import {submitScore} from '../services/score';
 import Card from '../components/cardMemory/Card';
 import MemoryValues from '../assets/values/memory';
+import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import StopWatch from '../components/common/StopWatch';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -41,6 +42,7 @@ const MemoryCardScreen = () => {
   const duration = timeRef?.current?.extractTime();
   const centiseconds = Math.floor(duration?.milliseconds() / 10);
 
+  //** ----- FUNCTIONS -----
   const setIsFlipped = React.useCallback(
     index => {
       //Keep flipped cards
@@ -104,6 +106,14 @@ const MemoryCardScreen = () => {
       milliseconds: duration?.seconds() * 1000 + duration?.milliseconds(),
     });
   }, [duration, flipCounter]);
+
+  //** ----- EFFECTS -----
+  useBackAction(() => {
+    if (tutOpen) {
+      setTutOpen(false);
+      return true;
+    }
+  });
 
   React.useEffect(() => {
     if (cards.length === 0) {

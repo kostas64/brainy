@@ -9,6 +9,7 @@ import {submitScore} from '../services/score';
 import dict from '../assets/values/dict.json';
 import {COLORS} from '../assets/values/colors';
 import Points from '../components/common/Points';
+import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import CountdownTimer from '../components/common/Timer';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -56,6 +57,7 @@ const ColorCardScreen = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
 
+  //** ----- FUNCTIONS -----
   const checkValid = answer => {
     if (
       (COLORS[rand2]?.color === COLORS[rand3]?.color && answer === 'yes') ||
@@ -97,6 +99,14 @@ const ColorCardScreen = () => {
     generateRandoms();
     timeRef.current?.resetTime();
   };
+
+  //** ----- EFFECTS -----
+  useBackAction(() => {
+    if (tutOpen) {
+      setTutOpen(false);
+      return true;
+    }
+  });
 
   React.useEffect(() => {
     generateRandoms();

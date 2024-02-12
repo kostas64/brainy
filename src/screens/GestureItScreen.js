@@ -5,6 +5,7 @@ import {PanGestureHandler, State} from 'react-native-gesture-handler';
 
 import {submitScore} from '../services/score';
 import Points from '../components/common/Points';
+import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
@@ -50,6 +51,7 @@ const GestureItScreen = () => {
   const availableWidth = WIDTH - MAX_DES_WIDTH - HOR_PADD;
   const availableHeight = HEIGHT - MAX_DES_HEIGHT - VER_PADD;
 
+  //** ----- FUNCTIONS -----
   const successContent = () => (
     <CardSuccessModal correct={correct} points={points} tries={tries} />
   );
@@ -137,6 +139,14 @@ const GestureItScreen = () => {
     generatePosition();
     setCurrentDesign(GEST_DESIGNS[designs[randIndex]]);
   }, [designs, generatePosition, setCurrentDesign]);
+
+  //** ----- EFFECTS -----
+  useBackAction(() => {
+    if (tutOpen) {
+      setTutOpen(false);
+      return true;
+    }
+  });
 
   React.useEffect(() => {
     generateNext();

@@ -12,6 +12,7 @@ import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 
 import {Colors} from '../../utils/Colors';
 import {HEIGHT} from '../../utils/GenericUtils';
+import useBackAction from '../../hooks/useBackAction';
 import {useModalContext} from '../../context/ModalProvider';
 
 const BottomSheet = React.forwardRef(
@@ -33,10 +34,10 @@ const BottomSheet = React.forwardRef(
     const active = useSharedValue(false);
     const translateY = useSharedValue(0);
     const context = useSharedValue({y: 0});
+    const [isActive, setIsActive] = React.useState(false);
     const [isPanEnabled, setIsPanEnabled] = React.useState(panEnabled);
 
     //** ----- STYLES -----
-
     const animBottomSheetStyle = useAnimatedStyle(
       () => ({
         borderRadius: 12,
@@ -70,6 +71,7 @@ const BottomSheet = React.forwardRef(
       destination => {
         'worklet';
 
+        runOnJS(setIsActive)(destination !== 0);
         active.value = destination !== 0;
         translateY.value = withTiming(
           destination,
@@ -92,7 +94,16 @@ const BottomSheet = React.forwardRef(
       scrollTo(0);
     }, [scrollTo, onBackPress]);
 
+    const onBackHandlerPress = React.useCallback(() => {
+      if (isActive) {
+        scrollTo(0);
+        return true;
+      }
+    }, [isActive, scrollTo]);
+
     //** ----- EFFECTS -----
+    useBackAction(onBackHandlerPress);
+
     React.useImperativeHandle(ref, () => ({scrollTo}), [scrollTo]);
 
     React.useEffect(() => {
