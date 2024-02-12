@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, {useImperativeHandle} from 'react';
+import React from 'react';
 import {Text, Easing, Animated, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
@@ -13,6 +13,7 @@ const Card = React.forwardRef(
 
     flipAnimation.addListener(({value}) => (flipRotation = value));
 
+    //** ----- STYLES -----
     const flipToFrontStyle = {
       transform: [
         {
@@ -35,10 +36,7 @@ const Card = React.forwardRef(
       ],
     };
 
-    useImperativeHandle(ref, () => ({
-      flipToBack,
-    }));
-
+    //** ----- FUNCTIONS -----
     const flipToFront = () => {
       setIsFlipped(index);
       Animated.timing(flipAnimation, {
@@ -57,6 +55,11 @@ const Card = React.forwardRef(
         useNativeDriver: true,
       }).start();
     };
+
+    //** ----- EFFECTS -----
+    React.useImperativeHandle(ref, () => ({
+      flipToBack,
+    }));
 
     return (
       <Pressable

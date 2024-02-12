@@ -44,6 +44,7 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
   const scaleRef = React.useRef(new Animated.Value(1)).current;
   const opacityRef = React.useRef(new Animated.Value(1)).current;
 
+  //** ----- FUNCTIONS -----
   const closeModal = React.useCallback(() => {
     Animated.timing(opacityRef, {
       toValue: 0,
@@ -66,6 +67,7 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
     setCardVal2('black');
   });
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     Animated.loop(
       Animated.sequence([

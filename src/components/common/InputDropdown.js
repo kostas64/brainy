@@ -28,6 +28,7 @@ const InputDropdown = ({
   const icon = useSharedValue(0);
   const height = useSharedValue(0);
 
+  //** ----- STYLES -----
   const iconStyles = useAnimatedStyle(() => {
     return {
       transform: [{rotate: `${icon.value}deg`}],
@@ -40,6 +41,7 @@ const InputDropdown = ({
     };
   });
 
+  //** ----- FUNCTIONS -----
   const toggleListItem = React.useCallback(() => {
     !!onFieldPress && onFieldPress();
 
@@ -70,6 +72,7 @@ const InputDropdown = ({
     );
   };
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     if (value && isOpen) {
       toggleListItem();

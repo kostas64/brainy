@@ -61,6 +61,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
       ? images.deleteUser
       : null;
 
+  //** ----- FUNCTIONS -----
   const renderItem = React.useCallback(
     game => (
       <UserProfileModalScoreItem
@@ -169,6 +170,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
     }
   }, [hasRequest, user?._id]);
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     Promise.all([getScores(), getFriendship(), checkFriendRequest()]).then(
       ([_, res2, res3]) => {

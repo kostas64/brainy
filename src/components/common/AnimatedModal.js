@@ -12,24 +12,7 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
   const opacityRef = React.useRef(new Animated.Value(0)).current;
   const translateY = React.useRef(new Animated.Value(1000)).current;
 
-  React.useEffect(() => {
-    if (gameOver) {
-      Animated.parallel([
-        Animated.timing(opacityRef, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-        Animated.spring(translateY, {
-          toValue: 0,
-          friction: 3,
-          tension: 20,
-          useNativeDriver: true,
-        }),
-      ]).start(() => setAnimFinished(true));
-    }
-  }, [gameOver, modalOpen]);
-
+  //** ----- FUNCTIONS -----
   const closeAnimation = () => {
     Animated.parallel([
       Animated.timing(opacityRef, {
@@ -49,6 +32,25 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
       setModalOpen(false);
     }, 150);
   };
+
+  //** ----- EFFECTS -----
+  React.useEffect(() => {
+    if (gameOver) {
+      Animated.parallel([
+        Animated.timing(opacityRef, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.spring(translateY, {
+          toValue: 0,
+          friction: 3,
+          tension: 20,
+          useNativeDriver: true,
+        }),
+      ]).start(() => setAnimFinished(true));
+    }
+  }, [gameOver, modalOpen]);
 
   return (
     modalOpen && (

@@ -15,11 +15,13 @@ const Header = ({noIcon = false, label, avatar, isGuest}) => {
 
   const iconSource = isGuest ? images.guest : {uri: avatar};
 
+  //** ----- STYLES -----
   const buttonStyles = [
     styles.avatarContainer,
     imgLoaded ? styles.fullOpacity : styles.zeroOpacity,
   ];
 
+  //** ----- FUNCTIONS -----
   const onAvatarLoad = React.useCallback(() => {
     setImgLoaded(true);
   }, []);

@@ -24,6 +24,7 @@ const GamesScreen = ({navigation, route}) => {
   const [force, setForce] = React.useState(false);
   const [index, setIndex] = React.useState(0);
 
+  //** ----- FUNCTIONS -----
   const setActiveIndex = React.useCallback(activeIndex => {
     scrollXIndex.setValue(activeIndex);
     setIndex(activeIndex);
@@ -38,6 +39,7 @@ const GamesScreen = ({navigation, route}) => {
     user,
   );
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     Animated.timing(opacityRef, {
       toValue: 1,

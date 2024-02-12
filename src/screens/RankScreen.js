@@ -28,6 +28,7 @@ const RankScreen = ({navigation}) => {
 
   const {status, data} = useFetch(query, 'GET', true, gameInput, force, user);
 
+  //** ----- FUNCTIONS -----
   const closeMenu = React.useCallback(() => {
     menuRef.current?.closeMenu();
   }, []);
@@ -52,6 +53,7 @@ const RankScreen = ({navigation}) => {
     [gameInput],
   );
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     !isFocused && menuRef?.current?.closeMenu();
     isFocused && setForce(true);

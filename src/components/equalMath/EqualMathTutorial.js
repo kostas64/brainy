@@ -34,6 +34,7 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
   const scaleRef = React.useRef(new Animated.Value(1)).current;
   const opacityRef = React.useRef(new Animated.Value(1)).current;
 
+  //** ----- FUNCTIONS -----
   const generateNum = () => Math.floor(Math.random() * 5) + 1;
 
   const generateOper = () => (Math.random() > 0.5 ? '/' : 'x');
@@ -51,6 +52,7 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
     setEquation2(`${generateNum()} ${generateOper()} ${generateNum()}`);
   };
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     Animated.loop(
       Animated.sequence([

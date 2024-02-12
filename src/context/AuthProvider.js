@@ -13,6 +13,7 @@ export const AuthProvider = ({children}) => {
     surname: null,
   });
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     // Fetch token and user's data
     const bootstrapAsync = async () => {

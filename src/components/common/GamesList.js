@@ -62,6 +62,7 @@ const GamesList = ({
   const navigation = useNavigation();
   const [flinged, setFlinged] = React.useState(0);
 
+  //** ----- FUNCTIONS -----
   const onFlingLeft = React.useCallback(
     e => {
       if (e.nativeEvent.state === State.END) {

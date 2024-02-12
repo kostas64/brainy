@@ -22,6 +22,7 @@ const TabBar = props => {
 
   const {routes, index: activeRouteIndex} = props.state;
 
+  //** ----- STYLES -----
   const translateX = translateRef.interpolate({
     inputRange: [0, 1],
     outputRange: [0, (WIDTH - DimensionsUtils.getDP(32)) / routes.length],
@@ -43,6 +44,7 @@ const TabBar = props => {
     insets.bottom !== 0 && styles.height80,
   ];
 
+  //** ----- FUNCTIONS -----
   const renderIcon = React.useCallback(({route, focused}) => {
     let iconName, style;
 
@@ -78,6 +80,7 @@ const TabBar = props => {
     return <Text style={[styles.text, style]}>{name}</Text>;
   }, []);
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     Animated.timing(translateRef, {
       duration: 200,

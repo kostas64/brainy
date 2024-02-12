@@ -30,6 +30,7 @@ export const ToastProvider = ({children}) => {
   const topPosition = useSharedValue(topPost);
   const [toast, setToast] = React.useState(initialState);
 
+  //** ----- STYLES -----
   const animStyle = useAnimatedStyle(
     () => ({
       top: topPosition.value,
@@ -37,6 +38,7 @@ export const ToastProvider = ({children}) => {
     [],
   );
 
+  //** ----- FUNCTIONS -----
   const animateToast = React.useCallback(() => {
     const toastTop = isIOS ? -100 : -112;
 
@@ -61,6 +63,7 @@ export const ToastProvider = ({children}) => {
     }
   }, [toast.message, topPosition]);
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     animateToast();
   }, [animateToast, toast]);

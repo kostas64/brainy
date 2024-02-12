@@ -35,6 +35,7 @@ const GamesListItem = ({
 
   const inputRange = [index - 1, index, index + 1];
 
+  //** ----- STYLES -----
   const translateX = scrollXAnimated.interpolate({
     inputRange,
     outputRange: [50, 0, -WIDTH],

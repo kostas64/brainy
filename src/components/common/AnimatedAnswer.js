@@ -16,10 +16,7 @@ const AnimatedAnswer = React.forwardRef(({}, ref) => {
     <FastImage source={images.wrong} style={styles.icon} />
   );
 
-  React.useImperativeHandle(ref, () => ({
-    animateAnswer,
-  }));
-
+  //** ----- FUNCTIONS -----
   const animateAnswer = answer => {
     setIsCorrect(answer);
 
@@ -52,6 +49,11 @@ const AnimatedAnswer = React.forwardRef(({}, ref) => {
       }),
     ]).start();
   };
+
+  //** ----- EFFECTS -----
+  React.useImperativeHandle(ref, () => ({
+    animateAnswer,
+  }));
 
   return (
     <Animated.View

@@ -12,11 +12,13 @@ const Screen = ({label, noIcon, navigation, children}) => {
   const insets = useSafeAreaInsets();
   const {user, setUser, setToken} = useAuthContext();
 
+  //** ----- STYLES -----
   const contStyles = [
     styles.container,
     {paddingTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24)},
   ];
 
+  //** ----- FUNCTIONS -----
   const logout = React.useCallback(async () => {
     !user?.isGuest && (await signOut(setToken, setUser));
     navigation.pop();

@@ -13,6 +13,35 @@ const CountdownTimer = React.forwardRef(({seconds, setIsFinished}, ref) => {
   const requestRef = React.useRef();
   const previousTimeRef = React.useRef();
 
+  //** ----- FUNCTIONS -----
+  const start = () => {
+    setIsRunning(true);
+  };
+
+  const pad = (time, isMilliscs) =>
+    time.toString().length >= 3
+      ? time.toString().substring(0, isMilliscs ? 2 : 1)
+      : time.toString().length === 1
+      ? `0${time}`
+      : `${time}`;
+
+  const resetTime = () => {
+    setTime(seconds * 1000);
+  };
+
+  const getTime = () => {
+    const minutes = Math.floor(timeState / 60000);
+    const seconds = Math.floor((timeState - minutes * 60000) / 1000);
+    const milliseconds = timeState % 1000;
+
+    return {
+      minutes: pad(minutes),
+      seconds: pad(seconds),
+      milliseconds: pad(milliseconds, true),
+    };
+  };
+
+  //** ----- EFFECTS -----
   React.useImperativeHandle(ref, () => ({
     isRunning,
     start,
@@ -45,33 +74,6 @@ const CountdownTimer = React.forwardRef(({seconds, setIsFinished}, ref) => {
 
     return () => cancelAnimationFrame(requestRef.current);
   }, [isRunning, timeState]);
-
-  const start = () => {
-    setIsRunning(true);
-  };
-
-  const pad = (time, isMilliscs) =>
-    time.toString().length >= 3
-      ? time.toString().substring(0, isMilliscs ? 2 : 1)
-      : time.toString().length === 1
-      ? `0${time}`
-      : `${time}`;
-
-  const resetTime = () => {
-    setTime(seconds * 1000);
-  };
-
-  const getTime = () => {
-    const minutes = Math.floor(timeState / 60000);
-    const seconds = Math.floor((timeState - minutes * 60000) / 1000);
-    const milliseconds = timeState % 1000;
-
-    return {
-      minutes: pad(minutes),
-      seconds: pad(seconds),
-      milliseconds: pad(milliseconds, true),
-    };
-  };
 
   return (
     <View

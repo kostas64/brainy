@@ -41,6 +41,7 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
 
   const opacityRef = React.useRef(new Animated.Value(1)).current;
 
+  //** ----- STYLES -----
   const flipToFrontStyle = React.useCallback(ref => {
     return {
       transform: [
@@ -67,6 +68,7 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
     };
   }, []);
 
+  //** ----- FUNCTIONS -----
   const closeModal = React.useCallback(() => {
     Animated.timing(opacityRef, {
       toValue: 0,
@@ -75,6 +77,7 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
     }).start(() => modalOpen && setModalOpen(false));
   }, []);
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     Animated.loop(
       Animated.sequence([

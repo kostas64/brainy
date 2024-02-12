@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
+import React from 'react';
 import moment from 'moment';
-import React, {useImperativeHandle} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
@@ -33,14 +33,7 @@ const StopWatch = React.forwardRef((props, ref) => {
   const [now, setNowState] = React.useState(0);
   const [isRunning, setIsRunning] = React.useState(false);
 
-  useImperativeHandle(ref, () => ({
-    start,
-    stop,
-    reset,
-    isRunning,
-    extractTime,
-  }));
-
+  //** ----- FUNCTIONS -----
   const start = () => {
     const now = new Date().getTime();
     setIsRunning(true);
@@ -71,6 +64,15 @@ const StopWatch = React.forwardRef((props, ref) => {
 
   const extractTime = () =>
     convertTime(laps.reduce((total, curr) => total + curr, 0) + timerVar);
+
+  //** ----- EFFECTS -----
+  React.useImperativeHandle(ref, () => ({
+    start,
+    stop,
+    reset,
+    isRunning,
+    extractTime,
+  }));
 
   React.useEffect(() => {
     return () => {

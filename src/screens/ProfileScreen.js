@@ -35,11 +35,13 @@ const ProfileScreen = ({navigation}) => {
     ? PROFILE_SECTIONS?.slice(5, 6)
     : PROFILE_SECTIONS;
 
+  //** ----- FUNCTIONS -----
   const logout = React.useCallback(async () => {
     !user?.isGuest && (await signOut(setToken, setUser, true));
     navigation.pop();
   }, [user?.isGuest, navigation, setToken, setUser]);
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     isFocused && getAllFriendsRequest().then(data => setFriendRequests(data));
     isFocused && navigation.getParent()?.setOptions({gestureEnabled: false});

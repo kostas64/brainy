@@ -35,10 +35,7 @@ const GetStartedScreen = ({navigation}) => {
     posY: -100,
   });
 
-  React.useEffect(() => {
-    navigation.setOptions({gestureEnabled: false});
-  }, [navigation]);
-
+  //** ----- FUNCTIONS -----
   const navigate = async (e, type) => {
     if (type === 'login') {
       let logged = false;
@@ -76,6 +73,11 @@ const GetStartedScreen = ({navigation}) => {
       posY,
     });
   };
+
+  //** ----- EFFECTS -----
+  React.useEffect(() => {
+    navigation.setOptions({gestureEnabled: false});
+  }, [navigation]);
 
   React.useEffect(() => {
     Animated.parallel([

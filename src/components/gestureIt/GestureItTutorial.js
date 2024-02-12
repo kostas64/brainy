@@ -32,6 +32,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
 
   const [designState, setDesignState] = React.useState(1);
 
+  //** ----- FUNCTIONS -----
   const designOne = React.useCallback(() => (
     <>
       <AnimatedImage
@@ -140,6 +141,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
     }).start(() => setModalOpen(false));
   }, []);
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     Animated.timing(designState === 1 ? tapOpacity2 : tapOpacity1, {
       toValue: 1,

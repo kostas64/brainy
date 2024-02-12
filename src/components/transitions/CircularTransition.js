@@ -10,6 +10,7 @@ const CircularTransition = ({posX, posY, inCircleColor, outCircleColor}) => {
   const navigation = useNavigation();
   const scaleRef = React.useRef(new Animated.Value(0)).current;
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     if (posX > 0 && posY > 0) {
       Animated.timing(scaleRef, {
