@@ -2,6 +2,7 @@ import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
@@ -11,17 +12,20 @@ import {matchGameWithScreenName} from '../../utils/GenericUtils';
 import UserProfileModal from '../userProfileModal/UserProfileModal';
 
 const RankFlipListItem = ({item, index, isMe}) => {
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const {closeModal, setModalInfo} = useModalContext();
 
+  //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {
     setModalInfo({
-      height: 420,
+      height:
+        384 + (insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(20)),
       content: (
         <UserProfileModal isMe={isMe} item={item} onGamePress={onGamePress} />
       ),
     });
-  }, [item, isMe, onGamePress, setModalInfo]);
+  }, [item, isMe, insets, onGamePress, setModalInfo]);
 
   const onGamePress = React.useCallback(
     game => {
