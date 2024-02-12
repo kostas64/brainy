@@ -29,8 +29,8 @@ const UserProfileModalFooterButtons = ({
       <ModalButton
         onPress={onPressSecondButton}
         loading={loadingButton}
-        containerStyle={!isMe && styles.buttonStyle}
         label={isMe ? dict.viewProfile : secondLabel}
+        containerStyle={!isMe ? styles.buttonStyle : styles.soloButtonStyle}
       />
     </View>
   );
@@ -40,11 +40,15 @@ export default UserProfileModalFooterButtons;
 
 const styles = StyleSheet.create({
   rowBetween: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: DimensionsUtils.getDP(12),
+    marginHorizontal: DimensionsUtils.getDP(18),
+  },
+  soloButtonStyle: {
+    width: WIDTH - DimensionsUtils.getDP(36),
   },
   buttonStyle: {
-    width: (WIDTH - DimensionsUtils.getDP(40)) / 2,
+    width: (WIDTH - DimensionsUtils.getDP(52)) / 2,
   },
 });
