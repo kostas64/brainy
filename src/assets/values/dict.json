@@ -61,5 +61,11 @@
   "profileInvite": "Invite friend",
   "profileLogout": "Logout",
   "profileLeaveFeedback": "Leave feedback",
-  "profileFAQ": "FAQ"
+  "profileFAQ": "FAQ",
+  "nameLabel": "Name",
+  "surnameLabel": "Surname",
+  "nameUpdated": "Your name has been updated  ✓",
+  "surnameUpdated": "Your surname has been updated  ✓",
+  "errorOnUpdate": "Something went wrong ✗",
+  "doneLabel": "Done"
 }

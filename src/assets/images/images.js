@@ -2,6 +2,7 @@ const addUser = require('./add_user.png');
 const arrowBlack = require('./arrow_black.png');
 const arrowDown = require('./arrow_down.png');
 const arrow = require('./arrow.png');
+const check = require('./check.png');
 const close = require('./close.png');
 const colorMatch = require('./color_match.png');
 const correct = require('./correct.png');
@@ -34,6 +35,7 @@ export default {
   arrowBlack,
   arrowDown,
   arrow,
+  check,
   close,
   colorMatch,
   correct,
