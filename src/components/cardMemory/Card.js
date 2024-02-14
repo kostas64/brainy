@@ -65,22 +65,10 @@ const Card = React.forwardRef(
       <Pressable
         disabled={cardsDisabled}
         onPress={() => !flipRotation && flipToFront()}>
-        <Animated.View
-          style={[
-            {
-              ...flipToBackStyle,
-            },
-            styles.front,
-          ]}>
+        <Animated.View style={[{...flipToBackStyle}, styles.front]}>
           <Text style={styles.label}>{value}</Text>
         </Animated.View>
-        <Animated.View
-          style={[
-            {
-              ...flipToFrontStyle,
-            },
-            styles.back,
-          ]}>
+        <Animated.View style={[{...flipToFrontStyle}, styles.back]}>
           <Text style={styles.labelBack}>?</Text>
         </Animated.View>
       </Pressable>
