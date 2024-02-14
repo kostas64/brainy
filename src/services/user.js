@@ -1,4 +1,6 @@
-import {HOST, REQUEST_ACCESS} from '../Endpoints';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {BEARER, HOST, REQUEST_ACCESS, UPDATE_PROFILE} from '../Endpoints';
 
 export const requestAccess = async user => {
   console.log('API requestAccess ', `${HOST}${REQUEST_ACCESS}`);
@@ -19,5 +21,30 @@ export const requestAccess = async user => {
     });
   } catch (e) {
     console.log('API requestAccess failed', e);
+  }
+};
+
+export const updateProfile = async (fields, successCb, errorCb) => {
+  console.log('API updateProfile ', `${HOST}${UPDATE_PROFILE}`, fields);
+
+  try {
+    const token = await AsyncStorage.getItem('token');
+    return fetch(`${HOST}${UPDATE_PROFILE}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+      body: JSON.stringify({
+        fields,
+      }),
+    })
+      .then(res => res.json())
+      .then(data => successCb(data))
+      .catch(() => errorCb());
+  } catch (e) {
+    !!errorCb && errorCb();
+    console.log('API updateProfile failed', e);
   }
 };

@@ -4,6 +4,7 @@ export const HOST = Config.HOST;
 export const BEARER = 'Bearer ';
 
 export const REQUEST_ACCESS = '/users/requestAccess';
+export const UPDATE_PROFILE = '/users/update-profile';
 export const SCORE = '/score';
 export const MATCH_CARDS = '/matchCards';
 export const COLOR_CARDS = '/colorCards';

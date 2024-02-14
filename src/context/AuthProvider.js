@@ -13,7 +13,22 @@ export const AuthProvider = ({children}) => {
     surname: null,
   });
 
+  //** ----- FUNCTIONS -----
+  const updateUser = React.useCallback(async () => {
+    if (user?.name) {
+      await AsyncStorage.setItem('name', user?.name);
+    }
+
+    if (user?.surname) {
+      await AsyncStorage.setItem('surname', user?.surname);
+    }
+  }, [user.name, user.surname]);
+
   //** ----- EFFECTS -----
+  React.useEffect(() => {
+    updateUser();
+  }, [updateUser]);
+
   React.useEffect(() => {
     // Fetch token and user's data
     const bootstrapAsync = async () => {
