@@ -1,24 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  View,
-  Text,
-  Animated,
-  Pressable,
-  StatusBar,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {View, Text, Animated, StatusBar, StyleSheet} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import {signIn} from '../services/auth';
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
+import Button from '../components/common/Button';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
-import {HEIGHT, WIDTH, isAndroid} from '../utils/GenericUtils';
+import {HEIGHT, isAndroid} from '../utils/GenericUtils';
 import CircularTransition from '../components/transitions/CircularTransition';
 
 const GetStartedScreen = ({navigation}) => {
@@ -34,6 +27,10 @@ const GetStartedScreen = ({navigation}) => {
     posX: -100,
     posY: -100,
   });
+
+  const mainButtonLabel = token
+    ? dict?.getStartedLoggedInButton
+    : dict?.getStartedLoginButton;
 
   //** ----- FUNCTIONS -----
   const navigate = async (e, type) => {
@@ -106,6 +103,7 @@ const GetStartedScreen = ({navigation}) => {
         inCircleColor={Colors.background}
         outCircleColor={outCircle}
       />
+
       <View style={styles.imageContainer}>
         <FastImage
           source={images.logo}
@@ -115,6 +113,7 @@ const GetStartedScreen = ({navigation}) => {
           ]}
         />
       </View>
+
       <Animated.View
         style={[
           styles.nameContainer,
@@ -122,6 +121,7 @@ const GetStartedScreen = ({navigation}) => {
         ]}>
         <Text style={styles.name}>{dict.appName}</Text>
       </Animated.View>
+
       <Animated.View
         style={[
           styles.subContainer,
@@ -131,35 +131,21 @@ const GetStartedScreen = ({navigation}) => {
             bottom: insets.bottom + DimensionsUtils.getDP(24),
           },
         ]}>
-        <Pressable
+        <Button
+          loading={loading}
           disabled={loading}
-          style={[styles.buttonContainer, loading && styles.lowOpacity]}
-          onPress={e => navigate(e, 'login')}>
-          {!loading ? (
-            <Text style={[styles.buttonLabel]}>
-              {token
-                ? dict?.getStartedLoggedInButton
-                : dict?.getStartedLoginButton}
-            </Text>
-          ) : (
-            <ActivityIndicator size={'small'} color={'white'} />
-          )}
-          {!!token && !!user?.email && (
-            <Text style={styles.loggedName}>{`(${user?.email})`}</Text>
-          )}
-        </Pressable>
-        <Pressable
+          label={mainButtonLabel}
+          onPress={e => navigate(e, 'login')}
+          containerStyle={[loading && styles.lowOpacity]}
+          extraLabel={user?.email ? `(${user?.email})` : null}
+        />
+        <Button
           disabled={loading}
-          style={[
-            styles.buttonContainer,
-            loading && styles.lowOpacity,
-            {backgroundColor: Colors.white},
-          ]}
-          onPress={e => navigate(e, 'guest')}>
-          <Text style={[styles.buttonLabel, {color: Colors.appGreen}]}>
-            {dict?.getStartedGuestButton}
-          </Text>
-        </Pressable>
+          labelStyle={styles.greenLabel}
+          onPress={e => navigate(e, 'guest')}
+          label={dict?.getStartedGuestButton}
+          containerStyle={[loading && styles.lowOpacity, styles.whiteBG]}
+        />
       </Animated.View>
     </>
   );
@@ -190,27 +176,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute',
   },
-  buttonContainer: {
-    minHeight: DimensionsUtils.getDP(50),
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: DimensionsUtils.getDP(8),
-    backgroundColor: Colors.appGreen,
-    borderRadius: DimensionsUtils.getDP(12),
-    width: WIDTH - DimensionsUtils.getDP(40),
-  },
-  buttonLabel: {
-    color: Colors.white,
-    fontFamily: 'Poppins-SemiBold',
-    fontSize: DimensionsUtils.getFontSize(16),
-  },
-  loggedName: {
-    color: Colors.white,
-    fontSize: DimensionsUtils.getFontSize(12),
-  },
   lowOpacity: {
     opacity: 0.4,
+  },
+  whiteBG: {
+    marginTop: DimensionsUtils.getDP(8),
+    backgroundColor: Colors.white,
+  },
+  greenLabel: {
+    color: Colors.appGreen,
   },
 });
 
