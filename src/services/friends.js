@@ -4,6 +4,7 @@ import {
   HOST,
   BEARER,
   FRIENDSHIP,
+  LIST_FRIENDS,
   DELETE_FRIEND,
   FRIENDS_REQUEST,
   CHECK_FRIENDS_REQUEST,
@@ -171,5 +172,24 @@ export const getAllFriendsRequest = async () => {
     }).then(res => res.json());
   } catch (e) {
     console.log('API getAllFriendsRequest failed', e);
+  }
+};
+
+export const getAllFriends = async () => {
+  console.log('API getAllFriends ', `${HOST}${LIST_FRIENDS}`);
+
+  try {
+    const token = await AsyncStorage.getItem('token');
+
+    return fetch(`${HOST}${LIST_FRIENDS}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+    }).then(res => res.json());
+  } catch (e) {
+    console.log('API getAllFriends failed', e);
   }
 };
