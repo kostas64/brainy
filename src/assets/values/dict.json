@@ -70,7 +70,10 @@
   "errorOnUpdate": "Something went wrong ✗",
   "doneLabel": "Done",
   "friendRequests": "Friend requests",
+  "yourFriends": "Your friends",
   "accept": "Accept",
   "reject": "Remove",
-  "updateProfile": "Update profile"
+  "updateProfile": "Update profile",
+  "noFriendRequests": "You don't have friend requests",
+  "noFriendsYet": "You have no friends yet. Find players through search or rank screen."
 }
