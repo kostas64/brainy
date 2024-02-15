@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   counterContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    height: DimensionsUtils.getDP(22),
     minWidth: DimensionsUtils.getDP(22),
     backgroundColor: Colors.fillRed,
     padding: DimensionsUtils.getDP(4),
