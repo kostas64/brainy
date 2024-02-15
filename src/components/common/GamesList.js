@@ -2,13 +2,14 @@
 
 import {
   State,
+  FlatList,
   Directions,
   FlingGestureHandler,
 } from 'react-native-gesture-handler';
 
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {View, Text, Animated, FlatList, StyleSheet} from 'react-native';
+import {View, Text, Animated, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import GamesListItem from './GamesListItem';
@@ -100,6 +101,7 @@ const GamesList = ({
 
   const cellRenderedComponent = ({item, index, children, style, ...props}) => {
     const newStyle = [style, {zIndex: data.length - index}];
+
     return (
       <View style={newStyle} index={index} {...props}>
         {children}
