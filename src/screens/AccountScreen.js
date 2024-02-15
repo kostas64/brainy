@@ -1,4 +1,5 @@
 import React from 'react';
+import Animated, {FadeInUp} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View, Keyboard, ScrollView, StyleSheet} from 'react-native';
 
@@ -75,25 +76,29 @@ const AccountScreen = ({navigation}) => {
     <Screen label={dict.profileAccount} navigation={navigation} noIcon>
       <ScrollView scrollEnabled={false} keyboardShouldPersistTaps={'handled'}>
         <View style={styles.container}>
-          <Input
-            value={name}
-            onBlur={onBlur}
-            setValue={setName}
-            onPress={callUpdate}
-            inputLabel={dict.nameLabel}
-            hasChanged={nameHasChanged}
-            loading={loading && nameHasChanged}
-          />
+          <Animated.View entering={FadeInUp.delay(150).duration(300)}>
+            <Input
+              value={name}
+              onBlur={onBlur}
+              setValue={setName}
+              onPress={callUpdate}
+              inputLabel={dict.nameLabel}
+              hasChanged={nameHasChanged}
+              loading={loading && nameHasChanged}
+            />
+          </Animated.View>
           <View style={styles.separator} />
-          <Input
-            value={surname}
-            onBlur={onBlur}
-            onPress={callUpdate}
-            setValue={setSurname}
-            inputLabel={dict.surnameLabel}
-            hasChanged={surnameHasChanged}
-            loading={loading && surnameHasChanged}
-          />
+          <Animated.View entering={FadeInUp.delay(300).duration(300)}>
+            <Input
+              value={surname}
+              onBlur={onBlur}
+              onPress={callUpdate}
+              setValue={setSurname}
+              inputLabel={dict.surnameLabel}
+              hasChanged={surnameHasChanged}
+              loading={loading && surnameHasChanged}
+            />
+          </Animated.View>
         </View>
       </ScrollView>
 
