@@ -1,18 +1,26 @@
+import Animated, {
+  FadeInUp,
+  withSpring,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+
 import React from 'react';
-import Animated, {FadeInUp} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View, Keyboard, ScrollView, StyleSheet} from 'react-native';
 
+import {isIOS} from '../utils/GenericUtils';
 import dict from '../assets/values/dict.json';
 import Input from '../components/common/Input';
 import {updateProfile} from '../services/user';
 import Screen from '../components/common/Screen';
+import {useKeyboard} from '../hooks/useKeyboard';
 import Button from '../components/common/Button';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import {useToastContext} from '../context/ToastProvider';
 
 const AccountScreen = ({navigation}) => {
+  const keyboard = useKeyboard();
   const insets = useSafeAreaInsets();
   const {setToast} = useToastContext();
   const {user, setUser} = useAuthContext();
@@ -23,12 +31,18 @@ const AccountScreen = ({navigation}) => {
 
   const nameHasChanged = name !== user?.name;
   const surnameHasChanged = surname !== user?.surname;
+  const toUpdate = nameHasChanged || surnameHasChanged;
+  const buttonLabel = toUpdate ? dict.updateProfile : dict?.doneLabel;
 
   //** ----- STYLES -----
   const bottom =
     insets.bottom > 0
       ? insets.bottom + DimensionsUtils.getDP(8)
       : DimensionsUtils.getDP(16);
+
+  const animatedBtnStyle = useAnimatedStyle(() => ({
+    transform: [{translateY: withSpring(-keyboard, {damping: 17})}],
+  }));
 
   //** ----- FUNCTIONS -----
   const onBlur = React.useCallback(() => {
@@ -72,6 +86,14 @@ const AccountScreen = ({navigation}) => {
     updateProfile({name, surname}, successCb, errorCb);
   }, [name, surname, successCb, errorCb]);
 
+  const onDonePress = React.useCallback(() => {
+    if (toUpdate) {
+      callUpdate();
+    } else {
+      navigation.pop();
+    }
+  }, [toUpdate, callUpdate, navigation]);
+
   return (
     <Screen label={dict.profileAccount} navigation={navigation} noIcon>
       <ScrollView scrollEnabled={false} keyboardShouldPersistTaps={'handled'}>
@@ -84,6 +106,7 @@ const AccountScreen = ({navigation}) => {
               onPress={callUpdate}
               inputLabel={dict.nameLabel}
               hasChanged={nameHasChanged}
+              placeholder={dict.nameLabel}
               loading={loading && nameHasChanged}
             />
           </Animated.View>
@@ -94,19 +117,22 @@ const AccountScreen = ({navigation}) => {
               onBlur={onBlur}
               onPress={callUpdate}
               setValue={setSurname}
-              inputLabel={dict.surnameLabel}
               hasChanged={surnameHasChanged}
+              inputLabel={dict.surnameLabel}
+              placeholder={dict.surnameLabel}
               loading={loading && surnameHasChanged}
             />
           </Animated.View>
         </View>
       </ScrollView>
 
-      <Button
-        label={dict?.doneLabel}
-        onPress={() => navigation.pop()}
-        containerStyle={{marginBottom: bottom}}
-      />
+      <Animated.View style={isIOS && animatedBtnStyle}>
+        <Button
+          label={buttonLabel}
+          onPress={onDonePress}
+          containerStyle={{marginBottom: bottom}}
+        />
+      </Animated.View>
     </Screen>
   );
 };
