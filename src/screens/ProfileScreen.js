@@ -7,7 +7,6 @@ import {signOut} from '../services/auth';
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import Screen from '../components/common/Screen';
-import {capFirstLet} from '../utils/StringUtils';
 import MenuItem from '../components/common/MenuItem';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -21,9 +20,7 @@ const ProfileScreen = ({navigation}) => {
 
   const [friendRequests, setFriendRequests] = React.useState([]);
 
-  const name = user?.isGuest
-    ? dict.guest
-    : `${capFirstLet(user?.name)} ${capFirstLet(user?.surname)}`;
+  const name = user?.isGuest ? dict.guest : `${user?.name} ${user?.surname}`;
 
   const nameStyle = user?.isGuest && styles.whiteColor;
   const contStyle = user?.isGuest ? styles.guestAvatarCont : styles.avatarCont;

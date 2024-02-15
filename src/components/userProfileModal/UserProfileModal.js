@@ -14,7 +14,6 @@ import {
 import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
-import {capFirstLet} from '../../utils/StringUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {getBestOfScoresForUser} from '../../services/score';
 import {useToastContext} from '../../context/ToastProvider';
@@ -38,7 +37,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   const [hasFriendship, setHasFriendship] = React.useState(false);
 
   const user = item?.user?.[0];
-  const name = `${capFirstLet(user?.name)} ${capFirstLet(user?.surname)}`;
+  const name = `${user?.name} ${user?.surname}`;
 
   const firstLabelButton =
     !hasRequest && !hasFriendship
