@@ -2,7 +2,7 @@ import React from 'react';
 import {ActivityIndicator, Pressable, StyleSheet, Text} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
-import {WIDTH} from '../../utils/GenericUtils';
+import {WIDTH, isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Button = ({
@@ -14,6 +14,7 @@ const Button = ({
   labelStyle,
   containerStyle,
   loading = false,
+  indicatorColor = Colors.white,
 }) => {
   return (
     <Pressable
@@ -21,7 +22,7 @@ const Button = ({
       disabled={disabled}
       style={[styles.buttonContainer, containerStyle]}>
       {loading ? (
-        <ActivityIndicator size={'small'} color={Colors.white} />
+        <ActivityIndicator size={'small'} color={indicatorColor} />
       ) : (
         <Text style={[styles.buttonLabel, labelStyle]}>{label}</Text>
       )}
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontFamily: 'Poppins-SemiBold',
     fontSize: DimensionsUtils.getFontSize(16),
+    top: isAndroid ? 1 : 0,
   },
   extraLabel: {
     color: Colors.white,
