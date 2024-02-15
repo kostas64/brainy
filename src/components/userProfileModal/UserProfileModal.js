@@ -89,9 +89,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   const getFriendship = React.useCallback(() => {
     return new Promise((resolve, reject) => {
       areWeFriends(user?._id)
-        .then(data => {
-          resolve(data);
-        })
+        .then(data => resolve(data))
         .catch(reject);
     });
   }, [user?._id]);
@@ -99,9 +97,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   const checkFriendRequest = React.useCallback(() => {
     return new Promise((resolve, reject) => {
       getFriendsRequest(user?._id)
-        .then(data => {
-          resolve(data);
-        })
+        .then(data => resolve(data))
         .catch(reject);
     });
   }, [user?._id]);
