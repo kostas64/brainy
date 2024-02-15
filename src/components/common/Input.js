@@ -21,6 +21,7 @@ const Input = ({
   setValue,
   hasChanged,
   inputLabel,
+  placeholder,
 }) => {
   return (
     <View style={styles.container}>
@@ -29,11 +30,11 @@ const Input = ({
       <TextInput
         value={value}
         onBlur={onBlur}
-        placeholder="Name"
         returnKeyType="done"
         blurOnSubmit={false}
         onChangeText={setValue}
         style={styles.textInput}
+        placeholder={placeholder}
         onSubmitEditing={onPress}
         selectionColor={Colors.appGreen}
       />
