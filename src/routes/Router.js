@@ -3,6 +3,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import TabStack from './TabRouter';
+import AccountScreen from '../screens/AccountScreen';
+import FriendsScreen from '../screens/FriendsScreen';
 import ColorCardScreen from '../screens/ColorCardScreen';
 import EqualMathScreen from '../screens/EqualMathScreen';
 import GestureItScreen from '../screens/GestureItScreen';
@@ -19,6 +21,10 @@ const navigatorScreenOptions = {
 const screenConfig = {
   animation: 'fade',
   customAnimationOnGesture: true,
+};
+
+const screenSlideConfig = {
+  animation: 'slide_from_right',
 };
 
 const gameStackOptions = {
@@ -56,6 +62,16 @@ const Router = ({onNavigationReady}) => {
           name="GestureIt"
           component={GestureItScreen}
           options={screenConfig}
+        />
+        <Stack.Screen
+          name="Account"
+          component={AccountScreen}
+          options={screenSlideConfig}
+        />
+        <Stack.Screen
+          name="Friends"
+          component={FriendsScreen}
+          options={screenSlideConfig}
         />
       </Stack.Navigator>
     </NavigationContainer>

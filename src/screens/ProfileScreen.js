@@ -41,6 +41,11 @@ const ProfileScreen = ({navigation}) => {
     navigation.pop();
   }, [user?.isGuest, navigation, setToken, setUser]);
 
+  const onPressItem = React.useCallback(
+    screen => navigation.navigate(screen),
+    [navigation],
+  );
+
   //** ----- EFFECTS -----
   React.useEffect(() => {
     isFocused && getAllFriendsRequest().then(data => setFriendRequests(data));
@@ -76,9 +81,9 @@ const ProfileScreen = ({navigation}) => {
               label={item.title}
               iconStyle={iconStyle}
               withChevron={!isLast}
-              onPress={isLast ? logout : () => {}}
               labelStyle={isLast && styles.logoutRed}
               counter={isRequestSection ? friendRequests.length : null}
+              onPress={isLast ? logout : () => onPressItem(item.screen)}
             />
           );
         })}
