@@ -50,6 +50,7 @@
   "cancelRequest": "Cancel request",
   "guest": "Guest",
   "friendRequestSent": "Friend request has been sent  ✓",
+  "friendRequestRejected": "Friend request rejected. User will not be notified.",
   "acceptedRequest": "You are now friends!",
   "deleteFriend": "Friend has been removed!",
   "guestRankMessage": "Log in to access leaderboards and discover the best scores.",
