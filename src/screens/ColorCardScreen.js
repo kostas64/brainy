@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
-import MathUtils from '../utils/MathUtils';
+import {getRandom} from '../utils/MathUtils';
 import {submitScore} from '../services/score';
 import dict from '../assets/values/dict.json';
 import {COLORS} from '../assets/values/colors';
@@ -75,10 +75,10 @@ const ColorCardScreen = () => {
   };
 
   const generateRandoms = () => {
-    setRand1(Math.floor(MathUtils.getRandom(0, COLORS.length)));
-    setRand2(Math.floor(MathUtils.getRandom(0, COLORS.length)));
-    setRand3(Math.floor(MathUtils.getRandom(0, COLORS.length)));
-    setRand4(Math.floor(MathUtils.getRandom(0, COLORS.length)));
+    setRand1(Math.floor(getRandom(0, COLORS.length)));
+    setRand2(Math.floor(getRandom(0, COLORS.length)));
+    setRand3(Math.floor(getRandom(0, COLORS.length)));
+    setRand4(Math.floor(getRandom(0, COLORS.length)));
   };
 
   const successContent = () => (

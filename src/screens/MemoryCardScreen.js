@@ -2,8 +2,8 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import MathUtils from '../utils/MathUtils';
 import {submitScore} from '../services/score';
+import {shuffleArray} from '../utils/MathUtils';
 import Card from '../components/cardMemory/Card';
 import MemoryValues from '../assets/values/memory';
 import useBackAction from '../hooks/useBackAction';
@@ -125,7 +125,7 @@ const MemoryCardScreen = () => {
       }
 
       //Shuffle and fill with id
-      newCards = MathUtils.shuffleArray(newCards);
+      newCards = shuffleArray(newCards);
       newCards = newCards.map((card, i) => ({
         ...card,
         id: i,
