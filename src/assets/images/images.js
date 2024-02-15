@@ -24,6 +24,7 @@ const profile_o = require('./profile_o.png');
 const rankIconO = require('./rank_icon_outline.png');
 const rankIcon = require('./rank_icon.png');
 const reminder = require('./reminder.png');
+const search = require('./search.png');
 const splash = require('./splash.png');
 const tap = require('./tap.png');
 const tutorial = require('./tutorial.png');
@@ -57,6 +58,7 @@ export default {
   rankIconO,
   rankIcon,
   reminder,
+  search,
   splash,
   tap,
   tutorial,
