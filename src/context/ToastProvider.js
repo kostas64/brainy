@@ -72,7 +72,7 @@ export const ToastProvider = ({children}) => {
     return () => {
       !!timeout.current && clearTimeout(timeout.current);
     };
-  });
+  }, []);
 
   return (
     <ToastContext.Provider value={{setToast}}>
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontFamily: 'Poppins-Regular',
     fontSize: DimensionsUtils.getDP(16),
+    width: WIDTH - DimensionsUtils.getDP(112),
   },
 });
 
