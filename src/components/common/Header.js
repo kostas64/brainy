@@ -18,6 +18,7 @@ const Header = ({noIcon = false, label, avatar, isGuest}) => {
   //** ----- STYLES -----
   const buttonStyles = [
     styles.avatarContainer,
+    isGuest && styles.whiteBorder,
     imgLoaded ? styles.fullOpacity : styles.zeroOpacity,
   ];
 
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
   avatarContainer: {
-    borderColor: Colors.white,
+    borderColor: Colors.appGreen,
     borderWidth: DimensionsUtils.getDP(2),
     borderRadius: DimensionsUtils.getDP(24),
   },
@@ -78,6 +79,9 @@ const styles = StyleSheet.create({
   },
   fullOpacity: {
     opacity: 1,
+  },
+  whiteBorder: {
+    borderColor: Colors.white,
   },
 });
 
