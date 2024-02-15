@@ -70,5 +70,6 @@
   "doneLabel": "Done",
   "friendRequests": "Friend requests",
   "accept": "Accept",
-  "reject": "Remove"
+  "reject": "Remove",
+  "updateProfile": "Update profile"
 }
