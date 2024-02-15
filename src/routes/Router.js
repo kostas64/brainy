@@ -3,11 +3,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import TabStack from './TabRouter';
+import FriendsTabs from '../screens/FriendsTabs';
 import AccountScreen from '../screens/AccountScreen';
-import FriendsScreen from '../screens/FriendsScreen';
-import ColorCardScreen from '../screens/ColorCardScreen';
 import EqualMathScreen from '../screens/EqualMathScreen';
 import GestureItScreen from '../screens/GestureItScreen';
+import ColorCardScreen from '../screens/ColorCardScreen';
 import MemoryCardScreen from '../screens/MemoryCardScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
 
@@ -69,8 +69,8 @@ const Router = ({onNavigationReady}) => {
           options={screenSlideConfig}
         />
         <Stack.Screen
-          name="Friends"
-          component={FriendsScreen}
+          name="FriendsTabs"
+          component={FriendsTabs}
           options={screenSlideConfig}
         />
       </Stack.Navigator>

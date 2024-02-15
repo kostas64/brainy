@@ -9,7 +9,7 @@ export const PROFILE_SECTIONS = [
   },
   {
     title: dict.profileFriends,
-    screen: 'Friends',
+    screen: 'FriendsTabs',
     icon: images.friends,
   },
   {

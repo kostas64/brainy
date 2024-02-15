@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     marginTop: DimensionsUtils.getDP(4),
-    marginLeft: DimensionsUtils.getDP(76),
+    marginLeft: 74,
   },
   buttonLabel: {
     fontFamily: 'Poppins-Medium',
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     color: Colors.appGreen,
   },
   btnContainer: {
-    width: (WIDTH - DimensionsUtils.getDP(132)) / 2,
+    width: (WIDTH - 120) / 2,
     minHeight: 36,
     borderRadius: DimensionsUtils.getDP(8),
   },
@@ -133,6 +133,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   spaceRight: {
-    marginRight: DimensionsUtils.getDP(8),
+    marginRight: 12,
   },
 });
