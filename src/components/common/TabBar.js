@@ -83,7 +83,7 @@ const TabBar = props => {
   //** ----- EFFECTS -----
   React.useEffect(() => {
     Animated.timing(translateRef, {
-      duration: 200,
+      duration: 150,
       toValue: activeRouteIndex,
       useNativeDriver: true,
     }).start();
