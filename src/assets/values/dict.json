@@ -67,5 +67,8 @@
   "nameUpdated": "Your name has been updated  ✓",
   "surnameUpdated": "Your surname has been updated  ✓",
   "errorOnUpdate": "Something went wrong ✗",
-  "doneLabel": "Done"
+  "doneLabel": "Done",
+  "friendRequests": "Friend requests",
+  "accept": "Accept",
+  "reject": "Remove"
 }
