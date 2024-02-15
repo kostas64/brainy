@@ -8,11 +8,8 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import React from 'react';
-import {StyleSheet} from 'react-native';
 
-import {Colors} from '../../utils/Colors';
-import {WIDTH} from '../../utils/GenericUtils';
-import {DimensionsUtils} from '../../utils/DimensionUtils';
+import SkeletonFriend from './SkeletonFriend';
 
 const Skeleton = ({skeletonStyle, loading, children}) => {
   const opacity = useSharedValue(0.5);
@@ -35,9 +32,9 @@ const Skeleton = ({skeletonStyle, loading, children}) => {
     () => {
       if (loading) {
         opacity.value = 0.5;
-        translateY.value = 25;
         opacity.value = withRepeat(withTiming(1, {duration: 500}), -1, true);
       } else {
+        translateY.value = 25;
         opacityChildren.value = withTiming(1, {
           duration: 500,
         });
@@ -53,9 +50,22 @@ const Skeleton = ({skeletonStyle, loading, children}) => {
 
   return loading ? (
     <>
-      <Animated.View style={[animatedStyle, styles.skeleton, skeletonStyle]} />
-      <Animated.View style={[animatedStyle, styles.skeleton, skeletonStyle]} />
-      <Animated.View style={[animatedStyle, styles.skeleton, skeletonStyle]} />
+      <SkeletonFriend
+        skeletonStyle={skeletonStyle}
+        animatedStyle={animatedStyle}
+      />
+      <SkeletonFriend
+        skeletonStyle={skeletonStyle}
+        animatedStyle={animatedStyle}
+      />
+      <SkeletonFriend
+        skeletonStyle={skeletonStyle}
+        animatedStyle={animatedStyle}
+      />
+      <SkeletonFriend
+        skeletonStyle={skeletonStyle}
+        animatedStyle={animatedStyle}
+      />
     </>
   ) : (
     <Animated.View style={animatedChildren}>{children}</Animated.View>
@@ -63,13 +73,3 @@ const Skeleton = ({skeletonStyle, loading, children}) => {
 };
 
 export default Skeleton;
-
-const styles = StyleSheet.create({
-  skeleton: {
-    alignSelf: 'center',
-    borderRadius: DimensionsUtils.getDP(8),
-    width: WIDTH - DimensionsUtils.getDP(32),
-    height: DimensionsUtils.getDP(50),
-    backgroundColor: Colors.lightGrey,
-  },
-});
