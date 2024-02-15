@@ -8,7 +8,14 @@ import {signOut} from '../../services/auth';
 import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const Screen = ({label, noIcon, navigation, children}) => {
+const Screen = ({
+  label,
+  noIcon,
+  customIcon,
+  iconStyle,
+  navigation,
+  children,
+}) => {
   const insets = useSafeAreaInsets();
   const {user, setUser, setToken} = useAuthContext();
 
@@ -31,8 +38,10 @@ const Screen = ({label, noIcon, navigation, children}) => {
         noIcon={noIcon}
         insets={insets}
         logout={logout}
+        iconStyle={iconStyle}
         avatar={user?.avatar}
         isGuest={user?.isGuest}
+        customIcon={customIcon}
       />
       {children}
     </View>

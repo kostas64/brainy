@@ -8,12 +8,24 @@ import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const Header = ({noIcon = false, label, avatar, isGuest}) => {
+const Header = ({
+  noIcon = false,
+  customIcon,
+  iconStyle,
+
+  label,
+  avatar,
+  isGuest,
+}) => {
   const navigation = useNavigation();
 
   const [imgLoaded, setImgLoaded] = React.useState(isGuest ? true : false);
 
-  const iconSource = isGuest ? images.guest : {uri: avatar};
+  const iconSource = isGuest
+    ? images.guest
+    : customIcon
+    ? customIcon
+    : {uri: avatar};
 
   //** ----- STYLES -----
   const buttonStyles = [
@@ -39,8 +51,8 @@ const Header = ({noIcon = false, label, avatar, isGuest}) => {
           <Pressable onPress={onAvatarPress} style={buttonStyles}>
             <Image
               source={iconSource}
-              style={styles.avatar}
               onLoadEnd={onAvatarLoad}
+              style={[styles.avatar, iconStyle]}
             />
           </Pressable>
         )}
@@ -63,9 +75,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
   avatarContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
     borderColor: Colors.appGreen,
     borderWidth: DimensionsUtils.getDP(2),
     borderRadius: DimensionsUtils.getDP(24),
+    width: DimensionsUtils.getDP(40),
+    height: DimensionsUtils.getDP(40),
   },
   avatar: {
     borderColor: Colors.background,
