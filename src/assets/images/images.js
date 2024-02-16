@@ -19,6 +19,7 @@ const matchEqual = require('./match_equal.png');
 const memoryMatch = require('./memory_match.png');
 const no = require('./no.png');
 const notification = require('./notification.png');
+const plus = require('../images/plus.png');
 const profile = require('./profile.png');
 const profile_o = require('./profile_o.png');
 const rankIconO = require('./rank_icon_outline.png');
@@ -27,6 +28,7 @@ const reminder = require('./reminder.png');
 const search = require('./search.png');
 const splash = require('./splash.png');
 const tap = require('./tap.png');
+const trash = require('./trash.png');
 const tutorial = require('./tutorial.png');
 const wrong = require('./wrong.png');
 const yes = require('./yes.png');
@@ -53,6 +55,7 @@ export default {
   memoryMatch,
   no,
   notification,
+  plus,
   profile,
   profile_o,
   rankIconO,
@@ -61,6 +64,7 @@ export default {
   search,
   splash,
   tap,
+  trash,
   tutorial,
   wrong,
   yes,
