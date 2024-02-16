@@ -80,5 +80,6 @@
   "setReminderCaption": "Set personalized alerts to elevate your game experience with notifications based to your preferences!",
   "setReminderPickTime": "Step 1.  Pick time",
   "setReminderPickDay": "Step 2.  Pick at least 1 day",
-  "at": "at"
+  "at": "at",
+  "toastRemiderMsg": "Your reminder has been set  ✓"
 }
