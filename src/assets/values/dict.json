@@ -75,5 +75,10 @@
   "reject": "Remove",
   "updateProfile": "Update profile",
   "noFriendRequests": "You don't have friend requests",
-  "noFriendsYet": "You have no friends yet. Find players through search or rank screen."
+  "noFriendsYet": "You have no friends yet. Find players through search or rank screen.",
+  "reminderLabel": "Reminders",
+  "setReminderCaption": "Set personalized alerts to elevate your game experience with notifications based to your preferences!",
+  "setReminderPickTime": "Step 1.  Pick time",
+  "setReminderPickDay": "Step 2.  Pick at least 1 day",
+  "at": "at"
 }
