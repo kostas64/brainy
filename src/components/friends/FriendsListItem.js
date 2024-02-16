@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   avatar: {
-    height: 60,
     width: 60,
+    height: 60,
     borderRadius: 30,
   },
   nameContainer: {
