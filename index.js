@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';
+import Config from 'react-native-config';
+import {AppRegistry, LogBox} from 'react-native';
+import {MMKVLoader} from 'react-native-mmkv-storage';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import App from './App';
-import Config from 'react-native-config';
 import {name as appName} from './app.json';
-import {AppRegistry, LogBox} from 'react-native';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 GoogleSignin.configure({
   offlineAccess: true,
@@ -15,5 +16,7 @@ GoogleSignin.configure({
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
+
+export const storage = new MMKVLoader().initialize();
 
 AppRegistry.registerComponent(appName, () => App);
