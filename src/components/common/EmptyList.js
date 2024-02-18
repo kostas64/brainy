@@ -17,7 +17,6 @@ export default EmptyList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: -12,
     justifyContent: 'center',
     alignItems: 'center',
   },

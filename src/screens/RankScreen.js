@@ -3,30 +3,38 @@ import {FlashList} from '@shopify/flash-list';
 import {useIsFocused} from '@react-navigation/native';
 import {View, StyleSheet, ActivityIndicator, Text} from 'react-native';
 
-import {SCORE} from '../Endpoints';
 import {Colors} from '../utils/Colors';
-import {useFetch} from '../hooks/useFetch';
+import {HOST, SCORE} from '../Endpoints';
 import {GAMES} from '../assets/values/games';
 import dict from '../assets/values/dict.json';
 import Screen from '../components/common/Screen';
 import {GenericUtils} from '../utils/GenericUtils';
 import EmptyList from '../components/common/EmptyList';
-import {DimensionsUtils} from '../utils/DimensionUtils';
 import {useAuthContext} from '../context/AuthProvider';
+import {DimensionsUtils} from '../utils/DimensionUtils';
 import RankGameItem from '../components/rank/RankGameItem';
 import InputDropdown from '../components/common/InputDropdown';
+
+const initialState = {
+  data: [],
+  page: 1,
+  noData: false,
+};
 
 const RankScreen = ({navigation}) => {
   const {user} = useAuthContext();
   const isFocused = useIsFocused();
 
   const menuRef = React.useRef();
-  const [query, setQuery] = React.useState(null);
-  const [page, setPage] = React.useState(1);
-  const [force, setForce] = React.useState(false);
+  const firstRender = React.useRef(0);
+
+  const [state, setState] = React.useState(initialState);
+  const [loadingApi, setLoadingApi] = React.useState(false);
   const [gameInput, setGameInput] = React.useState(GAMES[0]);
 
-  const {status, data} = useFetch(query, 'GET', true, gameInput, force, user);
+  const URL = `${HOST}${SCORE}${GenericUtils.getEndpoint(gameInput)}?page=${
+    state.page
+  }`;
 
   //** ----- FUNCTIONS -----
   const closeMenu = React.useCallback(() => {
@@ -36,6 +44,7 @@ const RankScreen = ({navigation}) => {
   const setValue = React.useCallback(
     item => {
       closeMenu();
+      resetState();
       setGameInput(item);
     },
     [closeMenu],
@@ -53,17 +62,69 @@ const RankScreen = ({navigation}) => {
     [gameInput],
   );
 
+  const onEndReached = React.useCallback(() => {
+    if (!state.noData && !loadingApi) {
+      fetchData();
+    }
+  }, [state.noData, loadingApi, fetchData]);
+
+  const fetchGameData = React.useCallback(async () => {
+    const tmp = await fetch(URL).then(res => res.json());
+
+    return tmp;
+  }, [URL]);
+
+  const resetState = React.useCallback(() => {
+    setState(initialState);
+  }, []);
+
+  const ListFooter = React.useCallback(() => {
+    if (loadingApi) {
+      return <ActivityIndicator size={'small'} color={Colors.appGreen} />;
+    }
+  }, [loadingApi]);
+
+  const ListEmpty = React.useCallback(() => {
+    if (!loadingApi && state.data.length === 0) {
+      return <EmptyList />;
+    }
+  }, [loadingApi, state.data]);
+
+  const fetchData = React.useCallback(async () => {
+    try {
+      setLoadingApi(true);
+      firstRender.current += 1;
+      const newData = await fetchGameData(state.page, gameInput);
+
+      setState(prevData => ({
+        data: [...prevData.data, ...newData.scores],
+        page: prevData.page + 1,
+        noData: newData.scores.length < 10,
+      }));
+      setLoadingApi(false);
+    } catch (error) {
+      setLoadingApi(false);
+      console.error('Error fetching data:', error);
+    }
+  }, [fetchGameData, state.page, gameInput]);
+
+  React.useEffect(() => {
+    // Reset data and page when gameInput changes
+    if (firstRender.current !== 0) {
+      resetState();
+      fetchData();
+    }
+  }, [gameInput]);
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
   //** ----- EFFECTS -----
   React.useEffect(() => {
     !isFocused && menuRef?.current?.closeMenu();
-    isFocused && setForce(true);
-    !isFocused && setForce(false);
     isFocused && navigation.getParent()?.setOptions({gestureEnabled: false});
   }, [isFocused, navigation]);
-
-  React.useEffect(() => {
-    setQuery(`${SCORE}${GenericUtils.getEndpoint(gameInput)}?page=${page}`);
-  }, [page, gameInput]);
 
   return (
     <Screen label={dict.rankScrTitle} navigation={navigation}>
@@ -85,20 +146,16 @@ const RankScreen = ({navigation}) => {
                 placeholder={dict.rankDropdownPlaceholder}
               />
             </View>
-            {status === 'fetching' ? (
-              <View style={styles.activityIndicator}>
-                <ActivityIndicator size={'small'} color={Colors.tabBarIcon} />
-              </View>
-            ) : status === 'fetched' && data.scores?.length > 0 ? (
-              <FlashList
-                data={data.scores}
-                keyExtractor={(_, index) => `index_${index}`}
-                renderItem={renderItem}
-                estimatedItemSize={DimensionsUtils.getDP(56)}
-              />
-            ) : status === 'fetched' ? (
-              <EmptyList />
-            ) : null}
+
+            <FlashList
+              data={state.data}
+              renderItem={renderItem}
+              onEndReached={onEndReached}
+              ListEmptyComponent={ListEmpty}
+              ListFooterComponent={ListFooter}
+              keyExtractor={(_, index) => `index_${index}`}
+              estimatedItemSize={DimensionsUtils.getDP(56)}
+            />
           </>
         )
       )}
