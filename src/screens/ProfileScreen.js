@@ -89,7 +89,6 @@ const ProfileScreen = ({navigation}) => {
       {/*
          Account
          Friends
-         Reminder
          Notifications
          Invite friend
          Logout

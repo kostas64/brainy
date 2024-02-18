@@ -3,6 +3,7 @@ const arrowBlack = require('./arrow_black.png');
 const arrowDown = require('./arrow_down.png');
 const arrow = require('./arrow.png');
 const check = require('./check.png');
+const clock = require('./clock.png');
 const close = require('./close.png');
 const colorMatch = require('./color_match.png');
 const correct = require('./correct.png');
@@ -24,7 +25,6 @@ const profile = require('./profile.png');
 const profile_o = require('./profile_o.png');
 const rankIconO = require('./rank_icon_outline.png');
 const rankIcon = require('./rank_icon.png');
-const reminder = require('./reminder.png');
 const search = require('./search.png');
 const splash = require('./splash.png');
 const tap = require('./tap.png');
@@ -39,6 +39,7 @@ export default {
   arrowDown,
   arrow,
   check,
+  clock,
   close,
   colorMatch,
   correct,
@@ -60,7 +61,6 @@ export default {
   profile_o,
   rankIconO,
   rankIcon,
-  reminder,
   search,
   splash,
   tap,
