@@ -13,11 +13,6 @@ export const PROFILE_SECTIONS = [
     icon: images.friends,
   },
   {
-    title: dict.profileReminder,
-    screen: 'SetReminder',
-    icon: images.reminder,
-  },
-  {
     title: dict.profileNotifications,
     screen: 'Notifications',
     icon: images.notification,

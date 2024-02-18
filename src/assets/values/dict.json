@@ -57,7 +57,6 @@
   "authFailed": "Authentication failed",
   "profileAccount": "Account",
   "profileFriends": "Friends",
-  "profileReminder": "Set reminder",
   "profileNotifications": "Notifications",
   "profileInvite": "Invite friend",
   "profileLogout": "Logout",
@@ -75,11 +74,5 @@
   "reject": "Remove",
   "updateProfile": "Update profile",
   "noFriendRequests": "You don't have friend requests",
-  "noFriendsYet": "You have no friends yet. Find players through search or rank screen.",
-  "reminderLabel": "Reminders",
-  "setReminderCaption": "Set personalized alerts to elevate your game experience with notifications based to your preferences!",
-  "setReminderPickTime": "Step 1.  Pick time",
-  "setReminderPickDay": "Step 2.  Pick a frequency",
-  "at": "at",
-  "toastRemiderMsg": "Your reminder has been set  ✓"
+  "noFriendsYet": "You have no friends yet. Find players through search or rank screen."
 }
