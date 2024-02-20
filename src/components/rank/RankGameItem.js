@@ -5,7 +5,7 @@ import RankFlipListItem from './RankFlipListItem';
 import RankPointListItem from './RankPointListItem';
 import {useAuthContext} from '../../context/AuthProvider';
 
-const RankGameItem = ({item, index, gameInput}) => {
+const RankGameItem = ({item, isLast, index, gameInput}) => {
   const {user} = useAuthContext();
 
   switch (gameInput) {
@@ -14,6 +14,7 @@ const RankGameItem = ({item, index, gameInput}) => {
         <RankFlipListItem
           item={item}
           index={index}
+          isLast={isLast}
           isMe={!user?.isGuest && user?.email === item?.user?.[0]?.email}
         />
       );
@@ -24,6 +25,7 @@ const RankGameItem = ({item, index, gameInput}) => {
         <RankPointListItem
           item={item}
           index={index}
+          isLast={isLast}
           isMe={!user?.isGuest && user?.email === item?.user?.[0]?.email}
         />
       );

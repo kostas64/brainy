@@ -6,26 +6,37 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
+import {normalizeMS} from '../../utils/MathUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useModalContext} from '../../context/ModalProvider';
 import {matchGameWithScreenName} from '../../utils/GenericUtils';
 import UserProfileModal from '../userProfileModal/UserProfileModal';
 
-const RankFlipListItem = ({item, index, isMe}) => {
+const RankFlipListItem = ({item, isLast, index, isMe}) => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const {closeModal, setModalInfo} = useModalContext();
 
+  const insetsBottom =
+    insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(20);
+
+  //** ----- STYLES -----
+  const containerStyles = [
+    styles.container,
+    styles.rowCenter,
+    isMe && styles.myBG,
+    isLast && styles.spaceBottom,
+  ];
+
   //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {
     setModalInfo({
-      height:
-        384 + (insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(20)),
+      height: 384 + insetsBottom,
       content: (
         <UserProfileModal isMe={isMe} item={item} onGamePress={onGamePress} />
       ),
     });
-  }, [item, isMe, insets, onGamePress, setModalInfo]);
+  }, [item, isMe, insetsBottom, onGamePress, setModalInfo]);
 
   const onGamePress = React.useCallback(
     game => {
@@ -36,13 +47,7 @@ const RankFlipListItem = ({item, index, isMe}) => {
   );
 
   return (
-    <Pressable
-      onPress={onPress}
-      style={[
-        styles.container,
-        styles.rowCenter,
-        isMe && {backgroundColor: Colors.tabBarBg},
-      ]}>
+    <Pressable onPress={onPress} style={containerStyles}>
       <View style={styles.rowCenter}>
         <Text style={styles.index}>{index + 1}</Text>
         <FastImage
@@ -56,7 +61,7 @@ const RankFlipListItem = ({item, index, isMe}) => {
         </Text>
         <Text style={styles.textGreyReg}>{'s '}</Text>
         <Text style={styles.textGreenBold}>
-          {Math.floor(item?.milliseconds % 1000)}
+          {normalizeMS(item?.milliseconds)}
         </Text>
         <Text style={styles.textGreyReg}>{dict?.rankFlipListLabel3}</Text>
       </Text>
@@ -102,6 +107,12 @@ const styles = StyleSheet.create({
     color: Colors.tabBarIcon,
     fontFamily: 'Poppins-Regular',
     fontSize: DimensionsUtils.getFontSize(14),
+  },
+  spaceBottom: {
+    marginBottom: DimensionsUtils.getDP(8),
+  },
+  myBG: {
+    backgroundColor: Colors.tabBarBg,
   },
 });
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {FlashList} from '@shopify/flash-list';
 import {useIsFocused} from '@react-navigation/native';
@@ -47,7 +48,7 @@ const RankScreen = ({navigation}) => {
       resetState();
       setGameInput(item);
     },
-    [closeMenu],
+    [closeMenu, resetState],
   );
 
   const renderItem = React.useCallback(
@@ -57,9 +58,10 @@ const RankScreen = ({navigation}) => {
         index={index}
         gameInput={gameInput}
         key={`rank-game-${index}`}
+        isLast={index === state.data?.length - 1}
       />
     ),
-    [gameInput],
+    [gameInput, state.data],
   );
 
   const onEndReached = React.useCallback(() => {

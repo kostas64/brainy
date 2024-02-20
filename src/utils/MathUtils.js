@@ -53,3 +53,15 @@ export const calcTimestamp = timestamp => {
     return `${years} y`;
   }
 };
+
+export const normalizeMS = ms => {
+  const value = Math.floor(ms % 1000);
+  const normalized =
+    `${value}`.length === 1
+      ? `${value}00`
+      : `${value}`.length === 2
+      ? `${value}0`
+      : `${value}`;
+
+  return normalized;
+};

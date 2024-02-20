@@ -11,13 +11,21 @@ import {useModalContext} from '../../context/ModalProvider';
 import {matchGameWithScreenName} from '../../utils/GenericUtils';
 import UserProfileModal from '../userProfileModal/UserProfileModal';
 
-const RankPointListItem = ({item, index, isMe}) => {
+const RankPointListItem = ({item, isLast, index, isMe}) => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const {closeModal, setModalInfo} = useModalContext();
 
   const insetsBottom =
     insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(20);
+
+  //** ----- STYLES -----
+  const containerStyles = [
+    styles.container,
+    styles.rowCenter,
+    isMe && styles.myBG,
+    isLast && styles.spaceBottom,
+  ];
 
   //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {
@@ -38,13 +46,7 @@ const RankPointListItem = ({item, index, isMe}) => {
   );
 
   return (
-    <Pressable
-      onPress={onPress}
-      style={[
-        styles.container,
-        styles.rowCenter,
-        isMe && {backgroundColor: Colors.tabBarBg},
-      ]}>
+    <Pressable onPress={onPress} style={containerStyles}>
       <View style={styles.rowCenter}>
         <Text style={styles.index}>{index + 1}</Text>
         <FastImage
@@ -96,6 +98,12 @@ const styles = StyleSheet.create({
     color: Colors.tabBarIcon,
     fontFamily: 'Poppins-Regular',
     fontSize: DimensionsUtils.getFontSize(14),
+  },
+  spaceBottom: {
+    marginBottom: DimensionsUtils.getDP(8),
+  },
+  myBG: {
+    backgroundColor: Colors.tabBarBg,
   },
 });
 
