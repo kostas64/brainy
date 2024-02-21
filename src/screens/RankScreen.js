@@ -116,6 +116,7 @@ const RankScreen = ({navigation}) => {
     }
   };
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     // Reset data and page when gameInput changes
     if (firstRender.current !== 0) {
@@ -128,7 +129,6 @@ const RankScreen = ({navigation}) => {
     fetchData();
   }, []);
 
-  //** ----- EFFECTS -----
   React.useEffect(() => {
     isFocused && navigation.getParent()?.setOptions({gestureEnabled: false});
   }, [isFocused, navigation]);
