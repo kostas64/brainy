@@ -123,16 +123,16 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   innerContainer: {
+    height: 50,
     flexDirection: 'row',
-    backgroundColor: Colors.tabBarBg,
     justifyContent: 'center',
-    height: DimensionsUtils.getDP(52),
+    backgroundColor: Colors.tabBarBg,
     borderRadius: DimensionsUtils.getDP(16),
     marginHorizontal: DimensionsUtils.getDP(16),
   },
   pose: {
+    height: 50,
     backgroundColor: Colors.appGreen,
-    height: DimensionsUtils.getDP(52),
     borderRadius: DimensionsUtils.getDP(16),
   },
   tabButton: {
@@ -150,8 +150,8 @@ const styles = StyleSheet.create({
     height: 24,
   },
   profileIcon: {
-    width: 24,
-    height: 24,
+    width: 23,
+    height: 23,
   },
   text: {
     marginTop: DimensionsUtils.getDP(4),
