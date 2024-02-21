@@ -36,7 +36,6 @@ const Screen = ({
       <Header
         label={label}
         noIcon={noIcon}
-        insets={insets}
         logout={logout}
         iconStyle={iconStyle}
         avatar={user?.avatar}
