@@ -64,6 +64,7 @@ const InputDropdown = ({
     const isSelected = value === GAMES[index];
     return (
       <Pressable
+        disabled={isSelected}
         onPress={() => setValue(GAMES[index])}
         style={[
           styles.listItemContainer,

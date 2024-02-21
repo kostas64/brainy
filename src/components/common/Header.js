@@ -12,7 +12,6 @@ const Header = ({
   noIcon = false,
   customIcon,
   iconStyle,
-
   label,
   avatar,
   isGuest,
