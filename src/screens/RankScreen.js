@@ -26,7 +26,7 @@ const RankScreen = ({navigation}) => {
   const {user} = useAuthContext();
   const isFocused = useIsFocused();
 
-  const menuRef = React.useRef();
+  const dropdownRef = React.useRef();
   const firstRender = React.useRef(0);
 
   const [state, setState] = React.useState(initialState);
@@ -38,17 +38,16 @@ const RankScreen = ({navigation}) => {
   }`;
 
   //** ----- FUNCTIONS -----
-  const closeMenu = React.useCallback(() => {
-    menuRef.current?.closeMenu();
+  const closeDropdown = React.useCallback(() => {
+    dropdownRef.current?.toggleDropdown();
   }, []);
 
   const setValue = React.useCallback(
     item => {
-      closeMenu();
       resetState();
       setGameInput(item);
     },
-    [closeMenu, resetState],
+    [resetState],
   );
 
   const renderItem = React.useCallback(
@@ -131,12 +130,14 @@ const RankScreen = ({navigation}) => {
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
-    !isFocused && menuRef?.current?.closeMenu();
     isFocused && navigation.getParent()?.setOptions({gestureEnabled: false});
   }, [isFocused, navigation]);
 
   return (
-    <Screen label={dict.rankScrTitle} navigation={navigation}>
+    <Screen
+      navigation={navigation}
+      label={dict.rankScrTitle}
+      onPressOutside={closeDropdown}>
       {user?.isGuest ? (
         <View style={styles.guestMessageContainer}>
           <Text style={styles.guestMessage}>{dict.guestRankMessage}</Text>
@@ -144,14 +145,12 @@ const RankScreen = ({navigation}) => {
       ) : (
         !user?.isGuest && (
           <>
-            <View
-              style={styles.dropdownContainer}
-              onStartShouldSetResponder={closeMenu}>
+            <View style={styles.dropdownContainer}>
               <InputDropdown
+                ref={dropdownRef}
                 value={gameInput}
                 setValue={setValue}
                 isFocused={isFocused}
-                onFieldPress={closeMenu}
                 placeholder={dict.rankDropdownPlaceholder}
               />
             </View>
