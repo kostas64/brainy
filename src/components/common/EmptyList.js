@@ -16,9 +16,9 @@ export default EmptyList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    height: DimensionsUtils.getDP(48),
   },
   label: {
     color: Colors.appGreen,
