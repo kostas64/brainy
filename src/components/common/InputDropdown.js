@@ -16,108 +16,110 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimatedIcon = Animated.createAnimatedComponent(FastImage);
 
-const InputDropdown = ({
-  value,
-  setValue,
-  isFocused,
-  onFieldPress,
-  placeholder,
-}) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+const InputDropdown = React.forwardRef(
+  ({value, setValue, isFocused, onFieldPress, placeholder}, ref) => {
+    const [isOpen, setIsOpen] = React.useState(false);
 
-  const icon = useSharedValue(0);
-  const height = useSharedValue(0);
-  const mgBottom = useSharedValue(0);
+    const icon = useSharedValue(0);
+    const height = useSharedValue(0);
+    const mgBottom = useSharedValue(0);
 
-  //** ----- STYLES -----
-  const iconStyles = useAnimatedStyle(() => {
-    return {
-      transform: [{rotate: `${icon.value}deg`}],
+    //** ----- STYLES -----
+    const iconStyles = useAnimatedStyle(() => {
+      return {
+        transform: [{rotate: `${icon.value}deg`}],
+      };
+    });
+
+    const heightStyles = useAnimatedStyle(() => {
+      return {
+        height: height.value,
+        marginBottom: mgBottom.value,
+      };
+    });
+
+    //** ----- FUNCTIONS -----
+    const toggleListItem = React.useCallback(() => {
+      !!onFieldPress && onFieldPress();
+
+      if (isOpen) {
+        height.value = withTiming(0);
+        icon.value = withTiming(0);
+        mgBottom.value = withTiming(0);
+      } else {
+        icon.value = withTiming(180);
+        height.value = withTiming(DimensionsUtils.getDP(200));
+        mgBottom.value = withTiming(DimensionsUtils.getDP(12));
+      }
+
+      setIsOpen(open => !open);
+    }, [isOpen, icon, height, onFieldPress]);
+
+    const renderItem = ({item, index}) => {
+      const isSelected = value === GAMES[index];
+      return (
+        <Pressable
+          disabled={isSelected}
+          onPress={() => setValue(GAMES[index])}
+          style={[
+            styles.listItemContainer,
+            isSelected && {backgroundColor: Colors.appGreen},
+          ]}>
+          <Text style={isSelected ? styles.boldText : styles.regText}>
+            {item}
+          </Text>
+        </Pressable>
+      );
     };
-  });
 
-  const heightStyles = useAnimatedStyle(() => {
-    return {
-      height: height.value,
-      marginBottom: mgBottom.value,
-    };
-  });
+    //** ----- EFFECTS -----
+    React.useImperativeHandle(ref, () => ({
+      toggleDropdown: () => {
+        isOpen && toggleListItem();
+      },
+    }));
 
-  //** ----- FUNCTIONS -----
-  const toggleListItem = React.useCallback(() => {
-    !!onFieldPress && onFieldPress();
+    React.useEffect(() => {
+      if (value && isOpen) {
+        toggleListItem();
+      }
+    }, [value]);
 
-    if (isOpen) {
-      height.value = withTiming(0);
-      icon.value = withTiming(0);
-      mgBottom.value = withTiming(0);
-    } else {
-      icon.value = withTiming(180);
-      height.value = withTiming(DimensionsUtils.getDP(200));
-      mgBottom.value = withTiming(DimensionsUtils.getDP(12));
-    }
+    React.useEffect(() => {
+      !isFocused && isOpen && toggleListItem();
+    }, [isOpen, isFocused]);
 
-    setIsOpen(open => !open);
-  }, [isOpen, icon, height, onFieldPress]);
-
-  const renderItem = ({item, index}) => {
-    const isSelected = value === GAMES[index];
     return (
-      <Pressable
-        disabled={isSelected}
-        onPress={() => setValue(GAMES[index])}
-        style={[
-          styles.listItemContainer,
-          isSelected && {backgroundColor: Colors.appGreen},
-        ]}>
-        <Text style={isSelected ? styles.boldText : styles.regText}>
-          {item}
-        </Text>
-      </Pressable>
-    );
-  };
-
-  //** ----- EFFECTS -----
-  React.useEffect(() => {
-    if (value && isOpen) {
-      toggleListItem();
-    }
-  }, [value]);
-
-  React.useEffect(() => {
-    !isFocused && isOpen && toggleListItem();
-  }, [isOpen]);
-
-  return (
-    <>
-      {/* Selected value */}
-      <Pressable onPress={toggleListItem} style={styles.inputContainer}>
-        <View style={styles.innerInput}>
-          <View>
-            <Text style={styles.placeholder}>{placeholder}</Text>
-            <View style={styles.choiceContainer}>
-              <Text style={styles.choiceLabel}>{value}</Text>
+      <>
+        {/* Selected value */}
+        <Pressable onPress={toggleListItem} style={styles.inputContainer}>
+          <View style={styles.innerInput}>
+            <View>
+              <Text style={styles.placeholder}>{placeholder}</Text>
+              <View style={styles.choiceContainer}>
+                <Text style={styles.choiceLabel}>{value}</Text>
+              </View>
             </View>
+            <AnimatedIcon
+              source={images.arrowDown}
+              style={[styles.icon, iconStyles]}
+            />
           </View>
-          <AnimatedIcon
-            source={images.arrowDown}
-            style={[styles.icon, iconStyles]}
-          />
-        </View>
-      </Pressable>
+        </Pressable>
 
-      {/* Animated Dropdown */}
-      <Animated.View style={[styles.listContainer, heightStyles]}>
-        <FlatList
-          data={GAMES}
-          bounces={false}
-          style={styles.listStyle}
-          renderItem={renderItem}
-        />
-      </Animated.View>
-    </>
-  );
-};
+        {/* Animated Dropdown */}
+        <Animated.View style={[styles.listContainer, heightStyles]}>
+          <FlatList
+            data={GAMES}
+            bounces={false}
+            style={styles.listStyle}
+            renderItem={renderItem}
+          />
+        </Animated.View>
+      </>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -159,7 +161,7 @@ const styles = StyleSheet.create({
     paddingTop: DimensionsUtils.getDP(8),
   },
   choiceLabel: {
-    color: Colors.tabBarIcon,
+    color: Colors.appGreen,
     fontSize: DimensionsUtils.getDP(16),
     fontFamily: 'Poppins-Bold',
   },
