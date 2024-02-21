@@ -11,10 +11,11 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 const Screen = ({
   label,
   noIcon,
-  customIcon,
-  iconStyle,
-  navigation,
   children,
+  iconStyle,
+  customIcon,
+  navigation,
+  onPressOutside,
 }) => {
   const insets = useSafeAreaInsets();
   const {user, setUser, setToken} = useAuthContext();
@@ -32,7 +33,7 @@ const Screen = ({
   }, [user?.isGuest, navigation, setToken, setUser]);
 
   return (
-    <View style={contStyles}>
+    <View style={contStyles} onStartShouldSetResponder={onPressOutside}>
       <Header
         label={label}
         noIcon={noIcon}
