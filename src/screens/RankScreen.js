@@ -10,6 +10,7 @@ import {GAMES} from '../assets/values/games';
 import dict from '../assets/values/dict.json';
 import Screen from '../components/common/Screen';
 import {GenericUtils} from '../utils/GenericUtils';
+import useBackAction from '../hooks/useBackAction';
 import EmptyList from '../components/common/EmptyList';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -117,6 +118,13 @@ const RankScreen = ({navigation}) => {
   };
 
   //** ----- EFFECTS -----
+  useBackAction(() => {
+    if (dropdownRef?.current?.isDropdownOpen()) {
+      dropdownRef?.current?.toggleDropdown();
+      return true;
+    }
+  });
+
   React.useEffect(() => {
     // Reset data and page when gameInput changes
     if (firstRender.current !== 0) {

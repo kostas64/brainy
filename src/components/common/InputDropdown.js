@@ -74,6 +74,9 @@ const InputDropdown = React.forwardRef(
 
     //** ----- EFFECTS -----
     React.useImperativeHandle(ref, () => ({
+      isDropdownOpen: () => {
+        return isOpen;
+      },
       toggleDropdown: () => {
         isOpen && toggleListItem();
       },
