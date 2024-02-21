@@ -14,7 +14,6 @@ const RankGameItem = ({item, isLast, index, gameInput}) => {
         <RankFlipListItem
           item={item}
           index={index}
-          isLast={isLast}
           isMe={!user?.isGuest && user?.email === item?.user?.[0]?.email}
         />
       );
@@ -25,7 +24,6 @@ const RankGameItem = ({item, isLast, index, gameInput}) => {
         <RankPointListItem
           item={item}
           index={index}
-          isLast={isLast}
           isMe={!user?.isGuest && user?.email === item?.user?.[0]?.email}
         />
       );

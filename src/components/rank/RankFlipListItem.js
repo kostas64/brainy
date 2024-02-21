@@ -12,7 +12,7 @@ import {useModalContext} from '../../context/ModalProvider';
 import {matchGameWithScreenName} from '../../utils/GenericUtils';
 import UserProfileModal from '../userProfileModal/UserProfileModal';
 
-const RankFlipListItem = ({item, isLast, index, isMe}) => {
+const RankFlipListItem = ({item, index, isMe}) => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const {closeModal, setModalInfo} = useModalContext();
@@ -25,7 +25,6 @@ const RankFlipListItem = ({item, isLast, index, isMe}) => {
     styles.container,
     styles.rowCenter,
     isMe && styles.myBG,
-    isLast && styles.spaceBottom,
   ];
 
   //** ----- FUNCTIONS -----
@@ -107,9 +106,6 @@ const styles = StyleSheet.create({
     color: Colors.tabBarIcon,
     fontFamily: 'Poppins-Regular',
     fontSize: DimensionsUtils.getFontSize(14),
-  },
-  spaceBottom: {
-    marginBottom: DimensionsUtils.getDP(8),
   },
   myBG: {
     backgroundColor: Colors.tabBarBg,

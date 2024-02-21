@@ -27,6 +27,7 @@ const InputDropdown = ({
 
   const icon = useSharedValue(0);
   const height = useSharedValue(0);
+  const mgBottom = useSharedValue(0);
 
   //** ----- STYLES -----
   const iconStyles = useAnimatedStyle(() => {
@@ -38,6 +39,7 @@ const InputDropdown = ({
   const heightStyles = useAnimatedStyle(() => {
     return {
       height: height.value,
+      marginBottom: mgBottom.value,
     };
   });
 
@@ -48,9 +50,11 @@ const InputDropdown = ({
     if (isOpen) {
       height.value = withTiming(0);
       icon.value = withTiming(0);
+      mgBottom.value = withTiming(0);
     } else {
       icon.value = withTiming(180);
       height.value = withTiming(DimensionsUtils.getDP(200));
+      mgBottom.value = withTiming(DimensionsUtils.getDP(12));
     }
 
     setIsOpen(open => !open);
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     maxHeight: DimensionsUtils.getDP(200),
-    marginTop: DimensionsUtils.getDP(16),
+    marginTop: DimensionsUtils.getDP(12),
     borderRadius: DimensionsUtils.getDP(8),
     overflow: 'hidden',
   },
