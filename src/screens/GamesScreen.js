@@ -16,20 +16,11 @@ const GamesScreen = ({navigation, route}) => {
   const {user} = useAuthContext();
   const isFocused = useIsFocused();
 
-  const menuRef = React.useRef();
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
-  const scrollXIndex = React.useRef(new Animated.Value(0)).current;
-  const scrollXAnimated = React.useRef(new Animated.Value(0)).current;
 
   const [force, setForce] = React.useState(false);
-  const [index, setIndex] = React.useState(0);
 
   //** ----- FUNCTIONS -----
-  const setActiveIndex = React.useCallback(activeIndex => {
-    scrollXIndex.setValue(activeIndex);
-    setIndex(activeIndex);
-  }, []);
-
   const {status, data} = useFetch(
     !user?.isGuest ? `${SCORE}${GenericUtils.getEndpoint('Best Of')}` : null,
     'GET',
@@ -55,31 +46,17 @@ const GamesScreen = ({navigation, route}) => {
   }, []);
 
   React.useEffect(() => {
-    !isFocused && menuRef?.current?.closeMenu();
     isFocused && setForce(true);
     !isFocused && setForce(false);
     isFocused && navigation.getParent()?.setOptions({gestureEnabled: true});
   }, [isFocused, navigation]);
-
-  React.useEffect(() => {
-    Animated.spring(scrollXAnimated, {
-      friction: 10,
-      toValue: scrollXIndex,
-      useNativeDriver: true,
-    }).start();
-  }, [scrollXIndex, scrollXAnimated]);
 
   return (
     <Screen navigation={navigation} label={dict?.gamesScrTitle}>
       <Animated.View style={[styles.flex, {opacity: opacityRef}]}>
         <GamesList
           data={LIST_GAMES}
-          index={index}
           bestScores={data}
-          setIndex={setIndex}
-          scrollXIndex={scrollXIndex}
-          setActiveIndex={setActiveIndex}
-          scrollXAnimated={scrollXAnimated}
           loadingScores={status === 'fetching'}
         />
       </Animated.View>

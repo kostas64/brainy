@@ -1,16 +1,8 @@
-/* eslint-disable no-shadow */
-
-import {
-  State,
-  FlatList,
-  Directions,
-  FlingGestureHandler,
-} from 'react-native-gesture-handler';
-
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {View, Text, Animated, StyleSheet} from 'react-native';
 
+import Pagination from './Pagination';
 import {Colors} from '../../utils/Colors';
 import GamesListItem from './GamesListItem';
 import {HEIGHT, WIDTH} from '../../utils/GenericUtils';
@@ -22,106 +14,53 @@ const OVERFLOW_HEIGHT = DimensionsUtils.getDP(46);
 const ITEM_HEIGHT =
   HEIGHT <= 600 ? WIDTH * 0.88 : HEIGHT <= 700 ? WIDTH : HEIGHT * 0.6;
 
-const OverflowItems = ({data, scrollXAnimated}) => {
-  const inputRange = [-1, 0, 1];
-
-  const translateY = scrollXAnimated.interpolate({
-    inputRange,
-    outputRange: [OVERFLOW_HEIGHT, 0, -OVERFLOW_HEIGHT],
-  });
-
+const OverflowItems = ({data, scrollX}) => {
   return (
     <View style={styles.overflowContainer}>
-      <Animated.View style={{transform: [{translateY}]}}>
-        {data.map((item, index) => {
-          return (
-            <View key={index} style={styles.overflowItemContainer}>
-              <Text style={styles.title} numberOfLines={1}>
-                {item.title}
-              </Text>
-              <View style={styles.overflowItemContainerRow}>
-                <Text style={styles.description}>{item.description}</Text>
-              </View>
+      {data.map((item, index) => {
+        const inputRange = [
+          (index - 1) * (WIDTH / 2),
+          index * (WIDTH / 2),
+          (index + 1) * (WIDTH / 2),
+        ];
+
+        const translateY = scrollX.interpolate({
+          inputRange,
+          outputRange: [OVERFLOW_HEIGHT, 0, -OVERFLOW_HEIGHT],
+        });
+
+        return (
+          <Animated.View
+            key={index}
+            style={[styles.overflowItemContainer, {transform: [{translateY}]}]}>
+            <Text style={styles.title} numberOfLines={1}>
+              {item.title}
+            </Text>
+            <View style={styles.overflowItemContainerRow}>
+              <Text style={styles.description}>{item.description}</Text>
             </View>
-          );
-        })}
-      </Animated.View>
+          </Animated.View>
+        );
+      })}
     </View>
   );
 };
 
-const GamesList = ({
-  data,
-  index,
-  setIndex,
-  bestScores,
-  scrollXIndex,
-  loadingScores,
-  setActiveIndex,
-  scrollXAnimated,
-}) => {
+const GamesList = ({data, bestScores, loadingScores}) => {
   const navigation = useNavigation();
-  const [flinged, setFlinged] = React.useState(0);
+
+  const scrollX = React.useRef(new Animated.Value(0)).current;
 
   //** ----- FUNCTIONS -----
-  const onFlingLeft = React.useCallback(
-    e => {
-      if (e.nativeEvent.state === State.END) {
-        if (index === data.length - 1) {
-          setFlinged(0);
-          return;
-        }
-
-        setIndex(oldInd => oldInd + 1);
-        scrollXIndex.setValue(index + 1);
-        setFlinged(0);
-      } else if (e.nativeEvent.state === State.ACTIVE) {
-        setFlinged(1);
-      }
-    },
-    [index, data.length, scrollXIndex, setIndex],
-  );
-
-  const onFlingRight = React.useCallback(
-    e => {
-      if (e.nativeEvent.state === State.END) {
-        if (index === 0) {
-          setFlinged(0);
-          return;
-        }
-
-        setActiveIndex(index - 1);
-        setFlinged(0);
-      } else if (e.nativeEvent.state === State.ACTIVE) {
-        setFlinged(1);
-      }
-    },
-    [index, setActiveIndex],
-  );
-
-  const cellRenderedComponent = ({item, index, children, style, ...props}) => {
-    const newStyle = [style, {zIndex: data.length - index}];
-
-    return (
-      <View style={newStyle} index={index} {...props}>
-        {children}
-      </View>
-    );
-  };
-
   const getItemLayout = (_, index) => ({
     index,
-    length: WIDTH * 0.76,
-    offset: WIDTH * 0.76 * index,
+    length: WIDTH,
+    offset: WIDTH * index,
   });
 
   const onItemPress = React.useCallback(
-    item => {
-      if (flinged === 0) {
-        navigation.navigate(item.screen);
-      }
-    },
-    [flinged, navigation],
+    item => navigation.navigate(item.screen),
+    [navigation],
   );
 
   const renderItem = React.useCallback(
@@ -129,42 +68,37 @@ const GamesList = ({
       <GamesListItem
         item={item}
         index={index}
+        scrollX={scrollX}
         bestScores={bestScores}
         onItemPress={onItemPress}
         key={`game-list-${index}`}
         loadingScores={loadingScores}
-        scrollXAnimated={scrollXAnimated}
       />
     ),
-    [bestScores, loadingScores, scrollXAnimated, onItemPress],
+    [bestScores, loadingScores, scrollX, onItemPress],
+  );
+
+  const onScroll = Animated.event(
+    [{nativeEvent: {contentOffset: {x: scrollX}}}],
+    {useNativeDriver: true},
   );
 
   return (
-    <FlingGestureHandler
-      key="left"
-      direction={Directions.LEFT}
-      onHandlerStateChange={onFlingLeft}>
-      <FlingGestureHandler
-        key="right"
-        direction={Directions.RIGHT}
-        onHandlerStateChange={onFlingRight}>
-        <View style={styles.container}>
-          <OverflowItems data={data} scrollXAnimated={scrollXAnimated} />
-          <FlatList
-            data={data}
-            inverted
-            horizontal
-            scrollEnabled={false}
-            renderItem={renderItem}
-            getItemLayout={getItemLayout}
-            removeClippedSubviews={false}
-            contentContainerStyle={styles.listContainer}
-            CellRendererComponent={cellRenderedComponent}
-            keyExtractor={(_, index) => String(index)}
-          />
-        </View>
-      </FlingGestureHandler>
-    </FlingGestureHandler>
+    <View style={styles.container}>
+      <OverflowItems data={data} scrollX={scrollX} />
+      <Animated.FlatList
+        data={data}
+        horizontal
+        pagingEnabled
+        onScroll={onScroll}
+        renderItem={renderItem}
+        getItemLayout={getItemLayout}
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(_, index) => String(index)}
+        contentContainerStyle={styles.listContainer}
+      />
+      <Pagination scrollX={scrollX} dotsLength={data.length} />
+    </View>
   );
 };
 
@@ -173,11 +107,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listContainer: {
-    flexGrow: 1,
     height: ITEM_HEIGHT + SPACING * 2 + 4,
     alignSelf: 'center',
     justifyContent: 'center',
-    paddingVertical: SPACING * 2,
   },
   title: {
     height: 22,
@@ -192,8 +124,10 @@ const styles = StyleSheet.create({
     fontSize: DimensionsUtils.getFontSize(16),
   },
   overflowContainer: {
+    alignSelf: 'center',
     height: OVERFLOW_HEIGHT,
     overflow: 'hidden',
+    top: DimensionsUtils.getDP(32),
   },
   overflowItemContainerRow: {
     flexDirection: 'row',
@@ -202,7 +136,6 @@ const styles = StyleSheet.create({
   },
   overflowItemContainer: {
     height: OVERFLOW_HEIGHT,
-    paddingHorizontal: SPACING * 3,
   },
 });
 

@@ -15,8 +15,6 @@ import {HEIGHT, WIDTH} from '../../utils/GenericUtils';
 import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const VISIBLE_ITEMS = 3;
-
 const ITEM_WIDTH = HEIGHT <= 700 ? (WIDTH * 0.88) / 1.4 : WIDTH * 0.75;
 const ITEM_HEIGHT =
   HEIGHT <= 600 ? WIDTH * 0.88 : HEIGHT <= 700 ? WIDTH : HEIGHT * 0.6;
@@ -26,29 +24,18 @@ const AnimPressable = Animated.createAnimatedComponent(Pressable);
 const GamesListItem = ({
   item,
   index,
+  scrollX,
   bestScores,
   onItemPress,
   loadingScores,
-  scrollXAnimated,
 }) => {
   const {user} = useAuthContext();
 
-  const inputRange = [index - 1, index, index + 1];
+  const inputRange = [(index - 1) * WIDTH, index * WIDTH, (index + 1) * WIDTH];
 
-  //** ----- STYLES -----
-  const translateX = scrollXAnimated.interpolate({
+  const scale = scrollX.interpolate({
     inputRange,
-    outputRange: [50, 0, -WIDTH],
-  });
-
-  const scale = scrollXAnimated.interpolate({
-    inputRange,
-    outputRange: [0.8, 1, 1],
-  });
-
-  const opacity = scrollXAnimated.interpolate({
-    inputRange,
-    outputRange: [1 - 2 / VISIBLE_ITEMS, 1, 0],
+    outputRange: [0.6, 1, 0.6],
   });
 
   const ms = bestScores[item.title]?.[0]?.milliseconds;
@@ -60,34 +47,38 @@ const GamesListItem = ({
   }`}`;
 
   return (
-    <AnimPressable
-      onPress={() => onItemPress(item)}
-      style={[
-        styles.cardContainer,
-        {opacity, transform: [{translateX}, {scale}]},
-      ]}>
-      <Image source={item.poster} style={styles.image} />
-      {user?.isGuest ? null : (
-        <View style={styles.scoreContainer}>
-          {loadingScores ? (
-            <ActivityIndicator size={'small'} color={Colors.tabBarBg} />
-          ) : (
-            <Text style={styles.score}>
-              {!!ms || !!points ? scoreLabel : dict?.gamesNoScore}
-            </Text>
-          )}
-        </View>
-      )}
-    </AnimPressable>
+    <View style={styles.gameContainer}>
+      <AnimPressable
+        onPress={() => onItemPress(item)}
+        style={[styles.cardContainer, {transform: [{scale}]}]}>
+        <Image source={item.poster} style={styles.image} />
+        {user?.isGuest ? null : (
+          <View style={styles.scoreContainer}>
+            {loadingScores ? (
+              <ActivityIndicator size={'small'} color={Colors.tabBarBg} />
+            ) : (
+              <Text style={styles.score}>
+                {!!ms || !!points ? scoreLabel : dict?.gamesNoScore}
+              </Text>
+            )}
+          </View>
+        )}
+      </AnimPressable>
+    </View>
   );
 };
 
 export default GamesListItem;
 
 const styles = StyleSheet.create({
+  gameContainer: {
+    width: WIDTH,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   cardContainer: {
-    position: 'absolute',
-    left: -ITEM_WIDTH / 2,
+    width: ITEM_WIDTH,
+    height: ITEM_HEIGHT,
     borderColor: Colors.tabBarIcon,
     borderRadius: DimensionsUtils.getDP(20),
     borderWidth: DimensionsUtils.getDP(2),
@@ -107,8 +98,8 @@ const styles = StyleSheet.create({
     height: 20,
   },
   image: {
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
+    width: ITEM_WIDTH - DimensionsUtils.getDP(4),
+    height: ITEM_HEIGHT - DimensionsUtils.getDP(4),
     borderRadius: DimensionsUtils.getDP(18),
   },
 });
