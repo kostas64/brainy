@@ -68,13 +68,13 @@ const RankScreen = ({navigation}) => {
     if (!state.noData && !loadingApi) {
       fetchData();
     }
-  }, [state.noData, loadingApi, fetchData]);
+  }, [state, loadingApi, fetchData]);
 
-  const fetchGameData = React.useCallback(async () => {
+  const fetchGameData = async () => {
     const tmp = await fetch(URL).then(res => res.json());
 
     return tmp;
-  }, [URL]);
+  };
 
   const resetState = React.useCallback(() => {
     setState(initialState);
@@ -92,23 +92,30 @@ const RankScreen = ({navigation}) => {
     }
   }, [loadingApi, state.data]);
 
-  const fetchData = React.useCallback(async () => {
+  const fetchData = async () => {
     try {
       setLoadingApi(true);
       firstRender.current += 1;
       const newData = await fetchGameData(state.page, gameInput);
 
-      setState(prevData => ({
-        data: [...prevData.data, ...newData.scores],
-        page: prevData.page + 1,
-        noData: newData.scores.length < 10,
-      }));
+      setState(prevData => {
+        if (!prevData.noData) {
+          return {
+            data: [...prevData.data, ...newData.scores],
+            page: state.page + 1,
+            noData: newData.scores.length < 10,
+          };
+        } else {
+          return prevData;
+        }
+      });
+
       setLoadingApi(false);
     } catch (error) {
       setLoadingApi(false);
       console.error('Error fetching data:', error);
     }
-  }, [fetchGameData, state.page, gameInput]);
+  };
 
   React.useEffect(() => {
     // Reset data and page when gameInput changes
@@ -149,15 +156,19 @@ const RankScreen = ({navigation}) => {
               />
             </View>
 
-            <FlashList
-              data={state.data}
-              renderItem={renderItem}
-              onEndReached={onEndReached}
-              ListEmptyComponent={ListEmpty}
-              ListFooterComponent={ListFooter}
-              keyExtractor={(_, index) => `index_${index}`}
-              estimatedItemSize={DimensionsUtils.getDP(56)}
-            />
+            <View style={styles.spaceBottom}>
+              <FlashList
+                data={state.data}
+                renderItem={renderItem}
+                extraData={state.data}
+                onEndReached={onEndReached}
+                onEndReachedThreshold={0.25}
+                ListEmptyComponent={ListEmpty}
+                ListFooterComponent={ListFooter}
+                keyExtractor={(_, index) => `index_${index}`}
+                estimatedItemSize={DimensionsUtils.getDP(56)}
+              />
+            </View>
           </>
         )
       )}
@@ -180,13 +191,17 @@ const styles = StyleSheet.create({
   },
   dropdownContainer: {
     paddingHorizontal: DimensionsUtils.getDP(16),
-    paddingVertical: DimensionsUtils.getDP(12),
+    paddingTop: DimensionsUtils.getDP(12),
   },
   activityIndicator: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     top: -DimensionsUtils.getDP(16),
+  },
+  spaceBottom: {
+    flex: 1,
+    marginBottom: DimensionsUtils.getDP(8),
   },
 });
 
