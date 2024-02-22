@@ -1,20 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import React from 'react';
+import Animated from 'react-native-reanimated';
 import {useNavigation} from '@react-navigation/native';
-import {View, Text, Pressable, StyleSheet, Image} from 'react-native';
+import {View, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Header = ({
-  noIcon = false,
-  customIcon,
-  iconStyle,
   label,
   avatar,
   isGuest,
+  iconStyle,
+  customIcon,
+  labelStyle,
+  onIconPress,
+  noIcon = false,
 }) => {
   const navigation = useNavigation();
 
@@ -39,16 +42,22 @@ const Header = ({
   }, []);
 
   const onAvatarPress = React.useCallback(() => {
-    navigation.navigate('Profile');
+    if (onIconPress) {
+      onIconPress();
+    } else {
+      navigation.navigate('Profile');
+    }
   }, []);
 
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.label}>{label}</Text>
+        <Animated.Text style={[styles.label, labelStyle]}>
+          {label}
+        </Animated.Text>
         {!noIcon && (
           <Pressable onPress={onAvatarPress} style={buttonStyles}>
-            <Image
+            <Animated.Image
               source={iconSource}
               onLoadEnd={onAvatarLoad}
               style={[styles.avatar, iconStyle]}

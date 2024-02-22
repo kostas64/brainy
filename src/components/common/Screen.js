@@ -15,6 +15,8 @@ const Screen = ({
   iconStyle,
   customIcon,
   navigation,
+  labelStyle,
+  onIconPress,
   onPressOutside,
 }) => {
   const insets = useSafeAreaInsets();
@@ -40,8 +42,10 @@ const Screen = ({
         logout={logout}
         iconStyle={iconStyle}
         avatar={user?.avatar}
+        labelStyle={labelStyle}
         isGuest={user?.isGuest}
         customIcon={customIcon}
+        onIconPress={onIconPress}
       />
       {children}
     </View>
