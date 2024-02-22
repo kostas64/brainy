@@ -71,10 +71,10 @@ const Header = ({
 
 const styles = StyleSheet.create({
   container: {
+    height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: DimensionsUtils.getDP(40),
     paddingHorizontal: DimensionsUtils.getDP(16),
   },
   label: {
@@ -88,15 +88,15 @@ const styles = StyleSheet.create({
     borderColor: Colors.appGreen,
     borderWidth: DimensionsUtils.getDP(2),
     borderRadius: DimensionsUtils.getDP(24),
-    width: DimensionsUtils.getDP(40),
-    height: DimensionsUtils.getDP(40),
+    width: 40,
+    height: 40,
   },
   avatar: {
     borderColor: Colors.background,
     borderWidth: DimensionsUtils.getDP(2),
     borderRadius: DimensionsUtils.getDP(24),
-    width: DimensionsUtils.getDP(36),
-    height: DimensionsUtils.getDP(36),
+    width: 36,
+    height: 36,
   },
   zeroOpacity: {
     opacity: 0,

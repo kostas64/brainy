@@ -10,9 +10,9 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Image, Pressable, StyleSheet, TextInput, View} from 'react-native';
 
 import {Colors} from '../utils/Colors';
-import {WIDTH} from '../utils/GenericUtils';
 import images from '../assets/images/images';
 import useTimeout from '../hooks/useTimeout';
+import {WIDTH, isIOS} from '../utils/GenericUtils';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 
 const AnimPress = Animated.createAnimatedComponent(Pressable);
@@ -22,14 +22,17 @@ const SearchScreen = ({onPressArrow}) => {
   const timeout = useTimeout();
   const insets = useSafeAreaInsets();
 
+  const inputRef = React.useRef();
+  const inputWidth = useSharedValue(40);
   const arrowOpacity = useSharedValue(0);
-  const inputWidth = useSharedValue(DimensionsUtils.getDP(40));
 
   //** ----- STYLES -----
   const contStyles = [
     styles.container,
     {paddingTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24)},
   ];
+
+  const fontFam = isIOS ? {fontFamily: 'Poppins-Regular'} : {};
 
   const animPress = useAnimatedStyle(() => ({
     opacity: arrowOpacity.value,
@@ -42,7 +45,8 @@ const SearchScreen = ({onPressArrow}) => {
   //** ----- FUNCTIONS -----
   const onPressBack = React.useCallback(() => {
     arrowOpacity.value = withTiming(0, {duration: 150});
-    inputWidth.value = withTiming(DimensionsUtils.getDP(40));
+    inputWidth.value = withTiming(40);
+    inputRef.current?.blur();
 
     timeout.current = setTimeout(() => {
       onPressArrow();
@@ -53,7 +57,8 @@ const SearchScreen = ({onPressArrow}) => {
   React.useEffect(() => {
     arrowOpacity.value = withDelay(150, withTiming(1, {duration: 150}));
     inputWidth.value = withTiming(WIDTH - DimensionsUtils.getDP(62));
-  }, [inputWidth, arrowOpacity]);
+    inputRef.current?.focus();
+  }, [timeout, inputWidth, arrowOpacity]);
 
   return (
     <View style={contStyles}>
@@ -64,7 +69,13 @@ const SearchScreen = ({onPressArrow}) => {
           <Image style={styles.chevron} source={images.arrowDown} />
         </AnimPress>
 
-        <AnimInput style={[styles.input, animInputStyle]} />
+        <AnimInput
+          ref={inputRef}
+          placeholder={'Search players'}
+          selectionColor={Colors.appGreen}
+          placeholderTextColor={Colors.tabBarIcon}
+          style={[styles.input, fontFam, animInputStyle]}
+        />
       </View>
     </View>
   );
@@ -81,9 +92,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     flexDirection: 'row',
     alignItems: 'center',
-    // justifyContent: 'space-between',
-    paddingRight: DimensionsUtils.getDP(16),
     paddingLeft: DimensionsUtils.getDP(6),
+    paddingRight: DimensionsUtils.getDP(16),
   },
   chevronContainer: {
     padding: DimensionsUtils.getDP(10),
@@ -95,9 +105,11 @@ const styles = StyleSheet.create({
     height: DimensionsUtils.getDP(20),
   },
   input: {
+    height: 40,
+    color: Colors.white,
     borderColor: Colors.appGreen,
-    height: DimensionsUtils.getDP(40),
     borderWidth: DimensionsUtils.getDP(2),
+    paddingLeft: DimensionsUtils.getDP(16),
     borderRadius: DimensionsUtils.getDP(24),
   },
 });
