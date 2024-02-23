@@ -21,6 +21,7 @@ const AnimInput = Animated.createAnimatedComponent(TextInput);
 const SearchInput = React.forwardRef(
   (
     {
+      setPage,
       setInput,
       loadingApi,
       setResults,
@@ -28,6 +29,7 @@ const SearchInput = React.forwardRef(
       onPressBack,
       setLoadingApi,
       arrowContStyle,
+      setNoOtherData,
     },
     ref,
   ) => {
@@ -36,21 +38,36 @@ const SearchInput = React.forwardRef(
     const onChangeHandler = React.useCallback(
       value => {
         clearTimeout(searchTimeout.current);
-        value.length > 1 && setLoadingApi(true);
+        value.length > 0 && setLoadingApi(true);
+
+        setPage(1);
         setInput(value);
 
         value.length === 0 && setResults([]);
         value.length === 0 && setLoadingApi(false);
+        value.length === 0 && setNoOtherData(false);
 
         searchTimeout.current = setTimeout(() => {
-          if (value.length > 1) {
+          if (value.length > 0) {
             searchUser(value)
-              .then(data => setResults(data))
+              .then(data => {
+                setResults(data);
+
+                data.length < 20 && setNoOtherData(true);
+                data.length === 20 && setNoOtherData(false);
+              })
               .finally(() => setLoadingApi(false));
           }
         }, 250);
       },
-      [searchTimeout, setLoadingApi, setInput, setResults],
+      [
+        setPage,
+        searchTimeout,
+        setLoadingApi,
+        setInput,
+        setResults,
+        setNoOtherData,
+      ],
     );
 
     return (

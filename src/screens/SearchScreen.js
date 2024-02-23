@@ -1,4 +1,12 @@
 import {
+  View,
+  FlatList,
+  Keyboard,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
+
+import {
   withTiming,
   useSharedValue,
   useAnimatedStyle,
@@ -6,9 +14,9 @@ import {
 
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, StyleSheet, FlatList, Keyboard} from 'react-native';
 
 import {Colors} from '../utils/Colors';
+import {searchUser} from '../services/user';
 import useTimeout from '../hooks/useTimeout';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import SearchInput from '../components/search/SearchInput';
@@ -21,9 +29,11 @@ const SearchScreen = ({onPressArrow}) => {
   const insets = useSafeAreaInsets();
 
   const inputRef = React.useRef();
+  const [page, setPage] = React.useState(1);
   const [input, setInput] = React.useState('');
   const [results, setResults] = React.useState([]);
   const [loadingApi, setLoadingApi] = React.useState(false);
+  const [noOtherData, setNoOtherData] = React.useState(false);
 
   const inputWidth = useSharedValue(40);
   const arrowOpacity = useSharedValue(0);
@@ -77,13 +87,37 @@ const SearchScreen = ({onPressArrow}) => {
     [listItemStyle],
   );
 
-  const onScroll = React.useCallback(() => {
-    if (isAndroid) {
-      return;
-    }
+  const onEndReached = React.useCallback(() => {
+    if (!noOtherData && !loadingApi && input.length > 0) {
+      setLoadingApi(true);
 
-    Keyboard.isVisible() && Keyboard.dismiss();
-  }, []);
+      searchUser(input, page + 1)
+        .then(data => {
+          setResults(old => [...old, ...data]);
+          setPage(old => old + 1);
+          data.length < 20 && setNoOtherData(true);
+        })
+        .finally(() => setLoadingApi(false));
+    }
+  }, [input, page, loadingApi, noOtherData]);
+
+  const onScroll = React.useCallback(() => {
+    if (results.length > 0) {
+      Keyboard.isVisible() && Keyboard.dismiss();
+    }
+  }, [results]);
+
+  const ListFooter = React.useCallback(() => {
+    if (loadingApi && page !== 1) {
+      return (
+        <ActivityIndicator
+          size={'small'}
+          color={Colors.appGreen}
+          style={styles.spaceBottom}
+        />
+      );
+    }
+  }, [page, loadingApi]);
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
@@ -105,12 +139,14 @@ const SearchScreen = ({onPressArrow}) => {
     <View style={contStyles}>
       <SearchInput
         ref={inputRef}
+        setPage={setPage}
         setInput={setInput}
         inputStyle={inputStyle}
         loadingApi={loadingApi}
         setResults={setResults}
         onPressBack={onPressBack}
         setLoadingApi={setLoadingApi}
+        setNoOtherData={setNoOtherData}
         arrowContStyle={arrowContStyle}
       />
 
@@ -119,6 +155,9 @@ const SearchScreen = ({onPressArrow}) => {
         onScroll={onScroll}
         renderItem={renderItem}
         style={styles.spaceTop}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.4}
+        ListFooterComponent={ListFooter}
         keyboardShouldPersistTaps={'always'}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={listStyles}
@@ -139,5 +178,8 @@ const styles = StyleSheet.create({
   },
   spaceHorizontal: {
     marginHorizontal: DimensionsUtils.getDP(16),
+  },
+  spaceBottom: {
+    marginBottom: DimensionsUtils.getDP(16),
   },
 });

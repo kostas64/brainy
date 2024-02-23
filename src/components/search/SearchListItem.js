@@ -1,17 +1,18 @@
 import React from 'react';
-import Animated from 'react-native-reanimated';
 import FastImage from 'react-native-fast-image';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import Touchable from '../common/Touchable';
 import {WIDTH} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const AnimPress = Animated.createAnimatedComponent(Pressable);
-
 const SearchListItem = ({item, style}) => {
   return (
-    <AnimPress style={[styles.container, style]}>
+    <Touchable
+      pressingAnimationDuration={25}
+      releasingAnimationDuraiton={50}
+      style={[styles.container, style]}>
       <FastImage source={{uri: item.avatar}} style={styles.avatar} />
       <View style={styles.spaceLeft}>
         <Text
@@ -22,7 +23,7 @@ const SearchListItem = ({item, style}) => {
           item.nickname ? item.nickname : ''
         }`}</Text>
       </View>
-    </AnimPress>
+    </Touchable>
   );
 };
 
