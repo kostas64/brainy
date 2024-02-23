@@ -45,6 +45,10 @@ const SearchScreen = ({onPressArrow}) => {
     opacity: arrowOpacity.value,
   }));
 
+  const listItemStyle = useAnimatedStyle(() => ({
+    opacity: arrowOpacity.value,
+  }));
+
   const inputStyle = useAnimatedStyle(() => ({
     width: inputWidth.value,
     paddingRight: inputWidth.value > 200 ? 36 : 0,
@@ -64,9 +68,13 @@ const SearchScreen = ({onPressArrow}) => {
 
   const renderItem = React.useCallback(
     ({item, index}) => (
-      <SearchListItem item={item} key={`search-user-${index}`} />
+      <SearchListItem
+        item={item}
+        style={listItemStyle}
+        key={`search-user-${index}`}
+      />
     ),
-    [],
+    [listItemStyle],
   );
 
   const onScroll = React.useCallback(() => {
@@ -84,11 +92,13 @@ const SearchScreen = ({onPressArrow}) => {
       duration: 200,
     });
 
-    isIOS && inputRef.current?.focus();
-
-    keyboard.current = setTimeout(() => {
+    if (isAndroid) {
+      keyboard.current = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50);
+    } else {
       inputRef.current?.focus();
-    }, 100);
+    }
   }, [timeout, keyboard, inputWidth, arrowOpacity]);
 
   return (
