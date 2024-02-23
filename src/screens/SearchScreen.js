@@ -1,5 +1,4 @@
-import Animated, {
-  withDelay,
+import {
   withTiming,
   useSharedValue,
   useAnimatedStyle,
@@ -7,45 +6,55 @@ import Animated, {
 
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Image, Pressable, StyleSheet, TextInput, View} from 'react-native';
+import {View, StyleSheet, FlatList, Keyboard} from 'react-native';
 
 import {Colors} from '../utils/Colors';
-import images from '../assets/images/images';
 import useTimeout from '../hooks/useTimeout';
-import {WIDTH, isIOS} from '../utils/GenericUtils';
 import {DimensionsUtils} from '../utils/DimensionUtils';
-
-const AnimPress = Animated.createAnimatedComponent(Pressable);
-const AnimInput = Animated.createAnimatedComponent(TextInput);
+import SearchInput from '../components/search/SearchInput';
+import {WIDTH, isAndroid, isIOS} from '../utils/GenericUtils';
+import SearchListItem from '../components/search/SearchListItem';
 
 const SearchScreen = ({onPressArrow}) => {
   const timeout = useTimeout();
+  const keyboard = useTimeout();
   const insets = useSafeAreaInsets();
 
   const inputRef = React.useRef();
+  const [input, setInput] = React.useState('');
+  const [results, setResults] = React.useState([]);
+  const [loadingApi, setLoadingApi] = React.useState(false);
+
   const inputWidth = useSharedValue(40);
   const arrowOpacity = useSharedValue(0);
 
   //** ----- STYLES -----
+  const insetsBottom =
+    insets.bottom > 0
+      ? insets.bottom + DimensionsUtils.getDP(4)
+      : DimensionsUtils.getDP(24);
+
   const contStyles = [
     styles.container,
     {paddingTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24)},
   ];
 
-  const fontFam = isIOS ? {fontFamily: 'Poppins-Regular'} : {};
+  const listStyles = [styles.spaceHorizontal, {paddingBottom: insetsBottom}];
 
-  const animPress = useAnimatedStyle(() => ({
+  const arrowContStyle = useAnimatedStyle(() => ({
     opacity: arrowOpacity.value,
   }));
 
-  const animInputStyle = useAnimatedStyle(() => ({
+  const inputStyle = useAnimatedStyle(() => ({
     width: inputWidth.value,
+    paddingRight: inputWidth.value > 200 ? 36 : 0,
+    ...(isIOS ? {fontFamily: 'Poppins-Regular'} : {}),
   }));
 
   //** ----- FUNCTIONS -----
   const onPressBack = React.useCallback(() => {
     arrowOpacity.value = withTiming(0, {duration: 150});
-    inputWidth.value = withTiming(40);
+    inputWidth.value = withTiming(40, {duration: 150});
     inputRef.current?.blur();
 
     timeout.current = setTimeout(() => {
@@ -53,30 +62,56 @@ const SearchScreen = ({onPressArrow}) => {
     }, 150);
   }, [timeout, inputWidth, arrowOpacity, onPressArrow]);
 
+  const renderItem = React.useCallback(
+    ({item, index}) => (
+      <SearchListItem item={item} key={`search-user-${index}`} />
+    ),
+    [],
+  );
+
+  const onScroll = React.useCallback(() => {
+    if (isAndroid) {
+      return;
+    }
+
+    Keyboard.isVisible() && Keyboard.dismiss();
+  }, []);
+
   //** ----- EFFECTS -----
   React.useEffect(() => {
-    arrowOpacity.value = withDelay(150, withTiming(1, {duration: 150}));
-    inputWidth.value = withTiming(WIDTH - DimensionsUtils.getDP(62));
-    inputRef.current?.focus();
-  }, [timeout, inputWidth, arrowOpacity]);
+    arrowOpacity.value = withTiming(1, {duration: 150});
+    inputWidth.value = withTiming(WIDTH - DimensionsUtils.getDP(62), {
+      duration: 200,
+    });
+
+    isIOS && inputRef.current?.focus();
+
+    keyboard.current = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+  }, [timeout, keyboard, inputWidth, arrowOpacity]);
 
   return (
     <View style={contStyles}>
-      <View style={styles.inputRowContainer}>
-        <AnimPress
-          onPress={onPressBack}
-          style={[styles.chevronContainer, animPress]}>
-          <Image style={styles.chevron} source={images.arrowDown} />
-        </AnimPress>
+      <SearchInput
+        ref={inputRef}
+        setInput={setInput}
+        inputStyle={inputStyle}
+        loadingApi={loadingApi}
+        setResults={setResults}
+        onPressBack={onPressBack}
+        setLoadingApi={setLoadingApi}
+        arrowContStyle={arrowContStyle}
+      />
 
-        <AnimInput
-          ref={inputRef}
-          placeholder={'Search players'}
-          selectionColor={Colors.appGreen}
-          placeholderTextColor={Colors.tabBarIcon}
-          style={[styles.input, fontFam, animInputStyle]}
-        />
-      </View>
+      <FlatList
+        data={results}
+        onScroll={onScroll}
+        renderItem={renderItem}
+        keyboardShouldPersistTaps={'always'}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={listStyles}
+      />
     </View>
   );
 };
@@ -88,28 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
-  inputRowContainer: {
-    alignSelf: 'flex-end',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: DimensionsUtils.getDP(6),
-    paddingRight: DimensionsUtils.getDP(16),
-  },
-  chevronContainer: {
-    padding: DimensionsUtils.getDP(10),
-  },
-  chevron: {
-    tintColor: Colors.appGreen,
-    transform: [{rotate: '90deg'}],
-    width: DimensionsUtils.getDP(20),
-    height: DimensionsUtils.getDP(20),
-  },
-  input: {
-    height: 40,
-    color: Colors.white,
-    borderColor: Colors.appGreen,
-    borderWidth: DimensionsUtils.getDP(2),
-    paddingLeft: DimensionsUtils.getDP(16),
-    borderRadius: DimensionsUtils.getDP(24),
+  spaceHorizontal: {
+    marginHorizontal: DimensionsUtils.getDP(16),
   },
 });

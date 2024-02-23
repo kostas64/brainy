@@ -66,7 +66,7 @@ const FriendsTabs = ({navigation}) => {
     const toValue = opacity.value === 1 ? 0 : 1;
     const searchValue = showSearch ? false : true;
 
-    opacity.value = withTiming(toValue, {duration: 150}, () => {
+    opacity.value = withTiming(toValue, {duration: 50}, () => {
       runOnJS(setShowSearch)(searchValue);
     });
   }, [opacity, showSearch]);
