@@ -108,6 +108,7 @@ const SearchScreen = ({onPressArrow}) => {
         data={results}
         onScroll={onScroll}
         renderItem={renderItem}
+        style={styles.spaceTop}
         keyboardShouldPersistTaps={'always'}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={listStyles}
@@ -122,6 +123,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+  },
+  spaceTop: {
+    marginTop: DimensionsUtils.getDP(8),
   },
   spaceHorizontal: {
     marginHorizontal: DimensionsUtils.getDP(16),
