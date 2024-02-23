@@ -4,11 +4,10 @@ import FastImage from 'react-native-fast-image';
 import {View, Text, Animated, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import Touchable from '../common/Touchable';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
-
-const AnimPress = Animated.createAnimatedComponent(Pressable);
 
 const Card = React.forwardRef(
   ({value, flipToFrontStyle, flipToBackStyle}, ref) => {
@@ -164,16 +163,16 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
     modalOpen && (
       <>
         <Animated.View style={[styles.container, {opacity: opacityRef}]}>
-          <AnimPress onPress={closeModal} style={styles.backgroundContainer} />
+          <Pressable onPress={closeModal} style={styles.backgroundContainer} />
           <View style={styles.innerContainer}>
             <View style={styles.titleContainer}>
               <View style={styles.innerTitleContainer}>
                 <FastImage source={images.tutorial} style={styles.icon} />
                 <Text style={styles.title}>{dict.memoryCardTutTitle}</Text>
               </View>
-              <Pressable onPress={closeModal}>
+              <Touchable onPress={closeModal} releasingAnimationDuraiton={300}>
                 <FastImage source={images.close} style={styles.closeIcon} />
-              </Pressable>
+              </Touchable>
             </View>
             <View style={styles.rowCenter}>
               <Card

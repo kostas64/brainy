@@ -5,11 +5,11 @@ import FastImage from 'react-native-fast-image';
 import {View, Text, Animated, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import Touchable from '../common/Touchable';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const AnimPress = Animated.createAnimatedComponent(Pressable);
 const AnimatedImage = Animated.createAnimatedComponent(FastImage);
 
 const Card = ({value}) => {
@@ -66,19 +66,19 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
   return (
     modalOpen && (
       <Animated.View style={[styles.container, {opacity: opacityRef}]}>
-        <AnimPress onPress={closeModal} style={styles.backgroundContainer} />
+        <Pressable onPress={closeModal} style={styles.backgroundContainer} />
         <View style={styles.innerContainer}>
           <View style={styles.titleContainer}>
             <View style={styles.innerTitleContainer}>
               <FastImage source={images.tutorial} style={styles.icon} />
               <Text style={styles.title}>{dict.doTheMathTutTitle}</Text>
             </View>
-            <Pressable onPress={closeModal}>
+            <Touchable onPress={closeModal} releasingAnimationDuraiton={300}>
               <FastImage source={images.close} style={styles.closeIcon} />
-            </Pressable>
+            </Touchable>
           </View>
           <View style={styles.gameContainer}>
-            <Pressable
+            <Touchable
               onPress={changeEquations}
               disabled={
                 evaluate(equation1.replace('x', '*')) <=
@@ -95,9 +95,9 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
                   ]}
                 />
               )}
-            </Pressable>
+            </Touchable>
             <View style={{marginVertical: DimensionsUtils.getDP(2)}} />
-            <Pressable
+            <Touchable
               onPress={changeEquations}
               disabled={
                 evaluate(equation1.replace('x', '*')) >=
@@ -114,9 +114,9 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
                   ]}
                 />
               )}
-            </Pressable>
+            </Touchable>
           </View>
-          <Pressable
+          <Touchable
             style={styles.equalButtonContainer}
             onPress={changeEquations}
             disabled={
@@ -136,7 +136,7 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
             <View style={styles.equalButton}>
               <Text style={styles.equalText}>{dict.equalLabel}</Text>
             </View>
-          </Pressable>
+          </Touchable>
           <Text style={{marginTop: DimensionsUtils.getDP(8)}}>
             <Text style={styles.text}>{dict.doTheMathTutContent}</Text>
             <Text

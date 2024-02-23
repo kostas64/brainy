@@ -1,8 +1,9 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
+import {View, Text, Animated, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Text, Animated, StyleSheet, Pressable} from 'react-native';
 
+import Touchable from './Touchable';
 import {Colors} from '../../utils/Colors';
 import {WIDTH} from '../../utils/GenericUtils';
 import images from '../../assets/images/images';
@@ -99,7 +100,7 @@ const TabBar = props => {
           const isRouteActive = routeIndex === activeRouteIndex;
 
           return (
-            <Pressable
+            <Touchable
               key={routeIndex}
               style={touchableStyles}
               onPressIn={() => {
@@ -107,7 +108,7 @@ const TabBar = props => {
               }}>
               {renderIcon({route, focused: isRouteActive})}
               {getLabel(routes?.[routeIndex].name, isRouteActive)}
-            </Pressable>
+            </Touchable>
           );
         })}
       </View>

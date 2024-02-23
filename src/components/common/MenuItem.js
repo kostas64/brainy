@@ -1,8 +1,9 @@
 import React from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
 import Chevron from './Chevron';
 import Counter from './Counter';
+import Touchable from './Touchable';
 import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
@@ -26,7 +27,7 @@ const MenuItem = ({
 
   return (
     <View style={[styles.menuItemCont, isLast && styles.noBorder]}>
-      <Pressable
+      <Touchable
         onPress={onPress}
         style={[styles.rowCenter, styles.spaceBetween]}>
         <View style={styles.rowCenter}>
@@ -37,7 +38,7 @@ const MenuItem = ({
           {showCounter && <NumIndicator number={counter} />}
           {withChevron && <Chevron />}
         </View>
-      </Pressable>
+      </Touchable>
     </View>
   );
 };
