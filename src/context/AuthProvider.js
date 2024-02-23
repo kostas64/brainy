@@ -11,6 +11,7 @@ export const AuthProvider = ({children}) => {
     isGuest: null,
     name: null,
     surname: null,
+    nickname: null,
   });
 
   //** ----- FUNCTIONS -----
@@ -22,7 +23,11 @@ export const AuthProvider = ({children}) => {
     if (user?.surname) {
       await AsyncStorage.setItem('surname', user?.surname);
     }
-  }, [user.name, user.surname]);
+
+    if (user?.nickname) {
+      await AsyncStorage.setItem('nickname', user?.nickname);
+    }
+  }, [user]);
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
@@ -32,7 +37,7 @@ export const AuthProvider = ({children}) => {
   React.useEffect(() => {
     // Fetch token and user's data
     const bootstrapAsync = async () => {
-      let userToken, userEmail, userAvatar, userName, userSurname;
+      let userToken, userEmail, userAvatar, userName, userSurname, userNickname;
 
       try {
         userToken = await AsyncStorage.getItem('token');
@@ -40,6 +45,7 @@ export const AuthProvider = ({children}) => {
         userAvatar = await AsyncStorage.getItem('avatar');
         userName = await AsyncStorage.getItem('name');
         userSurname = await AsyncStorage.getItem('surname');
+        userNickname = await AsyncStorage.getItem('nickname');
 
         setToken(userToken);
         setUser({
@@ -47,6 +53,7 @@ export const AuthProvider = ({children}) => {
           email: userEmail,
           name: userName,
           surname: userSurname,
+          nickname: userNickname,
         });
       } catch (e) {
         setToken(null);
@@ -56,6 +63,7 @@ export const AuthProvider = ({children}) => {
           isGuest: null,
           name: null,
           surname: null,
+          nickname: null,
         });
       }
     };

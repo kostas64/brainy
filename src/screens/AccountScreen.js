@@ -25,13 +25,16 @@ const AccountScreen = ({navigation}) => {
   const {setToast} = useToastContext();
   const {user, setUser} = useAuthContext();
 
+  const [loading, setLoading] = React.useState(false);
   const [name, setName] = React.useState(user?.name);
   const [surname, setSurname] = React.useState(user?.surname);
-  const [loading, setLoading] = React.useState(false);
+  const [nickname, setNickname] = React.useState(user?.nickname);
 
   const nameHasChanged = name !== user?.name;
   const surnameHasChanged = surname !== user?.surname;
-  const toUpdate = nameHasChanged || surnameHasChanged;
+  const nicknameHasChanged = nickname !== user?.nickname;
+
+  const toUpdate = nameHasChanged || surnameHasChanged || nicknameHasChanged;
   const buttonLabel = toUpdate ? dict.updateProfile : dict?.doneLabel;
 
   //** ----- STYLES -----
@@ -50,41 +53,51 @@ const AccountScreen = ({navigation}) => {
       setName(user?.name);
     } else if (surnameHasChanged) {
       setSurname(user?.surname);
+    } else if (nicknameHasChanged) {
+      setNickname(user?.nickname);
     }
-  }, [user?.name, user?.surname, nameHasChanged, surnameHasChanged]);
+  }, [user, nameHasChanged, surnameHasChanged, nicknameHasChanged]);
 
   const successCb = React.useCallback(
     async data => {
       Keyboard.dismiss();
       setLoading(false);
+
       setName(data?.name);
       setSurname(data?.surname);
+      setNickname(data?.nickname);
+
       setUser(old => ({
         ...old,
         name: data?.name,
         surname: data?.surname,
+        nickname: data.nickname,
       }));
 
       if (nameHasChanged) {
         setToast({message: dict.nameUpdated});
       } else if (surnameHasChanged) {
         setToast({message: dict.surnameUpdated});
+      } else if (nicknameHasChanged) {
+        setToast({message: dict.nicknameUpdated});
       }
     },
-    [setUser, setToast, nameHasChanged, surnameHasChanged],
+    [setUser, setToast, nameHasChanged, surnameHasChanged, nicknameHasChanged],
   );
 
   const errorCb = React.useCallback(() => {
     Keyboard.dismiss();
     setLoading(false);
+
     setName(user?.name);
     setSurname(user?.surname);
-  }, [user?.name, user?.surname]);
+    setNickname(user?.nickname);
+  }, [user]);
 
   const callUpdate = React.useCallback(() => {
     setLoading(true);
-    updateProfile({name, surname}, successCb, errorCb);
-  }, [name, surname, successCb, errorCb]);
+    updateProfile({name, surname, nickname}, successCb, errorCb);
+  }, [name, surname, nickname, successCb, errorCb]);
 
   const onDonePress = React.useCallback(() => {
     if (toUpdate) {
@@ -106,7 +119,6 @@ const AccountScreen = ({navigation}) => {
               onPress={callUpdate}
               inputLabel={dict.nameLabel}
               hasChanged={nameHasChanged}
-              placeholder={dict.nameLabel}
               loading={loading && nameHasChanged}
             />
           </Animated.View>
@@ -119,8 +131,19 @@ const AccountScreen = ({navigation}) => {
               setValue={setSurname}
               hasChanged={surnameHasChanged}
               inputLabel={dict.surnameLabel}
-              placeholder={dict.surnameLabel}
               loading={loading && surnameHasChanged}
+            />
+          </Animated.View>
+          <View style={styles.separator} />
+          <Animated.View entering={FadeInUp.delay(450).duration(300)}>
+            <Input
+              value={nickname}
+              onBlur={onBlur}
+              onPress={callUpdate}
+              setValue={setNickname}
+              hasChanged={nicknameHasChanged}
+              inputLabel={dict.nicknameLabel}
+              loading={loading && nicknameHasChanged}
             />
           </Animated.View>
         </View>
@@ -145,6 +168,6 @@ const styles = StyleSheet.create({
     marginTop: DimensionsUtils.getDP(24),
   },
   separator: {
-    marginVertical: DimensionsUtils.getDP(16),
+    marginVertical: DimensionsUtils.getDP(12),
   },
 });
