@@ -1,6 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {BEARER, HOST, REQUEST_ACCESS, UPDATE_PROFILE} from '../Endpoints';
+import {
+  HOST,
+  BEARER,
+  SEARCH_USER,
+  UPDATE_PROFILE,
+  REQUEST_ACCESS,
+} from '../Endpoints';
 
 export const requestAccess = async user => {
   console.log('API requestAccess ', `${HOST}${REQUEST_ACCESS}`);
@@ -46,5 +52,27 @@ export const updateProfile = async (fields, successCb, errorCb) => {
   } catch (e) {
     !!errorCb && errorCb();
     console.log('API updateProfile failed', e);
+  }
+};
+
+export const searchUser = async (input, page = 1) => {
+  console.log('API searchUser ', `${HOST}${SEARCH_USER}`, input, page);
+
+  try {
+    const token = await AsyncStorage.getItem('token');
+    return fetch(`${HOST}${SEARCH_USER}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+      body: JSON.stringify({
+        page,
+        input,
+      }),
+    }).then(res => res.json());
+  } catch (e) {
+    console.log('API searchUser failed', e);
   }
 };
