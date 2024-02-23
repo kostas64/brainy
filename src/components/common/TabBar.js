@@ -1,7 +1,7 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, Animated, StyleSheet, Pressable} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import {WIDTH} from '../../utils/GenericUtils';
@@ -83,7 +83,7 @@ const TabBar = props => {
   //** ----- EFFECTS -----
   React.useEffect(() => {
     Animated.timing(translateRef, {
-      duration: 150,
+      duration: 100,
       toValue: activeRouteIndex,
       useNativeDriver: true,
     }).start();
@@ -99,16 +99,15 @@ const TabBar = props => {
           const isRouteActive = routeIndex === activeRouteIndex;
 
           return (
-            <TouchableOpacity
+            <Pressable
               key={routeIndex}
               style={touchableStyles}
-              activeOpacity={0.4}
-              onPress={() => {
+              onPressIn={() => {
                 props.navigation.navigate(routes?.[routeIndex].name);
               }}>
               {renderIcon({route, focused: isRouteActive})}
               {getLabel(routes?.[routeIndex].name, isRouteActive)}
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>

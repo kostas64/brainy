@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import {isAndroid} from '../utils/GenericUtils';
@@ -26,13 +26,13 @@ const FriendsTabbar = props => {
   return (
     <View style={styles.row}>
       {navState.routes?.map((item, index) => (
-        <TouchableOpacity
+        <Pressable
           style={tabStyles(index)}
-          onPress={() => onPress(item)}
+          onPressIn={() => onPress(item)}
           key={`friends-tabbar-${index}`}>
           <Text style={styles.label}>{item.title}</Text>
           {selectedItem === index && <View style={styles.indicator} />}
-        </TouchableOpacity>
+        </Pressable>
       ))}
     </View>
   );

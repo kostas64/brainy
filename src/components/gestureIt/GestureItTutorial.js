@@ -1,16 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  View,
-  Text,
-  Animated,
-  Pressable,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
+import {View, Text, Animated, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
@@ -187,9 +180,9 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
                 <FastImage source={images.tutorial} style={styles.icon} />
                 <Text style={styles.title}>{dict.gestureItTutTitle}</Text>
               </View>
-              <TouchableOpacity onPress={closeModal}>
+              <Pressable onPress={closeModal}>
                 <FastImage source={images.close} style={styles.closeIcon} />
-              </TouchableOpacity>
+              </Pressable>
             </View>
             <View style={styles.gameContainer}>
               {designState === 1 && designOne()}

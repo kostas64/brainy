@@ -1,14 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  View,
-  Text,
-  Animated,
-  Pressable,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
+import {View, Text, Animated, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
@@ -22,15 +15,7 @@ const AnimatedImage = Animated.createAnimatedComponent(FastImage);
 const Card = ({color, value}) => {
   return (
     <View style={styles.cardContainer}>
-      <Text
-        style={[
-          styles.cardText,
-          {
-            color,
-          },
-        ]}>
-        {value}
-      </Text>
+      <Text style={[styles.cardText, {color}]}>{value}</Text>
     </View>
   );
 };
@@ -95,14 +80,12 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
               <FastImage source={images.tutorial} style={styles.icon} />
               <Text style={styles.title}>{dict.colorMatcTutTitle}</Text>
             </View>
-            <TouchableOpacity onPress={closeModal}>
+            <Pressable onPress={closeModal}>
               <FastImage source={images.close} style={styles.closeIcon} />
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <View style={styles.gameContainer}>
-            <TouchableOpacity
-              onPress={changeColors1}
-              disabled={cardVal1 === cardCol2}>
+            <Pressable onPress={changeColors1} disabled={cardVal1 === cardCol2}>
               <FastImage source={images.no} style={styles.image} />
               {cardVal1 !== cardCol2 && (
                 <AnimatedImage
@@ -113,15 +96,13 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
                   ]}
                 />
               )}
-            </TouchableOpacity>
+            </Pressable>
             <View>
               <Card color={cardCol1} value={cardVal1} />
               <View style={{marginVertical: DimensionsUtils.getDP(2)}} />
               <Card color={cardCol2} value={cardVal2} />
             </View>
-            <TouchableOpacity
-              onPress={changeColors2}
-              disabled={cardVal1 !== cardCol2}>
+            <Pressable onPress={changeColors2} disabled={cardVal1 !== cardCol2}>
               <FastImage source={images.yes} style={styles.image} />
               {cardVal1 === cardCol2 && (
                 <AnimatedImage
@@ -132,7 +113,7 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
                   ]}
                 />
               )}
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <Text>
             <Text style={styles.text}>{`${dict.colorMatcTutContent} `}</Text>
