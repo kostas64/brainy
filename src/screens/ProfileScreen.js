@@ -29,7 +29,7 @@ const ProfileScreen = ({navigation}) => {
   const icon = user?.isGuest ? images.guest : null;
 
   const profileItems = user?.isGuest
-    ? PROFILE_SECTIONS?.slice(5, 6)
+    ? PROFILE_SECTIONS?.slice(4, 5)
     : PROFILE_SECTIONS;
 
   //** ----- FUNCTIONS -----
