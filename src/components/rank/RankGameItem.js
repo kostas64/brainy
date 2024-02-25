@@ -5,7 +5,7 @@ import RankFlipListItem from './RankFlipListItem';
 import RankPointListItem from './RankPointListItem';
 import {useAuthContext} from '../../context/AuthProvider';
 
-const RankGameItem = ({item, isLast, index, gameInput}) => {
+const RankGameItem = ({item, index, gameInput}) => {
   const {user} = useAuthContext();
 
   switch (gameInput) {
