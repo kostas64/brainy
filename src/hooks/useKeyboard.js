@@ -3,12 +3,12 @@ import {Keyboard} from 'react-native';
 
 import {isAndroid} from '../utils/GenericUtils';
 
-export const useKeyboard = () => {
+export const useKeyboard = (considerAndroid = false) => {
   const [keyboardHeight, setKeyboardHeight] = React.useState(0);
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
-    if (isAndroid) {
+    if (!considerAndroid && isAndroid) {
       return () => {};
     }
 
@@ -19,6 +19,16 @@ export const useKeyboard = () => {
     function onKeyboardWillShow(e) {
       setKeyboardHeight(e.endCoordinates.height);
     }
+
+    const showDidSubscription = Keyboard.addListener(
+      'keyboardDidShow',
+      onKeyboardWillShow,
+    );
+
+    const didHideSubscription = Keyboard.addListener(
+      'keyboardDidHide',
+      onKeyboardWillHide,
+    );
 
     const showWillSubscription = Keyboard.addListener(
       'keyboardWillShow',
@@ -31,10 +41,12 @@ export const useKeyboard = () => {
     );
 
     return () => {
-      hideSubscription.remove();
-      showWillSubscription.remove();
+      !!hideSubscription && hideSubscription.remove();
+      !!didHideSubscription && didHideSubscription.remove();
+      !!showDidSubscription && showDidSubscription.remove();
+      !!showWillSubscription && showWillSubscription.remove();
     };
-  }, []);
+  }, [considerAndroid]);
 
   return keyboardHeight;
 };
