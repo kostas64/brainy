@@ -65,9 +65,9 @@
   "nameLabel": "Name",
   "surnameLabel": "Surname",
   "nicknameLabel": "Nickname",
-  "nameUpdated": "Your name has been updated  ✓",
-  "surnameUpdated": "Your surname has been updated  ✓",
-  "nicknameUpdated": "Your nickname has been updated  ✓",
+  "nameUpdated": "Name has been updated  ✓",
+  "surnameUpdated": "Surname has been updated  ✓",
+  "nicknameUpdated": "Nickname has been updated  ✓",
   "errorOnUpdate": "Something went wrong ✗",
   "doneLabel": "Done",
   "friendRequests": "Friend requests",
@@ -76,5 +76,9 @@
   "reject": "Remove",
   "updateProfile": "Update profile",
   "noFriendRequests": "You don't have friend requests",
-  "noFriendsYet": "You have no friends yet. Find players through search or rank screen."
+  "noFriendsYet": "You have no friends yet. Find players through search or rank screen.",
+  "chooseNicknameLabel": "Choose a nickname",
+  "chooseNickanemTip": "You can add or edit your nickname anytime from profile section.",
+  "setNicknameLabel": "Set nickname",
+  "skipLabel": "Skip"
 }
