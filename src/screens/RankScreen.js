@@ -1,4 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import {
+  runOnJS,
+  withTiming,
+  useSharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+
 import React from 'react';
 import {FlashList} from '@shopify/flash-list';
 import {useIsFocused} from '@react-navigation/native';
@@ -6,7 +13,9 @@ import {View, StyleSheet, ActivityIndicator, Text} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import {HOST, SCORE} from '../Endpoints';
+import SearchScreen from './SearchScreen';
 import {GAMES} from '../assets/values/games';
+import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import Screen from '../components/common/Screen';
 import {GenericUtils} from '../utils/GenericUtils';
@@ -27,10 +36,13 @@ const RankScreen = ({navigation}) => {
   const {user} = useAuthContext();
   const isFocused = useIsFocused();
 
+  const opacity = useSharedValue(1);
+
   const dropdownRef = React.useRef();
   const firstRender = React.useRef(0);
 
   const [state, setState] = React.useState(initialState);
+  const [showSearch, setShowSearch] = React.useState(false);
   const [loadingApi, setLoadingApi] = React.useState(false);
   const [gameInput, setGameInput] = React.useState(GAMES[0]);
 
@@ -38,7 +50,29 @@ const RankScreen = ({navigation}) => {
     state.page
   }`;
 
+  //** ----- STYLES -----
+  const iconAnimStyle = useAnimatedStyle(() => ({
+    width: 18,
+    height: 18,
+    borderWidth: 0,
+    borderRadius: 0,
+    opacity: opacity.value,
+    tintColor: Colors.appGreen,
+  }));
+
   //** ----- FUNCTIONS -----
+  const toggleIconOpacity = React.useCallback(() => {
+    const display = opacity.value === 1 ? 'none' : 'flex';
+    navigation.setOptions({tabBarStyle: {display}});
+
+    const toValue = opacity.value === 1 ? 0 : 1;
+    const searchValue = showSearch ? false : true;
+
+    opacity.value = withTiming(toValue, {duration: 50}, () => {
+      runOnJS(setShowSearch)(searchValue);
+    });
+  }, [opacity, showSearch]);
+
   const closeDropdown = React.useCallback(() => {
     dropdownRef.current?.toggleDropdown();
   }, []);
@@ -142,44 +176,55 @@ const RankScreen = ({navigation}) => {
   }, [isFocused, navigation]);
 
   return (
-    <Screen
-      navigation={navigation}
-      label={dict.rankScrTitle}
-      onPressOutside={closeDropdown}>
-      {user?.isGuest ? (
-        <View style={styles.guestMessageContainer}>
-          <Text style={styles.guestMessage}>{dict.guestRankMessage}</Text>
-        </View>
-      ) : (
-        !user?.isGuest && (
-          <>
-            <View style={styles.dropdownContainer}>
-              <InputDropdown
-                ref={dropdownRef}
-                value={gameInput}
-                setValue={setValue}
-                isFocused={isFocused}
-                placeholder={dict.rankDropdownPlaceholder}
-              />
-            </View>
+    <>
+      <Screen
+        navigation={navigation}
+        label={dict.rankScrTitle}
+        iconStyle={iconAnimStyle}
+        customIcon={images.search}
+        onIconPress={toggleIconOpacity}
+        onPressOutside={closeDropdown}>
+        {user?.isGuest ? (
+          <View style={styles.guestMessageContainer}>
+            <Text style={styles.guestMessage}>{dict.guestRankMessage}</Text>
+          </View>
+        ) : (
+          !user?.isGuest && (
+            <>
+              <View style={styles.dropdownContainer}>
+                <InputDropdown
+                  ref={dropdownRef}
+                  value={gameInput}
+                  setValue={setValue}
+                  isFocused={isFocused}
+                  placeholder={dict.rankDropdownPlaceholder}
+                />
+              </View>
 
-            <View style={styles.spaceBottom}>
-              <FlashList
-                data={state.data}
-                renderItem={renderItem}
-                extraData={state.data}
-                onEndReached={onEndReached}
-                onEndReachedThreshold={0.25}
-                ListEmptyComponent={ListEmpty}
-                ListFooterComponent={ListFooter}
-                keyExtractor={(_, index) => `index_${index}`}
-                estimatedItemSize={DimensionsUtils.getDP(56)}
-              />
-            </View>
-          </>
-        )
+              <View style={styles.spaceBottom}>
+                <FlashList
+                  data={state.data}
+                  renderItem={renderItem}
+                  extraData={state.data}
+                  onEndReached={onEndReached}
+                  onEndReachedThreshold={0.25}
+                  ListEmptyComponent={ListEmpty}
+                  ListFooterComponent={ListFooter}
+                  keyExtractor={(_, index) => `index_${index}`}
+                  estimatedItemSize={DimensionsUtils.getDP(56)}
+                />
+              </View>
+            </>
+          )
+        )}
+      </Screen>
+
+      {showSearch && (
+        <View style={StyleSheet.absoluteFill}>
+          <SearchScreen onPressArrow={toggleIconOpacity} />
+        </View>
       )}
-    </Screen>
+    </>
   );
 };
 

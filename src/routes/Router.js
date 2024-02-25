@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import TabStack from './TabRouter';
+import {Colors} from '../utils/Colors';
 import FriendsTabs from '../screens/FriendsTabs';
 import AccountScreen from '../screens/AccountScreen';
 import EqualMathScreen from '../screens/EqualMathScreen';
@@ -35,7 +36,9 @@ const gameStackOptions = {
 
 const Router = ({onNavigationReady}) => {
   return (
-    <NavigationContainer onReady={onNavigationReady}>
+    <NavigationContainer
+      onReady={onNavigationReady}
+      theme={{colors: {background: Colors.background}}}>
       <Stack.Navigator screenOptions={navigatorScreenOptions}>
         <Stack.Screen name="GetStarted" component={GetStartedScreen} />
         <Stack.Screen
