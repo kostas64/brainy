@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   HOST,
   BEARER,
+  MY_PROFILE,
   SEARCH_USER,
   UPDATE_PROFILE,
   REQUEST_ACCESS,
@@ -30,11 +31,36 @@ export const requestAccess = async user => {
   }
 };
 
-export const updateProfile = async (fields, successCb, errorCb) => {
-  console.log('API updateProfile ', `${HOST}${UPDATE_PROFILE}`, fields);
-
+export const getMyProfile = async setUser => {
   try {
     const token = await AsyncStorage.getItem('token');
+
+    return fetch(`${HOST}${MY_PROFILE}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+    })
+      .then(res => res.json())
+      .then(data => setUser(old => ({...old, ...data})));
+  } catch (e) {
+    console.log('API getMyProfile failed', e);
+  }
+};
+
+export const updateProfile = async (fields, successCb, errorCb, tokenParam) => {
+  console.log('API updateProfile ', `${HOST}${UPDATE_PROFILE}`, fields);
+  let token;
+
+  try {
+    token = await AsyncStorage.getItem('token');
+
+    if (!token && !!tokenParam) {
+      token = tokenParam;
+    }
+
     return fetch(`${HOST}${UPDATE_PROFILE}`, {
       method: 'POST',
       headers: {
@@ -47,8 +73,8 @@ export const updateProfile = async (fields, successCb, errorCb) => {
       }),
     })
       .then(res => res.json())
-      .then(data => successCb(data))
-      .catch(() => errorCb());
+      .then(data => !!successCb && successCb(data))
+      .catch(() => !!errorCb && errorCb());
   } catch (e) {
     !!errorCb && errorCb();
     console.log('API updateProfile failed', e);

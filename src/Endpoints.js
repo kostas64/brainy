@@ -5,6 +5,7 @@ export const BEARER = 'Bearer ';
 
 export const REQUEST_ACCESS = '/users/requestAccess';
 export const UPDATE_PROFILE = '/users/update-profile';
+export const MY_PROFILE = '/users/me';
 export const SEARCH_USER = '/users/search';
 export const SCORE = '/score';
 export const MATCH_CARDS = '/matchCards';
