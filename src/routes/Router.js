@@ -16,6 +16,7 @@ const Stack = createNativeStackNavigator();
 
 const navigatorScreenOptions = {
   headerShown: false,
+  gestureEnabled: false,
   animationTypeForReplace: 'pop',
 };
 
@@ -46,36 +47,38 @@ const Router = ({onNavigationReady}) => {
           component={TabStack}
           options={gameStackOptions}
         />
-        <Stack.Screen
-          name="ColorCard"
-          component={ColorCardScreen}
-          options={screenConfig}
-        />
-        <Stack.Screen
-          name="MemoryCard"
-          component={MemoryCardScreen}
-          options={screenConfig}
-        />
-        <Stack.Screen
-          name="EqualMath"
-          component={EqualMathScreen}
-          options={screenConfig}
-        />
-        <Stack.Screen
-          name="GestureIt"
-          component={GestureItScreen}
-          options={screenConfig}
-        />
-        <Stack.Screen
-          name="Account"
-          component={AccountScreen}
-          options={screenSlideConfig}
-        />
-        <Stack.Screen
-          name="FriendsTabs"
-          component={FriendsTabs}
-          options={screenSlideConfig}
-        />
+        <Stack.Group screenOptions={{gestureEnabled: true}}>
+          <Stack.Screen
+            name="ColorCard"
+            component={ColorCardScreen}
+            options={screenConfig}
+          />
+          <Stack.Screen
+            name="MemoryCard"
+            component={MemoryCardScreen}
+            options={screenConfig}
+          />
+          <Stack.Screen
+            name="EqualMath"
+            component={EqualMathScreen}
+            options={screenConfig}
+          />
+          <Stack.Screen
+            name="GestureIt"
+            component={GestureItScreen}
+            options={screenConfig}
+          />
+          <Stack.Screen
+            name="Account"
+            component={AccountScreen}
+            options={screenSlideConfig}
+          />
+          <Stack.Screen
+            name="FriendsTabs"
+            component={FriendsTabs}
+            options={screenSlideConfig}
+          />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

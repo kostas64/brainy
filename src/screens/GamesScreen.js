@@ -48,7 +48,6 @@ const GamesScreen = ({navigation, route}) => {
   React.useEffect(() => {
     isFocused && setForce(true);
     !isFocused && setForce(false);
-    isFocused && navigation.getParent()?.setOptions({gestureEnabled: true});
   }, [isFocused, navigation]);
 
   return (

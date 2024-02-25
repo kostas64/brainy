@@ -84,10 +84,6 @@ const GetStartedScreen = ({navigation}) => {
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
-    navigation.setOptions({gestureEnabled: false});
-  }, [navigation]);
-
-  React.useEffect(() => {
     Animated.parallel([
       Animated.timing(opacityRef, {
         toValue: 1,

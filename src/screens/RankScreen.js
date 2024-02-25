@@ -171,10 +171,6 @@ const RankScreen = ({navigation}) => {
     fetchData();
   }, []);
 
-  React.useEffect(() => {
-    isFocused && navigation.getParent()?.setOptions({gestureEnabled: false});
-  }, [isFocused, navigation]);
-
   return (
     <>
       <Screen

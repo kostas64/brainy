@@ -52,7 +52,6 @@ const ProfileScreen = ({navigation}) => {
   React.useEffect(() => {
     isFocused && getMyProfile(setUser);
     isFocused && getAllFriendsRequest().then(data => setFriendRequests(data));
-    isFocused && navigation.getParent()?.setOptions({gestureEnabled: false});
   }, [isFocused, setUser, navigation]);
 
   return (
