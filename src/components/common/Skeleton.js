@@ -17,14 +17,15 @@ const Skeleton = ({skeletonStyle, loading, children}) => {
   const translateY = useSharedValue(25);
 
   //** ----- STYLES -----
-  const animatedStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-  }));
+  const animatedStyle = useAnimatedStyle(() => ({opacity: opacity.value}), []);
 
-  const animatedChildren = useAnimatedStyle(() => ({
-    opacity: opacityChildren.value,
-    transform: [{translateY: translateY.value}],
-  }));
+  const animatedChildren = useAnimatedStyle(
+    () => ({
+      opacity: opacityChildren.value,
+      transform: [{translateY: translateY.value}],
+    }),
+    [],
+  );
 
   //** ----- EFFECTS -----
   useAnimatedReaction(

@@ -47,16 +47,12 @@ const BottomSheet = React.forwardRef(
     );
 
     const rBackdropStyle = useAnimatedStyle(
-      () => ({
-        opacity: withTiming(active.value ? 1 : 0),
-      }),
+      () => ({opacity: withTiming(active.value ? 1 : 0)}),
       [],
     );
 
     const rBackdropProps = useAnimatedProps(
-      () => ({
-        pointerEvents: active.value ? 'auto' : 'none',
-      }),
+      () => ({pointerEvents: active.value ? 'auto' : 'none'}),
       [],
     );
 

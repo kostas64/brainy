@@ -51,19 +51,24 @@ const SearchScreen = ({onPressArrow}) => {
 
   const listStyles = [styles.spaceHorizontal, {paddingBottom: insetsBottom}];
 
-  const arrowContStyle = useAnimatedStyle(() => ({
-    opacity: arrowOpacity.value,
-  }));
+  const arrowContStyle = useAnimatedStyle(
+    () => ({opacity: arrowOpacity.value}),
+    [],
+  );
 
-  const listItemStyle = useAnimatedStyle(() => ({
-    opacity: arrowOpacity.value,
-  }));
+  const listItemStyle = useAnimatedStyle(
+    () => ({opacity: arrowOpacity.value}),
+    [],
+  );
 
-  const inputStyle = useAnimatedStyle(() => ({
-    width: inputWidth.value,
-    paddingRight: inputWidth.value > 200 ? 36 : 0,
-    ...(isIOS ? {fontFamily: 'Poppins-Regular'} : {}),
-  }));
+  const inputStyle = useAnimatedStyle(
+    () => ({
+      width: inputWidth.value,
+      paddingRight: inputWidth.value > 200 ? 36 : 0,
+      ...(isIOS ? {fontFamily: 'Poppins-Regular'} : {}),
+    }),
+    [],
+  );
 
   //** ----- FUNCTIONS -----
   const onPressBack = React.useCallback(() => {

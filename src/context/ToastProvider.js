@@ -31,12 +31,7 @@ export const ToastProvider = ({children}) => {
   const [toast, setToast] = React.useState(initialState);
 
   //** ----- STYLES -----
-  const animStyle = useAnimatedStyle(
-    () => ({
-      top: topPosition.value,
-    }),
-    [],
-  );
+  const animStyle = useAnimatedStyle(() => ({top: topPosition.value}), []);
 
   //** ----- FUNCTIONS -----
   const animateToast = React.useCallback(() => {

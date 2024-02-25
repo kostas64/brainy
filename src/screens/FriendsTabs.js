@@ -50,14 +50,12 @@ const FriendsTabs = ({navigation}) => {
     tintColor: Colors.appGreen,
   }));
 
-  const labelAnimStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-  }));
+  const labelAnimStyle = useAnimatedStyle(() => ({opacity: opacity.value}), []);
 
-  const tabAnimStyle = useAnimatedStyle(() => ({
-    flex: 1,
-    opacity: opacity.value,
-  }));
+  const tabAnimStyle = useAnimatedStyle(
+    () => ({flex: 1, opacity: opacity.value}),
+    [],
+  );
 
   //** ----- FUNCTIONS -----
   const renderTabBar = props => <FriendsTabbar {...props} />;

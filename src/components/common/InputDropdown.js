@@ -25,18 +25,15 @@ const InputDropdown = React.forwardRef(
     const mgBottom = useSharedValue(0);
 
     //** ----- STYLES -----
-    const iconStyles = useAnimatedStyle(() => {
-      return {
-        transform: [{rotate: `${icon.value}deg`}],
-      };
-    });
+    const iconStyles = useAnimatedStyle(
+      () => ({transform: [{rotate: `${icon.value}deg`}]}),
+      [],
+    );
 
-    const heightStyles = useAnimatedStyle(() => {
-      return {
-        height: height.value,
-        marginBottom: mgBottom.value,
-      };
-    });
+    const heightStyles = useAnimatedStyle(
+      () => ({height: height.value, marginBottom: mgBottom.value}),
+      [],
+    );
 
     //** ----- FUNCTIONS -----
     const toggleListItem = React.useCallback(() => {
