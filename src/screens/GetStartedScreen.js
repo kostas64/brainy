@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -12,10 +11,12 @@ import Button from '../components/common/Button';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import {HEIGHT, isAndroid} from '../utils/GenericUtils';
+import {useModalContext} from '../context/ModalProvider';
 import CircularTransition from '../components/transitions/CircularTransition';
 
 const GetStartedScreen = ({navigation}) => {
   const insets = useSafeAreaInsets();
+  const {closeModal, setModalInfo} = useModalContext();
   const {token, setToken, user, setUser} = useAuthContext();
 
   const opacityRef = React.useRef(new Animated.Value(0)).current;
@@ -33,24 +34,34 @@ const GetStartedScreen = ({navigation}) => {
     : dict?.getStartedLoginButton;
 
   //** ----- FUNCTIONS -----
+  const setCircle = React.useCallback((e, color) => {
+    setOutCircle(color);
+    setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
+  }, []);
+
   const navigate = async (e, type) => {
     if (type === 'login') {
-      let logged = false;
-
       if (!token) {
-        logged = await signIn(setToken, setUser, setLoading);
+        await signIn(
+          setToken,
+          setUser,
+          setLoading,
+          setModalInfo,
+          () => setCircle(e, Colors.appGreen),
+          closeModal,
+        );
       } else {
-        logged = true;
         setUser({
           email: user?.email,
           avatar: user?.avatar,
           isGuest: false,
           name: user?.name,
           surname: user?.surname,
+          nickname: user?.nickname,
         });
+
+        setCircle(e, Colors.appGreen);
       }
-      logged && setOutCircle(Colors.appGreen);
-      logged && setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
     } else {
       setUser({
         email: user?.email,
@@ -58,9 +69,9 @@ const GetStartedScreen = ({navigation}) => {
         isGuest: true,
         name: user?.name,
         surname: user?.surname,
+        nickname: user?.nickname,
       });
-      setOutCircle(Colors.white);
-      setClickCoords(e.nativeEvent.pageX, e.nativeEvent.pageY);
+      setCircle(e, Colors.white);
     }
   };
 
@@ -89,7 +100,7 @@ const GetStartedScreen = ({navigation}) => {
         useNativeDriver: true,
       }),
     ]).start();
-  }, []);
+  }, [opacityRef, translateYRef]);
 
   return (
     <>
@@ -107,10 +118,7 @@ const GetStartedScreen = ({navigation}) => {
       <View style={styles.imageContainer}>
         <FastImage
           source={images.logo}
-          style={[
-            isAndroid && {marginTop: DimensionsUtils.getDP(26)},
-            styles.image,
-          ]}
+          style={[isAndroid && styles.spaceTop, styles.image]}
         />
       </View>
 
@@ -185,6 +193,9 @@ const styles = StyleSheet.create({
   },
   greenLabel: {
     color: Colors.appGreen,
+  },
+  spaceTop: {
+    marginTop: DimensionsUtils.getDP(26),
   },
 });
 

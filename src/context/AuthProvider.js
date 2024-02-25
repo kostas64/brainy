@@ -27,7 +27,7 @@ export const AuthProvider = ({children}) => {
     if (user?.nickname) {
       await AsyncStorage.setItem('nickname', user?.nickname);
     }
-  }, [user]);
+  }, [user.name, user.surname, user.nickname]);
 
   //** ----- EFFECTS -----
   React.useEffect(() => {

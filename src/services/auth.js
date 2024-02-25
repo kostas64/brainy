@@ -2,9 +2,13 @@ import {
   statusCodes,
   GoogleSignin,
 } from '@react-native-google-signin/google-signin';
+
+import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {storage} from '../../index';
 import {requestAccess} from './user';
+import SetNicknameModal from '../components/nickname/SetNicknameModal';
 
 export const signInGoogle = async () => {
   try {
@@ -48,7 +52,14 @@ export const signInGoogle = async () => {
   }
 };
 
-export const signIn = async (setToken, setUser, setLoading) => {
+export const signIn = async (
+  setToken,
+  setUser,
+  setLoading,
+  setModalInfo,
+  successCb,
+  closeModal,
+) => {
   try {
     setLoading(true);
     const {logged, user} = await signInGoogle();
@@ -57,27 +68,39 @@ export const signIn = async (setToken, setUser, setLoading) => {
       const res = await requestAccess(user);
       const data = await res.json();
 
-      setToken(data?.token);
-      setUser({
-        email: data?.user?.email,
-        avatar: data?.user?.avatar,
-        isGuest: false,
-        name: data?.user?.name,
-        surname: data?.user?.surname,
+      storage.getBool('firstTime', async (_, result) => {
+        if (result === null && !data?.user?.nickname) {
+          storage.setBool('firstTime', false);
+
+          setModalInfo({
+            height: 200,
+            onBackPress: () => setLoading(false),
+            content: (
+              <SetNicknameModal
+                token={data?.token}
+                successCb={() => {
+                  closeModal();
+
+                  setTimeout(() => {
+                    setDataForLogin(data, setToken, setUser);
+                    !!successCb && successCb();
+                    setLoading(false);
+                  }, 500);
+                }}
+              />
+            ),
+          });
+        } else {
+          setDataForLogin(data, setToken, setUser);
+          !!successCb && successCb();
+          setLoading(false);
+        }
       });
-
-      await AsyncStorage.setItem('token', data?.token);
-      await AsyncStorage.setItem('email', data?.user?.email);
-      await AsyncStorage.setItem('avatar', data?.user?.avatar);
-      await AsyncStorage.setItem('name', data?.user?.name);
-      await AsyncStorage.setItem('surname', data?.user?.surname);
+    } else {
+      setLoading(false);
     }
-
-    setLoading(false);
-    return logged;
   } catch (e) {
     console.log('Error on signIn ', e);
-    return false;
   }
 };
 
@@ -93,6 +116,7 @@ export const signOut = async (setToken, setUser, withDelay = false) => {
         isGuest: null,
         name: null,
         surname: null,
+        nickname: null,
       }));
     }, 500);
   } else {
@@ -102,6 +126,7 @@ export const signOut = async (setToken, setUser, withDelay = false) => {
       isGuest: null,
       name: null,
       surname: null,
+      nickname: null,
     }));
   }
 
@@ -110,4 +135,23 @@ export const signOut = async (setToken, setUser, withDelay = false) => {
   await AsyncStorage.removeItem('avatar');
   await AsyncStorage.removeItem('name');
   await AsyncStorage.removeItem('surname');
+  await AsyncStorage.removeItem('nickname');
+};
+
+const setDataForLogin = async (data, setToken, setUser) => {
+  setToken(data?.token);
+  setUser(old => ({
+    ...old,
+    email: data?.user?.email,
+    avatar: data?.user?.avatar,
+    isGuest: false,
+    name: data?.user?.name,
+    surname: data?.user?.surname,
+  }));
+
+  await AsyncStorage.setItem('token', data?.token);
+  await AsyncStorage.setItem('email', data?.user?.email);
+  await AsyncStorage.setItem('avatar', data?.user?.avatar);
+  await AsyncStorage.setItem('name', data?.user?.name);
+  await AsyncStorage.setItem('surname', data?.user?.surname);
 };
