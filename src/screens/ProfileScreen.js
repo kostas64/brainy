@@ -6,6 +6,7 @@ import {Colors} from '../utils/Colors';
 import {signOut} from '../services/auth';
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
+import {getMyProfile} from '../services/user';
 import Screen from '../components/common/Screen';
 import MenuItem from '../components/common/MenuItem';
 import {useAuthContext} from '../context/AuthProvider';
@@ -45,9 +46,10 @@ const ProfileScreen = ({navigation}) => {
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
+    isFocused && getMyProfile(setUser);
     isFocused && getAllFriendsRequest().then(data => setFriendRequests(data));
     isFocused && navigation.getParent()?.setOptions({gestureEnabled: false});
-  }, [isFocused, navigation]);
+  }, [isFocused, setUser, navigation]);
 
   return (
     <Screen label={dict.profileScrTitle} navigation={navigation} noIcon>
