@@ -1,6 +1,13 @@
+import Animated, {
+  withTiming,
+  interpolate,
+  useSharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {View, Text, Animated, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import Touchable from './Touchable';
@@ -19,20 +26,30 @@ const profileIO = images.profile_o;
 
 const TabBar = props => {
   const insets = useSafeAreaInsets();
-  const translateRef = React.useRef(new Animated.Value(0)).current;
+  const translateX = useSharedValue(0);
 
   const {routes, index: activeRouteIndex} = props.state;
 
   //** ----- STYLES -----
-  const translateX = translateRef.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, (WIDTH - DimensionsUtils.getDP(32)) / routes.length],
-  });
+  const animatedPose = useAnimatedStyle(
+    () => ({
+      transform: [
+        {
+          translateX: interpolate(
+            translateX.value,
+            [0, 1],
+            [0, (WIDTH - 32) / routes.length],
+          ),
+        },
+      ],
+    }),
+    [],
+  );
 
   const poseStyles = [
     styles.pose,
-    {transform: [{translateX}]},
-    {width: (WIDTH - DimensionsUtils.getDP(32)) / routes.length},
+    animatedPose,
+    {width: (WIDTH - 32) / routes.length},
   ];
 
   const innerStyles = [
@@ -83,12 +100,8 @@ const TabBar = props => {
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
-    Animated.timing(translateRef, {
-      duration: 100,
-      toValue: activeRouteIndex,
-      useNativeDriver: true,
-    }).start();
-  }, [translateRef, activeRouteIndex]);
+    translateX.value = withTiming(activeRouteIndex, {duration: 100});
+  }, [translateX, activeRouteIndex]);
 
   return (
     <View style={styles.container}>
@@ -128,7 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.tabBarBg,
     borderRadius: DimensionsUtils.getDP(16),
-    marginHorizontal: DimensionsUtils.getDP(16),
+    marginHorizontal: 16,
   },
   pose: {
     height: 50,
