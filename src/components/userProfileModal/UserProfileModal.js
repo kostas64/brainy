@@ -37,7 +37,9 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   const [hasFriendship, setHasFriendship] = React.useState(false);
 
   const user = item?.user?.[0];
-  const name = `${user?.name} ${user?.surname}`;
+  const name = user?.nickname
+    ? user?.nickname
+    : `${user?.name} ${user?.surname}`;
 
   const firstLabelButton =
     !hasRequest && !hasFriendship

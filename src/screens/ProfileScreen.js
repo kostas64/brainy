@@ -21,7 +21,11 @@ const ProfileScreen = ({navigation}) => {
 
   const [friendRequests, setFriendRequests] = React.useState([]);
 
-  const name = user?.isGuest ? dict.guest : `${user?.name} ${user?.surname}`;
+  const name = user?.isGuest
+    ? dict.guest
+    : user?.nickname
+    ? user?.nickname
+    : `${user?.name} ${user?.surname}`;
 
   const nameStyle = user?.isGuest && styles.whiteColor;
   const contStyle = user?.isGuest ? styles.guestAvatarCont : styles.avatarCont;
