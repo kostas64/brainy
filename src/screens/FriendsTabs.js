@@ -72,7 +72,6 @@ const FriendsTabs = ({navigation}) => {
   return (
     <>
       <Screen
-        navigation={navigation}
         iconStyle={iconAnimStyle}
         customIcon={images.search}
         label={dict.profileFriends}

@@ -55,7 +55,7 @@ const ProfileScreen = ({navigation}) => {
   }, [isFocused, setUser, navigation]);
 
   return (
-    <Screen label={dict.profileScrTitle} navigation={navigation} noIcon>
+    <Screen label={dict.profileScrTitle} noIcon>
       <UserProfileModalAvatar
         user={user}
         name={name}

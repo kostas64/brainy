@@ -51,7 +51,7 @@ const GamesScreen = ({navigation, route}) => {
   }, [isFocused, navigation]);
 
   return (
-    <Screen navigation={navigation} label={dict?.gamesScrTitle}>
+    <Screen label={dict?.gamesScrTitle}>
       <Animated.View style={[styles.flex, {opacity: opacityRef}]}>
         <GamesList
           data={LIST_GAMES}

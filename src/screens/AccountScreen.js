@@ -167,7 +167,7 @@ const AccountScreen = ({navigation}) => {
   }, [toUpdate, callUpdate, navigation]);
 
   return (
-    <Screen label={dict.profileAccount} navigation={navigation} noIcon>
+    <Screen label={dict.profileAccount} noIcon>
       <ScrollView scrollEnabled={false} keyboardShouldPersistTaps={'handled'}>
         <View style={styles.container}>
           <Animated.View

@@ -174,7 +174,6 @@ const RankScreen = ({navigation}) => {
   return (
     <>
       <Screen
-        navigation={navigation}
         label={dict.rankScrTitle}
         iconStyle={iconAnimStyle}
         customIcon={images.search}
