@@ -16,8 +16,8 @@ const CustomSwitch = ({size, value, setValue}) => {
 
   const animateIOS = React.useCallback(() => {
     triggerHaptik();
-    setValue(!value);
-  }, [value, setValue]);
+    setValue(old => !old);
+  }, [setValue]);
 
   const animStyle = useAnimatedStyle(
     () => ({transform: [{translateX: translateX.value}]}),
