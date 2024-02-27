@@ -1,6 +1,5 @@
 import Animated, {
   FadeInUp,
-  withSpring,
   useSharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
@@ -36,28 +35,19 @@ const AccountScreen = ({navigation}) => {
   const [surname, setSurname] = React.useState(user?.surname);
   const [nickname, setNickname] = React.useState(user?.nickname);
 
-  const nameHasChanged =
-    name !== user?.name && name.length !== user?.name?.length;
+  const nameHasChanged = name !== user?.name && name.length !== 0;
 
-  const surnameHasChanged =
-    surname !== user?.surname && surname.length !== user?.surname?.length;
+  const surnameHasChanged = surname !== user?.surname && surname.length !== 0;
 
-  const nicknameHasChanged =
-    nickname !== user?.nickname &&
-    nickname?.length !== (user?.nickname ? user?.nickname?.length : 0);
+  const nicknameHasChanged = nickname !== user?.nickname;
 
   const toUpdate = nameHasChanged || surnameHasChanged || nicknameHasChanged;
-  const buttonLabel = toUpdate ? dict.updateProfile : dict?.doneLabel;
 
   //** ----- STYLES -----
   const bottom =
     insets.bottom > 0
       ? insets.bottom + DimensionsUtils.getDP(8)
       : DimensionsUtils.getDP(16);
-
-  const animatedBtnStyle = useAnimatedStyle(() => ({
-    transform: [{translateY: withSpring(-keyboard, {damping: 17})}],
-  }));
 
   const nameInput = useAnimatedStyle(
     () => ({transform: [{translateX: nameTranslateX.value}]}),
@@ -214,13 +204,15 @@ const AccountScreen = ({navigation}) => {
         </View>
       </ScrollView>
 
-      <Animated.View style={isIOS && animatedBtnStyle}>
-        <Button
-          label={buttonLabel}
-          onPress={onDonePress}
-          containerStyle={{marginBottom: bottom}}
-        />
-      </Animated.View>
+      {toUpdate && (
+        <View style={isIOS && {transform: [{translateY: -keyboard}]}}>
+          <Button
+            onPress={onDonePress}
+            label={dict.updateProfile}
+            containerStyle={{marginBottom: bottom}}
+          />
+        </View>
+      )}
     </Screen>
   );
 };
