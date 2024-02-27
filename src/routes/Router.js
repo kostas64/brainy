@@ -11,6 +11,7 @@ import GestureItScreen from '../screens/GestureItScreen';
 import ColorCardScreen from '../screens/ColorCardScreen';
 import MemoryCardScreen from '../screens/MemoryCardScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -76,6 +77,11 @@ const Router = ({onNavigationReady}) => {
           <Stack.Screen
             name="FriendsTabs"
             component={FriendsTabs}
+            options={screenSlideConfig}
+          />
+          <Stack.Screen
+            name="Notifications"
+            component={NotificationsScreen}
             options={screenSlideConfig}
           />
         </Stack.Group>
