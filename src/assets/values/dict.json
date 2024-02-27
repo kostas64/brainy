@@ -80,5 +80,11 @@
   "chooseNicknameLabel": "Choose a nickname",
   "chooseNickanemTip": "You can add or edit your nickname anytime from profile section.",
   "setNicknameLabel": "Set nickname",
-  "skipLabel": "Skip"
+  "skipLabel": "Skip",
+  "notifyScoreTitle": "Score",
+  "notifyScoreSub": "Get a notification when one of your friends has beaten you in a game.",
+  "notifyFriendReqTitle": "Friend request",
+  "notifyFriendReqSub": "Get a notification for new friend requests and enjoy gaming together.",
+  "notifyReminderTitle": "Reminder",
+  "notifyReminderSub": "Let us remind you to train and level up your brain skills through our games."
 }
