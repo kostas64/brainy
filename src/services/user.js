@@ -7,6 +7,7 @@ import {
   SEARCH_USER,
   UPDATE_PROFILE,
   REQUEST_ACCESS,
+  NOTIF_SETTINGS,
 } from '../Endpoints';
 
 export const requestAccess = async user => {
@@ -100,5 +101,28 @@ export const searchUser = async (input, page = 1) => {
     }).then(res => res.json());
   } catch (e) {
     console.log('API searchUser failed', e);
+  }
+};
+
+export const updateNotifSetts = async settings => {
+  console.log('API updateNotifSetts ', `${HOST}${NOTIF_SETTINGS}`, settings);
+
+  try {
+    const token = await AsyncStorage.getItem('token');
+    return fetch(`${HOST}${NOTIF_SETTINGS}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+      body: JSON.stringify({
+        settings,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => console.log('Result ', res));
+  } catch (e) {
+    console.log('API updateNotifSetts failed', e);
   }
 };

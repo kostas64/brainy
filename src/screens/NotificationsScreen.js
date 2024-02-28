@@ -3,13 +3,13 @@ import {StyleSheet, Text, View} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import dict from '../assets/values/dict.json';
+import {useStorage} from '../hooks/useStorage';
 import Screen from '../components/common/Screen';
+import {updateNotifSetts} from '../services/user';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CustomSwitch from '../components/common/CustomSwitch';
 
-const NotificationItem = ({title, caption}) => {
-  const [value, setValue] = React.useState(true);
-
+const NotificationItem = ({value, setValue, title, caption}) => {
   return (
     <View style={styles.itemContainer}>
       <View>
@@ -24,18 +24,55 @@ const NotificationItem = ({title, caption}) => {
 };
 
 const NotificationsScreen = () => {
+  const firstRender = React.useRef(0);
+
+  const [settings, setSettings] = useStorage('notifSets', {
+    score: true,
+    friendReq: true,
+    reminder: true,
+  });
+
+  React.useEffect(() => {
+    if (firstRender.current !== 0) {
+      updateNotifSetts(settings);
+    }
+
+    firstRender.current += 1;
+  }, [settings]);
+
   return (
     <Screen noIcon label={dict.profileNotifications}>
       <View style={styles.container}>
         <NotificationItem
+          value={settings.score}
+          setValue={() =>
+            setSettings(old => ({
+              ...old,
+              score: !old.score,
+            }))
+          }
           title={dict.notifyScoreTitle}
           caption={dict.notifyScoreSub}
         />
         <NotificationItem
+          value={settings.friendReq}
+          setValue={() =>
+            setSettings(old => ({
+              ...old,
+              friendReq: !old.friendReq,
+            }))
+          }
           title={dict.notifyFriendReqTitle}
           caption={dict.notifyFriendReqSub}
         />
         <NotificationItem
+          value={settings.reminder}
+          setValue={() =>
+            setSettings(old => ({
+              ...old,
+              reminder: !old.reminder,
+            }))
+          }
           title={dict.notifyReminderTitle}
           caption={dict.notifyReminderSub}
         />
