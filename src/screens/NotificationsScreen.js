@@ -98,12 +98,11 @@ const styles = StyleSheet.create({
     fontSize: DimensionsUtils.getFontSize(20),
   },
   itemSubtitle: {
-    opacity: 0.5,
-    color: Colors.white,
+    width: 270,
+    color: Colors.halfWhite,
     marginTop: DimensionsUtils.getDP(4),
     fontFamily: 'Poppins-Regular',
     fontSize: DimensionsUtils.getFontSize(14),
-    width: 270,
   },
   spaceTop: {
     marginLeft: DimensionsUtils.getDP(8),
