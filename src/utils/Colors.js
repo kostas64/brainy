@@ -10,4 +10,5 @@ export const Colors = {
   fillRed: '#e5383b',
   lightGrey: 'rgba(255,255,255,0.2)',
   veryLightGrey: '#ced4da',
+  halfWhite: 'rgba(255,255,255,0.5)',
 };
