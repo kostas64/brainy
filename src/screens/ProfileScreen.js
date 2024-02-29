@@ -32,10 +32,10 @@ const ProfileScreen = ({navigation}) => {
   const icon = user?.isGuest ? images.guest : null;
 
   //** ----- FUNCTIONS -----
-
-  const onSettingsPress = React.useCallback(() => {
-    navigation.navigate('Settings');
-  }, [navigation]);
+  const onIconPress = React.useCallback(
+    screen => navigation.navigate(screen),
+    [navigation],
+  );
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
@@ -45,10 +45,13 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     <Screen
+      secondIcon
+      noIcon={user?.isGuest}
       customIcon={images.gear}
       iconStyle={styles.gearIcon}
       label={dict.profileScrTitle}
-      onIconPress={onSettingsPress}
+      onIconPress={() => onIconPress('Settings')}
+      onScndIcnPress={() => onIconPress('FriendsTabs')}
       hasDot={friendRequests?.length > 0}>
       <UserProfileModalAvatar
         user={user}

@@ -1,15 +1,45 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import {Colors} from '../../utils/Colors';
+import MenuItem from '../common/MenuItem';
+import {signOut} from '../../services/auth';
 import {WIDTH} from '../../utils/GenericUtils';
 import dict from '../../assets/values/dict.json';
 import {useStorage} from '../../hooks/useStorage';
 import {LIST_GAMES} from '../../assets/values/games';
+import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
+import {PROFILE_SECTIONS_3} from '../../assets/values/profile';
 
 const ProfileScoresSection = () => {
+  const navigation = useNavigation();
+
   const [scores] = useStorage('scores', []);
+  const {user, setToken, setUser} = useAuthContext();
+
+  //** ----- FUNCTIONS -----
+  const logout = React.useCallback(async () => {
+    navigation.pop();
+    !user?.isGuest && (await signOut(setToken, setUser, true));
+  }, [user?.isGuest, navigation, setToken, setUser]);
+
+  if (user?.isGuest) {
+    return (
+      <View style={styles.spaceHor}>
+        <MenuItem
+          isAlone
+          onPress={logout}
+          key={'profile-last'}
+          iconStyle={styles.smallIcon}
+          labelStyle={styles.logoutRed}
+          icon={PROFILE_SECTIONS_3.icon}
+          label={PROFILE_SECTIONS_3.title}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -73,5 +103,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     color: Colors.halfWhite,
     fontFamily: 'Poppins-Regular',
+  },
+  smallIcon: {
+    tintColor: Colors.fillRed,
+    width: DimensionsUtils.getDP(18),
+    height: DimensionsUtils.getDP(18),
+    marginLeft: DimensionsUtils.getDP(4),
+    marginRight: DimensionsUtils.getDP(8),
+  },
+  spaceHor: {
+    marginTop: DimensionsUtils.getDP(24),
+    borderRadius: DimensionsUtils.getDP(14),
+    marginHorizontal: DimensionsUtils.getDP(16),
+    backgroundColor: Colors.tabBarBg,
+  },
+  logoutRed: {
+    color: Colors.fillRed,
   },
 });

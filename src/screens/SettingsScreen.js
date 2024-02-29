@@ -1,27 +1,21 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useIsFocused} from '@react-navigation/native';
 
+import {
+  PROFILE_SECTIONS,
+  PROFILE_SECTIONS_2,
+  PROFILE_SECTIONS_3,
+} from '../assets/values/profile';
 import {Colors} from '../utils/Colors';
 import {signOut} from '../services/auth';
 import dict from '../assets/values/dict.json';
-import {getMyProfile} from '../services/user';
 import Screen from '../components/common/Screen';
 import MenuItem from '../components/common/MenuItem';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
-import {getAllFriendsRequest} from '../services/friends';
-import {PROFILE_SECTIONS} from '../assets/values/profile';
 
 const SettingsScreen = ({navigation}) => {
-  const isFocused = useIsFocused();
   const {user, setToken, setUser} = useAuthContext();
-
-  const [friendRequests, setFriendRequests] = React.useState([]);
-
-  const profileItems = user?.isGuest
-    ? PROFILE_SECTIONS?.slice(4, 5)
-    : PROFILE_SECTIONS;
 
   //** ----- FUNCTIONS -----
   const logout = React.useCallback(async () => {
@@ -34,51 +28,57 @@ const SettingsScreen = ({navigation}) => {
     [navigation],
   );
 
-  //** ----- EFFECTS -----
-  React.useEffect(() => {
-    isFocused && getAllFriendsRequest().then(data => setFriendRequests(data));
-  }, [isFocused, setUser, navigation]);
-
   return (
     <Screen label={dict.settingsScrTitle} noIcon>
       <View
         style={styles.spaceHor}
         scrollEnabled={!user?.isGuest}
         showsVerticalScrollIndicator={false}>
-        {profileItems.map((item, key) => {
-          const isLast = key === profileItems.length - 1;
-          const iconStyle = isLast ? styles.smallIcon : styles.icon;
-          const isRequestSection = item.title === dict.profileFriends;
-
-          return (
-            <MenuItem
-              key={`profile-${key}`}
-              isLast={isLast}
-              icon={item.icon}
-              label={item.title}
-              iconStyle={iconStyle}
-              withChevron={!isLast}
-              labelStyle={isLast && styles.logoutRed}
-              counter={isRequestSection ? friendRequests.length : null}
-              onPress={isLast ? logout : () => onPressItem(item.screen)}
-            />
-          );
-        })}
+        {PROFILE_SECTIONS.map((item, key) => (
+          <MenuItem
+            key={`profile-${key}`}
+            withChevron
+            isFirst={key === 0}
+            icon={item.icon}
+            label={item.title}
+            iconStyle={styles.icon}
+            isLast={key === PROFILE_SECTIONS.length - 1}
+            onPress={() => onPressItem(item.screen)}
+          />
+        ))}
       </View>
 
-      {/*
-         Account
-         Friends
-         Notifications
-         Invite friend
-         Logout
+      <View
+        style={styles.spaceHor}
+        scrollEnabled={!user?.isGuest}
+        showsVerticalScrollIndicator={false}>
+        {PROFILE_SECTIONS_2.map((item, key) => (
+          <MenuItem
+            withChevron
+            icon={item.icon}
+            label={item.title}
+            isFirst={key === 0}
+            key={`profile-${key}`}
+            iconStyle={styles.icon}
+            onPress={() => onPressItem(item.screen)}
+            isLast={key === PROFILE_SECTIONS_2.length - 1}
+          />
+        ))}
+      </View>
 
-         -------------
-         Leave feedback
-         FAQ
+      <View style={styles.spaceHor}>
+        <MenuItem
+          isAlone
+          onPress={logout}
+          key={'profile-last'}
+          iconStyle={styles.smallIcon}
+          labelStyle={styles.logoutRed}
+          icon={PROFILE_SECTIONS_3.icon}
+          label={PROFILE_SECTIONS_3.title}
+        />
+      </View>
 
-         App Version
-      */}
+      {/*  App Version */}
     </Screen>
   );
 };
@@ -100,9 +100,15 @@ const styles = StyleSheet.create({
     marginRight: DimensionsUtils.getDP(8),
   },
   spaceHor: {
+    marginTop: DimensionsUtils.getDP(24),
+    borderRadius: DimensionsUtils.getDP(14),
     marginHorizontal: DimensionsUtils.getDP(16),
+    backgroundColor: Colors.tabBarBg,
   },
   logoutRed: {
     color: Colors.fillRed,
+  },
+  spaceTop: {
+    marginTop: DimensionsUtils.getDP(24),
   },
 });
