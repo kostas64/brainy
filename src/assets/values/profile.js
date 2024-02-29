@@ -8,22 +8,26 @@ export const PROFILE_SECTIONS = [
     icon: images.profile,
   },
   {
-    title: dict.profileFriends,
-    screen: 'FriendsTabs',
-    icon: images.friends,
-  },
-  {
     title: dict.profileNotifications,
     screen: 'Notifications',
     icon: images.notification,
   },
+];
+
+export const PROFILE_SECTIONS_2 = [
   {
     title: dict.profileInvite,
     screen: dict.profileInvite,
     icon: images.envelope,
   },
   {
-    title: dict.profileLogout,
-    icon: images.logout,
+    title: dict.profileInspiration,
+    screen: 'LeaveFeedback',
+    icon: images.creative,
   },
 ];
+
+export const PROFILE_SECTIONS_3 = {
+  title: dict.profileLogout,
+  icon: images.logout,
+};
