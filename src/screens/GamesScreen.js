@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {Animated, StyleSheet} from 'react-native';
@@ -6,6 +7,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {SCORE} from '../Endpoints';
 import {useFetch} from '../hooks/useFetch';
 import dict from '../assets/values/dict.json';
+import {useStorage} from '../hooks/useStorage';
 import Screen from '../components/common/Screen';
 import {LIST_GAMES} from '../assets/values/games';
 import {useAuthContext} from '../context/AuthProvider';
@@ -15,6 +17,7 @@ import {GenericUtils, isIOS} from '../utils/GenericUtils';
 const GamesScreen = ({navigation, route}) => {
   const {user} = useAuthContext();
   const isFocused = useIsFocused();
+  const [scores, setScores] = useStorage('scores', []);
 
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
 
@@ -49,6 +52,10 @@ const GamesScreen = ({navigation, route}) => {
     isFocused && setForce(true);
     !isFocused && setForce(false);
   }, [isFocused, navigation]);
+
+  React.useEffect(() => {
+    status === 'fetched' && setScores(data);
+  }, [status]);
 
   return (
     <Screen label={dict?.gamesScrTitle}>
