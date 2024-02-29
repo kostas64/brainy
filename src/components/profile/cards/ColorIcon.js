@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   circle: {
     width: DimensionsUtils.getDP(10),
     height: DimensionsUtils.getDP(10),
-    backgroundColor: Colors.fillRed,
+    backgroundColor: 'forestgreen',
     borderRadius: DimensionsUtils.getDP(5),
   },
 });

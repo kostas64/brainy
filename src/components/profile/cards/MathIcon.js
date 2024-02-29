@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   label: {
     top: 1,
-    color: Colors.appGreen,
+    color: 'dodgerblue',
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(13),
   },
