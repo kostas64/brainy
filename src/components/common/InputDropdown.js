@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   choiceLabel: {
     color: Colors.appGreen,
-    fontSize: DimensionsUtils.getDP(16),
+    fontSize: DimensionsUtils.getFontSize(16),
     fontFamily: 'Poppins-Bold',
   },
   icon: {
@@ -171,12 +171,12 @@ const styles = StyleSheet.create({
   },
   regText: {
     color: Colors.tabBarIcon,
-    fontSize: DimensionsUtils.getDP(16),
+    fontSize: DimensionsUtils.getFontSize(16),
     fontFamily: 'Poppins-Regular',
   },
   boldText: {
     color: Colors.white,
-    fontSize: DimensionsUtils.getDP(16),
+    fontSize: DimensionsUtils.getFontSize(16),
     fontFamily: 'Poppins-SemiBold',
   },
 });

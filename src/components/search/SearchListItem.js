@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
     color: Colors.appGreen,
     fontFamily: 'Poppins-Regular',
     marginTop: DimensionsUtils.getDP(2),
-    fontSize: DimensionsUtils.getDP(14),
+    fontSize: DimensionsUtils.getFontSize(14),
   },
 });

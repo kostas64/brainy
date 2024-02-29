@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   message: {
     color: Colors.white,
     fontFamily: 'Poppins-Regular',
-    fontSize: DimensionsUtils.getDP(16),
+    fontSize: DimensionsUtils.getFontSize(16),
     width: WIDTH - DimensionsUtils.getDP(112),
   },
 });

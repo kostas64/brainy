@@ -118,15 +118,15 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.appGreen,
     fontFamily: 'Poppins-Medium',
-    fontSize: DimensionsUtils.getDP(20),
+    fontSize: DimensionsUtils.getFontSize(20),
   },
   input: {
     borderWidth: 2,
     color: Colors.white,
     borderColor: Colors.appGreen,
-    fontSize: DimensionsUtils.getDP(18),
     marginTop: DimensionsUtils.getDP(16),
     borderRadius: DimensionsUtils.getDP(12),
+    fontSize: DimensionsUtils.getFontSize(18),
     paddingVertical: DimensionsUtils.getDP(12),
     paddingHorizontal: DimensionsUtils.getDP(12),
   },
