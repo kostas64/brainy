@@ -18,7 +18,9 @@ const Header = ({
   customIcon,
   labelStyle,
   onIconPress,
+  onScndIcnPress,
   noIcon = false,
+  secondIcon = false,
 }) => {
   const navigation = useNavigation();
 
@@ -31,6 +33,8 @@ const Header = ({
     : {uri: avatar};
 
   //** ----- STYLES -----
+  const avatarStyles = isGuest ? styles.avatar : [styles.avatar, iconStyle];
+
   const buttonStyles = [
     styles.avatarContainer,
     isGuest && styles.whiteBorder,
@@ -43,7 +47,7 @@ const Header = ({
   }, []);
 
   const onAvatarPress = React.useCallback(() => {
-    if (onIconPress) {
+    if (onIconPress && !isGuest) {
       onIconPress();
     } else {
       navigation.navigate('Profile');
@@ -56,28 +60,51 @@ const Header = ({
         <Animated.Text style={[styles.label, labelStyle]}>
           {label}
         </Animated.Text>
-        {!noIcon && (
-          <>
-            <Pressable onPress={onAvatarPress} style={buttonStyles}>
-              <Animated.Image
-                source={iconSource}
-                onLoadEnd={onAvatarLoad}
-                style={[styles.avatar, iconStyle]}
-              />
-            </Pressable>
-            {hasDot && (
-              <View style={styles.dotContainer}>
-                <View style={styles.dot} />
-              </View>
-            )}
-          </>
-        )}
+        <View style={styles.row}>
+          {secondIcon && !isGuest && (
+            <>
+              <Pressable
+                onPress={onScndIcnPress}
+                style={[buttonStyles, {marginRight: DimensionsUtils.getDP(8)}]}>
+                <Animated.Image
+                  source={images.friendsF}
+                  onLoadEnd={onAvatarLoad}
+                  style={avatarStyles}
+                />
+              </Pressable>
+              {hasDot && (
+                <View style={styles.dotContainer}>
+                  <View style={styles.dot} />
+                </View>
+              )}
+            </>
+          )}
+          {!noIcon && (
+            <>
+              <Pressable onPress={onAvatarPress} style={buttonStyles}>
+                <Animated.Image
+                  source={iconSource}
+                  onLoadEnd={onAvatarLoad}
+                  style={avatarStyles}
+                />
+              </Pressable>
+              {hasDot && (
+                <View style={styles.dotContainer}>
+                  <View style={styles.dot} />
+                </View>
+              )}
+            </>
+          )}
+        </View>
       </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+  },
   container: {
     height: 40,
     flexDirection: 'row',
@@ -91,26 +118,26 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
   avatarContainer: {
+    width: 40,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: Colors.appGreen,
     borderWidth: DimensionsUtils.getDP(2),
     borderRadius: DimensionsUtils.getDP(24),
-    width: 40,
-    height: 40,
   },
   avatar: {
+    width: 36,
+    height: 36,
     borderColor: Colors.background,
     borderWidth: DimensionsUtils.getDP(2),
     borderRadius: DimensionsUtils.getDP(24),
-    width: 36,
-    height: 36,
   },
   dotContainer: {
     position: 'absolute',
     borderColor: Colors.background,
-    right: DimensionsUtils.getDP(12),
-    bottom: DimensionsUtils.getDP(26),
+    right: 44,
+    bottom: 27,
     borderWidth: DimensionsUtils.getDP(3),
     borderRadius: DimensionsUtils.getDP(18),
   },

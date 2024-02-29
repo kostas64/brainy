@@ -15,8 +15,10 @@ const Screen = ({
   iconStyle,
   customIcon,
   labelStyle,
+  secondIcon,
   onIconPress,
   onPressOutside,
+  onScndIcnPress,
 }) => {
   const {user} = useAuthContext();
   const insets = useSafeAreaInsets();
@@ -35,10 +37,12 @@ const Screen = ({
         hasDot={hasDot}
         iconStyle={iconStyle}
         avatar={user?.avatar}
+        secondIcon={secondIcon}
         labelStyle={labelStyle}
         isGuest={user?.isGuest}
         customIcon={customIcon}
         onIconPress={onIconPress}
+        onScndIcnPress={onScndIcnPress}
       />
       {children}
     </View>
