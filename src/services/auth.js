@@ -136,6 +136,8 @@ export const signOut = async (setToken, setUser, withDelay = false) => {
   await AsyncStorage.removeItem('name');
   await AsyncStorage.removeItem('surname');
   await AsyncStorage.removeItem('nickname');
+
+  storage.setArray('scores', []);
 };
 
 const setDataForLogin = async (data, setToken, setUser) => {
