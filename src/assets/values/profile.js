@@ -19,7 +19,6 @@ export const PROFILE_SECTIONS = [
   },
   {
     title: dict.profileInvite,
-    screen: 'InviteFriend',
     icon: images.envelope,
   },
   {
