@@ -6,6 +6,7 @@ import TabStack from './TabRouter';
 import {Colors} from '../utils/Colors';
 import FriendsTabs from '../screens/FriendsTabs';
 import AccountScreen from '../screens/AccountScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import EqualMathScreen from '../screens/EqualMathScreen';
 import GestureItScreen from '../screens/GestureItScreen';
 import ColorCardScreen from '../screens/ColorCardScreen';
@@ -68,6 +69,11 @@ const Router = ({onNavigationReady}) => {
             name="GestureIt"
             component={GestureItScreen}
             options={screenConfig}
+          />
+          <Stack.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={screenSlideConfig}
           />
           <Stack.Screen
             name="Account"
