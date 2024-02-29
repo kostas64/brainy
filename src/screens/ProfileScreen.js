@@ -1,23 +1,21 @@
 import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 
 import {Colors} from '../utils/Colors';
-import {signOut} from '../services/auth';
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import {getMyProfile} from '../services/user';
 import Screen from '../components/common/Screen';
-import MenuItem from '../components/common/MenuItem';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import {getAllFriendsRequest} from '../services/friends';
-import {PROFILE_SECTIONS} from '../assets/values/profile';
+import ProfileScoresSection from '../components/profile/ProfileScoresSection';
 import UserProfileModalAvatar from '../components/userProfileModal/UserProfileModalAvatar';
 
 const ProfileScreen = ({navigation}) => {
   const isFocused = useIsFocused();
-  const {user, setToken, setUser} = useAuthContext();
+  const {user, setUser} = useAuthContext();
 
   const [friendRequests, setFriendRequests] = React.useState([]);
 
@@ -33,20 +31,11 @@ const ProfileScreen = ({navigation}) => {
   const imgStyle = styles.imgStyle;
   const icon = user?.isGuest ? images.guest : null;
 
-  const profileItems = user?.isGuest
-    ? PROFILE_SECTIONS?.slice(4, 5)
-    : PROFILE_SECTIONS;
-
   //** ----- FUNCTIONS -----
-  const logout = React.useCallback(async () => {
-    !user?.isGuest && (await signOut(setToken, setUser, true));
-    navigation.pop();
-  }, [user?.isGuest, navigation, setToken, setUser]);
 
-  const onPressItem = React.useCallback(
-    screen => navigation.navigate(screen),
-    [navigation],
-  );
+  const onSettingsPress = React.useCallback(() => {
+    navigation.navigate('Settings');
+  }, [navigation]);
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
@@ -55,7 +44,12 @@ const ProfileScreen = ({navigation}) => {
   }, [isFocused, setUser, navigation]);
 
   return (
-    <Screen label={dict.profileScrTitle} noIcon>
+    <Screen
+      customIcon={images.gear}
+      iconStyle={styles.gearIcon}
+      label={dict.profileScrTitle}
+      onIconPress={onSettingsPress}
+      hasDot={friendRequests?.length > 0}>
       <UserProfileModalAvatar
         user={user}
         name={name}
@@ -66,44 +60,7 @@ const ProfileScreen = ({navigation}) => {
         imgContStyle={imgContStyle}
       />
 
-      <ScrollView
-        style={styles.spaceHor}
-        scrollEnabled={!user?.isGuest}
-        showsVerticalScrollIndicator={false}>
-        {profileItems.map((item, key) => {
-          const isLast = key === profileItems.length - 1;
-          const iconStyle = isLast ? styles.smallIcon : styles.icon;
-          const isRequestSection = item.title === dict.profileFriends;
-
-          return (
-            <MenuItem
-              key={`profile-${key}`}
-              isLast={isLast}
-              icon={item.icon}
-              label={item.title}
-              iconStyle={iconStyle}
-              withChevron={!isLast}
-              labelStyle={isLast && styles.logoutRed}
-              counter={isRequestSection ? friendRequests.length : null}
-              onPress={isLast ? logout : () => onPressItem(item.screen)}
-            />
-          );
-        })}
-      </ScrollView>
-
-      {/*
-         Account
-         Friends
-         Notifications
-         Invite friend
-         Logout
-
-         -------------
-         Leave feedback
-         FAQ
-
-         App Version
-      */}
+      <ProfileScoresSection />
     </Screen>
   );
 };
@@ -126,6 +83,13 @@ const styles = StyleSheet.create({
     height: DimensionsUtils.getDP(112),
     borderRadius: DimensionsUtils.getDP(56),
   },
+  gearIcon: {
+    tintColor: Colors.appGreen,
+    width: 21,
+    height: 21,
+    borderWidth: 0,
+    borderRadius: 0,
+  },
   imgCont: {
     width: DimensionsUtils.getDP(106),
     height: DimensionsUtils.getDP(106),
@@ -139,24 +103,5 @@ const styles = StyleSheet.create({
   whiteColor: {
     color: Colors.white,
     marginBottom: DimensionsUtils.getDP(8),
-  },
-  icon: {
-    tintColor: Colors.appGreen,
-    width: DimensionsUtils.getDP(22),
-    height: DimensionsUtils.getDP(22),
-    marginRight: DimensionsUtils.getDP(8),
-  },
-  smallIcon: {
-    tintColor: Colors.fillRed,
-    width: DimensionsUtils.getDP(18),
-    height: DimensionsUtils.getDP(18),
-    marginLeft: DimensionsUtils.getDP(4),
-    marginRight: DimensionsUtils.getDP(8),
-  },
-  spaceHor: {
-    marginHorizontal: DimensionsUtils.getDP(16),
-  },
-  logoutRed: {
-    color: Colors.fillRed,
   },
 });
