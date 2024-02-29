@@ -10,6 +10,7 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 const Screen = ({
   label,
   noIcon,
+  hasDot,
   children,
   iconStyle,
   customIcon,
@@ -31,6 +32,7 @@ const Screen = ({
       <Header
         label={label}
         noIcon={noIcon}
+        hasDot={hasDot}
         iconStyle={iconStyle}
         avatar={user?.avatar}
         labelStyle={labelStyle}

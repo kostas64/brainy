@@ -12,6 +12,7 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 const Header = ({
   label,
   avatar,
+  hasDot,
   isGuest,
   iconStyle,
   customIcon,
@@ -56,13 +57,20 @@ const Header = ({
           {label}
         </Animated.Text>
         {!noIcon && (
-          <Pressable onPress={onAvatarPress} style={buttonStyles}>
-            <Animated.Image
-              source={iconSource}
-              onLoadEnd={onAvatarLoad}
-              style={[styles.avatar, iconStyle]}
-            />
-          </Pressable>
+          <>
+            <Pressable onPress={onAvatarPress} style={buttonStyles}>
+              <Animated.Image
+                source={iconSource}
+                onLoadEnd={onAvatarLoad}
+                style={[styles.avatar, iconStyle]}
+              />
+            </Pressable>
+            {hasDot && (
+              <View style={styles.dotContainer}>
+                <View style={styles.dot} />
+              </View>
+            )}
+          </>
         )}
       </View>
     </>
@@ -97,6 +105,20 @@ const styles = StyleSheet.create({
     borderRadius: DimensionsUtils.getDP(24),
     width: 36,
     height: 36,
+  },
+  dotContainer: {
+    position: 'absolute',
+    borderColor: Colors.background,
+    right: DimensionsUtils.getDP(12),
+    bottom: DimensionsUtils.getDP(26),
+    borderWidth: DimensionsUtils.getDP(3),
+    borderRadius: DimensionsUtils.getDP(18),
+  },
+  dot: {
+    backgroundColor: Colors.fillRed,
+    width: DimensionsUtils.getDP(12),
+    height: DimensionsUtils.getDP(12),
+    borderRadius: DimensionsUtils.getDP(6),
   },
   zeroOpacity: {
     opacity: 0,
