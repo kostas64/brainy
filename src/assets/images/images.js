@@ -11,6 +11,7 @@ const creative = require('./creative.png');
 const deleteUser = require('./delete_user.png');
 const envelope = require('./envelope.png');
 const friends = require('./friends.png');
+const friendsF = require('./friends_fill.png');
 const gamesIconO = require('./games_icon_outline.png');
 const gamesIcon = require('./games_icon.png');
 const gear = require('./gear.png');
@@ -49,6 +50,7 @@ export default {
   deleteUser,
   envelope,
   friends,
+  friendsF,
   gamesIconO,
   gamesIcon,
   gear,
