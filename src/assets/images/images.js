@@ -7,6 +7,7 @@ const clock = require('./clock.png');
 const close = require('./close.png');
 const colorMatch = require('./color_match.png');
 const correct = require('./correct.png');
+const creative = require('./creative.png');
 const deleteUser = require('./delete_user.png');
 const envelope = require('./envelope.png');
 const friends = require('./friends.png');
@@ -44,6 +45,7 @@ export default {
   close,
   colorMatch,
   correct,
+  creative,
   deleteUser,
   envelope,
   friends,
