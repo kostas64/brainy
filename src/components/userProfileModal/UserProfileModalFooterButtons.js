@@ -20,15 +20,15 @@ const UserProfileModalFooterButtons = ({
       {!isMe && (
         <ModalButton
           label={firstLabel}
-          loading={loadingButton}
           icon={firstButtonIcon}
           onPress={onPressFirstButton}
+          loading={loadingButton === 'FIRST'}
           containerStyle={styles.buttonStyle}
         />
       )}
       <ModalButton
         onPress={onPressSecondButton}
-        loading={loadingButton}
+        loading={loadingButton === 'SECOND'}
         label={isMe ? dict.viewProfile : secondLabel}
         containerStyle={!isMe ? styles.buttonStyle : styles.soloButtonStyle}
       />

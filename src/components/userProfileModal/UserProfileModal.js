@@ -104,7 +104,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   }, [user?._id]);
 
   const onPressFirstButton = React.useCallback(() => {
-    setLoadingButton(true);
+    setLoadingButton('FIRST');
 
     if (hasFriendship) {
       //Delete friend
@@ -157,7 +157,8 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   const onPressSecondButton = React.useCallback(() => {
     if (hasRequest === 'Accept') {
       //Reject friend request
-      setLoadingButton(true);
+      setLoadingButton('SECOND');
+
       cancelFriendsRequest(user?._id)
         .then(() => {
           setHasRequest(false);
