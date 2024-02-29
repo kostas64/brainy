@@ -17,7 +17,7 @@ import {useToastContext} from '../../context/ToastProvider';
 const FriendRequestItem = ({item, updateList}) => {
   const {setToast} = useToastContext();
 
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(null);
 
   //** ----- FUNCTIONS -----
   const handleRequest = React.useCallback(
@@ -27,7 +27,7 @@ const FriendRequestItem = ({item, updateList}) => {
         ? dict.acceptedRequest
         : dict.friendRequestRejected;
 
-      setLoading(true);
+      setLoading(action);
 
       const api = acceptPressed ? acceptFriendsRequest : cancelFriendsRequest;
 
@@ -40,7 +40,7 @@ const FriendRequestItem = ({item, updateList}) => {
             icon: {uri: item?.friendUserAvatar},
           });
         })
-        .finally(() => setLoading(false));
+        .finally(() => setLoading(null));
     },
     [setToast, item, updateList],
   );
@@ -63,17 +63,17 @@ const FriendRequestItem = ({item, updateList}) => {
       </View>
       <View style={styles.buttonsContainer}>
         <Button
-          loading={loading}
           disabled={loading}
           label={dict.accept}
+          loading={loading === 'ACCEPT'}
           onPress={() => handleRequest('ACCEPT')}
           labelStyle={styles.buttonLabel}
           containerStyle={[styles.btnContainer, styles.spaceRight]}
         />
         <Button
-          loading={loading}
           disabled={loading}
           label={dict.reject}
+          loading={loading === 'REJECT'}
           indicatorColor={Colors.appGreen}
           onPress={() => handleRequest('REJECT')}
           labelStyle={[styles.buttonLabel, styles.greenLabel]}
