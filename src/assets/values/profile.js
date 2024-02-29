@@ -19,6 +19,7 @@ export const PROFILE_SECTIONS = [
   },
   {
     title: dict.profileInvite,
+    screen: dict.profileInvite,
     icon: images.envelope,
   },
   {

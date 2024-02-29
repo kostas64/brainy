@@ -1,9 +1,9 @@
 /* eslint-disable no-shadow */
 import React from 'react';
-import {Text, Easing, Animated, Pressable, StyleSheet} from 'react-native';
+import {Text, Animated, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
-import {WIDTH} from '../../utils/GenericUtils';
+import {WIDTH, isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Card = React.forwardRef(
@@ -37,24 +37,23 @@ const Card = React.forwardRef(
     };
 
     //** ----- FUNCTIONS -----
-    const flipToFront = () => {
+    const flipToFront = React.useCallback(() => {
       setIsFlipped(index);
       Animated.timing(flipAnimation, {
         toValue: 180,
-        duration: 250,
-        easing: Easing.linear,
+        duration: 150,
         useNativeDriver: true,
       }).start();
-    };
+    }, [index, flipAnimation, setIsFlipped]);
 
-    const flipToBack = () => {
+    const flipToBack = React.useCallback(() => {
       setIsFlipped(index);
       Animated.timing(flipAnimation, {
         toValue: 0,
         duration: 125,
         useNativeDriver: true,
       }).start();
-    };
+    }, [index, flipAnimation, setIsFlipped]);
 
     //** ----- EFFECTS -----
     React.useImperativeHandle(ref, () => ({
@@ -101,14 +100,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
+    color: Colors.white,
+    top: isAndroid ? 3 : 0,
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(48),
-    color: Colors.white,
   },
   labelBack: {
+    color: Colors.black,
+    top: isAndroid ? 3 : 0,
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(48),
-    color: Colors.black,
   },
 });
 
