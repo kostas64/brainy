@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     borderRadius: DimensionsUtils.getDP(4),
   },
   label: {
-    top: 1,
     color: 'gold',
     fontFamily: 'Poppins-Bold',
   },
