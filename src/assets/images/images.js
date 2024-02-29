@@ -12,6 +12,7 @@ const envelope = require('./envelope.png');
 const friends = require('./friends.png');
 const gamesIconO = require('./games_icon_outline.png');
 const gamesIcon = require('./games_icon.png');
+const gear = require('./gear.png');
 const gestureIt = require('./gesture_it.png');
 const guest = require('./guest.png');
 const logo = require('./logo.png');
@@ -48,6 +49,7 @@ export default {
   friends,
   gamesIconO,
   gamesIcon,
+  gear,
   gestureIt,
   guest,
   logo,
