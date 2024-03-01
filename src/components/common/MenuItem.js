@@ -22,6 +22,7 @@ const MenuItem = ({
   iconStyle,
   labelStyle,
   withChevron,
+  chevronStyle,
   isLast = false,
   isAlone = false,
 }) => {
@@ -39,7 +40,7 @@ const MenuItem = ({
           </View>
           <View style={styles.rowCenter}>
             {showCounter && <NumIndicator number={counter} />}
-            {withChevron && <Chevron />}
+            {withChevron && <Chevron style={chevronStyle} />}
           </View>
         </Touchable>
       </View>
