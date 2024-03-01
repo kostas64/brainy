@@ -27,7 +27,7 @@ const Loader = () => (
   </View>
 );
 
-const UserProfileModal = ({isMe, item, onGamePress}) => {
+const UserProfileModal = ({isMe, item, onGamePress, onViewProfilePress}) => {
   const {setToast} = useToastContext();
 
   const [scores, setScores] = React.useState({});
@@ -155,7 +155,9 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
   }, [user, hasFriendship, hasRequest, setToast]);
 
   const onPressSecondButton = React.useCallback(() => {
-    if (hasRequest === 'Accept') {
+    if (isMe) {
+      onViewProfilePress();
+    } else if (hasRequest === 'Accept') {
       //Reject friend request
       setLoadingButton('SECOND');
 
@@ -166,7 +168,7 @@ const UserProfileModal = ({isMe, item, onGamePress}) => {
         })
         .finally(() => setLoadingButton(false));
     }
-  }, [hasRequest, user?._id]);
+  }, [isMe, onViewProfilePress, hasRequest, user?._id]);
 
   //** ----- EFFECTS -----
   React.useEffect(() => {

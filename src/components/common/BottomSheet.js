@@ -69,17 +69,11 @@ const BottomSheet = React.forwardRef(
 
         runOnJS(setIsActive)(destination !== 0);
         active.value = destination !== 0;
-        translateY.value = withTiming(
-          destination,
-          {
-            duration: 200,
-          },
-          done => {
-            if (done && destination === 0) {
-              runOnJS(resetModal)();
-            }
-          },
-        );
+        translateY.value = withTiming(destination, {duration: 200}, done => {
+          if (done && destination === 0) {
+            runOnJS(resetModal)();
+          }
+        });
       },
       [active, resetModal, translateY],
     );

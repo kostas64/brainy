@@ -5,6 +5,7 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../../utils/Colors';
+import useTimeout from '../../hooks/useTimeout';
 import dict from '../../assets/values/dict.json';
 import {normalizeMS} from '../../utils/MathUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
@@ -13,6 +14,7 @@ import {matchGameWithScreenName} from '../../utils/GenericUtils';
 import UserProfileModal from '../userProfileModal/UserProfileModal';
 
 const RankFlipListItem = ({item, index, isMe}) => {
+  const timeout = useTimeout();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const {closeModal, setModalInfo} = useModalContext();
@@ -32,10 +34,23 @@ const RankFlipListItem = ({item, index, isMe}) => {
     setModalInfo({
       height: 384 + insetsBottom,
       content: (
-        <UserProfileModal isMe={isMe} item={item} onGamePress={onGamePress} />
+        <UserProfileModal
+          isMe={isMe}
+          item={item}
+          onGamePress={onGamePress}
+          onViewProfilePress={onViewProfilePress}
+        />
       ),
     });
-  }, [item, isMe, insetsBottom, onGamePress, setModalInfo]);
+  }, [item, isMe, insetsBottom, onGamePress, onViewProfilePress, setModalInfo]);
+
+  const onViewProfilePress = React.useCallback(() => {
+    closeModal();
+
+    timeout.current = setTimeout(() => {
+      navigation.navigate('Profile');
+    }, 200);
+  }, [closeModal, timeout, navigation]);
 
   const onGamePress = React.useCallback(
     game => {
