@@ -16,7 +16,7 @@ export const FIRST_SECTION = [
 
 export const INSPIRE = {
   title: dict.profileInspiration,
-  screen: 'LeaveFeedback',
+  screen: 'Inspire',
   icon: images.creative,
 };
 

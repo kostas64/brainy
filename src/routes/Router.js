@@ -6,6 +6,7 @@ import TabStack from './TabRouter';
 import {Colors} from '../utils/Colors';
 import FriendsTabs from '../screens/FriendsTabs';
 import AccountScreen from '../screens/AccountScreen';
+import InspireScreen from '../screens/InspireScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import EqualMathScreen from '../screens/EqualMathScreen';
 import GestureItScreen from '../screens/GestureItScreen';
@@ -88,6 +89,11 @@ const Router = ({onNavigationReady}) => {
           <Stack.Screen
             name="Notifications"
             component={NotificationsScreen}
+            options={screenSlideConfig}
+          />
+          <Stack.Screen
+            name="Inspire"
+            component={InspireScreen}
             options={screenSlideConfig}
           />
         </Stack.Group>

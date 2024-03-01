@@ -28,3 +28,6 @@ export const CHECK_ALL_FRIENDS_REQUESTS = '/friends/check-all-request';
 export const CANCEL_FRIENDS_REQUEST = '/friends/cancel-request';
 export const ACCEPT_FRIENDS_REQUEST = '/friends/accept-request';
 export const DELETE_FRIEND = '/friends/delete-friend';
+
+//Idea
+export const SHARE_IDEA = '/idea/inspiration';
