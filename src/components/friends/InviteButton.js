@@ -16,6 +16,7 @@ const InviteButton = () => {
         icon={images.envelope}
         iconStyle={styles.icon}
         label={dict.profileInvite}
+        chevronStyle={styles.chevron}
       />
     </View>
   );
@@ -35,5 +36,8 @@ const styles = StyleSheet.create({
     width: DimensionsUtils.getDP(22),
     height: DimensionsUtils.getDP(22),
     marginRight: DimensionsUtils.getDP(8),
+  },
+  chevron: {
+    transform: [{rotate: '0deg'}],
   },
 });
