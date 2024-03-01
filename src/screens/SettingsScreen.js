@@ -48,10 +48,10 @@ const SettingsScreen = ({navigation}) => {
         <MenuItem
           isAlone
           withChevron
-          key={'settings-inspire'}
-          iconStyle={styles.icon}
           icon={INSPIRE.icon}
           label={INSPIRE.title}
+          iconStyle={styles.icon}
+          key={'settings-inspire'}
           onPress={() => onPressItem(INSPIRE.screen)}
         />
       </View>
