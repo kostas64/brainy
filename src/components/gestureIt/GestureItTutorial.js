@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
-import {View, Text, Animated, Pressable, StyleSheet} from 'react-native';
+import {View, Text, Animated, Pressable, Image, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
@@ -12,7 +11,7 @@ import dict from '../../assets/values/dict.json';
 import {WIDTH, isIOS} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const AnimatedImage = Animated.createAnimatedComponent(FastImage);
+const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const GestureItTutorial = ({modalOpen, setModalOpen}) => {
   const navigation = useNavigation();
@@ -37,14 +36,14 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         ]}
       />
       <View style={styles.rowCenter}>
-        <FastImage source={images.arrowBlack} style={styles.smallImg} />
+        <Image source={images.arrowBlack} style={styles.smallImg} />
         <View style={styles.rightSpacer} />
-        <FastImage
+        <Image
           source={images.arrowBlack}
           style={[styles.smallImg, {transform: [{rotate: '180deg'}]}]}
         />
         <View style={styles.rightSpacer} />
-        <FastImage source={images.arrowBlack} style={styles.smallImg} />
+        <Image source={images.arrowBlack} style={styles.smallImg} />
       </View>
     </>
   ));

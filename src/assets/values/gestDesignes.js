@@ -1,6 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {View, Image} from 'react-native';
 
 import images from '../images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
@@ -40,15 +39,15 @@ export const GEST_DESIGNS = [
   {
     design: (
       <View>
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
       </View>
     ),
     designDirection: 'UP',
@@ -56,15 +55,15 @@ export const GEST_DESIGNS = [
   {
     design: (
       <View>
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={[image, transform(180)]} />
+        <Image source={gestImg} style={[image, transform(180)]} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
       </View>
     ),
     designDirection: 'DOWN',
@@ -72,15 +71,15 @@ export const GEST_DESIGNS = [
   {
     design: (
       <View style={row}>
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
       </View>
     ),
     designDirection: 'UP',
@@ -88,15 +87,15 @@ export const GEST_DESIGNS = [
   {
     design: (
       <View style={row}>
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={[image, transform(180)]} />
+        <Image source={gestImg} style={[image, transform(180)]} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
       </View>
     ),
     designDirection: 'DOWN',
@@ -104,15 +103,15 @@ export const GEST_DESIGNS = [
   {
     design: (
       <View style={row}>
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={[image, transform(90)]} />
+        <Image source={gestImg} style={[image, transform(90)]} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
       </View>
     ),
     designDirection: 'RIGHT',
@@ -120,25 +119,25 @@ export const GEST_DESIGNS = [
   {
     design: (
       <View style={itemsCenter}>
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
         <View style={row}>
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
         </View>
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
       </View>
     ),
     designDirection: 'UP',
@@ -146,25 +145,25 @@ export const GEST_DESIGNS = [
   {
     design: (
       <View style={itemsCenter}>
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
         <View style={row}>
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
         </View>
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
       </View>
     ),
     designDirection: 'RIGHT',
@@ -173,19 +172,16 @@ export const GEST_DESIGNS = [
     design: (
       <View style={row}>
         <View>
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
           <View style={{marginVertical: DimensionsUtils.getDP(56)}} />
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
         </View>
         <View style={selfCenter}>
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
           <View style={{marginVertical: DimensionsUtils.getDP(18)}} />
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
         </View>
-        <FastImage
-          source={gestImg}
-          style={[image, selfCenter, transform(90)]}
-        />
+        <Image source={gestImg} style={[image, selfCenter, transform(90)]} />
       </View>
     ),
     designDirection: 'RIGHT',
@@ -194,19 +190,16 @@ export const GEST_DESIGNS = [
     design: (
       <View style={row}>
         <View>
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
           <View style={{marginVertical: DimensionsUtils.getDP(56)}} />
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
         </View>
         <View style={selfCenter}>
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
           <View style={{marginVertical: DimensionsUtils.getDP(18)}} />
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
         </View>
-        <FastImage
-          source={gestImg}
-          style={[image, selfCenter, transform(270)]}
-        />
+        <Image source={gestImg} style={[image, selfCenter, transform(270)]} />
       </View>
     ),
     designDirection: 'LEFT',
@@ -214,25 +207,25 @@ export const GEST_DESIGNS = [
   {
     design: (
       <View style={[itemsCenter, transform(45)]}>
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
         <View style={row}>
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={[image, transform(225)]} />
+          <Image source={gestImg} style={[image, transform(225)]} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
           <View style={horSpace} />
-          <FastImage source={gestImg} style={image} />
+          <Image source={gestImg} style={image} />
         </View>
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={verSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
       </View>
     ),
     designDirection: 'LEFT',
@@ -242,16 +235,16 @@ export const GEST_DESIGNS = [
       <View
         style={[row, transform(270), {marginLeft: DimensionsUtils.getDP(42)}]}>
         <View>
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
           <View style={{marginVertical: DimensionsUtils.getDP(56)}} />
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
         </View>
         <View style={selfCenter}>
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
           <View style={{marginVertical: DimensionsUtils.getDP(18)}} />
-          <FastImage source={gestImg} style={[image, transform(90)]} />
+          <Image source={gestImg} style={[image, transform(90)]} />
         </View>
-        <FastImage source={gestImg} style={[image, selfCenter]} />
+        <Image source={gestImg} style={[image, selfCenter]} />
       </View>
     ),
     designDirection: 'LEFT',
@@ -266,15 +259,15 @@ export const GEST_DESIGNS = [
             marginTop: DimensionsUtils.getDP(56),
           },
         ]}>
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
         <View style={horSpace} />
-        <FastImage source={gestImg} style={image} />
+        <Image source={gestImg} style={image} />
       </View>
     ),
     designDirection: 'RIGHT',

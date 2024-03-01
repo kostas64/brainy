@@ -1,6 +1,5 @@
 import React from 'react';
-import FastImage from 'react-native-fast-image';
-import {StatusBar, StyleSheet, View} from 'react-native';
+import {StatusBar, StyleSheet, Image, View} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
@@ -14,37 +13,29 @@ const BackgroundWrapper = ({statusBar}) => {
     <>
       <StatusBar backgroundColor={'transparent'} barStyle={statusBar} />
       <View style={styles.background} />
-      <FastImage
-        source={image}
-        resizeMode="cover"
-        style={styles.splashTopLeft}
-      />
-      <FastImage
-        source={image}
-        resizeMode="cover"
-        style={styles.splashTopRight}
-      />
-      <FastImage
+      <Image source={image} resizeMode="cover" style={styles.splashTopLeft} />
+      <Image source={image} resizeMode="cover" style={styles.splashTopRight} />
+      <Image
         source={image}
         resizeMode="cover"
         style={styles.splashMiddleLeft}
       />
-      <FastImage
+      <Image
         source={image}
         resizeMode="cover"
         style={styles.splashMiddleLeft2}
       />
-      <FastImage
+      <Image
         source={image}
         resizeMode="cover"
         style={styles.splashMiddleRight}
       />
-      <FastImage
+      <Image
         source={image}
         resizeMode="cover"
         style={styles.splashBottomRight}
       />
-      <FastImage
+      <Image
         source={image}
         resizeMode="cover"
         style={styles.splashBottomLeft}

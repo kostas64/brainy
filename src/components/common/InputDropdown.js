@@ -6,15 +6,14 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import React from 'react';
-import FastImage from 'react-native-fast-image';
-import {Text, Pressable, StyleSheet, FlatList, View} from 'react-native';
+import {Text, Pressable, StyleSheet, FlatList, Image, View} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import {GAMES} from '../../assets/values/games';
 import images from '../../assets/images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const AnimatedIcon = Animated.createAnimatedComponent(FastImage);
+const AnimatedIcon = Animated.createAnimatedComponent(Image);
 
 const InputDropdown = React.forwardRef(
   ({value, setValue, isFocused, onFieldPress, placeholder}, ref) => {

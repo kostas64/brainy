@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import FastImage from 'react-native-fast-image';
-import {View, Text, Animated, Pressable, StyleSheet} from 'react-native';
+import {View, Text, Animated, Pressable, Image, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
@@ -167,11 +166,11 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
           <View style={styles.innerContainer}>
             <View style={styles.titleContainer}>
               <View style={styles.innerTitleContainer}>
-                <FastImage source={images.tutorial} style={styles.icon} />
+                <Image source={images.tutorial} style={styles.icon} />
                 <Text style={styles.title}>{dict.memoryCardTutTitle}</Text>
               </View>
               <Touchable onPress={closeModal} releasingAnimationDuraiton={300}>
-                <FastImage source={images.close} style={styles.closeIcon} />
+                <Image source={images.close} style={styles.closeIcon} />
               </Touchable>
             </View>
             <View style={styles.rowCenter}>

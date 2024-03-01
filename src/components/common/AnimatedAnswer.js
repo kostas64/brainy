@@ -1,6 +1,5 @@
 import React from 'react';
-import FastImage from 'react-native-fast-image';
-import {Animated, StyleSheet} from 'react-native';
+import {Animated, Image, StyleSheet} from 'react-native';
 
 import images from '../../assets/images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
@@ -11,9 +10,9 @@ const AnimatedAnswer = React.forwardRef(({}, ref) => {
   const [isCorrect, setIsCorrect] = React.useState(false);
 
   const iconComp = isCorrect ? (
-    <FastImage source={images.correct} style={styles.icon} />
+    <Image source={images.correct} style={styles.icon} />
   ) : (
-    <FastImage source={images.wrong} style={styles.icon} />
+    <Image source={images.wrong} style={styles.icon} />
   );
 
   //** ----- FUNCTIONS -----

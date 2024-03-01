@@ -1,6 +1,5 @@
 import React from 'react';
-import FastImage from 'react-native-fast-image';
-import {Pressable, StyleSheet, Text} from 'react-native';
+import {Pressable, StyleSheet, Image, Text} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
@@ -19,10 +18,7 @@ const UserProfileModalScoreItem = ({item, onGamePress}) => {
     <Pressable style={styles.container} onPress={() => onGamePress(item.game)}>
       <Text style={styles.gameName}>{item.game}</Text>
 
-      <FastImage
-        style={styles.gameImg}
-        source={matchGameNameWithImg(item.game)}
-      />
+      <Image style={styles.gameImg} source={matchGameNameWithImg(item.game)} />
 
       <Text
         style={[

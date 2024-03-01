@@ -1,7 +1,6 @@
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Text, Animated, StatusBar, StyleSheet} from 'react-native';
+import {View, Text, Animated, StatusBar, Image, StyleSheet} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import {signIn} from '../services/auth';
@@ -112,7 +111,7 @@ const GetStartedScreen = ({navigation}) => {
       />
 
       <View style={styles.imageContainer}>
-        <FastImage
+        <Image
           source={images.logo}
           style={[isAndroid && styles.spaceTop, styles.image]}
         />

@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {evaluate} from 'mathjs';
-import FastImage from 'react-native-fast-image';
-import {View, Text, Animated, Pressable, StyleSheet} from 'react-native';
+import {View, Text, Animated, Pressable, Image, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
@@ -10,7 +9,7 @@ import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const AnimatedImage = Animated.createAnimatedComponent(FastImage);
+const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const Card = ({value}) => {
   return (
@@ -70,11 +69,11 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
         <View style={styles.innerContainer}>
           <View style={styles.titleContainer}>
             <View style={styles.innerTitleContainer}>
-              <FastImage source={images.tutorial} style={styles.icon} />
+              <Image source={images.tutorial} style={styles.icon} />
               <Text style={styles.title}>{dict.doTheMathTutTitle}</Text>
             </View>
             <Touchable onPress={closeModal} releasingAnimationDuraiton={300}>
-              <FastImage source={images.close} style={styles.closeIcon} />
+              <Image source={images.close} style={styles.closeIcon} />
             </Touchable>
           </View>
           <View style={styles.gameContainer}>
