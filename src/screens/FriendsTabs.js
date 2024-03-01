@@ -18,6 +18,7 @@ import Screen from '../components/common/Screen';
 import YourFriendsScreen from './YourFriendsScreen';
 import FriendsTabbar from '../components/FriendsTabbar';
 import FriendRequestsScreens from './FriendRequestsScreen';
+import InviteButton from '../components/friends/InviteButton';
 
 const tabRoutes = [
   {key: 'first', title: dict.friendRequests},
@@ -78,6 +79,7 @@ const FriendsTabs = ({navigation}) => {
         labelStyle={labelAnimStyle}
         onIconPress={toggleIconOpacity}>
         <Animated.View style={tabAnimStyle}>
+          <InviteButton />
           <TabView
             onIndexChange={setIndex}
             renderTabBar={renderTabBar}

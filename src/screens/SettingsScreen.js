@@ -1,11 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-import {
-  PROFILE_SECTIONS,
-  PROFILE_SECTIONS_2,
-  PROFILE_SECTIONS_3,
-} from '../assets/values/profile';
 import {Colors} from '../utils/Colors';
 import {signOut} from '../services/auth';
 import dict from '../assets/values/dict.json';
@@ -13,6 +8,7 @@ import Screen from '../components/common/Screen';
 import MenuItem from '../components/common/MenuItem';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import {LOGOUT, FIRST_SECTION, INSPIRE} from '../assets/values/profile';
 
 const SettingsScreen = ({navigation}) => {
   const {user, setToken, setUser} = useAuthContext();
@@ -34,25 +30,7 @@ const SettingsScreen = ({navigation}) => {
         style={styles.spaceHor}
         scrollEnabled={!user?.isGuest}
         showsVerticalScrollIndicator={false}>
-        {PROFILE_SECTIONS.map((item, key) => (
-          <MenuItem
-            key={`profile-${key}`}
-            withChevron
-            isFirst={key === 0}
-            icon={item.icon}
-            label={item.title}
-            iconStyle={styles.icon}
-            isLast={key === PROFILE_SECTIONS.length - 1}
-            onPress={() => onPressItem(item.screen)}
-          />
-        ))}
-      </View>
-
-      <View
-        style={styles.spaceHor}
-        scrollEnabled={!user?.isGuest}
-        showsVerticalScrollIndicator={false}>
-        {PROFILE_SECTIONS_2.map((item, key) => (
+        {FIRST_SECTION.map((item, key) => (
           <MenuItem
             withChevron
             icon={item.icon}
@@ -61,7 +39,7 @@ const SettingsScreen = ({navigation}) => {
             key={`profile-${key}`}
             iconStyle={styles.icon}
             onPress={() => onPressItem(item.screen)}
-            isLast={key === PROFILE_SECTIONS_2.length - 1}
+            isLast={key === FIRST_SECTION.length - 1}
           />
         ))}
       </View>
@@ -69,12 +47,24 @@ const SettingsScreen = ({navigation}) => {
       <View style={styles.spaceHor}>
         <MenuItem
           isAlone
+          withChevron
+          key={'settings-inspire'}
+          iconStyle={styles.icon}
+          icon={INSPIRE.icon}
+          label={INSPIRE.title}
+          onPress={() => onPressItem(INSPIRE.screen)}
+        />
+      </View>
+
+      <View style={styles.spaceHor}>
+        <MenuItem
+          isAlone
           onPress={logout}
-          key={'profile-last'}
+          icon={LOGOUT.icon}
+          label={LOGOUT.title}
+          key={'settings-logout'}
           iconStyle={styles.smallIcon}
           labelStyle={styles.logoutRed}
-          icon={PROFILE_SECTIONS_3.icon}
-          label={PROFILE_SECTIONS_3.title}
         />
       </View>
 
@@ -107,8 +97,5 @@ const styles = StyleSheet.create({
   },
   logoutRed: {
     color: Colors.fillRed,
-  },
-  spaceTop: {
-    marginTop: DimensionsUtils.getDP(24),
   },
 });

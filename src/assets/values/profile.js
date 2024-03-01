@@ -1,7 +1,7 @@
 import images from '../images/images';
 import dict from '../values/dict.json';
 
-export const PROFILE_SECTIONS = [
+export const FIRST_SECTION = [
   {
     title: dict.profileAccount,
     screen: 'Account',
@@ -14,20 +14,18 @@ export const PROFILE_SECTIONS = [
   },
 ];
 
-export const PROFILE_SECTIONS_2 = [
-  {
-    title: dict.profileInvite,
-    screen: dict.profileInvite,
-    icon: images.envelope,
-  },
-  {
-    title: dict.profileInspiration,
-    screen: 'LeaveFeedback',
-    icon: images.creative,
-  },
-];
+export const INSPIRE = {
+  title: dict.profileInspiration,
+  screen: 'LeaveFeedback',
+  icon: images.creative,
+};
 
-export const PROFILE_SECTIONS_3 = {
+export const LOGOUT = {
   title: dict.profileLogout,
   icon: images.logout,
+};
+
+export const INVITE = {
+  title: dict.profileInvite,
+  icon: images.envelope,
 };
