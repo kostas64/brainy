@@ -9,9 +9,9 @@ import Animated, {
 
 import React from 'react';
 
-import SkeletonFriend from './SkeletonFriend';
+import {getSkeleton} from '../../utils/AnimateUtils';
 
-const Skeleton = ({skeletonStyle, loading, children}) => {
+const Skeleton = ({type, skeletonStyle, loading, children}) => {
   const opacity = useSharedValue(0.5);
   const opacityChildren = useSharedValue(0);
   const translateY = useSharedValue(25);
@@ -50,24 +50,7 @@ const Skeleton = ({skeletonStyle, loading, children}) => {
   );
 
   return loading ? (
-    <>
-      <SkeletonFriend
-        skeletonStyle={skeletonStyle}
-        animatedStyle={animatedStyle}
-      />
-      <SkeletonFriend
-        skeletonStyle={skeletonStyle}
-        animatedStyle={animatedStyle}
-      />
-      <SkeletonFriend
-        skeletonStyle={skeletonStyle}
-        animatedStyle={animatedStyle}
-      />
-      <SkeletonFriend
-        skeletonStyle={skeletonStyle}
-        animatedStyle={animatedStyle}
-      />
-    </>
+    getSkeleton(type, skeletonStyle, animatedStyle)
   ) : (
     <Animated.View style={animatedChildren}>{children}</Animated.View>
   );
