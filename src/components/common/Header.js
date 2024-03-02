@@ -50,7 +50,7 @@ const Header = ({
     if (onIconPress && !isGuest) {
       onIconPress();
     } else {
-      navigation.navigate('Profile');
+      navigation.navigate('MyProfile');
     }
   }, []);
 
