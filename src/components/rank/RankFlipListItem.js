@@ -10,7 +10,6 @@ import dict from '../../assets/values/dict.json';
 import {normalizeMS} from '../../utils/MathUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useModalContext} from '../../context/ModalProvider';
-import {matchGameWithScreenName} from '../../utils/GenericUtils';
 import UserProfileModal from '../userProfileModal/UserProfileModal';
 
 const RankFlipListItem = ({item, index, isMe}) => {
@@ -32,17 +31,16 @@ const RankFlipListItem = ({item, index, isMe}) => {
   //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {
     setModalInfo({
-      height: 384 + insetsBottom,
+      height: 234 + insetsBottom,
       content: (
         <UserProfileModal
           isMe={isMe}
           item={item}
-          onGamePress={onGamePress}
           onViewProfilePress={onViewProfilePress}
         />
       ),
     });
-  }, [item, isMe, insetsBottom, setModalInfo, onGamePress, onViewProfilePress]);
+  }, [item, isMe, insetsBottom, setModalInfo, onViewProfilePress]);
 
   const onViewProfilePress = React.useCallback(() => {
     closeModal();
@@ -55,14 +53,6 @@ const RankFlipListItem = ({item, index, isMe}) => {
       }
     }, 200);
   }, [isMe, item, closeModal, timeout, navigation]);
-
-  const onGamePress = React.useCallback(
-    game => {
-      closeModal();
-      navigation.navigate(matchGameWithScreenName(game));
-    },
-    [closeModal, navigation],
-  );
 
   return (
     <Pressable onPress={onPress} style={containerStyles}>

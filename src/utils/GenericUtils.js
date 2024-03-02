@@ -62,16 +62,3 @@ export const matchGameNameWithImg = game => {
 export const onNavigationReady = () => {
   RNBootSplash.hide({fade: true, duration: 300});
 };
-
-export const matchGameWithScreenName = game => {
-  switch (game) {
-    case 'Memory Cards':
-      return 'MemoryCard';
-    case 'Color Match':
-      return 'ColorCard';
-    case 'Do the math':
-      return 'EqualMath';
-    case 'Gesture It':
-      return 'GestureIt';
-  }
-};

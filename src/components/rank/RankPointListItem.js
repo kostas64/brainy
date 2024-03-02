@@ -9,7 +9,6 @@ import useTimeout from '../../hooks/useTimeout';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useModalContext} from '../../context/ModalProvider';
-import {matchGameWithScreenName} from '../../utils/GenericUtils';
 import UserProfileModal from '../userProfileModal/UserProfileModal';
 
 const RankPointListItem = ({item, index, isMe}) => {
@@ -31,17 +30,16 @@ const RankPointListItem = ({item, index, isMe}) => {
   //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {
     setModalInfo({
-      height: 384 + insetsBottom,
+      height: 234 + insetsBottom,
       content: (
         <UserProfileModal
           isMe={isMe}
           item={item}
-          onGamePress={onGamePress}
           onViewProfilePress={onViewProfilePress}
         />
       ),
     });
-  }, [item, isMe, insetsBottom, onGamePress, onViewProfilePress, setModalInfo]);
+  }, [item, isMe, insetsBottom, onViewProfilePress, setModalInfo]);
 
   const onViewProfilePress = React.useCallback(() => {
     closeModal();
@@ -54,14 +52,6 @@ const RankPointListItem = ({item, index, isMe}) => {
       }
     }, 200);
   }, [isMe, item, closeModal, timeout, navigation]);
-
-  const onGamePress = React.useCallback(
-    game => {
-      closeModal();
-      navigation.navigate(matchGameWithScreenName(game));
-    },
-    [closeModal, navigation],
-  );
 
   return (
     <Pressable onPress={onPress} style={containerStyles}>
