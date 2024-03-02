@@ -29,7 +29,7 @@ const UserProfileModalFooterButtons = ({
       <ModalButton
         onPress={onPressSecondButton}
         loading={loadingButton === 'SECOND'}
-        label={isMe ? dict.viewProfile : secondLabel}
+        label={isMe ? dict.goToProfile : secondLabel}
         containerStyle={!isMe ? styles.buttonStyle : styles.soloButtonStyle}
       />
     </View>

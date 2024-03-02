@@ -42,15 +42,19 @@ const RankFlipListItem = ({item, index, isMe}) => {
         />
       ),
     });
-  }, [item, isMe, insetsBottom, onGamePress, onViewProfilePress, setModalInfo]);
+  }, [item, isMe, insetsBottom, setModalInfo, onGamePress, onViewProfilePress]);
 
   const onViewProfilePress = React.useCallback(() => {
     closeModal();
 
     timeout.current = setTimeout(() => {
-      navigation.navigate('Profile');
+      if (isMe) {
+        navigation.navigate('MyProfile');
+      } else {
+        navigation.navigate('Profile');
+      }
     }, 200);
-  }, [closeModal, timeout, navigation]);
+  }, [isMe, closeModal, timeout, navigation]);
 
   const onGamePress = React.useCallback(
     game => {

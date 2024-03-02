@@ -155,7 +155,7 @@ const UserProfileModal = ({isMe, item, onGamePress, onViewProfilePress}) => {
   }, [user, hasFriendship, hasRequest, setToast]);
 
   const onPressSecondButton = React.useCallback(() => {
-    if (isMe) {
+    if (hasRequest !== 'Accept') {
       onViewProfilePress();
     } else if (hasRequest === 'Accept') {
       //Reject friend request
@@ -168,7 +168,7 @@ const UserProfileModal = ({isMe, item, onGamePress, onViewProfilePress}) => {
         })
         .finally(() => setLoadingButton(false));
     }
-  }, [isMe, onViewProfilePress, hasRequest, user?._id]);
+  }, [onViewProfilePress, hasRequest, user?._id]);
 
   //** ----- EFFECTS -----
   React.useEffect(() => {

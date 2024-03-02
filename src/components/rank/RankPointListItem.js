@@ -47,9 +47,13 @@ const RankPointListItem = ({item, index, isMe}) => {
     closeModal();
 
     timeout.current = setTimeout(() => {
-      navigation.navigate('Profile');
+      if (isMe) {
+        navigation.navigate('Profile');
+      } else {
+        navigation.navigate('MyProfile');
+      }
     }, 200);
-  }, [closeModal, timeout, navigation]);
+  }, [isMe, closeModal, timeout, navigation]);
 
   const onGamePress = React.useCallback(
     game => {
