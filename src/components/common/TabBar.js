@@ -107,7 +107,7 @@ const TabBar = props => {
           ? rankI
           : route.name === dict.rankScrTitle
           ? rankIO
-          : route.name === dict.profileScrTitle && focused
+          : route.name === dict.myProfileScrTitle && focused
           ? profileIO
           : profileI;
 
@@ -129,7 +129,9 @@ const TabBar = props => {
       fontFamily: focused ? 'Poppins-SemiBold' : 'Poppins-Medium',
     };
 
-    return <Text style={[styles.text, style]}>{name}</Text>;
+    const tabName = name === 'MyProfile' ? 'Profile' : name;
+
+    return <Text style={[styles.text, style]}>{tabName}</Text>;
   }, []);
 
   //** ----- EFFECTS -----

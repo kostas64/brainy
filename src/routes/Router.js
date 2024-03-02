@@ -7,6 +7,7 @@ import {Colors} from '../utils/Colors';
 import FriendsTabs from '../screens/FriendsTabs';
 import AccountScreen from '../screens/AccountScreen';
 import InspireScreen from '../screens/InspireScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import EqualMathScreen from '../screens/EqualMathScreen';
 import GestureItScreen from '../screens/GestureItScreen';
@@ -70,6 +71,11 @@ const Router = ({onNavigationReady}) => {
             name="GestureIt"
             component={GestureItScreen}
             options={screenConfig}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={screenSlideConfig}
           />
           <Stack.Screen
             name="Settings"
