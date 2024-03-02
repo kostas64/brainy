@@ -8,11 +8,11 @@ import {signOut} from '../../services/auth';
 import {WIDTH} from '../../utils/GenericUtils';
 import dict from '../../assets/values/dict.json';
 import {useStorage} from '../../hooks/useStorage';
+import {LOGOUT} from '../../assets/values/profile';
 import {LIST_GAMES} from '../../assets/values/games';
 import {getAdaptedScores} from '../../utils/StringUtils';
 import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
-import {PROFILE_SECTIONS_3} from '../../assets/values/profile';
 
 const ProfileScoresSection = ({passedScores}) => {
   const navigation = useNavigation();
@@ -32,11 +32,11 @@ const ProfileScoresSection = ({passedScores}) => {
         <MenuItem
           isAlone
           onPress={logout}
+          icon={LOGOUT.icon}
+          label={LOGOUT.title}
           key={'profile-last'}
           iconStyle={styles.smallIcon}
           labelStyle={styles.logoutRed}
-          icon={PROFILE_SECTIONS_3.icon}
-          label={PROFILE_SECTIONS_3.title}
         />
       </View>
     );
