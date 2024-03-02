@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
   icon: {
+    tintColor: Colors.appGreen,
     width: DimensionsUtils.getDP(16),
     height: DimensionsUtils.getDP(16),
   },
