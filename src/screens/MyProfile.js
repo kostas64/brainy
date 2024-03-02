@@ -25,11 +25,9 @@ const MyProfileScreen = ({navigation}) => {
     ? user?.nickname
     : `${user?.name} ${user?.surname}`;
 
+  const icon = user?.isGuest ? images.guest : null;
   const nameStyle = user?.isGuest && styles.whiteColor;
   const contStyle = user?.isGuest ? styles.guestAvatarCont : styles.avatarCont;
-  const imgContStyle = styles.imgCont;
-  const imgStyle = styles.imgStyle;
-  const icon = user?.isGuest ? images.guest : null;
 
   //** ----- FUNCTIONS -----
   const onIconPress = React.useCallback(
@@ -57,10 +55,10 @@ const MyProfileScreen = ({navigation}) => {
         user={user}
         name={name}
         icon={icon}
-        imgStyle={imgStyle}
         nameStyle={nameStyle}
         contStyle={contStyle}
-        imgContStyle={imgContStyle}
+        imgStyle={styles.imgStyle}
+        imgContStyle={styles.imgCont}
       />
 
       <ProfileScoresSection />
