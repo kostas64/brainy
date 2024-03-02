@@ -51,10 +51,10 @@ const RankFlipListItem = ({item, index, isMe}) => {
       if (isMe) {
         navigation.navigate('MyProfile');
       } else {
-        navigation.navigate('Profile');
+        navigation.navigate('Profile', {item});
       }
     }, 200);
-  }, [isMe, closeModal, timeout, navigation]);
+  }, [isMe, item, closeModal, timeout, navigation]);
 
   const onGamePress = React.useCallback(
     game => {
