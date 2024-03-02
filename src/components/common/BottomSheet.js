@@ -39,10 +39,7 @@ const BottomSheet = React.forwardRef(
 
     //** ----- STYLES -----
     const animBottomSheetStyle = useAnimatedStyle(
-      () => ({
-        borderRadius: 12,
-        transform: [{translateY: translateY.value}],
-      }),
+      () => ({transform: [{translateY: translateY.value}]}),
       [],
     );
 
@@ -159,7 +156,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.tabBarBg,
     position: 'absolute',
     top: HEIGHT,
-    borderRadius: 25,
+    borderRadius: 18,
   },
   line: {
     width: 40,
