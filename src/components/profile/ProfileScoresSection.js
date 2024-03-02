@@ -6,6 +6,7 @@ import {Colors} from '../../utils/Colors';
 import MenuItem from '../common/MenuItem';
 import {signOut} from '../../services/auth';
 import {WIDTH} from '../../utils/GenericUtils';
+import dict from '../../assets/values/dict.json';
 import {useStorage} from '../../hooks/useStorage';
 import {LIST_GAMES} from '../../assets/values/games';
 import {getAdaptedScores} from '../../utils/StringUtils';
@@ -42,19 +43,22 @@ const ProfileScoresSection = ({passedScores}) => {
   }
 
   return (
-    <View style={styles.container}>
-      {LIST_GAMES.map((item, index) => (
-        <View key={`game-${index}`} style={styles.itemContainer}>
-          <View style={styles.iconContainer}>{item.icon}</View>
-          <Text style={styles.label} numberOfLines={2}>
-            {item.title}
-          </Text>
-          <Text style={styles.score}>
-            {getAdaptedScores(item.title, scores, passedScores)}
-          </Text>
-        </View>
-      ))}
-    </View>
+    <>
+      <Text style={styles.bestScoresLabel}>{dict.bestScores}</Text>
+      <View style={styles.container}>
+        {LIST_GAMES.map((item, index) => (
+          <View key={`game-${index}`} style={styles.itemContainer}>
+            <View style={styles.iconContainer}>{item.icon}</View>
+            <Text style={styles.label} numberOfLines={2}>
+              {item.title}
+            </Text>
+            <Text style={styles.score}>
+              {getAdaptedScores(item.title, scores, passedScores)}
+            </Text>
+          </View>
+        ))}
+      </View>
+    </>
   );
 };
 
@@ -62,11 +66,17 @@ export default ProfileScoresSection;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 16,
+  },
+  bestScoresLabel: {
+    marginLeft: 16,
+    color: Colors.halfWhite,
+    fontFamily: 'Poppins-Medium',
+    marginBottom: DimensionsUtils.getDP(8),
+    fontSize: DimensionsUtils.getFontSize(18),
   },
   itemContainer: {
     height: 82,
