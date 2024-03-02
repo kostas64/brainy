@@ -7,7 +7,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Colors} from '../utils/Colors';
 import {HEIGHT} from '../utils/GenericUtils';
 import dict from '../assets/values/dict.json';
-import Skeleton from '../components/common/Skeleton';
+import Skeleton from '../components/skeleton/Skeleton';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import {getAllFriendsRequest} from '../services/friends';
 import FriendRequestItem from '../components/friendRequest/FriendRequestItem';
@@ -83,7 +83,10 @@ const FriendRequestsScreens = ({isFocused}) => {
   }, [isFocused]);
 
   return (
-    <Skeleton loading={loading} skeletonStyle={styles.skeletonStyle}>
+    <Skeleton
+      type={'friendReq'}
+      loading={loading}
+      skeletonStyle={styles.skeletonStyle}>
       <View style={[styles.listContainer, {height: listHeight}]}>
         <FlashList
           data={requests}

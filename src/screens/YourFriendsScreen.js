@@ -8,7 +8,7 @@ import {Colors} from '../utils/Colors';
 import {HEIGHT} from '../utils/GenericUtils';
 import dict from '../assets/values/dict.json';
 import {getAllFriends} from '../services/friends';
-import Skeleton from '../components/common/Skeleton';
+import Skeleton from '../components/skeleton/Skeleton';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import FriendsListItem from '../components/friends/FriendsListItem';
 
@@ -70,7 +70,10 @@ const YourFriendsScreen = ({isFocused}) => {
   }, [isFocused]);
 
   return (
-    <Skeleton loading={loading} skeletonStyle={styles.skeletonStyle}>
+    <Skeleton
+      type={'friends'}
+      loading={loading}
+      skeletonStyle={styles.skeletonStyle}>
       <View style={[styles.listContainer, {height: listHeight}]}>
         <FlashList
           data={friends}
