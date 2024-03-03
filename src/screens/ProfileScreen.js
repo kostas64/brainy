@@ -10,6 +10,7 @@ import {
   acceptFriendsRequest,
   cancelFriendsRequest,
 } from '../services/friends';
+import useTimeout from '../hooks/useTimeout';
 import dict from '../assets/values/dict.json';
 import Screen from '../components/common/Screen';
 import Skeleton from '../components/skeleton/Skeleton';
@@ -21,6 +22,7 @@ import ProfileScoresSection from '../components/profile/ProfileScoresSection';
 import UserProfileModalAvatar from '../components/userProfileModal/UserProfileModalAvatar';
 
 const ProfileScreen = ({route}) => {
+  const timeout = useTimeout();
   const insets = useSafeAreaInsets();
   const {setToast} = useToastContext();
 
@@ -158,12 +160,12 @@ const ProfileScreen = ({route}) => {
           setHasRequest('Cancel');
         }
 
-        setTimeout(() => {
+        timeout.current = setTimeout(() => {
           setLoading(false);
         }, 500);
       },
     );
-  }, [getScores, getFriendship, checkFriendRequest]);
+  }, [timeout, getScores, getFriendship, checkFriendRequest]);
 
   return (
     <Screen label={dict.profileScrTitle} noIcon>

@@ -87,9 +87,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
     const event = e.nativeEvent;
 
     if (event.oldState === State.UNDETERMINED && event.x < 10 && isIOS) {
-      setTimeout(() => {
-        navigation.pop();
-      }, 100);
+      navigation.pop();
     } else {
       if (event.oldState === State.ACTIVE && event.state === State.END) {
         if (

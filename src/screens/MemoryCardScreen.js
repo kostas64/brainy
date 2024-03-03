@@ -2,6 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
+import useTimeout from '../hooks/useTimeout';
 import {submitScore} from '../services/score';
 import {shuffleArray} from '../utils/MathUtils';
 import Card from '../components/cardMemory/Card';
@@ -21,6 +22,7 @@ import MemorySuccessModal from '../components/cardMemory/MemorySuccessModal';
 import CardMemoryTutorial from '../components/cardMemory/CardMemoryTutorial';
 
 const MemoryCardScreen = () => {
+  const timeout = useTimeout();
   const insets = useSafeAreaInsets();
 
   const timeRef = React.useRef();
@@ -173,7 +175,7 @@ const MemoryCardScreen = () => {
       animAnswerRef.current.animateAnswer(false);
       setFlipCounter(oldCounter => oldCounter + 1);
       setCardsDisabled(true);
-      setTimeout(() => {
+      timeout.current = setTimeout(() => {
         childRefs.current?.[currentFlipped[0]?.id]?.flipToBack();
         childRefs.current?.[currentFlipped[1]?.id]?.flipToBack();
         setCurrentFlipped([]);
@@ -201,7 +203,7 @@ const MemoryCardScreen = () => {
       );
       setCurrentFlipped([]);
     }
-  }, [cards, currentFlipped]);
+  }, [timeout, cards, currentFlipped]);
 
   return (
     <>

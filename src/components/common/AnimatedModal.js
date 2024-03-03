@@ -3,11 +3,14 @@ import React from 'react';
 import {Animated, StyleSheet, Pressable} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import useTimeout from '../../hooks/useTimeout';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimPress = Animated.createAnimatedComponent(Pressable);
 
 const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
+  const timeout = useTimeout();
+
   const [animFinished, setAnimFinished] = React.useState(false);
   const opacityRef = React.useRef(new Animated.Value(0)).current;
   const translateY = React.useRef(new Animated.Value(1000)).current;
@@ -28,7 +31,7 @@ const AnimatedModal = ({content, gameOver, modalOpen, setModalOpen}) => {
       }),
     ]).start();
 
-    setTimeout(() => {
+    timeout.current = setTimeout(() => {
       setModalOpen(false);
     }, 150);
   };

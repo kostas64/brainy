@@ -5,6 +5,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
+import useTimeout from '../hooks/useTimeout';
 import {HEIGHT} from '../utils/GenericUtils';
 import dict from '../assets/values/dict.json';
 import Skeleton from '../components/skeleton/Skeleton';
@@ -17,6 +18,7 @@ const ItemSeparator = () => {
 };
 
 const FriendRequestsScreens = ({isFocused}) => {
+  const timeout = useTimeout();
   const insets = useSafeAreaInsets();
 
   const [requests, setRequests] = React.useState([]);
@@ -67,9 +69,9 @@ const FriendRequestsScreens = ({isFocused}) => {
     getAllFriendsRequest()
       .then(data => setRequests(data))
       .finally(() => {
-        setTimeout(() => {
+        timeout.current = setTimeout(() => {
           setLoading(false);
-        }, 1000);
+        }, 750);
       });
   }, [loading]);
 
