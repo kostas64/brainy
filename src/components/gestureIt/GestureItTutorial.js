@@ -59,12 +59,12 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         ]}
       />
       <View style={styles.selfCenter}>
-        <FastImage
+        <Image
           source={images.arrowBlack}
           style={[styles.smallImg, {transform: [{rotate: '90deg'}]}]}
         />
         <View style={styles.rightSpacer} />
-        <FastImage
+        <Image
           source={images.arrowBlack}
           style={[
             styles.smallImg,
@@ -75,7 +75,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
           ]}
         />
         <View style={styles.rightSpacer} />
-        <FastImage
+        <Image
           source={images.arrowBlack}
           style={[styles.smallImg, {transform: [{rotate: '90deg'}]}]}
         />
@@ -176,11 +176,11 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
           <View style={styles.innerContainer}>
             <View style={styles.titleContainer}>
               <View style={styles.innerTitleContainer}>
-                <FastImage source={images.tutorial} style={styles.icon} />
+                <Image source={images.tutorial} style={styles.icon} />
                 <Text style={styles.title}>{dict.gestureItTutTitle}</Text>
               </View>
               <Touchable onPress={closeModal} releasingAnimationDuraiton={300}>
-                <FastImage source={images.close} style={styles.closeIcon} />
+                <Image source={images.close} style={styles.closeIcon} />
               </Touchable>
             </View>
             <View style={styles.gameContainer}>
