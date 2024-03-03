@@ -10,6 +10,7 @@ import React from 'react';
 import {Image, Text, StyleSheet} from 'react-native';
 
 import {Colors} from '../utils/Colors';
+import useTimeout from '../hooks/useTimeout';
 import {WIDTH, isIOS} from '../utils/GenericUtils';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 
@@ -21,7 +22,7 @@ const initialState = {
 const ToastContext = React.createContext();
 
 export const ToastProvider = ({children}) => {
-  const timeout = React.useRef();
+  const timeout = useTimeout();
 
   const topPost = isIOS
     ? toast?.top + 24 - 100 || -100
@@ -45,18 +46,12 @@ export const ToastProvider = ({children}) => {
       });
 
       timeout.current = setTimeout(() => {
-        topPosition.value = withTiming(
-          toastTop,
-          {
-            duration: 500,
-          },
-          done => {
-            done && runOnJS(setToast)(initialState);
-          },
-        );
+        topPosition.value = withTiming(toastTop, {duration: 500}, done => {
+          done && runOnJS(setToast)(initialState);
+        });
       }, 3500);
     }
-  }, [toast.message, topPosition]);
+  }, [timeout, toast.message, topPosition]);
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
