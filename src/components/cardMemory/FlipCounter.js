@@ -8,10 +8,9 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 const FlipCounter = ({flipCounter}) => {
   return (
     <View style={styles.flipContainer}>
-      <Text
-        style={
-          styles.flipLabel
-        }>{`${dict.memoryCardFlipLabel}: ${flipCounter}`}</Text>
+      <Text style={styles.flipLabel}>
+        {`${dict.memoryCardFlipLabel}: ${flipCounter}`}
+      </Text>
     </View>
   );
 };

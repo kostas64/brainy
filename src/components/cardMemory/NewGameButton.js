@@ -10,10 +10,7 @@ const NewGameButton = ({gameFinished, setNewGame}) => {
   return (
     <Pressable
       onPress={setNewGame}
-      style={[
-        styles.container,
-        isAndroid && {height: DimensionsUtils.getDP(58)},
-      ]}>
+      style={[styles.container, isAndroid && styles.height]}>
       <Text style={styles.label}>
         {gameFinished ? dict.playAgainLabel : dict.newGameLabel}
       </Text>
@@ -36,6 +33,9 @@ const styles = StyleSheet.create({
     fontSize: DimensionsUtils.getFontSize(24),
     color: Colors.white,
     alignSelf: 'center',
+  },
+  height: {
+    height: DimensionsUtils.getDP(58),
   },
 });
 
