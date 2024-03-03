@@ -34,7 +34,7 @@ const renderScene = ({route, index}) => {
   }
 };
 
-const FriendsTabs = ({navigation}) => {
+const FriendsTabs = () => {
   const opacity = useSharedValue(1);
 
   const [routes] = React.useState(tabRoutes);

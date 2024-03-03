@@ -13,7 +13,7 @@ import {HEIGHT, isAndroid} from '../utils/GenericUtils';
 import {useModalContext} from '../context/ModalProvider';
 import CircularTransition from '../components/transitions/CircularTransition';
 
-const GetStartedScreen = ({navigation}) => {
+const GetStartedScreen = () => {
   const insets = useSafeAreaInsets();
   const {closeModal, setModalInfo} = useModalContext();
   const {token, setToken, user, setUser} = useAuthContext();
