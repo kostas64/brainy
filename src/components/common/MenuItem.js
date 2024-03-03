@@ -30,20 +30,18 @@ const MenuItem = ({
 
   return (
     <>
-      <View>
-        <Touchable
-          onPress={onPress}
-          style={[styles.rowCenter, styles.spaceBetween]}>
-          <View style={styles.rowCenter}>
-            <Image source={icon} style={iconStyle} />
-            <Text style={[styles.menuItemLabel, labelStyle]}>{label}</Text>
-          </View>
-          <View style={styles.rowCenter}>
-            {showCounter && <NumIndicator number={counter} />}
-            {withChevron && <Chevron style={chevronStyle} />}
-          </View>
-        </Touchable>
-      </View>
+      <Touchable
+        onPress={onPress}
+        style={[styles.rowCenter, styles.spaceBetween]}>
+        <View style={styles.rowCenter}>
+          <Image source={icon} style={iconStyle} />
+          <Text style={[styles.menuItemLabel, labelStyle]}>{label}</Text>
+        </View>
+        <View style={styles.rowCenter}>
+          {showCounter && <NumIndicator number={counter} />}
+          {withChevron && <Chevron style={chevronStyle} />}
+        </View>
+      </Touchable>
       {!(isLast || isAlone) && <View style={styles.hr} />}
     </>
   );
