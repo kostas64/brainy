@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 
 const useTimeout = () => {
@@ -7,7 +6,10 @@ const useTimeout = () => {
   //** ----- EFFECTS -----
   React.useEffect(() => {
     return () => {
-      !!timeout.current && clearTimeout(timeout.current);
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+        timeout.current = null;
+      }
     };
   }, []);
 
