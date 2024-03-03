@@ -55,11 +55,7 @@ const AnimatedAnswer = React.forwardRef(({}, ref) => {
   }));
 
   return (
-    <Animated.View
-      style={{
-        opacity: opacityRef,
-        transform: [{translateY}],
-      }}>
+    <Animated.View style={{opacity: opacityRef, transform: [{translateY}]}}>
       {iconComp}
     </Animated.View>
   );
