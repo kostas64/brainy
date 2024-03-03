@@ -1,21 +1,45 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import {Colors} from '../../utils/Colors';
+import Touchable from '../common/Touchable';
 import {WIDTH} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const FriendsListItem = ({item}) => {
+  const navigation = useNavigation();
+
+  const onPress = React.useCallback(() => {
+    navigation.navigate('Profile', {
+      item: {
+        user: [
+          {
+            _id: item.friendUserId,
+            nickname: item?.friendUserNickname,
+            name: item?.friendUserName,
+            surname: item?.friendUserSurname,
+            avatar: item?.friendUserAvatar,
+          },
+        ],
+      },
+    });
+  }, [item, navigation]);
+
   return (
-    <View style={styles.row}>
+    <Touchable
+      onPress={onPress}
+      style={styles.row}
+      pressingAnimationDuration={25}
+      releasingAnimationDuraiton={50}>
       <FastImage style={styles.avatar} source={{uri: item.friendUserAvatar}} />
       <View style={styles.nameContainer}>
         <Text numberOfLines={2} style={styles.name}>
           {`${item.friendUserName} ${item.friendUserSurname}`}
         </Text>
       </View>
-    </View>
+    </Touchable>
   );
 };
 

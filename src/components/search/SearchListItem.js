@@ -1,15 +1,44 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
 import {WIDTH} from '../../utils/GenericUtils';
+import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const SearchListItem = ({item, style}) => {
+  const {user} = useAuthContext();
+  const navigation = useNavigation();
+
+  //** ----- FUNCTIONS -----
+  const onPress = React.useCallback(() => {
+    const isMe = !user?.isGuest && user?.email === item?.email;
+
+    if (isMe) {
+      navigation.navigate('MyProfile');
+    } else {
+      navigation.navigate('Profile', {
+        item: {
+          user: [
+            {
+              _id: item._id,
+              nickname: item?.nickname,
+              name: item?.name,
+              surname: item?.surname,
+              avatar: item?.avatar,
+            },
+          ],
+        },
+      });
+    }
+  }, [user, navigation, item]);
+
   return (
     <Touchable
+      onPress={onPress}
       pressingAnimationDuration={25}
       releasingAnimationDuraiton={50}
       style={[styles.container, style]}>
