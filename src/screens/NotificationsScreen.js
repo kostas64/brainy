@@ -32,6 +32,7 @@ const NotificationsScreen = () => {
     reminder: true,
   });
 
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     if (firstRender.current !== 0) {
       updateNotifSetts(settings);

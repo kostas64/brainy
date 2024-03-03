@@ -14,16 +14,19 @@ const CustomSwitch = ({size, value, setValue}) => {
   const SIZE = size || 60;
   const translateX = useSharedValue(0);
 
-  const animateIOS = React.useCallback(() => {
-    triggerHaptik();
-    setValue(old => !old);
-  }, [setValue]);
-
+  //** ----- STYLES -----
   const animStyle = useAnimatedStyle(
     () => ({transform: [{translateX: translateX.value}]}),
     [],
   );
 
+  //** ----- FUNCTIONS -----
+  const animateIOS = React.useCallback(() => {
+    triggerHaptik();
+    setValue(old => !old);
+  }, [setValue]);
+
+  //** ----- EFFECTS -----
   React.useEffect(() => {
     const toValue = value ? SIZE / 2 : 0;
     translateX.value = withTiming(toValue, {duration: 250});

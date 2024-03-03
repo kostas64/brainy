@@ -35,6 +35,7 @@ const SearchInput = React.forwardRef(
   ) => {
     const searchTimeout = useTimeout();
 
+    //** ----- FUNCTIONS -----
     const onChangeHandler = React.useCallback(
       value => {
         clearTimeout(searchTimeout.current);

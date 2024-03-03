@@ -97,7 +97,7 @@ const BottomSheet = React.forwardRef(
       panEnabled !== isPanEnabled && setIsPanEnabled(panEnabled);
     }, [panEnabled, isPanEnabled]);
 
-    //** ----- GESTURES
+    //** ----- GESTURES -----
     const gesture = Gesture.Pan()
       .enabled(isPanEnabled)
       .onStart(() => {
