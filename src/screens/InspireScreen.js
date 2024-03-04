@@ -1,6 +1,13 @@
+import {
+  View,
+  Text,
+  Keyboard,
+  TextInput,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import {shareIdea} from '../services/idea';
@@ -34,12 +41,13 @@ const InspireScreen = ({navigation}) => {
 
     shareIdea(input)
       .then(() => {
+        setInput('');
+        Keyboard.dismiss();
         setToast({message: dict.shareToast});
-        navigation.pop();
       })
       .catch(() => setToast({message: dict.errorOnUpdate}))
       .finally(() => setLoading(false));
-  }, [input, navigation, setToast]);
+  }, [input, setToast]);
 
   return (
     <Screen label={dict.inspireScrTitle} noIcon>
@@ -50,6 +58,7 @@ const InspireScreen = ({navigation}) => {
           <TextInput
             autoFocus
             multiline
+            value={input}
             style={styles.input}
             onChangeText={setInput}
             placeholder="Write your idea..."
