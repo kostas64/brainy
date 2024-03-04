@@ -7,13 +7,22 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 
 import {Colors} from '../../utils/Colors';
-import {HEIGHT} from '../../utils/GenericUtils';
 import useBackAction from '../../hooks/useBackAction';
+import {HEIGHT, isIOS} from '../../utils/GenericUtils';
 import {useModalContext} from '../../context/ModalProvider';
+import {initialWindowMetrics} from 'react-native-safe-area-context';
+
+const {frame} = initialWindowMetrics;
+
+const MAX_HEIGHT = isIOS
+  ? HEIGHT
+  : Platform.Version >= 29
+  ? frame.height + StatusBar.currentHeight
+  : frame.height;
 
 const BottomSheet = React.forwardRef(
   (
@@ -28,7 +37,7 @@ const BottomSheet = React.forwardRef(
     ref,
   ) => {
     const MAX_TRANSLATE_Y =
-      (modalHeight > 0 ? -modalHeight : modalHeight) || -HEIGHT + 50;
+      (modalHeight > 0 ? -modalHeight : modalHeight) || -MAX_HEIGHT + 50;
 
     const {resetModal} = useModalContext();
     const active = useSharedValue(false);
@@ -151,11 +160,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   bottomSheetContainer: {
-    height: HEIGHT,
+    height: MAX_HEIGHT,
     width: '100%',
     backgroundColor: Colors.tabBarBg,
     position: 'absolute',
-    top: HEIGHT,
+    top: MAX_HEIGHT,
     borderRadius: 18,
   },
   line: {

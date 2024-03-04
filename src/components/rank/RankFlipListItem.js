@@ -19,7 +19,7 @@ const RankFlipListItem = ({item, index, isMe}) => {
   const {closeModal, setModalInfo} = useModalContext();
 
   const insetsBottom =
-    insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(20);
+    insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(24);
 
   //** ----- STYLES -----
   const containerStyles = [
