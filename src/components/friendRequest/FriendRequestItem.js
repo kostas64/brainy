@@ -63,7 +63,7 @@ const FriendRequestItem = ({item, updateList}) => {
       </View>
       <View style={styles.buttonsContainer}>
         <Button
-          disabled={loading}
+          disabled={!!loading}
           label={dict.accept}
           loading={loading === 'ACCEPT'}
           onPress={() => handleRequest('ACCEPT')}
@@ -71,7 +71,7 @@ const FriendRequestItem = ({item, updateList}) => {
           containerStyle={[styles.btnContainer, styles.spaceRight]}
         />
         <Button
-          disabled={loading}
+          disabled={!!loading}
           label={dict.reject}
           loading={loading === 'REJECT'}
           indicatorColor={Colors.appGreen}

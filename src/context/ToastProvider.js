@@ -7,7 +7,8 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import React from 'react';
-import {Image, Text, StyleSheet} from 'react-native';
+import {Image, Text, StyleSheet, View} from 'react-native';
+import {initialWindowMetrics} from 'react-native-safe-area-context';
 
 import {Colors} from '../utils/Colors';
 import {WIDTH, isIOS} from '../utils/GenericUtils';
@@ -22,6 +23,7 @@ const ToastContext = React.createContext();
 
 export const ToastProvider = ({children}) => {
   const timeout = React.useRef();
+  const {insets} = initialWindowMetrics;
 
   const topPost = isIOS
     ? toast?.top + 24 - 100 || -100
@@ -38,7 +40,7 @@ export const ToastProvider = ({children}) => {
     const toastTop = isIOS ? -100 : -112;
 
     if (toast.message) {
-      topPosition.value = withSpring(54, {
+      topPosition.value = withSpring(insets.top + 4, {
         mass: 3,
         damping: 30,
         stiffness: 125,
@@ -52,9 +54,9 @@ export const ToastProvider = ({children}) => {
             timeout.current = null;
           }
         });
-      }, 3500);
+      }, 3000);
     }
-  }, [timeout, toast.message, topPosition]);
+  }, [insets.top, timeout, toast.message, topPosition]);
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
@@ -64,9 +66,13 @@ export const ToastProvider = ({children}) => {
   return (
     <ToastContext.Provider value={{setToast}}>
       {children}
-      <Animated.View style={[animStyle, styles.container]}>
-        {toast.icon && <Image source={toast.icon} style={styles.image} />}
-        <Text style={styles.message}>{toast.message}</Text>
+
+      <Animated.View style={[animStyle, styles.row, styles.container]}>
+        <View style={styles.leftPose} />
+        <View style={styles.innerContainer}>
+          {toast.icon && <Image source={toast.icon} style={styles.image} />}
+          <Text style={styles.message}>{toast.message}</Text>
+        </View>
       </Animated.View>
     </ToastContext.Provider>
   );
@@ -77,19 +83,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   container: {
-    padding: DimensionsUtils.getDP(12),
-    paddingHorizontal: DimensionsUtils.getDP(16),
     position: 'absolute',
-    borderRadius: DimensionsUtils.getDP(8),
-    width: WIDTH - DimensionsUtils.getDP(32),
     alignSelf: 'center',
-    backgroundColor: Colors.tabBarIcon,
+  },
+  leftPose: {
+    position: 'absolute',
+    height: '100%',
+    left: -DimensionsUtils.getDP(4),
+    width: DimensionsUtils.getDP(12),
+    backgroundColor: Colors.appGreen,
+    borderTopLeftRadius: DimensionsUtils.getDP(8),
+    borderBottomLeftRadius: DimensionsUtils.getDP(8),
+  },
+  innerContainer: {
+    left: 3,
+    height: 66,
+    width: WIDTH - DimensionsUtils.getDP(32),
+    backgroundColor: Colors.tabBarBg,
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: DimensionsUtils.getDP(16),
+    borderTopRightRadius: DimensionsUtils.getDP(8),
+    borderBottomRightRadius: DimensionsUtils.getDP(8),
   },
   image: {
-    width: DimensionsUtils.getDP(42),
-    height: DimensionsUtils.getDP(42),
+    width: 40,
+    height: 40,
     borderRadius: DimensionsUtils.getDP(5),
     marginRight: DimensionsUtils.getDP(12),
   },
