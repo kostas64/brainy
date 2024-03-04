@@ -1,11 +1,17 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import Share from 'react-native-share';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 import {Colors} from '../utils/Colors';
+import dict from '../assets/values/dict.json';
 import {isAndroid} from '../utils/GenericUtils';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import {useToastContext} from '../context/ToastProvider';
+import {shareOptions} from '../assets/values/shareOptions';
 
 const FriendsTabbar = props => {
+  const {setToast} = useToastContext();
+
   const navState = props.navigationState;
   const selectedItem = navState?.index;
 
@@ -23,17 +29,39 @@ const FriendsTabbar = props => {
     [props],
   );
 
+  const onPressShare = React.useCallback(async () => {
+    Share.open(shareOptions)
+      .then(res => {
+        //On success show toast
+        if (res.success) {
+          setToast({message: dict.thanksOnSharing});
+        }
+      })
+      .catch(err => console.log('Error ', err));
+  }, [setToast]);
+
   return (
-    <View style={styles.row}>
-      {navState.routes?.map((item, index) => (
+    <View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}>
+        {navState.routes?.map((item, index) => (
+          <Pressable
+            style={tabStyles(index)}
+            onPress={() => onPress(item)}
+            key={`friends-tabbar-${index}`}>
+            <Text style={styles.label}>{item.title}</Text>
+            {selectedItem === index && <View style={styles.indicator} />}
+          </Pressable>
+        ))}
         <Pressable
-          style={tabStyles(index)}
-          onPressIn={() => onPress(item)}
-          key={`friends-tabbar-${index}`}>
-          <Text style={styles.label}>{item.title}</Text>
-          {selectedItem === index && <View style={styles.indicator} />}
+          onPress={onPressShare}
+          key={'friends-tabbar-invite'}
+          style={[styles.tabContainer, styles.spaceRight]}>
+          <Text style={styles.label}>{dict.profileInvite}</Text>
         </Pressable>
-      ))}
+      </ScrollView>
     </View>
   );
 };
@@ -41,12 +69,14 @@ const FriendsTabbar = props => {
 export default FriendsTabbar;
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
+  scrollContainer: {
+    height: 60,
+    marginTop: DimensionsUtils.getDP(16),
   },
   tabContainer: {
+    height: 38,
+    justifyContent: 'center',
     backgroundColor: Colors.veryLightGrey,
-    paddingVertical: DimensionsUtils.getDP(8),
     paddingHorizontal: DimensionsUtils.getDP(16),
     borderRadius: DimensionsUtils.getDP(30),
     marginTop: DimensionsUtils.getDP(8),
@@ -61,12 +91,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.appGreen,
   },
   indicator: {
+    top: 46,
     position: 'absolute',
     alignSelf: 'center',
-    bottom: -DimensionsUtils.getDP(12),
-    height: DimensionsUtils.getDP(6),
-    width: DimensionsUtils.getDP(6),
-    borderRadius: DimensionsUtils.getDP(3),
+    width: 6,
+    height: 6,
+    borderRadius: 3,
     backgroundColor: Colors.appGreen,
+  },
+
+  spaceRight: {
+    marginRight: DimensionsUtils.getDP(16),
   },
 });
