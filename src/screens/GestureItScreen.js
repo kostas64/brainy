@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -150,7 +151,7 @@ const GestureItScreen = () => {
 
   React.useEffect(() => {
     generateNext();
-  }, [generateNext]);
+  }, []);
 
   React.useEffect(() => {
     if (isFinished) {
