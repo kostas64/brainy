@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -102,12 +103,12 @@ const MemoryCardScreen = () => {
     );
   }, [duration, centiseconds, flipCounter]);
 
-  const sendScore = React.useCallback(() => {
+  const sendScore = () => {
     submitScore('match_cards', {
       flips: flipCounter,
       milliseconds: duration?.seconds() * 1000 + duration?.milliseconds(),
     });
-  }, [duration, flipCounter]);
+  };
 
   //** ----- EFFECTS -----
   useBackAction(() => {
@@ -163,7 +164,7 @@ const MemoryCardScreen = () => {
       lottieRef?.current?.play(0, 210);
       !user?.isGuest && sendScore();
     }
-  }, [gameOver, user?.isGuest, sendScore]);
+  }, [gameOver]);
 
   React.useEffect(() => {
     const flippedEqual =
