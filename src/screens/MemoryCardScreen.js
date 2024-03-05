@@ -106,7 +106,10 @@ const MemoryCardScreen = () => {
   const sendScore = () => {
     submitScore('match_cards', {
       flips: flipCounter,
-      milliseconds: duration?.seconds() * 1000 + duration?.milliseconds(),
+      milliseconds:
+        duration.minutes() * 60000 +
+        duration?.seconds() * 1000 +
+        duration?.milliseconds(),
     });
   };
 
