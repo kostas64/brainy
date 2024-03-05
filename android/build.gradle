@@ -17,6 +17,10 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:7.3.1")
         classpath("com.facebook.react:react-native-gradle-plugin")
+
+        //Used for google-signin and firebase messaging
+        //Upgrade it only if i upgrade RN to 0.72.x
+        //Doesn't work 4.4.1 version with RN 0.71.x
         classpath 'com.google.gms:google-services:4.3.15'
     }
 }
