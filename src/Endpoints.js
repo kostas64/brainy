@@ -9,6 +9,7 @@ export const UPDATE_PROFILE = '/users/update-profile';
 export const MY_PROFILE = '/users/me';
 export const SEARCH_USER = '/users/search';
 export const NOTIF_SETTINGS = '/users/notification-settings';
+export const NOTIF_TOKEN = '/users/save-notification-token';
 
 //Game services
 export const SCORE = '/score';

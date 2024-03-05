@@ -1,3 +1,4 @@
+import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
@@ -5,6 +6,7 @@ import {
   BEARER,
   MY_PROFILE,
   SEARCH_USER,
+  NOTIF_TOKEN,
   UPDATE_PROFILE,
   REQUEST_ACCESS,
   NOTIF_SETTINGS,
@@ -124,5 +126,28 @@ export const updateNotifSetts = async settings => {
       .then(res => console.log('Result ', res));
   } catch (e) {
     console.log('API updateNotifSetts failed', e);
+  }
+};
+
+export const updateNotificationToken = async () => {
+  console.log('API updateNotificationToken ', `${HOST}${NOTIF_TOKEN}`);
+
+  try {
+    const token = await AsyncStorage.getItem('token');
+    const notToken = await messaging().getToken();
+
+    return fetch(`${HOST}${NOTIF_TOKEN}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+      body: JSON.stringify({
+        notificationToken: notToken,
+      }),
+    });
+  } catch (e) {
+    console.log('API updateNotificationToken failed', e);
   }
 };
