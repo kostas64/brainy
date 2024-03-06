@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Text, Animated, StatusBar, Image, StyleSheet} from 'react-native';
+import {View, Text, Animated, Image, StyleSheet, StatusBar} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import {signIn} from '../services/auth';
@@ -95,19 +95,11 @@ const GetStartedScreen = () => {
         duration: 850,
         useNativeDriver: true,
       }),
-    ]).start(({finished}) => {
-      if (finished) {
-        requestNotPermissions();
-      }
-    });
+    ]).start(({finished}) => finished && requestNotPermissions());
   }, [opacityRef, translateYRef]);
 
   return (
     <>
-      <StatusBar
-        barStyle={'light-content'}
-        backgroundColor={Colors.background}
-      />
       <CircularTransition
         posX={positionCirc.posX}
         posY={positionCirc.posY}
@@ -155,6 +147,10 @@ const GetStartedScreen = () => {
           containerStyle={[loading && styles.lowOpacity, styles.whiteBG]}
         />
       </Animated.View>
+      <StatusBar
+        barStyle={'light-content'}
+        backgroundColor={Colors.background}
+      />
     </>
   );
 };
