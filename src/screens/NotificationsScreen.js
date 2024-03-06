@@ -1,12 +1,21 @@
+import {
+  Text,
+  View,
+  Linking,
+  StyleSheet,
+  InteractionManager,
+} from 'react-native';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import dict from '../assets/values/dict.json';
 import {useStorage} from '../hooks/useStorage';
 import Screen from '../components/common/Screen';
+import {useAppState} from '../hooks/useAppState';
 import {updateNotifSetts} from '../services/user';
+import InfoBox from '../components/common/InfoBox';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import {hasNotPermissions} from '../utils/PermissionUtils';
 import CustomSwitch from '../components/common/CustomSwitch';
 
 const NotificationItem = ({value, setValue, title, caption}) => {
@@ -25,6 +34,7 @@ const NotificationItem = ({value, setValue, title, caption}) => {
 
 const NotificationsScreen = () => {
   const firstRender = React.useRef(0);
+  const [showBox, setShowBox] = React.useState(false);
 
   const [settings, setSettings] = useStorage('notifSets', {
     score: true,
@@ -32,7 +42,19 @@ const NotificationsScreen = () => {
     reminder: true,
   });
 
+  //** ----- FUNCTIONS -----
+  const onPressInfoBox = () => {
+    Linking.openSettings();
+  };
+
+  const checkForPerms = React.useCallback(async () => {
+    const res = await hasNotPermissions();
+    setShowBox(!res);
+  }, []);
+
   //** ----- EFFECTS -----
+  useAppState(checkForPerms, false);
+
   React.useEffect(() => {
     if (firstRender.current !== 0) {
       updateNotifSetts(settings);
@@ -40,6 +62,12 @@ const NotificationsScreen = () => {
 
     firstRender.current += 1;
   }, [settings]);
+
+  React.useEffect(() => {
+    InteractionManager.runAfterInteractions(async () => {
+      checkForPerms();
+    });
+  }, [checkForPerms]);
 
   return (
     <Screen noIcon label={dict.profileNotifications}>
@@ -77,6 +105,14 @@ const NotificationsScreen = () => {
           title={dict.notifyReminderTitle}
           caption={dict.notifyReminderSub}
         />
+
+        <InfoBox
+          showBox={showBox}
+          onPress={onPressInfoBox}
+          infoLabel={dict.infoNotLabel}
+          containerStyle={styles.infoBoxContainer}
+          callToActionLabel={dict.infoNotCtaLabel}
+        />
       </View>
     </Screen>
   );
@@ -107,5 +143,8 @@ const styles = StyleSheet.create({
   },
   spaceTop: {
     marginLeft: DimensionsUtils.getDP(8),
+  },
+  infoBoxContainer: {
+    marginTop: DimensionsUtils.getDP(24),
   },
 });

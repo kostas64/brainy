@@ -11,6 +11,7 @@ import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import {HEIGHT, isAndroid} from '../utils/GenericUtils';
 import {useModalContext} from '../context/ModalProvider';
+import {requestNotPermissions} from '../utils/PermissionUtils';
 import CircularTransition from '../components/transitions/CircularTransition';
 
 const GetStartedScreen = () => {
@@ -94,7 +95,11 @@ const GetStartedScreen = () => {
         duration: 850,
         useNativeDriver: true,
       }),
-    ]).start();
+    ]).start(({finished}) => {
+      if (finished) {
+        requestNotPermissions();
+      }
+    });
   }, [opacityRef, translateYRef]);
 
   return (
