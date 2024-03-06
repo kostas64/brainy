@@ -27,7 +27,7 @@ const EqualButton = ({disabled = false, onPress, insets, label}) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.tabBarBg,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: DimensionsUtils.getDP(12),
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   buttonLabel: {
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(24),
-    color: Colors.black,
+    color: Colors.white,
     alignSelf: 'center',
   },
 });

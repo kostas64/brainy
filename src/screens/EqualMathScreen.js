@@ -221,7 +221,7 @@ const EqualMathScreen = () => {
                   : DimensionsUtils.getDP(96),
             },
           ]}>
-          <NewGameButton gameFinished={isFinished} setNewGame={setNewGame} />
+          <NewGameButton setNewGame={setNewGame} />
         </View>
       )}
       {isFinished && <CelebrationLottie ref={lottieRef} />}

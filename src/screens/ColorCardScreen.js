@@ -24,15 +24,23 @@ import CelebrationLottie from '../components/common/CelebrationLottie';
 import CardSuccessModal from '../components/cardColor/CardSuccessModal';
 import CardColorTutorial from '../components/cardColor/CardColorTutorial';
 
-const BottomButton = ({label, onPress, disabled}) => {
+const BottomButton = ({
+  label,
+  onPress,
+  disabled,
+  labelStyle,
+  containerStyle,
+}) => {
   const insets = useSafeAreaInsets();
 
   return (
     <ColorButton
-      disabled={disabled}
       label={label}
-      onPress={onPress}
       insets={insets}
+      onPress={onPress}
+      disabled={disabled}
+      labelStyle={labelStyle}
+      containerStyle={containerStyle}
     />
   );
 };
@@ -162,6 +170,8 @@ const ColorCardScreen = () => {
         <BottomButton
           label={dict.yesLabel}
           disabled={isFinished}
+          labelStyle={styles.positiveBtn}
+          containerStyle={styles.positiveBtnBg}
           onPress={() => {
             if (!timeRef.current.isRunning) {
               timeRef.current.start();
@@ -182,7 +192,7 @@ const ColorCardScreen = () => {
                   : DimensionsUtils.getDP(96),
             },
           ]}>
-          <NewGameButton gameFinished={isFinished} setNewGame={setNewGame} />
+          <NewGameButton setNewGame={setNewGame} />
         </View>
       )}
       {isFinished && <CelebrationLottie ref={lottieRef} />}
@@ -223,6 +233,12 @@ const styles = StyleSheet.create({
   playAgainCont: {
     position: 'absolute',
     alignSelf: 'center',
+  },
+  positiveBtnBg: {
+    backgroundColor: Colors.white,
+  },
+  positiveBtn: {
+    color: Colors.tabBarBg,
   },
 });
 

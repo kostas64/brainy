@@ -1,18 +1,29 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, Pressable, StyleSheet} from 'react-native';
+import {Text, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import Touchable from '../common/Touchable';
 import {WIDTH, isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const ColorButton = ({onPress, disabled, label, insets}) => {
+const ColorButton = ({
+  label,
+  insets,
+  onPress,
+  disabled,
+  labelStyle,
+  containerStyle,
+}) => {
   return (
-    <Pressable
-      disabled={disabled}
+    <Touchable
       onPress={onPress}
+      disabled={disabled}
+      pressingAnimationDuration={75}
+      releasingAnimationDuraiton={75}
       style={[
         styles.buttonContainer,
+        containerStyle,
         isAndroid && {height: DimensionsUtils.getDP(58)},
         {
           opacity: disabled ? 0.4 : 1,
@@ -20,14 +31,14 @@ const ColorButton = ({onPress, disabled, label, insets}) => {
             insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(16),
         },
       ]}>
-      <Text style={styles.buttonLabel}>{label}</Text>
-    </Pressable>
+      <Text style={[styles.buttonLabel, labelStyle]}>{label}</Text>
+    </Touchable>
   );
 };
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.tabBarBg,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: DimensionsUtils.getDP(12),
@@ -38,7 +49,7 @@ const styles = StyleSheet.create({
   buttonLabel: {
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(24),
-    color: Colors.black,
+    color: Colors.white,
     alignSelf: 'center',
   },
 });

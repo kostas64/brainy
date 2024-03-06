@@ -1,20 +1,19 @@
 import React from 'react';
-import {Text, Pressable, StyleSheet} from 'react-native';
+import {Text, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import Touchable from '../common/Touchable';
 import dict from '../../assets/values/dict.json';
 import {isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const NewGameButton = ({gameFinished, setNewGame}) => {
+const NewGameButton = ({setNewGame}) => {
   return (
-    <Pressable
+    <Touchable
       onPress={setNewGame}
       style={[styles.container, isAndroid && styles.height]}>
-      <Text style={styles.label}>
-        {gameFinished ? dict.playAgainLabel : dict.newGameLabel}
-      </Text>
-    </Pressable>
+      <Text style={styles.label}>{dict.newGameLabel}</Text>
+    </Touchable>
   );
 };
 
@@ -23,9 +22,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: DimensionsUtils.getDP(24),
     paddingVertical: DimensionsUtils.getDP(8),
     borderRadius: DimensionsUtils.getDP(12),
-    backgroundColor: Colors.background,
-    borderWidth: 1,
-    borderColor: Colors.appGreen,
+    backgroundColor: Colors.tabBarBg,
     justifyContent: 'flex-end',
   },
   label: {
