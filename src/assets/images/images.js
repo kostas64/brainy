@@ -17,6 +17,7 @@ const gamesIcon = require('./games_icon.png');
 const gear = require('./gear.png');
 const gestureIt = require('./gesture_it.png');
 const guest = require('./guest.png');
+const info = require('./info.png');
 const logo = require('./logo.png');
 const logout = require('./logout.png');
 const matchEqual = require('./match_equal.png');
@@ -56,6 +57,7 @@ export default {
   gear,
   gestureIt,
   guest,
+  info,
   logo,
   logout,
   matchEqual,
