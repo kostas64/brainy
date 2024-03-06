@@ -5,7 +5,7 @@ import Chevron from './Chevron';
 import Counter from './Counter';
 import Touchable from './Touchable';
 import {Colors} from '../../utils/Colors';
-import {WIDTH} from '../../utils/GenericUtils';
+import {WIDTH, isAndroid} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const NumIndicator = ({number}) => (
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   menuItemLabel: {
     color: Colors.appGreen,
     fontFamily: 'Poppins-Regular',
+    top: isAndroid ? 1 : 0,
     marginVertical: DimensionsUtils.getDP(16),
     fontSize: DimensionsUtils.getFontSize(16),
   },

@@ -12,6 +12,7 @@ import Screen from '../components/common/Screen';
 import {LIST_GAMES} from '../assets/values/games';
 import {useAuthContext} from '../context/AuthProvider';
 import GamesList from '../components/common/GamesList';
+import {updateNotificationToken} from '../services/user';
 import {GenericUtils, isIOS} from '../utils/GenericUtils';
 
 const GamesScreen = ({navigation, route}) => {
@@ -19,9 +20,8 @@ const GamesScreen = ({navigation, route}) => {
   const isFocused = useIsFocused();
   const [scores, setScores] = useStorage('scores', []);
 
-  const opacityRef = React.useRef(new Animated.Value(0.2)).current;
-
   const [force, setForce] = React.useState(false);
+  const opacityRef = React.useRef(new Animated.Value(0.2)).current;
 
   //** ----- FUNCTIONS -----
   const {status, data} = useFetch(
@@ -51,6 +51,7 @@ const GamesScreen = ({navigation, route}) => {
   React.useEffect(() => {
     isFocused && setForce(true);
     !isFocused && setForce(false);
+    isFocused && !user?.isGuest && updateNotificationToken();
   }, [isFocused, navigation]);
 
   React.useEffect(() => {

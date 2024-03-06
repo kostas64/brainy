@@ -68,6 +68,10 @@ export const signIn = async (
       const res = await requestAccess(user);
       const data = await res.json();
 
+      if (data?.user?.notificationToken) {
+        storage.setString('notToken', data?.user?.notificationToken);
+      }
+
       storage.getBool('firstTime', async (_, result) => {
         if (result === null && !data?.user?.nickname) {
           storage.setBool('firstTime', false);

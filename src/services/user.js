@@ -11,6 +11,7 @@ import {
   REQUEST_ACCESS,
   NOTIF_SETTINGS,
 } from '../Endpoints';
+import {storage} from '../..';
 
 export const requestAccess = async user => {
   console.log('API requestAccess ', `${HOST}${REQUEST_ACCESS}`);
@@ -131,10 +132,19 @@ export const updateNotifSetts = async settings => {
 
 export const updateNotificationToken = async () => {
   console.log('API updateNotificationToken ', `${HOST}${NOTIF_TOKEN}`);
+  const currentNotToken = storage.getString('notToken');
 
   try {
     const token = await AsyncStorage.getItem('token');
     const notToken = await messaging().getToken();
+
+    if (currentNotToken === null && !!notToken) {
+      storage.setString('notToken', notToken);
+    }
+
+    if (currentNotToken === notToken) {
+      return;
+    }
 
     return fetch(`${HOST}${NOTIF_TOKEN}`, {
       method: 'POST',
