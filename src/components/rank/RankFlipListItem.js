@@ -18,8 +18,7 @@ const RankFlipListItem = ({item, index, isMe}) => {
   const navigation = useNavigation();
   const {closeModal, setModalInfo} = useModalContext();
 
-  const insetsBottom =
-    insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(24);
+  const insetsBottom = insets.bottom > 0 ? insets.bottom : 26;
 
   //** ----- STYLES -----
   const containerStyles = [

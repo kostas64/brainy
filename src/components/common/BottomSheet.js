@@ -7,22 +7,18 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import React from 'react';
-import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {initialWindowMetrics} from 'react-native-safe-area-context';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 
 import {Colors} from '../../utils/Colors';
 import useBackAction from '../../hooks/useBackAction';
-import {HEIGHT, isIOS} from '../../utils/GenericUtils';
 import {useModalContext} from '../../context/ModalProvider';
-import {initialWindowMetrics} from 'react-native-safe-area-context';
+import {HEIGHT, HEIGHT_SCR, isIOS} from '../../utils/GenericUtils';
 
-const {frame} = initialWindowMetrics;
+const {insets} = initialWindowMetrics;
 
-const MAX_HEIGHT = isIOS
-  ? HEIGHT
-  : Platform.Version >= 29
-  ? frame.height + StatusBar.currentHeight
-  : frame.height;
+const MAX_HEIGHT = isIOS ? HEIGHT : HEIGHT_SCR - insets.top - insets.bottom;
 
 const BottomSheet = React.forwardRef(
   (
