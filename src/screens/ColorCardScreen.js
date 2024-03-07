@@ -65,22 +65,32 @@ const ColorCardScreen = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
 
-  //** ----- FUNCTIONS -----
-  const checkValid = answer => {
-    if (
-      (COLORS[rand2]?.color === COLORS[rand3]?.color && answer === 'yes') ||
-      (COLORS[rand2]?.color !== COLORS[rand3]?.color && answer === 'no')
-    ) {
-      animAnswerRef.current.animateAnswer(true);
-      setPoints(oldPoints => oldPoints + 1);
-      setCorrect(oldCorrect => oldCorrect + 1);
-    } else {
-      animAnswerRef.current.animateAnswer(false);
-      triggerHaptik();
-      setPoints(oldPoints => (oldPoints - 3 > 0 ? oldPoints - 3 : 0));
-    }
-    setTries(oldTries => oldTries + 1);
+  const bottom = {
+    bottom:
+      insets.bottom > 0
+        ? insets.bottom + DimensionsUtils.getDP(96)
+        : DimensionsUtils.getDP(96),
   };
+
+  //** ----- FUNCTIONS -----
+  const checkValid = React.useCallback(
+    answer => {
+      if (
+        (COLORS[rand2]?.color === COLORS[rand3]?.color && answer === 'yes') ||
+        (COLORS[rand2]?.color !== COLORS[rand3]?.color && answer === 'no')
+      ) {
+        animAnswerRef.current.animateAnswer(true);
+        setPoints(oldPoints => oldPoints + 1);
+        setCorrect(oldCorrect => oldCorrect + 1);
+      } else {
+        animAnswerRef.current.animateAnswer(false);
+        triggerHaptik();
+        setPoints(oldPoints => (oldPoints - 3 > 0 ? oldPoints - 3 : 0));
+      }
+      setTries(oldTries => oldTries + 1);
+    },
+    [rand2, rand3],
+  );
 
   const generateRandoms = () => {
     setRand1(Math.floor(getRandom(0, COLORS.length)));
@@ -108,6 +118,18 @@ const ColorCardScreen = () => {
     timeRef.current?.resetTime();
   };
 
+  const onPressBtn = React.useCallback(
+    value => {
+      if (!timeRef.current.isRunning) {
+        timeRef.current.start();
+      }
+
+      checkValid(value);
+      generateRandoms();
+    },
+    [checkValid],
+  );
+
   //** ----- EFFECTS -----
   useBackAction(() => {
     if (tutOpen) {
@@ -132,12 +154,7 @@ const ColorCardScreen = () => {
       <BackgroundWrapper statusBar={'light-content'} />
       <CardColorTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View
-        style={[
-          styles.header,
-          {
-            top: insets.top + DimensionsUtils.getDP(24),
-          },
-        ]}>
+        style={[styles.header, {top: insets.top + DimensionsUtils.getDP(24)}]}>
         <Points points={points} />
         <AnimatedAnswer ref={animAnswerRef} />
         <CountdownTimer
@@ -159,42 +176,23 @@ const ColorCardScreen = () => {
         <BottomButton
           label={dict.noLabel}
           disabled={isFinished}
-          onPress={() => {
-            if (!timeRef.current.isRunning) {
-              timeRef.current.start();
-            }
-            checkValid(dict.noLabel.toLowerCase());
-            generateRandoms();
-          }}
+          onPress={() => onPressBtn(dict.noLabel.toLowerCase())}
         />
         <BottomButton
           label={dict.yesLabel}
           disabled={isFinished}
           labelStyle={styles.positiveBtn}
           containerStyle={styles.positiveBtnBg}
-          onPress={() => {
-            if (!timeRef.current.isRunning) {
-              timeRef.current.start();
-            }
-            checkValid(dict.yesLabel.toLowerCase());
-            generateRandoms();
-          }}
+          onPress={() => onPressBtn(dict.yesLabel.toLowerCase())}
         />
       </View>
+
       {isFinished && (
-        <View
-          style={[
-            styles.playAgainCont,
-            {
-              bottom:
-                insets.bottom > 0
-                  ? insets.bottom + DimensionsUtils.getDP(96)
-                  : DimensionsUtils.getDP(96),
-            },
-          ]}>
+        <View style={[styles.playAgainCont, bottom]}>
           <NewGameButton setNewGame={setNewGame} />
         </View>
       )}
+
       {isFinished && <CelebrationLottie ref={lottieRef} />}
       <AnimatedModal
         gameOver={isFinished}

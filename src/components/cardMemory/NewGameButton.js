@@ -9,9 +9,7 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const NewGameButton = ({setNewGame}) => {
   return (
-    <Touchable
-      onPress={setNewGame}
-      style={[styles.container, isAndroid && styles.height]}>
+    <Touchable onPress={setNewGame} style={styles.container}>
       <Text style={styles.label}>{dict.newGameLabel}</Text>
     </Touchable>
   );
@@ -19,20 +17,19 @@ const NewGameButton = ({setNewGame}) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: DimensionsUtils.getDP(24),
-    paddingVertical: DimensionsUtils.getDP(8),
-    borderRadius: DimensionsUtils.getDP(12),
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.tabBarBg,
-    justifyContent: 'flex-end',
+    borderRadius: DimensionsUtils.getDP(12),
+    paddingHorizontal: DimensionsUtils.getDP(24),
   },
   label: {
-    fontFamily: 'Poppins-Bold',
-    fontSize: DimensionsUtils.getFontSize(24),
+    fontSize: 20,
     color: Colors.white,
     alignSelf: 'center',
-  },
-  height: {
-    height: DimensionsUtils.getDP(58),
+    top: isAndroid ? 2 : 0,
+    fontFamily: 'Poppins-Bold',
   },
 });
 

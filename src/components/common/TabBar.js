@@ -200,9 +200,9 @@ const styles = StyleSheet.create({
     marginTop: DimensionsUtils.getDP(6),
   },
   text: {
-    marginTop: DimensionsUtils.getDP(4),
-    fontSize: DimensionsUtils.getFontSize(12),
+    fontSize: 12,
     fontFamily: 'Poppins-Medium',
+    marginTop: DimensionsUtils.getDP(4),
   },
   height80: {
     height: '80%',

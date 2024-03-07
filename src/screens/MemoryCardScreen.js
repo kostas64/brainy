@@ -45,6 +45,11 @@ const MemoryCardScreen = () => {
   const duration = timeRef?.current?.extractTime();
   const centiseconds = Math.floor(duration?.milliseconds() / 10);
 
+  const bottom =
+    insets.bottom > 0
+      ? {bottom: insets.bottom}
+      : {bottom: DimensionsUtils.getDP(24)};
+
   //** ----- FUNCTIONS -----
   const setIsFlipped = React.useCallback(
     index => {
@@ -224,11 +229,11 @@ const MemoryCardScreen = () => {
           <Card
             key={i}
             index={i}
-            ref={ref => (childRefs.current[i] = ref)}
             value={card.value}
             cardsDisabled={cardsDisabled}
             isFlipped={card.isFlipped}
             setIsFlipped={i => setIsFlipped(i)}
+            ref={ref => (childRefs.current[i] = ref)}
           />
         ))}
       </View>
@@ -239,14 +244,8 @@ const MemoryCardScreen = () => {
         setModalOpen={setModalOpen}
         content={successContent()}
       />
-      <View
-        style={[
-          styles.newGameCont,
-          insets.bottom > 0
-            ? {bottom: insets.bottom}
-            : {bottom: DimensionsUtils.getDP(24)},
-        ]}>
-        <NewGameButton gameFinished={gameOver} setNewGame={setNewGame} />
+      <View style={[styles.newGameCont, bottom]}>
+        <NewGameButton setNewGame={setNewGame} />
       </View>
     </>
   );

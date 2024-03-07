@@ -13,7 +13,6 @@ const EqualButton = ({disabled = false, onPress, insets, label}) => {
       onPress={onPress}
       style={[
         styles.buttonContainer,
-        isAndroid && {height: DimensionsUtils.getDP(58)},
         {
           opacity: disabled ? 0.4 : 1,
           marginBottom:
@@ -27,19 +26,20 @@ const EqualButton = ({disabled = false, onPress, insets, label}) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: Colors.tabBarBg,
-    justifyContent: 'center',
+    height: 50,
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.tabBarBg,
     borderRadius: DimensionsUtils.getDP(12),
     marginHorizontal: DimensionsUtils.getDP(16),
     width: WIDTH - DimensionsUtils.getDP(32),
-    paddingVertical: DimensionsUtils.getDP(8),
   },
   buttonLabel: {
-    fontFamily: 'Poppins-Bold',
-    fontSize: DimensionsUtils.getFontSize(24),
+    fontSize: 20,
     color: Colors.white,
     alignSelf: 'center',
+    top: isAndroid ? 2 : 0,
+    fontFamily: 'Poppins-Bold',
   },
 });
 

@@ -55,6 +55,13 @@ const EqualMathScreen = () => {
   const [number6, setNumber6] = React.useState();
   const [question, setQuestion] = React.useState(0);
 
+  const bottom = {
+    bottom:
+      insets.bottom > 0
+        ? insets.bottom + DimensionsUtils.getDP(96)
+        : DimensionsUtils.getDP(96),
+  };
+
   //** ----- FUNCTIONS -----
   const onCardPress = (firstCardPressed, isEqual = false, eq1, eq2) => {
     if (!timeRef.current.isRunning) {
@@ -167,12 +174,7 @@ const EqualMathScreen = () => {
       <BackgroundWrapper statusBar={'light-content'} />
       <EqualMathTutorial modalOpen={tutOpen} setModalOpen={setTutOpen} />
       <View
-        style={[
-          styles.header,
-          {
-            top: insets.top + DimensionsUtils.getDP(24),
-          },
-        ]}>
+        style={[styles.header, {top: insets.top + DimensionsUtils.getDP(24)}]}>
         <Points points={points} insets={insets} />
         <AnimatedAnswer ref={animAnswerRef} />
         <CountdownTimer
@@ -192,7 +194,7 @@ const EqualMathScreen = () => {
           onPress={() => onCardPress(true, false, eq1, eq2)}
           equation={question <= 10 ? equationEasyMed1 : equationDiff1}
         />
-        <View style={{marginVertical: DimensionsUtils.getDP(8)}} />
+        <View style={styles.separator} />
         <Card
           card={2}
           question={question}
@@ -210,20 +212,13 @@ const EqualMathScreen = () => {
           onPress={() => onCardPress(false, true, eq1, eq2)}
         />
       </View>
+
       {isFinished && (
-        <View
-          style={[
-            styles.playAgainCont,
-            {
-              bottom:
-                insets.bottom > 0
-                  ? insets.bottom + DimensionsUtils.getDP(96)
-                  : DimensionsUtils.getDP(96),
-            },
-          ]}>
+        <View style={[styles.playAgainCont, bottom]}>
           <NewGameButton setNewGame={setNewGame} />
         </View>
       )}
+
       {isFinished && <CelebrationLottie ref={lottieRef} />}
       <AnimatedModal
         gameOver={isFinished}
@@ -288,6 +283,9 @@ const styles = StyleSheet.create({
   playAgainCont: {
     position: 'absolute',
     alignSelf: 'center',
+  },
+  separator: {
+    marginVertical: DimensionsUtils.getDP(8),
   },
 });
 
