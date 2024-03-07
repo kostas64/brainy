@@ -36,6 +36,8 @@ export const requestAccess = async user => {
 };
 
 export const getMyProfile = async setUser => {
+  console.log('API getMyProfile ', `${HOST}${MY_PROFILE}`);
+
   try {
     const token = await AsyncStorage.getItem('token');
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {evaluate} from 'mathjs';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
@@ -32,7 +33,7 @@ const Card = ({onPress, equation, disabled}) => {
   );
 };
 
-const EqualMathScreen = () => {
+const EqualMathScreen = ({route}) => {
   const insets = useSafeAreaInsets();
 
   const timeRef = React.useRef();
@@ -121,14 +122,11 @@ const EqualMathScreen = () => {
     timeRef.current?.resetTime();
   };
 
-  const sendScore = React.useCallback(
-    () =>
-      submitScore('equal_math', {
-        points,
-        correctness: Math.floor((correct / question) * 100),
-      }),
-    [correct, points, question],
-  );
+  const sendScore = () =>
+    submitScore('equal_math', {
+      points,
+      correctness: Math.floor((correct / question) * 100),
+    }).finally(() => route?.params?.update());
 
   const successContent = () => (
     <EqualMathModal correct={correct} total={question} points={points} />
@@ -151,7 +149,7 @@ const EqualMathScreen = () => {
       lottieRef?.current?.play(0, 210);
       !user?.isGuest && sendScore();
     }
-  }, [isFinished, user?.isGuest, sendScore]);
+  }, [isFinished]);
 
   const equationEasyMed1 = generateEquationEasy(number1, number2);
   const equationEasyMed2 = generateEquationEasy(number4, number5);

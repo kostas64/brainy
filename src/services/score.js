@@ -1,14 +1,36 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   HOST,
   SCORE,
   BEARER,
+  BEST_OF,
   EQUAL_MATH,
   GESTURE_IT,
   COLOR_CARDS,
   MATCH_CARDS,
   BEST_OF_USER,
 } from '../Endpoints';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export const getBestOf = async setStatus => {
+  console.log('API getBestOf ', `${HOST}${SCORE}${BEST_OF}`);
+
+  try {
+    setStatus('fetching');
+    const token = await AsyncStorage.getItem('token');
+
+    return fetch(`${HOST}${SCORE}${BEST_OF}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+    }).then(res => res.json());
+  } catch (e) {
+    console.log('API getBestOf failed ', e);
+  }
+};
 
 export const submitScore = async (game, payload) => {
   const GAME =

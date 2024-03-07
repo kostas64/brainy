@@ -4,8 +4,8 @@ import React from 'react';
 import {Animated, StyleSheet} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 
-import {SCORE} from '../Endpoints';
-import {useFetch} from '../hooks/useFetch';
+import {isIOS} from '../utils/GenericUtils';
+import {getBestOf} from '../services/score';
 import dict from '../assets/values/dict.json';
 import {useStorage} from '../hooks/useStorage';
 import Screen from '../components/common/Screen';
@@ -13,25 +13,21 @@ import {LIST_GAMES} from '../assets/values/games';
 import {useAuthContext} from '../context/AuthProvider';
 import GamesList from '../components/common/GamesList';
 import {updateNotificationToken} from '../services/user';
-import {GenericUtils, isIOS} from '../utils/GenericUtils';
 
 const GamesScreen = ({navigation, route}) => {
   const {user} = useAuthContext();
   const isFocused = useIsFocused();
   const [scores, setScores] = useStorage('scores', []);
 
-  const [force, setForce] = React.useState(false);
+  const [status, setStatus] = React.useState('idle');
   const opacityRef = React.useRef(new Animated.Value(0.2)).current;
 
   //** ----- FUNCTIONS -----
-  const {status, data} = useFetch(
-    !user?.isGuest ? `${SCORE}${GenericUtils.getEndpoint('Best Of')}` : null,
-    'GET',
-    true,
-    'Best Of',
-    force,
-    user,
-  );
+  const getBestOfScores = () => {
+    getBestOf(setStatus)
+      .then(data => setScores(data))
+      .finally(() => setStatus('idle'));
+  };
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
@@ -49,21 +45,20 @@ const GamesScreen = ({navigation, route}) => {
   }, []);
 
   React.useEffect(() => {
-    isFocused && setForce(true);
-    !isFocused && setForce(false);
     isFocused && !user?.isGuest && updateNotificationToken();
   }, [isFocused, navigation]);
 
   React.useEffect(() => {
-    status === 'fetched' && setScores(data);
-  }, [status]);
+    !user?.isGuest && getBestOfScores();
+  }, []);
 
   return (
     <Screen label={dict?.gamesScrTitle}>
       <Animated.View style={[styles.flex, {opacity: opacityRef}]}>
         <GamesList
           data={LIST_GAMES}
-          bestScores={data}
+          bestScores={scores}
+          getBestOfScores={getBestOfScores}
           loadingScores={status === 'fetching'}
         />
       </Animated.View>

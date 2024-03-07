@@ -45,7 +45,7 @@ const BottomButton = ({
   );
 };
 
-const ColorCardScreen = () => {
+const ColorCardScreen = ({route}) => {
   const insets = useSafeAreaInsets();
 
   const timeRef = React.useRef();
@@ -107,7 +107,7 @@ const ColorCardScreen = () => {
     submitScore('color_cards', {
       points,
       correctness: Math.floor((correct / tries) * 100),
-    });
+    }).finally(() => route?.params?.update());
 
   const setNewGame = () => {
     setTries(0);

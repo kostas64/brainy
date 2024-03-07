@@ -22,7 +22,7 @@ import BackgroundWrapper from '../components/common/BackgroundWrapper';
 import MemorySuccessModal from '../components/cardMemory/MemorySuccessModal';
 import CardMemoryTutorial from '../components/cardMemory/CardMemoryTutorial';
 
-const MemoryCardScreen = () => {
+const MemoryCardScreen = ({route}) => {
   const timeout = useTimeout();
   const insets = useSafeAreaInsets();
 
@@ -115,7 +115,7 @@ const MemoryCardScreen = () => {
         duration.minutes() * 60000 +
         duration?.seconds() * 1000 +
         duration?.milliseconds(),
-    });
+    }).finally(() => route?.params?.update());
   };
 
   //** ----- EFFECTS -----

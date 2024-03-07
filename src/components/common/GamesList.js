@@ -46,7 +46,7 @@ const OverflowItems = ({data, scrollX}) => {
   );
 };
 
-const GamesList = ({data, bestScores, loadingScores}) => {
+const GamesList = ({data, bestScores, loadingScores, getBestOfScores}) => {
   const navigation = useNavigation();
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -59,8 +59,11 @@ const GamesList = ({data, bestScores, loadingScores}) => {
   });
 
   const onItemPress = React.useCallback(
-    item => navigation.navigate(item.screen),
-    [navigation],
+    item =>
+      navigation.navigate(item.screen, {
+        update: () => getBestOfScores(),
+      }),
+    [navigation, getBestOfScores],
   );
 
   const renderItem = React.useCallback(

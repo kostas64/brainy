@@ -25,6 +25,7 @@ const MyProfileScreen = ({navigation}) => {
     ? user?.nickname
     : `${user?.name} ${user?.surname}`;
 
+  const shouldCall = isFocused && !user?.isGuest;
   const icon = user?.isGuest ? images.guest : null;
   const nameStyle = user?.isGuest && styles.whiteColor;
   const contStyle = user?.isGuest ? styles.guestAvatarCont : styles.avatarCont;
@@ -37,9 +38,9 @@ const MyProfileScreen = ({navigation}) => {
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
-    isFocused && getMyProfile(setUser);
-    isFocused && getAllFriendsRequest().then(data => setFriendRequests(data));
-  }, [isFocused, setUser, navigation]);
+    shouldCall && getMyProfile(setUser);
+    shouldCall && getAllFriendsRequest().then(data => setFriendRequests(data));
+  }, [shouldCall, setUser]);
 
   return (
     <Screen

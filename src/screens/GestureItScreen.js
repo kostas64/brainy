@@ -20,7 +20,7 @@ import CardSuccessModal from '../components/cardColor/CardSuccessModal';
 import GestureItTutorial from '../components/gestureIt/GestureItTutorial';
 import {HEIGHT, WIDTH, isIOS, triggerHaptik} from '../utils/GenericUtils';
 
-const GestureItScreen = () => {
+const GestureItScreen = ({route}) => {
   const insets = useSafeAreaInsets();
 
   const timeRef = React.useRef();
@@ -62,8 +62,8 @@ const GestureItScreen = () => {
       submitScore('gesture_it', {
         points,
         correctness: Math.floor((correct / tries) * 100),
-      }),
-    [correct, tries, points],
+      }).finally(() => route?.params?.update()),
+    [correct, tries, points, route?.params],
   );
 
   const setNewGame = () => {
