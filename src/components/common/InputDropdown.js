@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   placeholder: {
     position: 'absolute',
     left: DimensionsUtils.getDP(-8),
-    top: DimensionsUtils.getDP(-4),
+    top: DimensionsUtils.getDP(-5),
     color: Colors.tabBarIcon,
     fontSize: DimensionsUtils.getFontSize(12),
     width: DimensionsUtils.getDP(120),
@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
   },
   choiceLabel: {
     color: Colors.appGreen,
+    top: DimensionsUtils.getDP(1),
     fontSize: DimensionsUtils.getFontSize(16),
     fontFamily: 'Poppins-Bold',
   },
@@ -176,6 +177,7 @@ const styles = StyleSheet.create({
   },
   boldText: {
     color: Colors.white,
+    top: DimensionsUtils.getDP(1),
     fontSize: DimensionsUtils.getFontSize(16),
     fontFamily: 'Poppins-SemiBold',
   },
