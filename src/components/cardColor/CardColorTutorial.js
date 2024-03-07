@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {View, Text, Animated, Pressable, Image, StyleSheet} from 'react-native';
 
@@ -6,6 +5,7 @@ import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
+import {useInteraction} from '../../hooks/useInteraction';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -34,24 +34,24 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
       duration: 300,
       useNativeDriver: true,
     }).start(() => setModalOpen(false));
-  }, []);
+  }, [opacityRef, setModalOpen]);
 
   const changeColors1 = React.useCallback(() => {
     setCardCol1(Colors.black);
     setCardVal1('red');
     setCardCol2(Colors.red);
     setCardVal2('blue');
-  });
+  }, []);
 
   const changeColors2 = React.useCallback(() => {
     setCardCol1(Colors.appGreen);
     setCardVal1('yellow');
     setCardCol2(Colors.black);
     setCardVal2('black');
-  });
+  }, []);
 
   //** ----- EFFECTS -----
-  React.useEffect(() => {
+  useInteraction(
     Animated.loop(
       Animated.sequence([
         Animated.timing(scaleRef, {
@@ -65,8 +65,8 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
           useNativeDriver: true,
         }),
       ]),
-    ).start();
-  }, []);
+    ).start(),
+  );
 
   return (
     modalOpen && (

@@ -6,6 +6,7 @@ import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
+import {useInteraction} from '../../hooks/useInteraction';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Card = React.forwardRef(
@@ -69,7 +70,7 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
   }, []);
 
   //** ----- EFFECTS -----
-  React.useEffect(() => {
+  useInteraction(
     Animated.loop(
       Animated.sequence([
         Animated.parallel([
@@ -155,8 +156,8 @@ const CardMemoryTutorial = ({modalOpen, setModalOpen}) => {
           }),
         ]),
       ]),
-    ).start();
-  }, []);
+    ).start(),
+  );
 
   return (
     modalOpen && (

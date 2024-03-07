@@ -1,11 +1,5 @@
-import {
-  Text,
-  View,
-  Linking,
-  StyleSheet,
-  InteractionManager,
-} from 'react-native';
 import React from 'react';
+import {Text, View, Linking, StyleSheet} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import dict from '../assets/values/dict.json';
@@ -14,6 +8,7 @@ import Screen from '../components/common/Screen';
 import {useAppState} from '../hooks/useAppState';
 import {updateNotifSetts} from '../services/user';
 import InfoBox from '../components/common/InfoBox';
+import {useInteraction} from '../hooks/useInteraction';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import {hasNotPermissions} from '../utils/PermissionUtils';
 import CustomSwitch from '../components/common/CustomSwitch';
@@ -55,6 +50,8 @@ const NotificationsScreen = () => {
   //** ----- EFFECTS -----
   useAppState(checkForPerms, false);
 
+  useInteraction(checkForPerms);
+
   React.useEffect(() => {
     if (firstRender.current !== 0) {
       updateNotifSetts(settings);
@@ -62,12 +59,6 @@ const NotificationsScreen = () => {
 
     firstRender.current += 1;
   }, [settings]);
-
-  React.useEffect(() => {
-    InteractionManager.runAfterInteractions(async () => {
-      checkForPerms();
-    });
-  }, [checkForPerms]);
 
   return (
     <Screen noIcon label={dict.profileNotifications}>

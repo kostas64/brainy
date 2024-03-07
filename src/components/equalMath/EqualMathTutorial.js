@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {evaluate} from 'mathjs';
 import {View, Text, Animated, Pressable, Image, StyleSheet} from 'react-native';
@@ -7,6 +6,7 @@ import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
+import {useInteraction} from '../../hooks/useInteraction';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -45,7 +45,7 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
   };
 
   //** ----- EFFECTS -----
-  React.useEffect(() => {
+  useInteraction(
     Animated.loop(
       Animated.sequence([
         Animated.timing(scaleRef, {
@@ -59,8 +59,8 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
           useNativeDriver: true,
         }),
       ]),
-    ).start();
-  }, []);
+    ).start(),
+  );
 
   return (
     modalOpen && (

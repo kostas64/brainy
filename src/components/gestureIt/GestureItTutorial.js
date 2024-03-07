@@ -9,12 +9,14 @@ import Touchable from '../common/Touchable';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {WIDTH, isIOS} from '../../utils/GenericUtils';
+import {useInteraction} from '../../hooks/useInteraction';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const GestureItTutorial = ({modalOpen, setModalOpen}) => {
   const navigation = useNavigation();
+
   const swipeRef = React.useRef();
   const translateXRef = React.useRef(new Animated.Value(0)).current;
   const translateYRef = React.useRef(new Animated.Value(0)).current;
@@ -25,63 +27,63 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
   const [designState, setDesignState] = React.useState(1);
 
   //** ----- FUNCTIONS -----
-  const designOne = React.useCallback(() => (
-    <>
-      <AnimatedImage
-        source={images.tap}
-        style={[
-          styles.closeIcon,
-          styles.designOne,
-          {opacity: tapOpacity1, transform: [{translateY: translateYRef}]},
-        ]}
-      />
-      <View style={styles.rowCenter}>
-        <Image source={images.arrowBlack} style={styles.smallImg} />
-        <View style={styles.rightSpacer} />
-        <Image
-          source={images.arrowBlack}
-          style={[styles.smallImg, {transform: [{rotate: '180deg'}]}]}
-        />
-        <View style={styles.rightSpacer} />
-        <Image source={images.arrowBlack} style={styles.smallImg} />
-      </View>
-    </>
-  ));
-
-  const designTwo = React.useCallback(() => (
-    <>
-      <AnimatedImage
-        source={images.tap}
-        style={[
-          styles.closeIcon,
-          styles.designTwo,
-          {opacity: tapOpacity2, transform: [{translateX: translateXRef}]},
-        ]}
-      />
-      <View style={styles.selfCenter}>
-        <Image
-          source={images.arrowBlack}
-          style={[styles.smallImg, {transform: [{rotate: '90deg'}]}]}
-        />
-        <View style={styles.rightSpacer} />
-        <Image
-          source={images.arrowBlack}
+  const designOne = React.useCallback(
+    () => (
+      <>
+        <AnimatedImage
+          source={images.tap}
           style={[
-            styles.smallImg,
-            {
-              marginLeft: DimensionsUtils.getDP(24),
-              transform: [{rotate: '270deg'}],
-            },
+            styles.closeIcon,
+            styles.designOne,
+            {opacity: tapOpacity1, transform: [{translateY: translateYRef}]},
           ]}
         />
-        <View style={styles.rightSpacer} />
-        <Image
-          source={images.arrowBlack}
-          style={[styles.smallImg, {transform: [{rotate: '90deg'}]}]}
+        <View style={styles.rowCenter}>
+          <Image source={images.arrowBlack} style={styles.smallImg} />
+          <View style={styles.rightSpacer} />
+          <Image
+            source={images.arrowBlack}
+            style={[styles.smallImg, styles.rot180]}
+          />
+          <View style={styles.rightSpacer} />
+          <Image source={images.arrowBlack} style={styles.smallImg} />
+        </View>
+      </>
+    ),
+    [],
+  );
+
+  const designTwo = React.useCallback(
+    () => (
+      <>
+        <AnimatedImage
+          source={images.tap}
+          style={[
+            styles.closeIcon,
+            styles.designTwo,
+            {opacity: tapOpacity2, transform: [{translateX: translateXRef}]},
+          ]}
         />
-      </View>
-    </>
-  ));
+        <View style={styles.selfCenter}>
+          <Image
+            source={images.arrowBlack}
+            style={[styles.smallImg, styles.rot90]}
+          />
+          <View style={styles.rightSpacer} />
+          <Image
+            source={images.arrowBlack}
+            style={[styles.smallImg, styles.spaceRot]}
+          />
+          <View style={styles.rightSpacer} />
+          <Image
+            source={images.arrowBlack}
+            style={[styles.smallImg, styles.rot90]}
+          />
+        </View>
+      </>
+    ),
+    [],
+  );
 
   const swipeHandler = React.useCallback(e => {
     const event = e.nativeEvent;
@@ -132,7 +134,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
   }, []);
 
   //** ----- EFFECTS -----
-  React.useEffect(() => {
+  useInteraction(() => {
     Animated.timing(designState === 1 ? tapOpacity2 : tapOpacity1, {
       toValue: 1,
       duration: 10,
@@ -163,7 +165,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
         }),
       ]),
     ).start();
-  }, [designState]);
+  });
 
   return (
     modalOpen && (
@@ -292,6 +294,19 @@ const styles = StyleSheet.create({
     top: DimensionsUtils.getDP(42),
     left: WIDTH / 2 - DimensionsUtils.getDP(108),
     position: 'absolute',
+  },
+  rot90: {
+    transform: [{rotate: '90deg'}],
+  },
+  rot180: {
+    transform: [{rotate: '180deg'}],
+  },
+  rot270: {
+    transform: [{rotate: '270deg'}],
+  },
+  spaceRot: {
+    marginLeft: DimensionsUtils.getDP(24),
+    transform: [{rotate: '270deg'}],
   },
 });
 
