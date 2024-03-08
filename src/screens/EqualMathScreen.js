@@ -70,7 +70,8 @@ const EqualMathScreen = ({route}) => {
     }
 
     const isCorrect = isEqual
-      ? evaluate(eq1.replaceAll('X', '*')) == evaluate(eq2.replaceAll('X', '*'))
+      ? evaluate(eq1.replaceAll('X', '*')) ===
+        evaluate(eq2.replaceAll('X', '*'))
       : firstCardPressed
       ? evaluate(eq1.replaceAll('X', '*')) > evaluate(eq2.replaceAll('X', '*'))
       : evaluate(eq1.replaceAll('X', '*')) < evaluate(eq2.replaceAll('X', '*'));
