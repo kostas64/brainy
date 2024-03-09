@@ -17,6 +17,7 @@ export const HEIGHT_SCR = Dimensions.get('screen').height;
 
 export const isIOS = Platform.OS === 'ios';
 export const isAndroid = Platform.OS === 'android';
+export const isTiramisuAndHigher = isAndroid && Platform.Version >= 33;
 
 const haptikSettings = {
   enableVibrateFallback: true,
