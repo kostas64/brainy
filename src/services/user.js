@@ -124,9 +124,7 @@ export const updateNotifSetts = async settings => {
       body: JSON.stringify({
         settings,
       }),
-    })
-      .then(res => res.json())
-      .then(res => console.log('Result ', res));
+    });
   } catch (e) {
     console.log('API updateNotifSetts failed', e);
   }
