@@ -65,22 +65,14 @@ const NotificationsScreen = () => {
       <View style={styles.container}>
         <NotificationItem
           value={settings.score}
-          setValue={() =>
-            setSettings(old => ({
-              ...old,
-              score: !old.score,
-            }))
-          }
           title={dict.notifyScoreTitle}
           caption={dict.notifyScoreSub}
+          setValue={() => setSettings(old => ({...old, score: !old.score}))}
         />
         <NotificationItem
           value={settings.friendReq}
           setValue={() =>
-            setSettings(old => ({
-              ...old,
-              friendReq: !old.friendReq,
-            }))
+            setSettings(old => ({...old, friendReq: !old.friendReq}))
           }
           title={dict.notifyFriendReqTitle}
           caption={dict.notifyFriendReqSub}
