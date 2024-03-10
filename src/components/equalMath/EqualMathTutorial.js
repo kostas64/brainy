@@ -136,7 +136,7 @@ const EqualMathTutorial = ({modalOpen, setModalOpen}) => {
               <Text style={styles.equalText}>{dict.equalLabel}</Text>
             </View>
           </Touchable>
-          <Text style={{marginTop: DimensionsUtils.getDP(8)}}>
+          <Text style={styles.spaceTop}>
             <Text style={styles.text}>{dict.doTheMathTutContent}</Text>
             <Text
               style={[
@@ -184,19 +184,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: DimensionsUtils.getDP(8),
   },
   innerTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   icon: {
-    width: DimensionsUtils.getDP(52),
-    height: DimensionsUtils.getDP(52),
+    width: DimensionsUtils.getDP(50),
+    height: DimensionsUtils.getDP(50),
   },
   title: {
     marginLeft: DimensionsUtils.getDP(16),
     color: Colors.black,
-    fontSize: DimensionsUtils.getFontSize(22),
+    fontSize: DimensionsUtils.getFontSize(20),
     fontFamily: 'Poppins-SemiBold',
   },
   closeIcon: {
@@ -245,11 +246,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'Poppins-SemiBold',
   },
+  spaceTop: {
+    marginTop: DimensionsUtils.getDP(16),
+  },
   text: {
     color: Colors.black,
-    fontSize: DimensionsUtils.getFontSize(16),
-    fontFamily: 'Poppins-Regular',
     textAlign: 'justify',
+    fontFamily: 'Poppins-Regular',
+    fontSize: DimensionsUtils.getFontSize(16),
   },
   textBold: {
     fontWeight: 'bold',

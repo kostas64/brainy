@@ -187,7 +187,7 @@ const GestureItTutorial = ({modalOpen, setModalOpen}) => {
               {designState === 1 && designOne()}
               {designState === 2 && designTwo()}
             </View>
-            <Text>
+            <Text style={styles.spaceTop}>
               <Text style={styles.text}>{`${dict.gestureItTutContent1} `}</Text>
               <Text
                 style={[
@@ -248,8 +248,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    width: DimensionsUtils.getDP(52),
-    height: DimensionsUtils.getDP(52),
+    width: DimensionsUtils.getDP(50),
+    height: DimensionsUtils.getDP(50),
   },
   closeIcon: {
     width: DimensionsUtils.getDP(36),
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   title: {
     marginLeft: DimensionsUtils.getDP(16),
     color: Colors.black,
-    fontSize: DimensionsUtils.getFontSize(22),
+    fontSize: DimensionsUtils.getFontSize(20),
     fontFamily: 'Poppins-SemiBold',
   },
   gameContainer: {
@@ -284,6 +284,9 @@ const styles = StyleSheet.create({
   },
   rightSpacer: {
     marginRight: DimensionsUtils.getDP(4),
+  },
+  spaceTop: {
+    marginTop: DimensionsUtils.getDP(16),
   },
   designOne: {
     left: (WIDTH - DimensionsUtils.getDP(124)) / 2 - DimensionsUtils.getDP(86),

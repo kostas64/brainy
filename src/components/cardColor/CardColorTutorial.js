@@ -113,7 +113,7 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
               )}
             </Touchable>
           </View>
-          <Text>
+          <Text style={styles.spaceTop}>
             <Text style={styles.text}>{`${dict.colorMatcTutContent} `}</Text>
             <Text
               style={[
@@ -161,19 +161,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: DimensionsUtils.getDP(8),
   },
   innerTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   icon: {
-    width: DimensionsUtils.getDP(52),
-    height: DimensionsUtils.getDP(52),
+    width: DimensionsUtils.getDP(50),
+    height: DimensionsUtils.getDP(50),
   },
   title: {
     marginLeft: DimensionsUtils.getDP(16),
     color: Colors.black,
-    fontSize: DimensionsUtils.getFontSize(22),
+    fontSize: DimensionsUtils.getFontSize(20),
     fontFamily: 'Poppins-SemiBold',
   },
   closeIcon: {
@@ -216,11 +217,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     fontSize: DimensionsUtils.getFontSize(22),
   },
+  spaceTop: {
+    marginTop: DimensionsUtils.getDP(8),
+  },
   text: {
     color: Colors.black,
-    fontSize: DimensionsUtils.getFontSize(16),
-    fontFamily: 'Poppins-Regular',
     textAlign: 'justify',
+    fontFamily: 'Poppins-Regular',
+    fontSize: DimensionsUtils.getFontSize(16),
   },
   textBold: {
     fontWeight: 'bold',
