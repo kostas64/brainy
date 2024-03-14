@@ -76,11 +76,7 @@ const CountdownTimer = React.forwardRef(({seconds, setIsFinished}, ref) => {
   }, [isRunning, timeState]);
 
   return (
-    <View
-      style={[
-        styles.container,
-        isAndroid && {height: DimensionsUtils.getDP(50)},
-      ]}>
+    <View style={[styles.container]}>
       <View style={styles.timerContainer}>
         <Text style={styles.timer}>{getTime().minutes}:</Text>
         <Text style={styles.timer}>{getTime().seconds}.</Text>
@@ -94,9 +90,9 @@ const CountdownTimer = React.forwardRef(({seconds, setIsFinished}, ref) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: DimensionsUtils.getDP(8),
-    borderRadius: DimensionsUtils.getDP(8),
-    width: DimensionsUtils.getDP(120),
+    paddingVertical: 6,
+    borderRadius: 8,
+    paddingHorizontal: 12,
     backgroundColor: Colors.background,
     borderWidth: 1,
     borderColor: Colors.appGreen,
@@ -107,10 +103,11 @@ const styles = StyleSheet.create({
     marginLeft: DimensionsUtils.getDP(4),
   },
   timer: {
+    width: 34,
+    fontSize: 20,
+    lineHeight: 28,
     color: Colors.white,
-    fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: 'Poppins-Regular',
-    width: DimensionsUtils.getDP(36),
   },
 });
 

@@ -3,16 +3,10 @@ import {View, Text, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
-import {isAndroid} from '../../utils/GenericUtils';
-import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Points = ({points}) => {
   return (
-    <View
-      style={[
-        styles.counterContainer,
-        isAndroid && {height: DimensionsUtils.getDP(50)},
-      ]}>
+    <View style={[styles.counterContainer]}>
       <Text
         style={styles.counterLabel}>{`${dict.pointsLabel}: ${points} `}</Text>
     </View>
@@ -21,16 +15,17 @@ const Points = ({points}) => {
 
 const styles = StyleSheet.create({
   counterContainer: {
-    paddingHorizontal: DimensionsUtils.getDP(12),
-    paddingVertical: DimensionsUtils.getDP(8),
-    borderRadius: DimensionsUtils.getDP(8),
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
     backgroundColor: Colors.background,
     borderWidth: 1,
     borderColor: Colors.appGreen,
   },
   counterLabel: {
+    fontSize: 20,
+    lineHeight: 28,
     color: Colors.white,
-    fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: 'Poppins-Regular',
   },
 });

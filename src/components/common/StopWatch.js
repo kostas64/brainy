@@ -4,19 +4,17 @@ import moment from 'moment';
 import {Text, View, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
-import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Timer = ({interval, style}) => {
   const pad = n => (n < 10 ? '0' + n : n);
   const duration = convertTime(interval);
   const centiseconds = Math.floor(duration.milliseconds() / 10);
+
   return (
     <View style={styles.timerContainer}>
       <Text style={style}>{pad(duration.minutes())}:</Text>
       <Text style={style}>{pad(duration.seconds())},</Text>
-      <Text style={[style, {width: DimensionsUtils.getDP(32)}]}>
-        {pad(centiseconds)}
-      </Text>
+      <Text style={[style, styles.width28]}>{pad(centiseconds)}</Text>
     </View>
   );
 };
@@ -95,22 +93,28 @@ export default StopWatch;
 
 const styles = StyleSheet.create({
   container: {
-    height: DimensionsUtils.getDP(50),
-    paddingVertical: DimensionsUtils.getDP(8),
-    paddingHorizontal: DimensionsUtils.getDP(12),
-    borderRadius: DimensionsUtils.getDP(8),
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: Colors.appGreen,
     backgroundColor: Colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   timer: {
+    width: 34,
+    fontSize: 20,
+    lineHeight: 28,
     color: Colors.white,
-    fontSize: DimensionsUtils.getFontSize(24),
     fontFamily: 'Poppins-Regular',
-    width: DimensionsUtils.getDP(36),
   },
   timerContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
+  },
+  width28: {
+    width: 28,
   },
 });
