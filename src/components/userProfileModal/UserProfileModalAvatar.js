@@ -3,6 +3,7 @@ import FastImage from 'react-native-fast-image';
 import {StyleSheet, Text, View} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
+import images from '../../assets/images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const UserProfileModalAvatar = ({
@@ -20,7 +21,11 @@ const UserProfileModalAvatar = ({
     <>
       <View style={[styles.avatarContainer, contStyle]}>
         <View style={[styles.avatarInnerContainer, imgContStyle]}>
-          <FastImage source={source} style={[styles.avatar, imgStyle]} />
+          <FastImage
+            source={source}
+            defaultSource={images.guest}
+            style={[styles.avatar, imgStyle]}
+          />
         </View>
       </View>
       <Text style={[styles.name, nameStyle]}>{name}</Text>

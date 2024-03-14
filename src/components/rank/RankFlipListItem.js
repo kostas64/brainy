@@ -6,6 +6,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../../utils/Colors';
 import useTimeout from '../../hooks/useTimeout';
+import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {normalizeMS} from '../../utils/MathUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
@@ -58,8 +59,9 @@ const RankFlipListItem = ({item, index, isMe}) => {
       <View style={styles.rowCenter}>
         <Text style={styles.index}>{index + 1}</Text>
         <FastImage
-          source={{uri: item?.user?.[0]?.avatar}}
           style={styles.avatar}
+          defaultSource={images.guest}
+          source={{uri: item?.user?.[0]?.avatar}}
         />
       </View>
       <Text style={styles.textWrapper}>

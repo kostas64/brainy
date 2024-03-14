@@ -9,6 +9,7 @@ import {
 import Button from '../common/Button';
 import {Colors} from '../../utils/Colors';
 import {WIDTH} from '../../utils/GenericUtils';
+import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {calcTimestamp} from '../../utils/MathUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
@@ -51,6 +52,7 @@ const FriendRequestItem = ({item, updateList}) => {
         <View style={styles.row}>
           <FastImage
             style={styles.avatar}
+            defaultSource={images.guest}
             source={{uri: item.friendUserAvatar}}
           />
           <View style={styles.nameContainer}>

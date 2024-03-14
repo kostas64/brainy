@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
 import {WIDTH} from '../../utils/GenericUtils';
+import images from '../../assets/images/images';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const FriendsListItem = ({item}) => {
@@ -33,7 +34,11 @@ const FriendsListItem = ({item}) => {
       style={styles.row}
       pressingAnimationDuration={25}
       releasingAnimationDuraiton={50}>
-      <FastImage style={styles.avatar} source={{uri: item.friendUserAvatar}} />
+      <FastImage
+        style={styles.avatar}
+        defaultSource={images.guest}
+        source={{uri: item.friendUserAvatar}}
+      />
       <View style={styles.nameContainer}>
         <Text numberOfLines={2} style={styles.name}>
           {`${item.friendUserName} ${item.friendUserSurname}`}

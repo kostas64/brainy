@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
 import {WIDTH} from '../../utils/GenericUtils';
+import images from '../../assets/images/images';
 import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
@@ -42,7 +43,11 @@ const SearchListItem = ({item, style}) => {
       pressingAnimationDuration={25}
       releasingAnimationDuraiton={50}
       style={[styles.container, style]}>
-      <FastImage source={{uri: item.avatar}} style={styles.avatar} />
+      <FastImage
+        style={styles.avatar}
+        source={{uri: item.avatar}}
+        defaultSource={images.guest}
+      />
       <View style={styles.spaceLeft}>
         <Text
           numberOfLines={1}
