@@ -87,18 +87,17 @@ const SetNicknameModal = ({token, successCb}) => {
 
       <View style={[styles.rowBetween, styles.spaceHor]}>
         <Button
-          onPress={successCb}
-          disabled={loadingApi}
-          label={dict.skipLabel}
-          containerStyle={styles.skipBtn}
-          labelStyle={{color: Colors.appGreen}}
-        />
-        <Button
           onPress={onPressSet}
           loading={loadingApi}
           disabled={loadingApi}
           label={dict.setNicknameLabel}
           containerStyle={styles.setBtn}
+        />
+        <Button
+          onPress={successCb}
+          disabled={loadingApi}
+          label={dict.skipLabel}
+          containerStyle={styles.skipBtn}
         />
       </View>
     </ScrollView>
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
     fontSize: DimensionsUtils.getFontSize(12),
   },
   skipBtn: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.lightGrey,
     width: (WIDTH - DimensionsUtils.getDP(56)) / 2,
   },
   setBtn: {

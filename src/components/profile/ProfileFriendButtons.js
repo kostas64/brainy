@@ -22,8 +22,10 @@ const ProfileFriendButtons = ({
   firstButtonLabel,
   secondButtonLabel,
   showSecondButton,
+  secondBtnContainer,
   onPressFirstButton,
   onPressSecondButton,
+  secondButtonLabelStyle,
 }) => {
   const opacity = useSharedValue(0.5);
 
@@ -62,8 +64,8 @@ const ProfileFriendButtons = ({
           label={secondButtonLabel}
           onPress={onPressSecondButton}
           loading={loadingBtn === 'SECOND'}
-          labelStyle={{color: Colors.appGreen}}
-          containerStyle={styles.secondBtnContainerStyle}
+          labelStyle={secondButtonLabelStyle}
+          containerStyle={[styles.secondBtnContainerStyle, secondBtnContainer]}
         />
       )}
     </View>
