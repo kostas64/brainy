@@ -1,26 +1,26 @@
 /* eslint-disable no-shadow */
 import React from 'react';
-import moment from 'moment';
 import {Text, View, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 
 const Timer = ({interval, style}) => {
   const pad = n => (n < 10 ? '0' + n : n);
-  const duration = convertTime(interval);
-  const centiseconds = Math.floor(duration.milliseconds() / 10);
+
+  // Convert milliseconds to minutes, seconds, and remaining milliseconds
+  const minutes = Math.floor(interval / 60000);
+  const seconds = Math.floor((interval % 60000) / 1000);
+  const milliseconds = interval % 1000;
 
   return (
     <View style={styles.timerContainer}>
-      <Text style={style}>{pad(duration.minutes())}:</Text>
-      <Text style={style}>{pad(duration.seconds())},</Text>
-      <Text style={[style, styles.width28]}>{pad(centiseconds)}</Text>
+      <Text style={style}>{pad(minutes)}:</Text>
+      <Text style={style}>{pad(seconds)},</Text>
+      <Text style={[style, styles.width28]}>
+        {pad(Math.floor(milliseconds / 10))}
+      </Text>
     </View>
   );
-};
-
-const convertTime = time => {
-  return moment.duration(time);
 };
 
 let timer;
@@ -60,8 +60,18 @@ const StopWatch = React.forwardRef((props, ref) => {
     setLaps([]);
   };
 
-  const extractTime = () =>
-    convertTime(laps.reduce((total, curr) => total + curr, 0) + timerVar);
+  const extractTime = () => {
+    // Calculate total milliseconds by summing up laps and the current timerVar
+    const totalMilliseconds =
+      laps?.reduce((total, curr) => total + curr, 0) + timerVar;
+
+    // Convert totalMilliseconds to minutes, seconds, and milliseconds
+    const minutes = Math.floor(totalMilliseconds / 60000);
+    const seconds = Math.floor((totalMilliseconds % 60000) / 1000);
+    const milliseconds = totalMilliseconds % 1000;
+
+    return {minutes, seconds, milliseconds};
+  };
 
   //** ----- EFFECTS -----
   React.useImperativeHandle(ref, () => ({

@@ -5,16 +5,14 @@ import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const MemorySuccessModal = ({pad, duration, flipCounter, centiseconds}) => {
+const MemorySuccessModal = ({result, flipCounter}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{dict.bravoLabel}</Text>
       <Text style={styles.resultsLabel}>
         {`${dict.memoryCardFlipLabel} : ${flipCounter}`}
       </Text>
-      <Text style={styles.resultsLabel}>{`${pad(duration?.minutes())}:${pad(
-        duration?.seconds(),
-      )}:${pad(centiseconds)}`}</Text>
+      <Text style={styles.resultsLabel}>{result}</Text>
     </View>
   );
 };

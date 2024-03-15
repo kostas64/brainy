@@ -43,7 +43,10 @@ const MemoryCardScreen = ({route}) => {
 
   const pad = n => (n < 10 ? '0' + n : n);
   const duration = timeRef?.current?.extractTime();
-  const centiseconds = Math.floor(duration?.milliseconds() / 10);
+  const totalMilliseconds =
+    duration?.minutes * 60000 +
+    duration?.seconds * 1000 +
+    duration?.milliseconds;
 
   const bottom =
     insets.bottom > 0
@@ -98,23 +101,16 @@ const MemoryCardScreen = ({route}) => {
   }, []);
 
   const successContent = React.useCallback(() => {
-    return (
-      <MemorySuccessModal
-        pad={pad}
-        duration={duration}
-        flipCounter={flipCounter}
-        centiseconds={centiseconds}
-      />
-    );
-  }, [duration, centiseconds, flipCounter]);
+    const result = `${pad(duration?.minutes)}:${pad(duration?.seconds)}:${pad(
+      duration?.milliseconds,
+    )}`;
+    return <MemorySuccessModal result={result} flipCounter={flipCounter} />;
+  }, [duration, flipCounter]);
 
   const sendScore = () => {
     submitScore('match_cards', {
       flips: flipCounter,
-      milliseconds:
-        duration.minutes() * 60000 +
-        duration?.seconds() * 1000 +
-        duration?.milliseconds(),
+      milliseconds: totalMilliseconds,
     }).finally(() => route?.params?.update());
   };
 
