@@ -65,20 +65,19 @@ const FriendRequestItem = ({item, updateList}) => {
       </View>
       <View style={styles.buttonsContainer}>
         <Button
-          disabled={!!loading}
           label={dict.accept}
+          disabled={!!loading}
           loading={loading === 'ACCEPT'}
           onPress={() => handleRequest('ACCEPT')}
-          labelStyle={styles.buttonLabel}
           containerStyle={[styles.btnContainer, styles.spaceRight]}
         />
         <Button
-          disabled={!!loading}
           label={dict.reject}
+          disabled={!!loading}
           loading={loading === 'REJECT'}
+          labelStyle={styles.greenLabel}
           indicatorColor={Colors.appGreen}
           onPress={() => handleRequest('REJECT')}
-          labelStyle={[styles.buttonLabel, styles.greenLabel]}
           containerStyle={[styles.btnContainer, styles.whiteBG]}
         />
       </View>
@@ -120,11 +119,8 @@ const styles = StyleSheet.create({
     marginTop: DimensionsUtils.getDP(4),
     marginLeft: 74,
   },
-  buttonLabel: {
-    fontFamily: 'Poppins-Medium',
-  },
   greenLabel: {
-    color: Colors.appGreen,
+    color: Colors.white,
   },
   btnContainer: {
     width: (WIDTH - 120) / 2,
@@ -132,7 +128,7 @@ const styles = StyleSheet.create({
     borderRadius: DimensionsUtils.getDP(8),
   },
   whiteBG: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.tabBarBg,
   },
   spaceRight: {
     marginRight: 12,

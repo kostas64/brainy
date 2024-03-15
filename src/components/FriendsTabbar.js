@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: Colors.appGreen,
   },
-
   spaceRight: {
     marginRight: DimensionsUtils.getDP(16),
   },
