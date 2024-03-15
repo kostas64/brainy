@@ -71,7 +71,7 @@ const GetStartedScreen = () => {
         surname: user?.surname,
         nickname: user?.nickname,
       });
-      setCircle(e, Colors.white);
+      setCircle(e, Colors.tabBarBg);
     }
   };
 
@@ -141,7 +141,6 @@ const GetStartedScreen = () => {
         />
         <Button
           disabled={loading}
-          labelStyle={styles.greenLabel}
           onPress={e => navigate(e, 'guest')}
           label={dict?.getStartedGuestButton}
           containerStyle={[loading && styles.lowOpacity, styles.whiteBG]}
@@ -185,10 +184,7 @@ const styles = StyleSheet.create({
   },
   whiteBG: {
     marginTop: DimensionsUtils.getDP(8),
-    backgroundColor: Colors.white,
-  },
-  greenLabel: {
-    color: Colors.appGreen,
+    backgroundColor: Colors.tabBarBg,
   },
   spaceTop: {
     marginTop: DimensionsUtils.getDP(26),
