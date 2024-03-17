@@ -1,6 +1,7 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import {
   acceptFriendsRequest,
@@ -8,6 +9,7 @@ import {
 } from '../../services/friends';
 import Button from '../common/Button';
 import {Colors} from '../../utils/Colors';
+import Touchable from '../common/Touchable';
 import {WIDTH} from '../../utils/GenericUtils';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
@@ -16,11 +18,28 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useToastContext} from '../../context/ToastProvider';
 
 const FriendRequestItem = ({item, updateList}) => {
+  const navigation = useNavigation();
   const {setToast} = useToastContext();
 
   const [loading, setLoading] = React.useState(null);
 
   //** ----- FUNCTIONS -----
+  const onPress = React.useCallback(() => {
+    navigation.navigate('Profile', {
+      item: {
+        user: [
+          {
+            _id: item.friendUserId,
+            nickname: item?.nickname,
+            name: item?.friendUserName,
+            surname: item?.friendUserSurname,
+            avatar: item?.friendUserAvatar,
+          },
+        ],
+      },
+    });
+  }, [item, navigation]);
+
   const handleRequest = React.useCallback(
     action => {
       const acceptPressed = action === 'ACCEPT';
@@ -48,7 +67,7 @@ const FriendRequestItem = ({item, updateList}) => {
 
   return (
     <>
-      <View style={styles.firstRowContainer}>
+      <Touchable style={styles.firstRowContainer} onPress={onPress}>
         <View style={styles.row}>
           <FastImage
             style={styles.avatar}
@@ -62,7 +81,7 @@ const FriendRequestItem = ({item, updateList}) => {
           </View>
         </View>
         <Text style={styles.timeStamp}>{calcTimestamp(item.updatedAt)}</Text>
-      </View>
+      </Touchable>
       <View style={styles.buttonsContainer}>
         <Button
           label={dict.accept}
