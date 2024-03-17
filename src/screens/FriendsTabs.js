@@ -22,6 +22,7 @@ import FriendRequestsScreens from './FriendRequestsScreen';
 const tabRoutes = [
   {key: 'first', title: dict.friendRequests},
   {key: 'second', title: dict.yourFriends},
+  {key: 'third', title: dict.profileInvite},
 ];
 
 const renderScene = ({route, index}) => {
@@ -30,6 +31,8 @@ const renderScene = ({route, index}) => {
       return <FriendRequestsScreens isFocused={index === 0} />;
     case 'second':
       return <YourFriendsScreen isFocused={index === 1} />;
+    case 'third':
+      return null;
   }
 };
 

@@ -10,6 +10,7 @@ import {useToastContext} from '../context/ToastProvider';
 import {shareOptions} from '../assets/values/shareOptions';
 
 const FriendsTabbar = props => {
+  const scrollRef = React.useRef();
   const {setToast} = useToastContext();
 
   const navState = props.navigationState;
@@ -22,28 +23,44 @@ const FriendsTabbar = props => {
   ];
 
   //** ----- FUNCTIONS -----
+  const scrollToFirst = React.useCallback(() => {
+    scrollRef.current.scrollTo({x: 0, y: 0, animated: true});
+    props.jumpTo('first');
+  }, [props]);
   const onPress = React.useCallback(
     item => {
-      props.jumpTo(item.key);
+      if (item.key === 'first') {
+        scrollToFirst();
+      } else if (item.key === 'second') {
+        props.jumpTo(item.key);
+      } else if (item.key === 'third') {
+        props.jumpTo(item.key);
+        onPressShare();
+      }
     },
-    [props],
+    [props, scrollToFirst, onPressShare],
   );
 
   const onPressShare = React.useCallback(async () => {
+    scrollRef.current.scrollToEnd({animated: true});
+
     Share.open(shareOptions)
       .then(res => {
+        scrollToFirst();
+
         //On success show toast
         if (res.success) {
           setToast({message: dict.thanksOnSharing});
         }
       })
       .catch(err => console.log('Error ', err));
-  }, [setToast]);
+  }, [setToast, scrollToFirst]);
 
   return (
     <View>
       <ScrollView
         horizontal
+        ref={scrollRef}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}>
         {navState.routes?.map((item, index) => (
@@ -55,12 +72,6 @@ const FriendsTabbar = props => {
             {selectedItem === index && <View style={styles.indicator} />}
           </Pressable>
         ))}
-        <Pressable
-          onPress={onPressShare}
-          key={'friends-tabbar-invite'}
-          style={[styles.tabContainer, styles.spaceRight]}>
-          <Text style={styles.label}>{dict.profileInvite}</Text>
-        </Pressable>
       </ScrollView>
     </View>
   );
@@ -72,6 +83,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     height: 60,
     marginTop: DimensionsUtils.getDP(16),
+    paddingLeft: DimensionsUtils.getDP(16),
   },
   tabContainer: {
     height: 38,
@@ -80,7 +92,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: DimensionsUtils.getDP(16),
     borderRadius: DimensionsUtils.getDP(30),
     marginTop: DimensionsUtils.getDP(8),
-    marginLeft: DimensionsUtils.getDP(16),
+    marginRight: DimensionsUtils.getDP(16),
   },
   label: {
     color: Colors.black,
@@ -98,8 +110,5 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: 3,
     backgroundColor: Colors.appGreen,
-  },
-  spaceRight: {
-    marginRight: DimensionsUtils.getDP(16),
   },
 });
