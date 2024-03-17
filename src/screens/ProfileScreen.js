@@ -10,6 +10,7 @@ import {
   acceptFriendsRequest,
   cancelFriendsRequest,
 } from '../services/friends';
+import {Colors} from '../utils/Colors';
 import useTimeout from '../hooks/useTimeout';
 import dict from '../assets/values/dict.json';
 import Screen from '../components/common/Screen';
@@ -191,6 +192,7 @@ const ProfileScreen = ({route}) => {
           showSecondButton={showSecondButton}
           firstButtonLabel={firstButtonLabel}
           secondButtonLabel={secondButtonLabel}
+          secondBtnContainer={styles.scndBtnCont}
           onPressFirstButton={onPressFirstButton}
           onPressSecondButton={onPressSecondButton}
         />
@@ -226,5 +228,8 @@ const styles = StyleSheet.create({
     width: DimensionsUtils.getDP(102),
     height: DimensionsUtils.getDP(102),
     borderRadius: DimensionsUtils.getDP(51),
+  },
+  scndBtnCont: {
+    backgroundColor: Colors.tabBarBg,
   },
 });
