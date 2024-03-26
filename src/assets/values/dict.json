@@ -97,7 +97,8 @@
   "bestScores": "Best scores",
   "shareTitleContent": "Download Brainfull and let's start our battles ⚔️⚔️⚔️",
   "sharePreviewContent": "Share Brainfull with your friends",
-  "thanksOnSharing": "Thank you for sharing Brainfull with your friends!"
+  "shareDescContent": "\nFor iOS visit:\nhttps://www.instagram.com/\n\nFor Android visit:\nhttps://www.facebook.com/",
+  "thanksOnSharing": "Thank you for sharing Brainfull with your friends!",
   "infoNotLabel": "Looks like you've turned off notifications for Brainfull. Turn them on to stay tuned!",
   "infoAlarmLabel": "Looks like you've turned off \"Alarms & reminders\" in your device settings. Turn them on to stay tuned!",
   "infoNotCtaLabel": "Open settings"
