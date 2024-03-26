@@ -87,11 +87,12 @@ const GamesList = ({data, bestScores, loadingScores, getBestOfScores}) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} accessible>
       <OverflowItems data={data} scrollX={scrollX} />
       <Animated.FlatList
         data={data}
         horizontal
+        accessible
         pagingEnabled
         onScroll={onScroll}
         renderItem={renderItem}

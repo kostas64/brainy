@@ -11,6 +11,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const Touchable = ({
   style,
+  testID,
   onPress,
   children,
   disabled,
@@ -44,6 +45,9 @@ const Touchable = ({
 
   return (
     <AnimatedPressable
+      testID={testID}
+      accessibilityHint={testID}
+      accessibilityLabel={testID}
       onPress={onPress}
       disabled={disabled}
       onPressIn={onPressing}

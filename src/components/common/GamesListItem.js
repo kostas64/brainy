@@ -47,8 +47,9 @@ const GamesListItem = ({
   }`}`;
 
   return (
-    <View style={styles.gameContainer}>
+    <View style={styles.gameContainer} acceessible>
       <AnimPressable
+        testID={`card-${index}`}
         onPress={() => onItemPress(item)}
         style={[styles.cardContainer, {transform: [{scale}]}]}>
         <Image source={item.poster} style={styles.image} />

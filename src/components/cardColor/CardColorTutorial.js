@@ -70,15 +70,20 @@ const CardColorTutorial = ({modalOpen, setModalOpen}) => {
 
   return (
     modalOpen && (
-      <Animated.View style={[styles.container, {opacity: opacityRef}]}>
+      <Animated.View
+        accessible
+        style={[styles.container, {opacity: opacityRef}]}>
         <Pressable onPress={closeModal} style={styles.backgroundContainer} />
-        <View style={styles.innerContainer}>
-          <View style={styles.titleContainer}>
+        <View accessible style={styles.innerContainer}>
+          <View accessible style={styles.titleContainer}>
             <View style={styles.innerTitleContainer}>
               <Image source={images.tutorial} style={styles.icon} />
               <Text style={styles.title}>{dict.colorMatcTutTitle}</Text>
             </View>
-            <Touchable onPress={closeModal} releasingAnimationDuraiton={300}>
+            <Touchable
+              testID="pressOut"
+              onPress={closeModal}
+              releasingAnimationDuraiton={300}>
               <Image source={images.close} style={styles.closeIcon} />
             </Touchable>
           </View>
