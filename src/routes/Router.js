@@ -14,6 +14,7 @@ import GestureItScreen from '../screens/GestureItScreen';
 import ColorCardScreen from '../screens/ColorCardScreen';
 import MemoryCardScreen from '../screens/MemoryCardScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
+import BallBalanceScreen from '../screens/BallBalanceScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 
 const Stack = createNativeStackNavigator();
@@ -70,6 +71,11 @@ const Router = ({onNavigationReady}) => {
           <Stack.Screen
             name="GestureIt"
             component={GestureItScreen}
+            options={screenConfig}
+          />
+          <Stack.Screen
+            name="BallBalance"
+            component={BallBalanceScreen}
             options={screenConfig}
           />
           <Stack.Screen
