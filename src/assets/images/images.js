@@ -2,6 +2,7 @@ const addUser = require('./add_user.png');
 const arrowBlack = require('./arrow_black.png');
 const arrowDown = require('./arrow_down.png');
 const arrow = require('./arrow.png');
+const ballBalance = require('./ball_balance.png');
 const check = require('./check.png');
 const clock = require('./clock.png');
 const close = require('./close.png');
@@ -22,6 +23,7 @@ const logo = require('./logo.png');
 const logout = require('./logout.png');
 const matchEqual = require('./match_equal.png');
 const memoryMatch = require('./memory_match.png');
+const mobile = require('./smartphone.png');
 const no = require('./no.png');
 const notification = require('./notification.png');
 const plus = require('../images/plus.png');
@@ -42,6 +44,7 @@ export default {
   arrowBlack,
   arrowDown,
   arrow,
+  ballBalance,
   check,
   clock,
   close,
@@ -62,6 +65,7 @@ export default {
   logout,
   matchEqual,
   memoryMatch,
+  mobile,
   no,
   notification,
   plus,
