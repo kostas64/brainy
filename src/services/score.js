@@ -10,6 +10,7 @@ import {
   COLOR_CARDS,
   MATCH_CARDS,
   BEST_OF_USER,
+  BALL_BALANCE,
 } from '../Endpoints';
 
 export const getBestOf = async setStatus => {
@@ -42,6 +43,8 @@ export const submitScore = async (game, payload) => {
       ? EQUAL_MATH
       : game === 'gesture_it'
       ? GESTURE_IT
+      : game === 'ball_balance'
+      ? BALL_BALANCE
       : null;
 
   console.log('API submitScore ', `${HOST}${SCORE}${GAME}`, payload);

@@ -6,12 +6,14 @@ import MathIcon from '../../components/profile/cards/MathIcon';
 import ColorIcon from '../../components/profile/cards/ColorIcon';
 import MemoryIcon from '../../components/profile/cards/MemoryIcon';
 import GestureIcon from '../../components/profile/cards/GestureIcon';
+import BallBalanceIcon from '../../components/profile/cards/BallBalanceIcon';
 
 export const GAMES = [
   'Memory Cards',
   'Color Match',
   'Do the math',
   'Gesture It',
+  'Ball Balance',
 ];
 
 export const LIST_GAMES = [
@@ -42,5 +44,12 @@ export const LIST_GAMES = [
     screen: 'GestureIt',
     description: 'Swipe to the right direction',
     icon: <GestureIcon />,
+  },
+  {
+    title: dict.ballBalanceGameTitle,
+    poster: images.ballBalance,
+    screen: 'BallBalance',
+    description: 'Find the right balance',
+    icon: <BallBalanceIcon />,
   },
 ];

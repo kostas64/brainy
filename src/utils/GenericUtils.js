@@ -8,8 +8,8 @@ import {
   GESTURE_IT,
   COLOR_CARDS,
   MATCH_CARDS,
+  BALL_BALANCE,
 } from '../Endpoints';
-import images from '../assets/images/images';
 
 export const WIDTH = Dimensions.get('window').width;
 export const HEIGHT = Dimensions.get('window').height;
@@ -43,23 +43,12 @@ export class GenericUtils {
       ? EQUAL_MATH
       : game === 'Gesture It'
       ? GESTURE_IT
+      : game === 'Ball Balance'
+      ? BALL_BALANCE
       : game === 'Best Of'
       ? BEST_OF
       : null;
 }
-
-export const matchGameNameWithImg = game => {
-  switch (game) {
-    case 'Memory Cards':
-      return images.memoryMatch;
-    case 'Color Match':
-      return images.colorMatch;
-    case 'Do the math':
-      return images.matchEqual;
-    case 'Gesture It':
-      return images.gestureIt;
-  }
-};
 
 export const onNavigationReady = () => {
   RNBootSplash.hide({fade: true, duration: 300});
