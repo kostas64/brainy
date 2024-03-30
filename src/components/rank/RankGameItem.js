@@ -4,6 +4,7 @@ import {GAMES} from '../../assets/values/games';
 import RankFlipListItem from './RankFlipListItem';
 import RankPointListItem from './RankPointListItem';
 import {useAuthContext} from '../../context/AuthProvider';
+import RankPointTimeListItem from './RankPointTimeListItem';
 
 const RankGameItem = ({item, index, gameInput}) => {
   const {user} = useAuthContext();
@@ -22,6 +23,14 @@ const RankGameItem = ({item, index, gameInput}) => {
     case GAMES[3]:
       return (
         <RankPointListItem
+          item={item}
+          index={index}
+          isMe={!user?.isGuest && user?.email === item?.user?.[0]?.email}
+        />
+      );
+    case GAMES[4]:
+      return (
+        <RankPointTimeListItem
           item={item}
           index={index}
           isMe={!user?.isGuest && user?.email === item?.user?.[0]?.email}
