@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     color: Colors.halfWhite,
     fontFamily: 'Poppins-Regular',
+    fontSize: 13,
   },
   smallIcon: {
     tintColor: Colors.fillRed,
