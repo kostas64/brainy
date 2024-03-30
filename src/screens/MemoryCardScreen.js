@@ -5,6 +5,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import useTimeout from '../hooks/useTimeout';
 import {submitScore} from '../services/score';
+import dict from '../assets/values/dict.json';
 import {shuffleArray} from '../utils/MathUtils';
 import Card from '../components/cardMemory/Card';
 import MemoryValues from '../assets/values/memory';
@@ -19,8 +20,8 @@ import {HEIGHT, WIDTH, triggerHaptik} from '../utils/GenericUtils';
 import NewGameButton from '../components/cardMemory/NewGameButton';
 import CelebrationLottie from '../components/common/CelebrationLottie';
 import BackgroundWrapper from '../components/common/BackgroundWrapper';
-import MemorySuccessModal from '../components/cardMemory/MemorySuccessModal';
 import CardMemoryTutorial from '../components/cardMemory/CardMemoryTutorial';
+import TimePointsSuccessModal from '../components/common/TimePointsSuccessModal';
 
 const MemoryCardScreen = ({route}) => {
   const timeout = useTimeout();
@@ -104,7 +105,14 @@ const MemoryCardScreen = ({route}) => {
     const result = `${pad(duration?.minutes)}:${pad(duration?.seconds)}:${pad(
       duration?.milliseconds,
     )}`;
-    return <MemorySuccessModal result={result} flipCounter={flipCounter} />;
+
+    return (
+      <TimePointsSuccessModal
+        time={result}
+        points={flipCounter}
+        label={dict.memoryCardFlipLabel}
+      />
+    );
   }, [duration, flipCounter]);
 
   const sendScore = () => {

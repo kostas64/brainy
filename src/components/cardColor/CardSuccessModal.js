@@ -11,7 +11,9 @@ const CardSuccessModal = ({correct, tries, points}) => {
       <Text style={styles.label}>{dict.bravoLabel}</Text>
       <Text
         style={styles.resultsLabel}>{`${dict.pointsLabel}: ${points}`}</Text>
-      <Text style={styles.resultsLabel}>{`${correct}/${tries}`}</Text>
+      {!!correct && !!tries && (
+        <Text style={styles.resultsLabel}>{`${correct}/${tries}`}</Text>
+      )}
     </View>
   );
 };
