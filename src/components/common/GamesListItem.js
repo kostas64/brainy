@@ -11,6 +11,7 @@ import React from 'react';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
+import {msToMMSSmmm} from '../../utils/StringUtils';
 import {HEIGHT, WIDTH} from '../../utils/GenericUtils';
 import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
@@ -40,9 +41,19 @@ const GamesListItem = ({
 
   const ms = bestScores[item.title]?.[0]?.milliseconds;
   const points = bestScores[item.title]?.[0]?.points;
+  const hasFlips = bestScores[item.title]?.[0]?.flips;
+  const hasPoints = bestScores[item.title]?.[0]?.points;
+  const time = msToMMSSmmm(ms);
+
+  const scoreUnit = hasFlips
+    ? `${hasFlips} flips`
+    : hasPoints
+    ? `${hasPoints} points`
+    : '';
+
   const scoreLabel = `Best: ${`${
     ms
-      ? `${ms / 1000}s (${bestScores[item.title]?.[0]?.flips} flips)`
+      ? `${time} (${scoreUnit})`
       : `${points} points (${bestScores[item.title]?.[0]?.correctness}%)`
   }`}`;
 
@@ -93,14 +104,13 @@ const styles = StyleSheet.create({
     borderRadius: DimensionsUtils.getDP(8),
   },
   score: {
+    fontSize: 12,
     color: Colors.black,
     fontFamily: 'Poppins-Medium',
-    fontSize: 14,
-    height: 20,
   },
   image: {
+    borderRadius: DimensionsUtils.getDP(18),
     width: ITEM_WIDTH - DimensionsUtils.getDP(4),
     height: ITEM_HEIGHT - DimensionsUtils.getDP(4),
-    borderRadius: DimensionsUtils.getDP(18),
   },
 });
