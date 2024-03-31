@@ -116,8 +116,13 @@ const BallBalanceScreen = ({route}) => {
     setGameOver(false);
     setHoleSize(INIT_HOLE_SIZE);
     generateRandPos(true);
-    timeRef.current.stop();
     timeRef.current.reset();
+    timeRef.current.start();
+  }, []);
+
+  const closeModal = React.useCallback(val => {
+    timeRef.current.start();
+    setTutOpen(val);
   }, []);
 
   const sendScore = () => {
@@ -181,14 +186,7 @@ const BallBalanceScreen = ({route}) => {
   return (
     <>
       <BackgroundWrapper statusBar={'light-content'} />
-      {/* TO-DO Tutorial */}
-      <BallBalanceTutorial
-        modalOpen={tutOpen}
-        setModalOpen={val => {
-          timeRef.current.start();
-          setTutOpen(val);
-        }}
-      />
+      <BallBalanceTutorial modalOpen={tutOpen} setModalOpen={closeModal} />
 
       <View
         style={[styles.header, {top: insets.top + DimensionsUtils.getDP(24)}]}>
@@ -201,8 +199,8 @@ const BallBalanceScreen = ({route}) => {
           progress={progress}
           strokeWidth={6}
           size={holeSize}
-          barColor={Colors.white}
-          borderColor={Colors.tabBarBg}
+          barColor={Colors.fillRed}
+          borderColor={Colors.veryLightGrey}
         />
       </View>
 
