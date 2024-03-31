@@ -61,7 +61,7 @@ export const msToMMSSmmm = milliseconds => {
 
   // Format the result as MM:SS:mmm
   var result =
-    padZero(minutes) + ':' + padZero(seconds) + ':' + padZero(remainingMs, 3);
+    padZero(minutes) + ':' + padZero(seconds) + '.' + padZero(remainingMs, 3);
   return result;
 };
 
