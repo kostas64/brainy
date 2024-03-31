@@ -137,7 +137,7 @@ const BallBalanceTutorial = ({modalOpen, setModalOpen}) => {
                 size={42}
                 strokeWidth={4}
                 progress={progress}
-                barColor={Colors.tabBarIcon}
+                barColor={Colors.fillRed}
                 borderColor={Colors.tabBarBg}
               />
             </View>
