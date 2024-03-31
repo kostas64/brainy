@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     height: DimensionsUtils.getDP(14),
     width: DimensionsUtils.getDP(14),
     borderRadius: 7,
-    backgroundColor: Colors.tabBarBg,
+    backgroundColor: Colors.veryLightGrey,
   },
   innerHole: {
     position: 'absolute',
