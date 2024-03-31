@@ -35,6 +35,12 @@ const InputDropdown = React.forwardRef(
     );
 
     //** ----- FUNCTIONS -----
+    const onPress = React.useCallback((isSelected, index) => {
+      if (!isSelected) {
+        setValue(GAMES[index]);
+      }
+    }, []);
+
     const toggleListItem = React.useCallback(() => {
       !!onFieldPress && onFieldPress();
 
@@ -53,10 +59,10 @@ const InputDropdown = React.forwardRef(
 
     const renderItem = ({item, index}) => {
       const isSelected = value === GAMES[index];
+
       return (
         <Pressable
-          disabled={isSelected}
-          onPress={() => setValue(GAMES[index])}
+          onPress={() => onPress(isSelected, index)}
           style={[
             styles.listItemContainer,
             isSelected && {backgroundColor: Colors.appGreen},
