@@ -63,6 +63,14 @@ const styles = StyleSheet.create({
   },
   moveDot: {
     position: 'absolute',
+    elevation: 8,
+    shadowColor: Colors.appGreen,
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
     backgroundColor: Colors.appGreen,
   },
   lowOpacity: {
