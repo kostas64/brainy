@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     borderWidth: DimensionsUtils.getDP(2),
   },
   scoreContainer: {
+    height: 28,
     position: 'absolute',
     left: DimensionsUtils.getDP(16),
     top: DimensionsUtils.getDP(16),
