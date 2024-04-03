@@ -26,7 +26,7 @@ const Screen = ({
   //** ----- STYLES -----
   const contStyles = [
     styles.container,
-    {paddingTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24)},
+    {paddingTop: insets.top > 24 ? insets.top : DimensionsUtils.getDP(24)},
   ];
 
   return (
