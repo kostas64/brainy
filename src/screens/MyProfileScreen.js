@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 
 import {Colors} from '../utils/Colors';
@@ -52,17 +52,19 @@ const MyProfileScreen = ({navigation}) => {
       onIconPress={() => onIconPress('Settings')}
       onScndIcnPress={() => onIconPress('FriendsTabs')}
       hasDot={friendRequests?.length > 0}>
-      <UserProfileModalAvatar
-        user={user}
-        name={name}
-        icon={icon}
-        nameStyle={nameStyle}
-        contStyle={contStyle}
-        imgStyle={styles.imgStyle}
-        imgContStyle={styles.imgCont}
-      />
+      <ScrollView bounces={false}>
+        <UserProfileModalAvatar
+          user={user}
+          name={name}
+          icon={icon}
+          nameStyle={nameStyle}
+          contStyle={contStyle}
+          imgStyle={styles.imgStyle}
+          imgContStyle={styles.imgCont}
+        />
 
-      <ProfileScoresSection />
+        <ProfileScoresSection />
+      </ScrollView>
     </Screen>
   );
 };

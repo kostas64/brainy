@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {
@@ -170,19 +170,21 @@ const ProfileScreen = ({route}) => {
 
   return (
     <Screen label={dict.profileScrTitle} noIcon>
-      <Skeleton
-        type={'profile'}
-        loading={loading}
-        skeletonStyle={styles.skeletonStyle}>
-        <UserProfileModalAvatar
-          name={name}
-          contStyle={styles.avatarCont}
-          imgStyle={styles.imgStyle}
-          imgContStyle={styles.imgCont}
-          user={{avatar: item?.user?.[0]?.avatar}}
-        />
-        <ProfileScoresSection passedScores={scores} />
-      </Skeleton>
+      <ScrollView bounces={false}>
+        <Skeleton
+          type={'profile'}
+          loading={loading}
+          skeletonStyle={styles.skeletonStyle}>
+          <UserProfileModalAvatar
+            name={name}
+            contStyle={styles.avatarCont}
+            imgStyle={styles.imgStyle}
+            imgContStyle={styles.imgCont}
+            user={{avatar: item?.user?.[0]?.avatar}}
+          />
+          <ProfileScoresSection passedScores={scores} />
+        </Skeleton>
+      </ScrollView>
 
       <View style={[styles.absolute, {bottom}]}>
         <ProfileFriendButtons
