@@ -11,6 +11,8 @@ import {shareOptions} from '../assets/values/shareOptions';
 
 const FriendsTabbar = props => {
   const scrollRef = React.useRef();
+  const sharePressed = React.useRef(false);
+
   const {setToast} = useToastContext();
 
   const navState = props.navigationState;
@@ -27,6 +29,7 @@ const FriendsTabbar = props => {
     scrollRef.current.scrollTo({x: 0, y: 0, animated: true});
     props.jumpTo('first');
   }, [props]);
+
   const onPress = React.useCallback(
     item => {
       if (item.key === 'first') {
@@ -35,26 +38,35 @@ const FriendsTabbar = props => {
         props.jumpTo(item.key);
       } else if (item.key === 'third') {
         props.jumpTo(item.key);
-        onPressShare();
+        onPressShare(() => (sharePressed.current = true));
       }
     },
     [props, scrollToFirst, onPressShare],
   );
 
-  const onPressShare = React.useCallback(async () => {
-    scrollRef.current.scrollToEnd({animated: true});
+  const onPressShare = React.useCallback(
+    async cb => {
+      scrollRef.current.scrollToEnd({animated: true});
+      !!cb && cb();
 
-    Share.open(shareOptions)
-      .then(res => {
-        scrollToFirst();
+      Share.open(shareOptions)
+        .then(res => {
+          scrollToFirst();
 
-        //On success show toast
-        if (res.success) {
-          setToast({message: dict.thanksOnSharing});
-        }
-      })
-      .catch(err => console.log('Error ', err));
-  }, [setToast, scrollToFirst]);
+          //On success show toast
+          if (res.success) {
+            setToast({message: dict.thanksOnSharing});
+          }
+        })
+        .catch(err => console.log('Error ', err))
+        .finally(() => (sharePressed.current = false));
+    },
+    [setToast, scrollToFirst],
+  );
+
+  if (selectedItem === 2 && sharePressed.current === false) {
+    onPressShare();
+  }
 
   return (
     <View>

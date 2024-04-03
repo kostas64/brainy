@@ -82,7 +82,6 @@ const FriendsTabs = () => {
         onIconPress={toggleIconOpacity}>
         <Animated.View style={tabAnimStyle}>
           <TabView
-            swipeEnabled={false}
             onIndexChange={setIndex}
             renderTabBar={renderTabBar}
             navigationState={{index, routes}}
