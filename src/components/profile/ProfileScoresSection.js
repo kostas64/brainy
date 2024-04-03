@@ -1,7 +1,14 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import Animated, {
+  withTiming,
+  useSharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
+import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+
+import Button from '../common/Button';
 import {Colors} from '../../utils/Colors';
 import MenuItem from '../common/MenuItem';
 import {signOut} from '../../services/auth';
@@ -20,7 +27,39 @@ const ProfileScoresSection = ({passedScores}) => {
   const [scores] = useStorage('scores', []);
   const {user, setToken, setUser} = useAuthContext();
 
+  const listHeight = useSharedValue(192);
+  const [btnLabel, setBtnLabel] = React.useState(dict.showMoreLabel);
+
+  //** ----- STYLES -----
+  const listAnim = useAnimatedStyle(() => ({height: listHeight.value}), []);
+
   //** ----- FUNCTIONS -----
+  const renderItem = React.useCallback(
+    ({item, index}) => (
+      <View key={`game-${index}`} style={styles.itemContainer}>
+        <View style={styles.iconContainer}>{item.icon}</View>
+        <Text style={styles.label} numberOfLines={2}>
+          {item.title}
+        </Text>
+        <Text style={styles.score}>
+          {getAdaptedScores(item.title, scores, passedScores)}
+        </Text>
+      </View>
+    ),
+    [],
+  );
+
+  const onPressShowMore = React.useCallback(() => {
+    const newHeight =
+      listHeight.value === 192 ? Math.round(LIST_GAMES.length / 2) * 96 : 192;
+
+    setBtnLabel(old =>
+      old === dict.showLessLabel ? dict.showMoreLabel : dict.showLessLabel,
+    );
+
+    listHeight.value = withTiming(newHeight);
+  }, [listHeight]);
+
   const logout = React.useCallback(async () => {
     navigation.pop();
     !user?.isGuest && (await signOut(setToken, setUser, true));
@@ -45,19 +84,23 @@ const ProfileScoresSection = ({passedScores}) => {
   return (
     <>
       <Text style={styles.bestScoresLabel}>{dict.bestScores}</Text>
-      <View style={styles.container}>
-        {LIST_GAMES.map((item, index) => (
-          <View key={`game-${index}`} style={styles.itemContainer}>
-            <View style={styles.iconContainer}>{item.icon}</View>
-            <Text style={styles.label} numberOfLines={2}>
-              {item.title}
-            </Text>
-            <Text style={styles.score}>
-              {getAdaptedScores(item.title, scores, passedScores)}
-            </Text>
-          </View>
-        ))}
-      </View>
+
+      <Animated.View style={[styles.container, listAnim]}>
+        <FlatList
+          numColumns={2}
+          bounces={false}
+          data={LIST_GAMES}
+          scrollEnabled={false}
+          renderItem={renderItem}
+        />
+      </Animated.View>
+
+      <Button
+        label={btnLabel}
+        onPress={onPressShowMore}
+        labelStyle={styles.btnLabel}
+        containerStyle={styles.btnContainer}
+      />
     </>
   );
 };
@@ -66,9 +109,6 @@ export default ProfileScoresSection;
 
 const styles = StyleSheet.create({
   container: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     marginHorizontal: 16,
   },
   bestScoresLabel: {
@@ -79,10 +119,11 @@ const styles = StyleSheet.create({
     fontSize: DimensionsUtils.getFontSize(18),
   },
   itemContainer: {
-    height: 82,
+    height: 80,
     paddingLeft: DimensionsUtils.getDP(12),
     paddingTop: 12,
     paddingBottom: 8,
+    marginRight: 16,
     borderRadius: DimensionsUtils.getDP(8),
     backgroundColor: Colors.tabBarBg,
     width: (WIDTH - 48) / 2,
@@ -112,6 +153,17 @@ const styles = StyleSheet.create({
     height: DimensionsUtils.getDP(18),
     marginLeft: DimensionsUtils.getDP(4),
     marginRight: DimensionsUtils.getDP(8),
+  },
+  btnContainer: {
+    backgroundColor: Colors.tabBarBg,
+    minHeight: DimensionsUtils.getDP(32),
+    borderRadius: DimensionsUtils.getDP(8),
+    width: WIDTH - DimensionsUtils.getDP(32),
+    marginBottom: DimensionsUtils.getDP(32),
+  },
+  btnLabel: {
+    color: Colors.tabBarIcon,
+    fontSize: DimensionsUtils.getFontSize(12),
   },
   spaceHor: {
     marginTop: DimensionsUtils.getDP(24),

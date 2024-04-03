@@ -103,5 +103,7 @@
   "infoAlarmLabel": "Looks like you've turned off \"Alarms & reminders\" in your device settings. Turn them on to stay tuned!",
   "infoNotCtaLabel": "Open settings",
   "ballBalanceGameTitle": "Ball Balance",
-  "ballBalanceTutContent": "Rotate your phone to move the ball into the hole, finding the perfect balance. Once the ball is in the hole, hold it steady for 1.5 seconds before the hole changes position. Each successful placement shrinks the hole."
+  "ballBalanceTutContent": "Rotate your phone to move the ball into the hole, finding the perfect balance. Once the ball is in the hole, hold it steady for 1.5 seconds before the hole changes position. Each successful placement shrinks the hole.",
+  "showMoreLabel": "Show more",
+  "showLessLabel": "Show less"
 }

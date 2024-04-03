@@ -37,7 +37,7 @@ const INIT_HOLE_SIZE = 72;
 const BallBalanceScreen = ({route}) => {
   const {user} = useAuthContext();
   const insets = useSafeAreaInsets();
-  const gyroscope = useAnimatedSensor(SensorType.ROTATION);
+  const rotation = useAnimatedSensor(SensorType.ROTATION);
 
   //Start ball from center
   const progress = useSharedValue(0);
@@ -134,7 +134,7 @@ const BallBalanceScreen = ({route}) => {
 
   //** ----- EFFECTS -----
   useDerivedValue(() => {
-    const {qx, qy} = gyroscope.sensor.value;
+    const {qx, qy} = rotation.sensor.value;
 
     if (!gameOver && !tutOpen) {
       const ballCenterX = rotY.value + qy * 75 + BALL_SIZE / 2;
