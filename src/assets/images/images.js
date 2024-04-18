@@ -4,6 +4,7 @@ const arrowDown = require('./arrow_down.png');
 const arrow = require('./arrow.png');
 const ballBalance = require('./ball_balance.png');
 const check = require('./check.png');
+const chevron = require('./chevron.png');
 const clock = require('./clock.png');
 const close = require('./close.png');
 const colorMatch = require('./color_match.png');
@@ -31,6 +32,7 @@ const profile = require('./profile.png');
 const profile_o = require('./profile_o.png');
 const rankIconO = require('./rank_icon_outline.png');
 const rankIcon = require('./rank_icon.png');
+const rankRes = require('./rank_results.png');
 const search = require('./search.png');
 const splash = require('./splash.png');
 const tap = require('./tap.png');
@@ -39,6 +41,18 @@ const tutorial = require('./tutorial.png');
 const wrong = require('./wrong.png');
 const yes = require('./yes.png');
 
+//Transparent games for onboarding
+const balance_trans = require('./transparent/balance_trans.png');
+const color_trans = require('./transparent/color_trans.png');
+const gesture_trans = require('./transparent/gesture_trans.png');
+const math_trans = require('./transparent/math_trans.png');
+const memory_trans = require('./transparent/memory_trans.png');
+
+//Search steps for onboarding
+const onboardSearch1 = require('./onboardingSearch/onboarding_search_1.png');
+const onboardSearch2 = require('./onboardingSearch/onboarding_search_2.png');
+const onboardSearch3 = require('./onboardingSearch/onboarding_search_3.png');
+
 export default {
   addUser,
   arrowBlack,
@@ -46,6 +60,7 @@ export default {
   arrow,
   ballBalance,
   check,
+  chevron,
   clock,
   close,
   colorMatch,
@@ -73,6 +88,7 @@ export default {
   profile_o,
   rankIconO,
   rankIcon,
+  rankRes,
   search,
   splash,
   tap,
@@ -80,4 +96,12 @@ export default {
   tutorial,
   wrong,
   yes,
+  balance_trans,
+  color_trans,
+  gesture_trans,
+  math_trans,
+  memory_trans,
+  onboardSearch1,
+  onboardSearch2,
+  onboardSearch3,
 };

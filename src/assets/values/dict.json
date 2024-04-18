@@ -1,5 +1,6 @@
 {
   "appName": "Brainy",
+  "onboardingWelcome": "Welcome to Brainy",
   "getStartedSub": "Have fun with a big collection of brain games",
   "getStartedLoginButton": "Login",
   "getStartedLoggedInButton": "Continue",
@@ -105,5 +106,14 @@
   "ballBalanceGameTitle": "Ball Balance",
   "ballBalanceTutContent": "Rotate your phone to move the ball into the hole, finding the perfect balance. Once the ball is in the hole, hold it steady for 1.5 seconds before the hole changes position. Each successful placement shrinks the hole.",
   "showMoreLabel": "Show more",
-  "showLessLabel": "Show less"
+  "showLessLabel": "Show less",
+  "onboardingTitle1": "Welcome to Brainy",
+  "onboardingSubtitle1": "Have fun through a variety of mini brain games",
+  "onboardingTitle2": "Connect and compete",
+  "onboardingSubtitle2": "You can add friends, play and receive notifications if someone beat you",
+  "onboardingStep2Tip1": "In \"Rank\" screen press the search icon",
+  "onboardingStep2Tip2": "Search your friend's name",
+  "onboardingStep2Tip3": "Navigate to their profile and tap 'Add friend'",
+  "onboardingTitle3": "Climb the rank",
+  "onboardingSubtitle3": "Track your progress and strive for the top spot in Brainy community"
 }
