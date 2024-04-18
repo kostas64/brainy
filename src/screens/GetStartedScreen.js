@@ -7,6 +7,7 @@ import {signIn} from '../services/auth';
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import Button from '../components/common/Button';
+import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import {HEIGHT, isAndroid} from '../utils/GenericUtils';
@@ -83,6 +84,10 @@ const GetStartedScreen = () => {
   };
 
   //** ----- EFFECTS -----
+  useBackAction(() => {
+    return true;
+  });
+
   React.useEffect(() => {
     Animated.parallel([
       Animated.timing(opacityRef, {

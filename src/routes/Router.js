@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import TabStack from './TabRouter';
 import {Colors} from '../utils/Colors';
+import {useStorage} from '../hooks/useStorage';
 import FriendsTabs from '../screens/FriendsTabs';
 import AccountScreen from '../screens/AccountScreen';
 import InspireScreen from '../screens/InspireScreen';
@@ -14,6 +15,7 @@ import GestureItScreen from '../screens/GestureItScreen';
 import ColorCardScreen from '../screens/ColorCardScreen';
 import MemoryCardScreen from '../screens/MemoryCardScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
+import OnboardingScreen from '../screens/OnboardingScreen';
 import BallBalanceScreen from '../screens/BallBalanceScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 
@@ -41,12 +43,22 @@ const gameStackOptions = {
 };
 
 const Router = ({onNavigationReady}) => {
+  const [showOnboarding, set] = useStorage('oboarding', true);
+  const initialScreen = showOnboarding ? 'Onboarding' : 'GetStarted';
+
   return (
     <NavigationContainer
       onReady={onNavigationReady}
       theme={{colors: {background: Colors.background}}}>
-      <Stack.Navigator screenOptions={navigatorScreenOptions}>
-        <Stack.Screen name="GetStarted" component={GetStartedScreen} />
+      <Stack.Navigator
+        initialRouteName={initialScreen}
+        screenOptions={navigatorScreenOptions}>
+        <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+        <Stack.Screen
+          name="GetStarted"
+          component={GetStartedScreen}
+          options={screenSlideConfig}
+        />
         <Stack.Screen
           name="GamesStack"
           component={TabStack}
