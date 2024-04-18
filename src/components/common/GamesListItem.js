@@ -2,12 +2,12 @@ import {
   Text,
   View,
   Image,
-  Animated,
   Pressable,
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
+import Animated, {interpolate, useAnimatedStyle} from 'react-native-reanimated';
 
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
@@ -32,13 +32,6 @@ const GamesListItem = ({
 }) => {
   const {user} = useAuthContext();
 
-  const inputRange = [(index - 1) * WIDTH, index * WIDTH, (index + 1) * WIDTH];
-
-  const scale = scrollX.interpolate({
-    inputRange,
-    outputRange: [0.6, 1, 0.6],
-  });
-
   const ms = bestScores[item.title]?.[0]?.milliseconds;
   const points = bestScores[item.title]?.[0]?.points;
   const hasFlips = bestScores[item.title]?.[0]?.flips;
@@ -57,12 +50,19 @@ const GamesListItem = ({
       : `${points} points (${bestScores[item.title]?.[0]?.correctness}%)`
   }`}`;
 
+  //** ----- STYLES -----
+  const inputRange = [(index - 1) * WIDTH, index * WIDTH, (index + 1) * WIDTH];
+
+  const scaleStyle = useAnimatedStyle(() => ({
+    transform: [{scale: interpolate(scrollX.value, inputRange, [0.6, 1, 0.6])}],
+  }));
+
   return (
     <View style={styles.gameContainer} acceessible>
       <AnimPressable
         testID={`card-${index}`}
         onPress={() => onItemPress(item)}
-        style={[styles.cardContainer, {transform: [{scale}]}]}>
+        style={[styles.cardContainer, scaleStyle]}>
         <Image source={item.poster} style={styles.image} />
         {user?.isGuest ? null : (
           <View style={styles.scoreContainer}>

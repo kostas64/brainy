@@ -1,10 +1,18 @@
-import React from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {View, Text, Animated, StyleSheet} from 'react-native';
+/* eslint-disable react-hooks/rules-of-hooks */
+import Animated, {
+  interpolate,
+  useSharedValue,
+  useAnimatedStyle,
+  useAnimatedScrollHandler,
+} from 'react-native-reanimated';
 
-import Pagination from './Pagination';
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+
 import {Colors} from '../../utils/Colors';
 import GamesListItem from './GamesListItem';
+import WidePagination from './WidePagination';
 import {HEIGHT, WIDTH} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
@@ -24,15 +32,18 @@ const OverflowItems = ({data, scrollX}) => {
           (index + 1) * (WIDTH / 2),
         ];
 
-        const translateY = scrollX.interpolate({
-          inputRange,
-          outputRange: [OVERFLOW_HEIGHT, 0, -OVERFLOW_HEIGHT],
-        });
+        const outputRange = [OVERFLOW_HEIGHT, 0, -OVERFLOW_HEIGHT];
+
+        const translateYStyle = useAnimatedStyle(() => ({
+          transform: [
+            {translateY: interpolate(scrollX.value, inputRange, outputRange)},
+          ],
+        }));
 
         return (
           <Animated.View
             key={index}
-            style={[styles.overflowItemContainer, {transform: [{translateY}]}]}>
+            style={[styles.overflowItemContainer, translateYStyle]}>
             <Text style={styles.title} numberOfLines={1}>
               {item.title}
             </Text>
@@ -47,9 +58,8 @@ const OverflowItems = ({data, scrollX}) => {
 };
 
 const GamesList = ({data, bestScores, loadingScores, getBestOfScores}) => {
+  const scrollX = useSharedValue(0);
   const navigation = useNavigation();
-
-  const scrollX = React.useRef(new Animated.Value(0)).current;
 
   //** ----- FUNCTIONS -----
   const getItemLayout = (_, index) => ({
@@ -81,10 +91,9 @@ const GamesList = ({data, bestScores, loadingScores, getBestOfScores}) => {
     [bestScores, loadingScores, scrollX, onItemPress],
   );
 
-  const onScroll = Animated.event(
-    [{nativeEvent: {contentOffset: {x: scrollX}}}],
-    {useNativeDriver: true},
-  );
+  const onScroll = useAnimatedScrollHandler(e => {
+    scrollX.value = e.contentOffset.x;
+  });
 
   return (
     <View style={styles.container} accessible>
@@ -101,7 +110,13 @@ const GamesList = ({data, bestScores, loadingScores, getBestOfScores}) => {
         keyExtractor={(_, index) => String(index)}
         contentContainerStyle={styles.listContainer}
       />
-      <Pagination scrollX={scrollX} dotsLength={data.length} />
+      <WidePagination
+        x={scrollX}
+        width={WIDTH}
+        steps={data.length}
+        color={Colors.appGreen}
+        containerStyle={styles.bottomCenter}
+      />
     </View>
   );
 };
@@ -140,6 +155,10 @@ const styles = StyleSheet.create({
   },
   overflowItemContainer: {
     height: OVERFLOW_HEIGHT,
+  },
+  bottomCenter: {
+    alignSelf: 'center',
+    bottom: DimensionsUtils.getDP(24),
   },
 });
 
