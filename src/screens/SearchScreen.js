@@ -87,9 +87,10 @@ const SearchScreen = ({onPressArrow}) => {
         item={item}
         style={listItemStyle}
         key={`search-user-${index}`}
+        isLast={index === results?.length - 1}
       />
     ),
-    [listItemStyle],
+    [listItemStyle, results],
   );
 
   const onEndReached = React.useCallback(() => {
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   spaceTop: {
-    marginTop: DimensionsUtils.getDP(8),
+    marginTop: DimensionsUtils.getDP(16),
   },
   spaceHorizontal: {
     marginHorizontal: DimensionsUtils.getDP(16),

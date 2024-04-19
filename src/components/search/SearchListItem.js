@@ -1,7 +1,7 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
@@ -10,9 +10,20 @@ import images from '../../assets/images/images';
 import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const SearchListItem = ({item, style}) => {
+const SearchListItem = ({item, style, isLast = false}) => {
   const {user} = useAuthContext();
   const navigation = useNavigation();
+
+  const username = `${item.name} ${item.surname}`;
+  const nickname = `${item.nickname ? item.nickname : ''}`;
+
+  //** ----- STYLES -----
+  const containerStyle = [
+    styles.container,
+    styles.rowCenter,
+    isLast && styles.lastPadding,
+    style,
+  ];
 
   //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {
@@ -38,35 +49,45 @@ const SearchListItem = ({item, style}) => {
   }, [user, navigation, item]);
 
   return (
-    <Touchable
-      onPress={onPress}
-      pressingAnimationDuration={25}
-      releasingAnimationDuraiton={50}
-      style={[styles.container, style]}>
-      <FastImage
-        style={styles.avatar}
-        source={{uri: item.avatar}}
-        defaultSource={images.guest}
-      />
-      <View style={styles.spaceLeft}>
-        <Text
-          numberOfLines={1}
-          style={styles.userName}>{`${item.name} ${item.surname}`}</Text>
+    <>
+      <Touchable
+        onPress={onPress}
+        pressingAnimationDuration={25}
+        releasingAnimationDuraiton={50}
+        style={containerStyle}>
+        <View style={styles.rowCenter}>
+          <FastImage
+            style={styles.avatar}
+            source={{uri: item.avatar}}
+            defaultSource={images.guest}
+          />
+          <View style={styles.spaceLeft}>
+            <Text numberOfLines={1} style={styles.userName}>
+              {username}
+            </Text>
 
-        <Text style={styles.nickName}>{`${
-          item.nickname ? item.nickname : ''
-        }`}</Text>
-      </View>
-    </Touchable>
+            <Text numberOfLines={1} style={styles.nickName}>
+              {nickname}
+            </Text>
+          </View>
+        </View>
+        <Image source={images.chevron} style={styles.arrow} />
+      </Touchable>
+      {!isLast && <View style={styles.line} />}
+    </>
   );
 };
 
 export default SearchListItem;
 
 const styles = StyleSheet.create({
-  container: {
+  rowCenter: {
     flexDirection: 'row',
-    marginTop: DimensionsUtils.getDP(24),
+    alignItems: 'center',
+  },
+  container: {
+    justifyContent: 'space-between',
+    paddingVertical: DimensionsUtils.getDP(16),
   },
   avatar: {
     width: DimensionsUtils.getDP(42),
@@ -80,7 +101,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: Colors.appGreen,
     fontFamily: 'Poppins-Regular',
-    width: WIDTH - DimensionsUtils.getDP(90),
+    width: WIDTH - DimensionsUtils.getDP(124),
     fontSize: DimensionsUtils.getFontSize(16),
   },
   nickName: {
@@ -88,6 +109,22 @@ const styles = StyleSheet.create({
     color: Colors.appGreen,
     fontFamily: 'Poppins-Regular',
     marginTop: DimensionsUtils.getDP(2),
+    width: WIDTH - DimensionsUtils.getDP(124),
     fontSize: DimensionsUtils.getFontSize(14),
+  },
+  arrow: {
+    tintColor: Colors.appGreen,
+    width: DimensionsUtils.getDP(16),
+    height: DimensionsUtils.getDP(16),
+    marginRight: DimensionsUtils.getDP(12),
+  },
+  line: {
+    height: 1,
+    left: DimensionsUtils.getDP(54),
+    backgroundColor: Colors.lightAppGreen,
+    width: WIDTH - DimensionsUtils.getDP(90),
+  },
+  lastPadding: {
+    paddingBottom: DimensionsUtils.getDP(16),
   },
 });
