@@ -118,14 +118,19 @@ const TabBar = props => {
           ? rankIconStyle
           : profIconStyle;
 
-      return <Animated.Image source={iconName} style={style} />;
+      return (
+        <Animated.Image
+          source={iconName}
+          style={[style, focused && styles.tintColor]}
+        />
+      );
     },
     [gamesIconStyle, rankIconStyle, profIconStyle],
   );
 
   const getLabel = React.useCallback((name, focused) => {
     const style = {
-      color: focused ? Colors.white : Colors.tabBarIcon,
+      color: focused ? Colors.background : Colors.tabBarIcon,
       fontFamily: focused ? 'Poppins-SemiBold' : 'Poppins-Medium',
     };
 
@@ -209,6 +214,9 @@ const styles = StyleSheet.create({
   },
   spaceBottom: {
     marginBottom: DimensionsUtils.getDP(16),
+  },
+  tintColor: {
+    tintColor: Colors.background,
   },
 });
 

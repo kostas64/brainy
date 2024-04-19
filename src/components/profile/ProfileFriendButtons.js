@@ -53,6 +53,7 @@ const ProfileFriendButtons = ({
         label={firstButtonLabel}
         onPress={onPressFirstButton}
         loading={loadingBtn === 'FIRST'}
+        labelStyle={[hasFriendship && styles.firstBtnLabelColor]}
         containerStyle={[
           hasFriendship && styles.firstBtnContainerColor,
           showSecondButton && styles.firstBtnContainerWidth,
@@ -88,6 +89,9 @@ const styles = StyleSheet.create({
   },
   firstBtnContainerColor: {
     backgroundColor: Colors.fillRed,
+  },
+  firstBtnLabelColor: {
+    color: Colors.white,
   },
   secondBtnContainerStyle: {
     marginLeft: 16,

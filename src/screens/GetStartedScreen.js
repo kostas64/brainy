@@ -146,6 +146,7 @@ const GetStartedScreen = () => {
         />
         <Button
           disabled={loading}
+          labelStyle={styles.labelStyle}
           onPress={e => navigate(e, 'guest')}
           label={dict?.getStartedGuestButton}
           containerStyle={[loading && styles.lowOpacity, styles.whiteBG]}
@@ -193,6 +194,9 @@ const styles = StyleSheet.create({
   },
   spaceTop: {
     marginTop: DimensionsUtils.getDP(26),
+  },
+  labelStyle: {
+    color: Colors.white,
   },
 });
 

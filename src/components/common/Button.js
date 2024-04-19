@@ -14,7 +14,7 @@ const Button = ({
   labelStyle,
   containerStyle,
   loading = false,
-  indicatorColor = Colors.white,
+  indicatorColor = Colors.background,
 }) => {
   return (
     <Pressable
@@ -46,13 +46,13 @@ const styles = StyleSheet.create({
     width: WIDTH - DimensionsUtils.getDP(40),
   },
   buttonLabel: {
-    color: Colors.white,
+    color: Colors.background,
     fontFamily: 'Poppins-SemiBold',
     fontSize: DimensionsUtils.getFontSize(16),
     top: isAndroid ? 1 : 0,
   },
   extraLabel: {
-    color: Colors.white,
+    color: Colors.background,
     fontSize: DimensionsUtils.getFontSize(12),
   },
 });

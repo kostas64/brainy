@@ -97,6 +97,7 @@ const SetNicknameModal = ({token, successCb}) => {
           onPress={successCb}
           disabled={loadingApi}
           label={dict.skipLabel}
+          labelStyle={styles.labelStyle}
           containerStyle={styles.skipBtn}
         />
       </View>
@@ -142,5 +143,8 @@ const styles = StyleSheet.create({
   },
   setBtn: {
     width: (WIDTH - DimensionsUtils.getDP(56)) / 2,
+  },
+  labelStyle: {
+    color: Colors.white,
   },
 });
