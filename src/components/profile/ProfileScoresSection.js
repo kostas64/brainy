@@ -43,7 +43,7 @@ const ProfileScoresSection = ({passedScores}) => {
         passedScores={passedScores}
       />
     ),
-    [],
+    [scores, passedScores],
   );
 
   const onPressShowMore = React.useCallback(() => {
