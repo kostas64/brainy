@@ -17,9 +17,9 @@ import dict from '../../assets/values/dict.json';
 import {useStorage} from '../../hooks/useStorage';
 import {LOGOUT} from '../../assets/values/profile';
 import {LIST_GAMES} from '../../assets/values/games';
-import {getAdaptedScores} from '../../utils/StringUtils';
 import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
+import ProfileScoresSectionItem from './ProfileScoresSectionItem';
 
 const ProfileScoresSection = ({passedScores}) => {
   const navigation = useNavigation();
@@ -36,15 +36,12 @@ const ProfileScoresSection = ({passedScores}) => {
   //** ----- FUNCTIONS -----
   const renderItem = React.useCallback(
     ({item, index}) => (
-      <View key={`game-${index}`} style={styles.itemContainer}>
-        <View style={styles.iconContainer}>{item.icon}</View>
-        <Text style={styles.label} numberOfLines={2}>
-          {item.title}
-        </Text>
-        <Text style={styles.score}>
-          {getAdaptedScores(item.title, scores, passedScores)}
-        </Text>
-      </View>
+      <ProfileScoresSectionItem
+        item={item}
+        scores={scores}
+        key={`game-${index}`}
+        passedScores={passedScores}
+      />
     ),
     [],
   );
@@ -117,35 +114,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     marginBottom: DimensionsUtils.getDP(8),
     fontSize: DimensionsUtils.getFontSize(18),
-  },
-  itemContainer: {
-    height: 80,
-    paddingLeft: DimensionsUtils.getDP(12),
-    paddingTop: 12,
-    paddingBottom: 8,
-    marginRight: 16,
-    borderRadius: DimensionsUtils.getDP(8),
-    backgroundColor: Colors.tabBarBg,
-    width: (WIDTH - 48) / 2,
-    marginBottom: 16,
-    justifyContent: 'space-between',
-  },
-  iconContainer: {
-    position: 'absolute',
-    top: DimensionsUtils.getDP(12),
-    right: DimensionsUtils.getDP(10),
-  },
-  label: {
-    lineHeight: 17,
-    color: Colors.appGreen,
-    fontFamily: 'Poppins-Bold',
-    width: (WIDTH - 156) / 2,
-  },
-  score: {
-    justifyContent: 'space-between',
-    color: Colors.halfWhite,
-    fontFamily: 'Poppins-Regular',
-    fontSize: 13,
   },
   smallIcon: {
     tintColor: Colors.fillRed,
