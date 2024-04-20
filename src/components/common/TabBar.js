@@ -89,7 +89,7 @@ const TabBar = props => {
   );
 
   const profIconStyle = useAnimatedStyle(
-    () => ({width: p.value, height: p.value}),
+    () => ({width: p.value, height: p.value, top: 1}),
     [],
   );
 
@@ -162,7 +162,7 @@ const TabBar = props => {
           <Animated.View style={poseStyles} />
         </View>
         {routes.map((route, routeIndex) => {
-          const isRouteActive = routeIndex === activeRouteIndex;
+          const isActive = routeIndex === activeRouteIndex;
 
           return (
             <Touchable
@@ -171,8 +171,8 @@ const TabBar = props => {
               onPressIn={() => {
                 props.navigation.navigate(routes?.[routeIndex].name);
               }}>
-              {renderIcon({route, focused: isRouteActive})}
-              {getLabel(routes?.[routeIndex].name, isRouteActive)}
+              {renderIcon({route, focused: isActive})}
+              {getLabel(routes?.[routeIndex].name, isActive)}
             </Touchable>
           );
         })}
