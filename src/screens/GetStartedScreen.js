@@ -1,13 +1,21 @@
+import {
+  View,
+  Text,
+  Image,
+  Animated,
+  StatusBar,
+  StyleSheet,
+  BackHandler,
+} from 'react-native';
 import React from 'react';
+import {useIsFocused} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Text, Animated, Image, StyleSheet, StatusBar} from 'react-native';
 
 import {Colors} from '../utils/Colors';
 import {signIn} from '../services/auth';
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import Button from '../components/common/Button';
-import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import {HEIGHT, isAndroid} from '../utils/GenericUtils';
@@ -15,8 +23,10 @@ import {useModalContext} from '../context/ModalProvider';
 import {requestNotPermissions} from '../utils/PermissionUtils';
 import CircularTransition from '../components/transitions/CircularTransition';
 
-const GetStartedScreen = () => {
+const GetStartedScreen = ({navigation}) => {
+  const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
+
   const {closeModal, setModalInfo} = useModalContext();
   const {token, setToken, user, setUser} = useAuthContext();
 
@@ -84,9 +94,22 @@ const GetStartedScreen = () => {
   };
 
   //** ----- EFFECTS -----
-  useBackAction(() => {
-    return true;
-  });
+  React.useEffect(() => {
+    let backHandler;
+
+    if (isAndroid) {
+      const routes = navigation.getState()?.routes;
+      backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+        if (isFocused && routes?.[0]?.name === 'Onboarding') {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    }
+
+    return () => backHandler?.remove();
+  }, [isFocused, navigation]);
 
   React.useEffect(() => {
     Animated.parallel([
