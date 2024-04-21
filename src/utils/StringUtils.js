@@ -46,6 +46,22 @@ export const getAdaptedScores = (game, scores, passedScores) => {
   }
 };
 
+export const getAdaptedScore = value => {
+  const ms = value?.milliseconds;
+  const points = value.points;
+  const flips = value.flips;
+  const time = msToMMSSmmm(ms);
+
+  const scoreUnit = flips ? `${flips} flips` : points ? `${points} points` : '';
+
+  const scoreLabel = `${`${
+    ms ? `${time} (${scoreUnit})` : `${points} points (${value?.correctness}%)`
+  }`}`;
+  const score = !!ms || !!points ? scoreLabel : dict?.gamesNoScore;
+
+  return score;
+};
+
 export const msToMMSSmmm = milliseconds => {
   // Calculate minutes
   var minutes = Math.floor(milliseconds / 60000);

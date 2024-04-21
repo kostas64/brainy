@@ -106,7 +106,6 @@ const RankScreen = ({navigation}) => {
 
   const fetchGameData = async () => {
     const tmp = await fetch(URL).then(res => res.json());
-
     return tmp;
   };
 

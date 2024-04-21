@@ -17,6 +17,7 @@ const Screen = ({
   labelStyle,
   secondIcon,
   onIconPress,
+  headerStyle,
   onPressOutside,
   onScndIcnPress,
 }) => {
@@ -41,6 +42,7 @@ const Screen = ({
         labelStyle={labelStyle}
         isGuest={user?.isGuest}
         customIcon={customIcon}
+        headerStyle={headerStyle}
         onIconPress={onIconPress}
         onScndIcnPress={onScndIcnPress}
       />

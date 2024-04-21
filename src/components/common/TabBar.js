@@ -184,7 +184,6 @@ const TabBar = props => {
 const styles = StyleSheet.create({
   container: {
     width: WIDTH,
-    backgroundColor: Colors.background,
     bottom: 0,
   },
   innerContainer: {

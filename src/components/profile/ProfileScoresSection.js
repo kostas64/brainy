@@ -21,7 +21,7 @@ import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import ProfileScoresSectionItem from './ProfileScoresSectionItem';
 
-const ProfileScoresSection = ({passedScores}) => {
+const ProfileScoresSection = ({show, passedScores, itemRefs, scrollRef}) => {
   const navigation = useNavigation();
 
   const [scores] = useStorage('scores', []);
@@ -38,12 +38,15 @@ const ProfileScoresSection = ({passedScores}) => {
     ({item, index}) => (
       <ProfileScoresSectionItem
         item={item}
+        index={index}
         scores={scores}
         key={`game-${index}`}
+        scrollRef={scrollRef}
         passedScores={passedScores}
+        ref={itemRefs?.current?.[index]}
       />
     ),
-    [scores, passedScores],
+    [scores, itemRefs, scrollRef, passedScores],
   );
 
   const onPressShowMore = React.useCallback(() => {
@@ -61,6 +64,10 @@ const ProfileScoresSection = ({passedScores}) => {
     navigation.pop();
     !user?.isGuest && (await signOut(setToken, setUser, true));
   }, [user?.isGuest, navigation, setToken, setUser]);
+
+  if (!show) {
+    return null;
+  }
 
   if (user?.isGuest) {
     return (

@@ -18,6 +18,7 @@ const Header = ({
   customIcon,
   labelStyle,
   onIconPress,
+  headerStyle,
   onScndIcnPress,
   noIcon = false,
   secondIcon = false,
@@ -55,49 +56,45 @@ const Header = ({
   }, []);
 
   return (
-    <>
-      <View style={styles.container}>
-        <Animated.Text style={[styles.label, labelStyle]}>
-          {label}
-        </Animated.Text>
-        <View style={styles.row}>
-          {secondIcon && !isGuest && (
-            <>
-              <Pressable
-                onPress={onScndIcnPress}
-                style={[buttonStyles, {marginRight: DimensionsUtils.getDP(8)}]}>
-                <Animated.Image
-                  source={images.friendsF}
-                  onLoadEnd={onAvatarLoad}
-                  style={avatarStyles}
-                />
-              </Pressable>
-              {hasDot && (
-                <View style={styles.dotContainer}>
-                  <View style={styles.dot} />
-                </View>
-              )}
-            </>
-          )}
-          {!noIcon && (
-            <>
-              <Pressable onPress={onAvatarPress} style={buttonStyles}>
-                <Animated.Image
-                  source={iconSource}
-                  onLoadEnd={onAvatarLoad}
-                  style={avatarStyles}
-                />
-              </Pressable>
-              {hasDot && (
-                <View style={styles.dotContainer}>
-                  <View style={styles.dot} />
-                </View>
-              )}
-            </>
-          )}
-        </View>
+    <View style={[styles.container, headerStyle]}>
+      <Animated.Text style={[styles.label, labelStyle]}>{label}</Animated.Text>
+      <View style={styles.row}>
+        {secondIcon && !isGuest && (
+          <>
+            <Pressable
+              onPress={onScndIcnPress}
+              style={[buttonStyles, {marginRight: DimensionsUtils.getDP(8)}]}>
+              <Animated.Image
+                source={images.friendsF}
+                onLoadEnd={onAvatarLoad}
+                style={avatarStyles}
+              />
+            </Pressable>
+            {hasDot && (
+              <View style={styles.dotContainer}>
+                <View style={styles.dot} />
+              </View>
+            )}
+          </>
+        )}
+        {!noIcon && (
+          <>
+            <Pressable onPress={onAvatarPress} style={buttonStyles}>
+              <Animated.Image
+                source={iconSource}
+                onLoadEnd={onAvatarLoad}
+                style={avatarStyles}
+              />
+            </Pressable>
+            {hasDot && (
+              <View style={styles.dotContainer}>
+                <View style={styles.dot} />
+              </View>
+            )}
+          </>
+        )}
       </View>
-    </>
+    </View>
   );
 };
 
