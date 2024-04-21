@@ -49,14 +49,22 @@ const ProfileScoresSectionItemExtended = ({
               <ActivityIndicator color={Colors.appGreen} size={'small'} />
             </View>
           ) : showScores === true ? (
-            padArray(scores?.[item.title], 5)?.map?.((score, key) => (
-              <Animated.Text
-                key={`score-${key}`}
-                style={styles.scoreExt}
-                entering={FadeInLeft.delay(key * 100).duration(200)}>
-                {`${key + 1}. ${score ? getAdaptedScore(score) : '-'}`}
-              </Animated.Text>
-            ))
+            <View style={styles.innerScoreContainer}>
+              {padArray(scores?.[item.title], 5)?.map?.((score, key) => (
+                <View key={`score-${key}`} style={styles.row}>
+                  <Animated.Text
+                    style={[styles.scoreExt, styles.w20]}
+                    entering={FadeInLeft.delay(key * 100).duration(200)}>{`${
+                    key + 1
+                  }. `}</Animated.Text>
+                  <Animated.Text
+                    style={styles.scoreExt}
+                    entering={FadeInLeft.delay(key * 100).duration(200)}>
+                    {`${score ? getAdaptedScore(score) : '-'}`}
+                  </Animated.Text>
+                </View>
+              ))}
+            </View>
           ) : null}
         </View>
       </Animated.View>
@@ -67,6 +75,9 @@ const ProfileScoresSectionItemExtended = ({
 export default ProfileScoresSectionItemExtended;
 
 const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+  },
   transparent: {
     backgroundColor: 'transparent',
   },
@@ -80,11 +91,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: DimensionsUtils.getDP(8),
     backgroundColor: Colors.tabBarBg,
-    padding: 12,
+    padding: DimensionsUtils.getDP(12),
   },
   scoresContainer: {
     flex: 1,
-    margin: 8,
+    marginTop: DimensionsUtils.getDP(8),
+    marginLeft: DimensionsUtils.getDP(8),
+  },
+  innerScoreContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
   iconContainer: {
     position: 'absolute',
@@ -107,5 +123,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  w20: {
+    width: 20,
   },
 });

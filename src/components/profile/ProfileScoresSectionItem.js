@@ -21,7 +21,7 @@ const AnimPress = Animated.createAnimatedComponent(Pressable);
 
 const duration = 400;
 const INIT_HEIGHT = 80;
-const FULL_HEIGHT = 152;
+const FULL_HEIGHT = DimensionsUtils.getDP(170);
 
 const ProfileScoresSectionItem = React.forwardRef(
   ({item, index, scrollRef, scores, passedScores}, ref) => {
@@ -141,8 +141,8 @@ export default ProfileScoresSectionItem;
 const styles = StyleSheet.create({
   itemContainer: {
     height: 80,
-    paddingLeft: 12,
-    paddingTop: 12,
+    paddingLeft: DimensionsUtils.getDP(12),
+    paddingTop: DimensionsUtils.getDP(12),
     paddingBottom: 8,
     marginRight: 16,
     borderRadius: DimensionsUtils.getDP(8),
