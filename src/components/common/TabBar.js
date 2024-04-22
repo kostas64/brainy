@@ -6,10 +6,9 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import Touchable from './Touchable';
 import {Colors} from '../../utils/Colors';
 import {WIDTH} from '../../utils/GenericUtils';
 import images from '../../assets/images/images';
@@ -165,7 +164,7 @@ const TabBar = props => {
           const isActive = routeIndex === activeRouteIndex;
 
           return (
-            <Touchable
+            <Pressable
               key={routeIndex}
               style={touchableStyles}
               onPressIn={() => {
@@ -173,7 +172,7 @@ const TabBar = props => {
               }}>
               {renderIcon({route, focused: isActive})}
               {getLabel(routes?.[routeIndex].name, isActive)}
-            </Touchable>
+            </Pressable>
           );
         })}
       </Animated.View>
