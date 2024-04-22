@@ -34,7 +34,7 @@ const RankPointTimeListItem = ({item, index, isMe}) => {
   //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {
     setModalInfo({
-      height: 234 + insetsBottom,
+      height: DimensionsUtils.getDP(224) + insetsBottom,
       content: (
         <UserProfileModal
           isMe={isMe}

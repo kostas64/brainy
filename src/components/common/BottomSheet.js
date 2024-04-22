@@ -7,7 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import React from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {initialWindowMetrics} from 'react-native-safe-area-context';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 
@@ -18,11 +18,7 @@ import {HEIGHT, HEIGHT_SCR, isIOS} from '../../utils/GenericUtils';
 
 const {insets} = initialWindowMetrics;
 
-const MAX_HEIGHT = isIOS
-  ? HEIGHT
-  : Platform.Version > 30
-  ? HEIGHT_SCR - insets.top - insets.bottom
-  : HEIGHT_SCR - insets.bottom;
+const MAX_HEIGHT = isIOS ? HEIGHT : HEIGHT_SCR - insets.top - insets.bottom;
 
 const BottomSheet = React.forwardRef(
   (

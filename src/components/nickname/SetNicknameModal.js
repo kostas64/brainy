@@ -31,6 +31,8 @@ const SetNicknameModal = ({token, successCb}) => {
   const [loadingApi, setLoadingApi] = React.useState(false);
 
   const bottom = insets.bottom > 0 ? insets.bottom : DimensionsUtils.getDP(24);
+  const modalHeight = DimensionsUtils.getDP(272) + bottom;
+  const fullModalHeight = DimensionsUtils.getDP(296) + keyboard;
 
   //** ----- STYLES -----
   const inputStyle = useAnimatedStyle(
@@ -40,8 +42,8 @@ const SetNicknameModal = ({token, successCb}) => {
 
   //** ----- FUNCTIONS -----
   const onBlur = React.useCallback(() => {
-    setModalInfo(old => ({...old, height: 280 + bottom}));
-  }, [bottom, setModalInfo]);
+    setModalInfo(old => ({...old, height: modalHeight}));
+  }, [modalHeight, setModalInfo]);
 
   const onPressSet = React.useCallback(() => {
     if (nickname.length === 0) {
@@ -62,9 +64,9 @@ const SetNicknameModal = ({token, successCb}) => {
   //** ----- EFFECTS
   React.useEffect(() => {
     if (keyboard > 0) {
-      setModalInfo(old => ({...old, height: 296 + keyboard}));
+      setModalInfo(old => ({...old, height: fullModalHeight}));
     }
-  }, [keyboard, setModalInfo]);
+  }, [keyboard, fullModalHeight, setModalInfo]);
 
   return (
     <ScrollView scrollEnabled={false} keyboardShouldPersistTaps={'handled'}>
