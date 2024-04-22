@@ -43,7 +43,9 @@ const ProfileScreen = ({route}) => {
 
   const name = item?.user?.[0].nickname
     ? item?.user?.[0]?.nickname
-    : `${item?.user?.[0]?.name} ${item?.user?.[0]?.surname}`;
+    : `${item?.user?.[0]?.name ? item?.user?.[0]?.name : ''} ${
+        item?.user?.[0]?.surname ? item?.user?.[0]?.surname : ''
+      }`;
 
   const firstButtonLabel =
     !hasRequest && !hasFriendship

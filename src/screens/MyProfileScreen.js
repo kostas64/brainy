@@ -27,7 +27,7 @@ const MyProfileScreen = ({navigation}) => {
     ? dict.guest
     : user?.nickname
     ? user?.nickname
-    : `${user?.name} ${user?.surname}`;
+    : `${user?.name ? user?.name : ''} ${user?.surname ? user?.surname : ''}`;
 
   const shouldCall = isFocused && !user?.isGuest;
   const icon = user?.isGuest ? images.guest : null;
