@@ -99,8 +99,8 @@ const ProfileScoresSectionItem = React.forwardRef(
     React.useImperativeHandle(ref, () => ({
       measureAndAnimate: () => {
         if (scrollFromMe.current) {
-          itemRef.current.measureInWindow((x, y, pageX, pageY) => {
-            setPosBox({x, y, pageX, pageY});
+          itemRef.current.measureInWindow((x, y) => {
+            setPosBox({x, y});
             animateBox();
             scrollFromMe.current = false;
           });
