@@ -221,8 +221,8 @@ const ProfileScreen = ({route}) => {
           <UserProfileModalAvatar
             name={name}
             contStyle={styles.avatarCont}
-            imgStyle={styles.imgStyle}
             imgContStyle={styles.imgCont}
+            imgSize={DimensionsUtils.getDP(102)}
             user={{avatar: item?.user?.[0]?.avatar}}
           />
           <ProfileScoresSection

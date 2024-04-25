@@ -100,8 +100,8 @@ const MyProfileScreen = ({navigation}) => {
           icon={icon}
           nameStyle={nameStyle}
           contStyle={contStyle}
-          imgStyle={styles.imgStyle}
           imgContStyle={styles.imgCont}
+          imgSize={DimensionsUtils.getDP(102)}
         />
         <ProfileScoresSection
           itemRefs={itemRefs}

@@ -16,7 +16,11 @@ const UserProfileModal = ({isMe, item, onViewProfilePress}) => {
 
   return (
     <>
-      <UserProfileModalAvatar name={name} user={user} />
+      <UserProfileModalAvatar
+        name={name}
+        user={user}
+        imgSize={DimensionsUtils.getDP(64)}
+      />
 
       <Button
         label={buttonLabel}
