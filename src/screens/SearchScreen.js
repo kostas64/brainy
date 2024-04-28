@@ -46,7 +46,7 @@ const SearchScreen = ({onPressArrow}) => {
 
   const contStyles = [
     styles.container,
-    {paddingTop: insets.top > 0 ? insets.top : DimensionsUtils.getDP(24)},
+    {paddingTop: insets.top > 24 ? insets.top : DimensionsUtils.getDP(24)},
   ];
 
   const listStyles = [styles.spaceHorizontal, {paddingBottom: insetsBottom}];
