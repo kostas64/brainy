@@ -10,9 +10,9 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../../utils/Colors';
-import {WIDTH} from '../../utils/GenericUtils';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
+import {WIDTH, isIOS} from '../../utils/GenericUtils';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const gamesI = images.gamesIcon;
@@ -69,7 +69,11 @@ const TabBar = props => {
   const innerStyles = [
     styles.innerContainer,
     innerAnimContainerStyle,
-    insets.bottom > 0 ? {marginBottom: insets.bottom} : styles.spaceBottom,
+    insets.bottom > 0
+      ? {marginBottom: insets.bottom}
+      : isIOS
+      ? styles.spaceBottom
+      : styles.smallSpaceBottom,
   ];
 
   const touchableStyles = [
@@ -209,6 +213,9 @@ const styles = StyleSheet.create({
   },
   height80: {
     height: '80%',
+  },
+  smallSpaceBottom: {
+    marginBottom: DimensionsUtils.getDP(4),
   },
   spaceBottom: {
     marginBottom: DimensionsUtils.getDP(16),
