@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Animated, {
   runOnJS,
   withTiming,
@@ -9,6 +10,7 @@ import Animated, {
 import React from 'react';
 import {Image, Text, StyleSheet, View} from 'react-native';
 import {initialWindowMetrics} from 'react-native-safe-area-context';
+import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 
 import {Colors} from '../utils/Colors';
 import {WIDTH, isIOS} from '../utils/GenericUtils';
@@ -19,46 +21,52 @@ const initialState = {
   message: null,
 };
 
+const TOP_POS = -100;
 const ToastContext = React.createContext();
 
 export const ToastProvider = ({children}) => {
   const timeout = React.useRef();
   const {insets} = initialWindowMetrics;
+  const FINAL_POS = isIOS && insets.top < 24 ? 28 : isIOS ? insets.top + 4 : 24;
 
-  const topPost = isIOS
-    ? toast?.top + 24 - 100 || -100
-    : toast?.top + 24 - 112 || -112;
-
-  const topPosition = useSharedValue(topPost);
+  const topPosition = useSharedValue(TOP_POS);
   const [toast, setToast] = React.useState(initialState);
 
   //** ----- STYLES -----
   const animStyle = useAnimatedStyle(() => ({top: topPosition.value}), []);
 
   //** ----- FUNCTIONS -----
-  const animateToast = React.useCallback(() => {
-    const toastTop = isIOS ? -100 : -112;
+  const closeToast = React.useCallback(() => {
+    topPosition.value = withTiming(TOP_POS, {duration: 500}, done => {
+      if (done) {
+        runOnJS(setToast)(initialState);
+        runOnJS(clearTimeout)(timeout.current);
+        timeout.current = null;
+      }
+    });
+  }, []);
 
+  const animateToast = React.useCallback(() => {
     if (toast.message) {
-      topPosition.value = withSpring(insets.top + 4, {
+      topPosition.value = withSpring(FINAL_POS, {
         mass: 3,
         damping: 30,
         stiffness: 125,
       });
 
       timeout.current = setTimeout(() => {
-        topPosition.value = withTiming(toastTop, {duration: 500}, done => {
-          if (done) {
-            runOnJS(setToast)(initialState);
-            runOnJS(clearTimeout)(timeout.current);
-            timeout.current = null;
-          }
-        });
+        closeToast();
       }, 3000);
     }
-  }, [insets.top, timeout, toast.message, topPosition]);
+  }, [toast.message]);
 
   //** ----- EFFECTS -----
+  const gesture = Gesture.Pan().onFinalize(e => {
+    if (e.translationY < 0) {
+      runOnJS(closeToast)();
+    }
+  });
+
   React.useEffect(() => {
     animateToast();
   }, [animateToast, toast]);
@@ -66,14 +74,15 @@ export const ToastProvider = ({children}) => {
   return (
     <ToastContext.Provider value={{setToast}}>
       {children}
-
-      <Animated.View style={[animStyle, styles.row, styles.container]}>
-        <View style={styles.leftPose} />
-        <View style={styles.innerContainer}>
-          {toast.icon && <Image source={toast.icon} style={styles.image} />}
-          <Text style={styles.message}>{toast.message}</Text>
-        </View>
-      </Animated.View>
+      <GestureDetector gesture={gesture}>
+        <Animated.View style={[animStyle, styles.row, styles.container]}>
+          <View style={styles.leftPose} />
+          <View style={styles.innerContainer}>
+            {toast.icon && <Image source={toast.icon} style={styles.image} />}
+            <Text style={styles.message}>{toast.message}</Text>
+          </View>
+        </Animated.View>
+      </GestureDetector>
     </ToastContext.Provider>
   );
 };
