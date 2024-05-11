@@ -245,6 +245,7 @@ const ProfileScreen = ({route}) => {
           secondBtnContainer={styles.scndBtnCont}
           onPressFirstButton={onPressFirstButton}
           onPressSecondButton={onPressSecondButton}
+          secondButtonLabelStyle={styles.scndBtnLabel}
         />
       </View>
     </Screen>
@@ -284,5 +285,8 @@ const styles = StyleSheet.create({
   },
   scndBtnCont: {
     backgroundColor: Colors.tabBarBg,
+  },
+  scndBtnLabel: {
+    color: Colors.white,
   },
 });
