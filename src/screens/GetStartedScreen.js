@@ -115,7 +115,7 @@ const GetStartedScreen = ({navigation}) => {
     Animated.parallel([
       Animated.timing(opacityRef, {
         toValue: 1,
-        duration: 1000,
+        duration: 850,
         useNativeDriver: true,
       }),
       Animated.timing(translateYRef, {
