@@ -3,6 +3,7 @@ import Animated, {
   runOnJS,
   withTiming,
   withSpring,
+  interpolate,
   useSharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
@@ -13,8 +14,8 @@ import {initialWindowMetrics} from 'react-native-safe-area-context';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 
 import {Colors} from '../utils/Colors';
-import {WIDTH, isIOS} from '../utils/GenericUtils';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import {WIDTH, isAndroid, isIOS} from '../utils/GenericUtils';
 
 const initialState = {
   icon: null,
@@ -33,7 +34,13 @@ export const ToastProvider = ({children}) => {
   const [toast, setToast] = React.useState(initialState);
 
   //** ----- STYLES -----
-  const animStyle = useAnimatedStyle(() => ({top: topPosition.value}), []);
+  const animStyle = useAnimatedStyle(
+    () => ({
+      top: topPosition.value,
+      opacity: interpolate(topPosition.value, [TOP_POS / 2, FINAL_POS], [0, 1]),
+    }),
+    [],
+  );
 
   //** ----- FUNCTIONS -----
   const closeToast = React.useCallback(() => {
@@ -76,11 +83,13 @@ export const ToastProvider = ({children}) => {
       {children}
       <GestureDetector gesture={gesture}>
         <Animated.View style={[animStyle, styles.row, styles.container]}>
-          <View style={styles.leftPose} />
           <View style={styles.innerContainer}>
             {toast.icon && <Image source={toast.icon} style={styles.image} />}
-            <Text style={styles.message}>{toast.message}</Text>
+            <Text numberOfLines={2} style={styles.message}>
+              {toast.message}
+            </Text>
           </View>
+          <View style={styles.pose} />
         </Animated.View>
       </GestureDetector>
     </ToastContext.Provider>
@@ -95,36 +104,38 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
   },
-  leftPose: {
-    position: 'absolute',
-    height: '100%',
-    left: -DimensionsUtils.getDP(4),
-    width: DimensionsUtils.getDP(12),
-    backgroundColor: Colors.appGreen,
-    borderTopLeftRadius: DimensionsUtils.getDP(8),
-    borderBottomLeftRadius: DimensionsUtils.getDP(8),
-  },
   innerContainer: {
-    left: 3,
-    height: 66,
+    maxHeight: DimensionsUtils.getDP(82),
     width: WIDTH - DimensionsUtils.getDP(32),
     backgroundColor: Colors.tabBarBg,
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: DimensionsUtils.getDP(12),
+    paddingBottom: DimensionsUtils.getDP(20),
     paddingHorizontal: DimensionsUtils.getDP(16),
-    borderTopRightRadius: DimensionsUtils.getDP(8),
-    borderBottomRightRadius: DimensionsUtils.getDP(8),
+    borderRadius: DimensionsUtils.getDP(8),
+  },
+  pose: {
+    height: 4,
+    left: (WIDTH - DimensionsUtils.getDP(32) - 48) / 2,
+    position: 'absolute',
+    bottom: DimensionsUtils.getDP(8),
+    width: 48,
+    backgroundColor: Colors.appGreen,
+    borderRadius: DimensionsUtils.getDP(8),
   },
   image: {
     width: 40,
     height: 40,
     borderRadius: DimensionsUtils.getDP(5),
-    marginRight: DimensionsUtils.getDP(12),
+    marginRight: DimensionsUtils.getDP(8),
   },
   message: {
     color: Colors.white,
+    top: isAndroid ? 2 : 1,
     fontFamily: 'Poppins-Regular',
-    fontSize: DimensionsUtils.getFontSize(16),
+    fontSize: DimensionsUtils.getFontSize(14),
     width: WIDTH - DimensionsUtils.getDP(112),
   },
 });
