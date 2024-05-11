@@ -12,6 +12,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Colors} from '../utils/Colors';
 import {shareIdea} from '../services/idea';
 import {isIOS} from '../utils/GenericUtils';
+import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import Screen from '../components/common/Screen';
 import Button from '../components/common/Button';
@@ -43,7 +44,7 @@ const InspireScreen = ({navigation}) => {
       .then(() => {
         setInput('');
         Keyboard.dismiss();
-        setToast({message: dict.shareToast});
+        setToast({icon: images.logo, message: dict.shareToast});
       })
       .catch(() => setToast({message: dict.errorOnUpdate}))
       .finally(() => setLoading(false));

@@ -9,6 +9,7 @@ import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 
 import Button from '../common/Button';
 import {Colors} from '../../utils/Colors';
+import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {updateProfile} from '../../services/user';
 import {useKeyboard} from '../../hooks/useKeyboard';
@@ -56,7 +57,7 @@ const SetNicknameModal = ({token, successCb}) => {
         setLoadingApi(false);
         successCb();
         setUser(old => ({...old, nickname}));
-        setToast({message: dict.nicknameUpdated});
+        setToast({icon: images.logo, message: dict.nicknameUpdated});
       });
     }
   }, [token, nickname, successCb, setToast, setUser, translateX]);

@@ -8,6 +8,7 @@ import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View, Keyboard, ScrollView, StyleSheet} from 'react-native';
 
+import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import Input from '../components/common/Input';
 import {updateProfile} from '../services/user';
@@ -92,11 +93,11 @@ const AccountScreen = ({navigation}) => {
       }));
 
       if (nameHasChanged) {
-        setToast({message: dict.nameUpdated});
+        setToast({icon: images.logo, message: dict.nameUpdated});
       } else if (surnameHasChanged) {
-        setToast({message: dict.surnameUpdated});
+        setToast({icon: images.logo, message: dict.surnameUpdated});
       } else if (nicknameHasChanged) {
-        setToast({message: dict.nicknameUpdated});
+        setToast({icon: images.logo, message: dict.nicknameUpdated});
       }
     },
     [setUser, setToast, nameHasChanged, surnameHasChanged, nicknameHasChanged],

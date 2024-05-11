@@ -3,6 +3,7 @@ import Share from 'react-native-share';
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 import {Colors} from '../utils/Colors';
+import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import {isAndroid} from '../utils/GenericUtils';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -55,7 +56,7 @@ const FriendsTabbar = props => {
 
           //On success show toast
           if (res.success) {
-            setToast({message: dict.thanksOnSharing});
+            setToast({icon: images.logo, message: dict.thanksOnSharing});
           }
         })
         .catch(err => console.log('Error ', err))
