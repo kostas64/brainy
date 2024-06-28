@@ -167,7 +167,9 @@ const RankScreen = ({navigation}) => {
   }, [gameInput]);
 
   React.useEffect(() => {
-    fetchData();
+    if (!user.isGuest) {
+      fetchData();
+    }
   }, []);
 
   return (
