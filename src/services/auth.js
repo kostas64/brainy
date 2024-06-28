@@ -7,7 +7,7 @@ import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {storage} from '../../index';
-import {requestAccess} from './user';
+import {logoutUser, requestAccess} from './user';
 import SetNicknameModal from '../components/nickname/SetNicknameModal';
 
 export const signInGoogle = async () => {
@@ -110,6 +110,8 @@ export const signIn = async (
 
 export const signOut = async (setToken, setUser, withDelay = false) => {
   await GoogleSignin.signOut();
+
+  logoutUser();
   setToken(null);
 
   if (withDelay) {
