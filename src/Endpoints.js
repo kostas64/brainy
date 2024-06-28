@@ -5,6 +5,7 @@ export const BEARER = 'Bearer ';
 
 //User services
 export const REQUEST_ACCESS = '/users/requestAccess';
+export const LOGOUT_USER = '/users/logout';
 export const UPDATE_PROFILE = '/users/update-profile';
 export const MY_PROFILE = '/users/me';
 export const SEARCH_USER = '/users/search';
