@@ -65,10 +65,6 @@ const ProfileScoresSection = ({show, passedScores, itemRefs, scrollRef}) => {
     !user?.isGuest && (await signOut(setToken, setUser, true));
   }, [user?.isGuest, navigation, setToken, setUser]);
 
-  if (!show) {
-    return null;
-  }
-
   if (user?.isGuest) {
     return (
       <View style={styles.spaceHor}>
@@ -83,6 +79,10 @@ const ProfileScoresSection = ({show, passedScores, itemRefs, scrollRef}) => {
         />
       </View>
     );
+  }
+
+  if (!show) {
+    return null;
   }
 
   return (
