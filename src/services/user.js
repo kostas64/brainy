@@ -7,6 +7,7 @@ import {
   MY_PROFILE,
   SEARCH_USER,
   NOTIF_TOKEN,
+  LOGOUT_USER,
   UPDATE_PROFILE,
   REQUEST_ACCESS,
   NOTIF_SETTINGS,
@@ -32,6 +33,24 @@ export const requestAccess = async user => {
     });
   } catch (e) {
     console.log('API requestAccess failed', e);
+  }
+};
+
+export const logoutUser = async () => {
+  console.log('API logoutUser ', `${HOST}${LOGOUT_USER}`);
+  try {
+    const token = await AsyncStorage.getItem('token');
+
+    return fetch(`${HOST}${LOGOUT_USER}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+    });
+  } catch (e) {
+    console.log('API logoutUser failed', e);
   }
 };
 
