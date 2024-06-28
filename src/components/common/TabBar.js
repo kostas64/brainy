@@ -1,5 +1,5 @@
 import Animated, {
-  withTiming,
+  withSpring,
   interpolate,
   useSharedValue,
   useAnimatedStyle,
@@ -144,7 +144,7 @@ const TabBar = props => {
 
   //** ----- EFFECTS -----
   React.useEffect(() => {
-    translateX.value = withTiming(activeRouteIndex, {duration: 100});
+    translateX.value = withSpring(activeRouteIndex, {overshootClamping: true});
   }, [translateX, activeRouteIndex]);
 
   React.useEffect(() => {
