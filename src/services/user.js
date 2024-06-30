@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -29,6 +30,7 @@ export const requestAccess = async user => {
         surname: user?.user?.familyName,
         avatar: user?.user?.photo,
         email: user?.user?.email,
+        deviceOS: Platform.OS,
       }),
     });
   } catch (e) {
@@ -159,10 +161,6 @@ export const updateNotificationToken = async () => {
 
     if (currentNotToken === null && !!notToken) {
       storage.setString('notToken', notToken);
-    }
-
-    if (currentNotToken === notToken) {
-      return;
     }
 
     return fetch(`${HOST}${NOTIF_TOKEN}`, {
