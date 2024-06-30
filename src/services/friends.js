@@ -83,7 +83,7 @@ export const sendFriendsRequest = async userId_requested => {
   }
 };
 
-export const cancelFriendsRequest = async userId_requested => {
+export const cancelFriendsRequest = async (userId_requested, token) => {
   console.log(
     'API cancelFriendsRequest ',
     `${HOST}${CANCEL_FRIENDS_REQUEST}`,
@@ -91,14 +91,20 @@ export const cancelFriendsRequest = async userId_requested => {
   );
 
   try {
-    const token = await AsyncStorage.getItem('token');
+    let tokenToSend;
+
+    if (token) {
+      tokenToSend = token;
+    } else {
+      tokenToSend = await AsyncStorage.getItem('token');
+    }
 
     return fetch(`${HOST}${CANCEL_FRIENDS_REQUEST}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `${BEARER}${token}`,
+        Authorization: `${BEARER}${tokenToSend}`,
       },
       body: JSON.stringify({
         userId_requested,
@@ -109,18 +115,24 @@ export const cancelFriendsRequest = async userId_requested => {
   }
 };
 
-export const acceptFriendsRequest = async userId_request => {
+export const acceptFriendsRequest = async (userId_request, token) => {
   console.log('API acceptFriendsRequest ', `${HOST}${ACCEPT_FRIENDS_REQUEST}`);
 
   try {
-    const token = await AsyncStorage.getItem('token');
+    let tokenToSend;
+
+    if (token) {
+      tokenToSend = token;
+    } else {
+      tokenToSend = await AsyncStorage.getItem('token');
+    }
 
     return fetch(`${HOST}${ACCEPT_FRIENDS_REQUEST}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `${BEARER}${token}`,
+        Authorization: `${BEARER}${tokenToSend}`,
       },
       body: JSON.stringify({
         userId_request,
