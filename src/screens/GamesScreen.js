@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {Animated, StyleSheet} from 'react-native';
@@ -9,14 +8,17 @@ import {getBestOf} from '../services/score';
 import dict from '../assets/values/dict.json';
 import {useStorage} from '../hooks/useStorage';
 import Screen from '../components/common/Screen';
+import {useAppState} from '../hooks/useAppState';
 import {LIST_GAMES} from '../assets/values/games';
 import {useAuthContext} from '../context/AuthProvider';
 import GamesList from '../components/common/GamesList';
 import {updateNotificationToken} from '../services/user';
+import {NotificationUtils} from '../utils/NotificationsUtils';
 
 const GamesScreen = ({navigation, route}) => {
   const {user} = useAuthContext();
   const isFocused = useIsFocused();
+
   const [scores, setScores] = useStorage('scores', []);
 
   const [status, setStatus] = React.useState('idle');
@@ -30,6 +32,10 @@ const GamesScreen = ({navigation, route}) => {
   };
 
   //** ----- EFFECTS -----
+  useAppState(() => {
+    NotificationUtils.createReminderNotification();
+  }, false);
+
   React.useEffect(() => {
     Animated.timing(opacityRef, {
       toValue: 1,
@@ -45,6 +51,7 @@ const GamesScreen = ({navigation, route}) => {
   }, []);
 
   React.useEffect(() => {
+    NotificationUtils.createReminderNotification();
     isFocused && !user?.isGuest && updateNotificationToken();
   }, [isFocused, navigation]);
 
