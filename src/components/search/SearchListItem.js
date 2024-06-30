@@ -14,8 +14,11 @@ const SearchListItem = ({item, style, isLast = false}) => {
   const {user} = useAuthContext();
   const navigation = useNavigation();
 
-  const username = `${item.name} ${item.surname}`;
-  const nickname = `${item.nickname ? item.nickname : ''}`;
+  const username = `${item?.name ? `${item.name} ` : ''}${
+    item?.surname ? item.surname : ''
+  }`;
+
+  const nickname = `${item?.nickname ? item.nickname : ''}`;
 
   //** ----- STYLES -----
   const containerStyle = [
@@ -62,9 +65,11 @@ const SearchListItem = ({item, style, isLast = false}) => {
             defaultSource={images.guest}
           />
           <View style={styles.spaceLeft}>
-            <Text numberOfLines={1} style={styles.userName}>
-              {username}
-            </Text>
+            {username && (
+              <Text numberOfLines={1} style={styles.userName}>
+                {username}
+              </Text>
+            )}
 
             <Text numberOfLines={1} style={styles.nickName}>
               {nickname}
