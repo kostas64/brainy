@@ -6,6 +6,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import App from './App';
 import {name as appName} from './app.json';
+import {NotificationUtils} from './src/utils/NotificationsUtils';
 
 GoogleSignin.configure({
   offlineAccess: true,
@@ -18,5 +19,10 @@ LogBox.ignoreLogs([
 ]);
 
 export const storage = new MMKVLoader().initialize();
+
+NotificationUtils.onMessage();
+NotificationUtils.onBackgroundEvent();
+NotificationUtils.foregroundNotification();
+NotificationUtils.backgroundNotification();
 
 AppRegistry.registerComponent(appName, () => App);
