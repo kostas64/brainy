@@ -52,11 +52,16 @@ export const getAdaptedScore = value => {
   const flips = value.flips;
   const time = msToMMSSmmm(ms);
 
-  const scoreUnit = flips ? `${flips} flips` : points ? `${points} points` : '';
+  const scoreUnit = flips
+    ? `${flips} flips`
+    : typeof points === 'number'
+    ? `${points} points`
+    : '';
 
   const scoreLabel = `${`${
     ms ? `${time} (${scoreUnit})` : `${points} points (${value?.correctness}%)`
   }`}`;
+
   const score = !!ms || !!points ? scoreLabel : dict?.gamesNoScore;
 
   return score;
