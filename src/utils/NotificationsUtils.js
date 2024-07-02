@@ -118,15 +118,6 @@ export class NotificationUtils {
     });
   };
 
-  static triggerReminderNotification = () => {
-    this.displayNotification({
-      notification: {
-        title: 'Reminder',
-        body: 'Your brain needs you! Play now ⚔️',
-      },
-    });
-  };
-
   static displayNotification = async data => {
     const channelId = await notifee.createChannel({
       id: 'default',
