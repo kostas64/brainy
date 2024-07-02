@@ -71,7 +71,7 @@ const UserProfileModalAnimatedAvatar = ({
   }, [progress, avatarPos]);
 
   if (!show) {
-    return null;
+    return <Animated.Image source={source} style={styles.hiddenImg} />;
   }
 
   return (
@@ -112,5 +112,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontFamily: 'Poppins-Regular',
     fontSize: DimensionsUtils.getFontSize(16),
+  },
+  hiddenImg: {
+    height: 0,
+    width: 0,
   },
 });
