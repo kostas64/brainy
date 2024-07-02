@@ -12,6 +12,12 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 const FriendsListItem = ({item}) => {
   const navigation = useNavigation();
 
+  const username = item?.friendUserNickname
+    ? item.friendUserNickname
+    : `${item?.friendUserName ? `${item.friendUserName} ` : ''}${
+        item?.friendUserSurname ? item.friendUserSurname : ''
+      }`;
+
   const onPress = React.useCallback(() => {
     navigation.navigate('Profile', {
       item: {
@@ -41,7 +47,7 @@ const FriendsListItem = ({item}) => {
       />
       <View style={styles.nameContainer}>
         <Text numberOfLines={2} style={styles.name}>
-          {`${item.friendUserName} ${item.friendUserSurname}`}
+          {username}
         </Text>
       </View>
     </Touchable>
