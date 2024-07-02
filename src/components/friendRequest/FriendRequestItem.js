@@ -23,6 +23,12 @@ const FriendRequestItem = ({item, updateList}) => {
 
   const [loading, setLoading] = React.useState(null);
 
+  const username = item?.friendUserNickname
+    ? item.friendUserNickname
+    : `${item?.friendUserName ? `${item.friendUserName} ` : ''}${
+        item?.friendUserSurname ? item.friendUserSurname : ''
+      }`;
+
   //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {
     navigation.navigate('Profile', {
@@ -76,7 +82,7 @@ const FriendRequestItem = ({item, updateList}) => {
           />
           <View style={styles.nameContainer}>
             <Text numberOfLines={2} style={styles.name}>
-              {`${item.friendUserName} ${item.friendUserSurname}`}
+              {username}
             </Text>
           </View>
         </View>
