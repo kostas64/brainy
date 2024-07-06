@@ -116,5 +116,7 @@
   "onboardingStep2Tip3": "Navigate to their profile and tap 'Add friend'",
   "onboardingTitle3": "Climb the rank",
   "onboardingSubtitle3": "Track your progress and strive for the top spot in Brainy community",
-  "close": "Close"
+  "close": "Close",
+  "requestAccountDeletion": "Request account deletion",
+  "requestAccountDeletionMessage": "mailto:konstantinos.efkarpidis@outlook.com?subject=Account deletion request&body=Hello, I would like to request the deletion of my account with email"
 }

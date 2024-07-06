@@ -6,7 +6,7 @@ import Animated, {
 
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Keyboard, ScrollView, StyleSheet} from 'react-native';
+import {View, Keyboard, ScrollView, StyleSheet, Linking} from 'react-native';
 
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
@@ -157,6 +157,10 @@ const AccountScreen = ({navigation}) => {
     }
   }, [toUpdate, callUpdate, navigation]);
 
+  const onPressDelete = React.useCallback(() => {
+    Linking.openURL(`${dict.requestAccountDeletionMessage}  ${user?.email}`);
+  }, [user.email]);
+
   return (
     <Screen label={dict.profileAccount} noIcon>
       <ScrollView scrollEnabled={false} keyboardShouldPersistTaps={'handled'}>
@@ -202,6 +206,15 @@ const AccountScreen = ({navigation}) => {
               loading={loading && nicknameHasChanged}
             />
           </Animated.View>
+          <View style={styles.separator} />
+          {!toUpdate && keyboard === 0 && (
+            <Animated.View entering={FadeInUp.delay(600).duration(300)}>
+              <Button
+                onPress={onPressDelete}
+                label={dict.requestAccountDeletion}
+              />
+            </Animated.View>
+          )}
         </View>
       </ScrollView>
 

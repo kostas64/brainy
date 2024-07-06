@@ -6,7 +6,8 @@
     "dev-android": "ENVFILE=dev.env react-native run-android",
     "dev-ios": "ENVFILE=dev.env react-native run-ios",
     "prod-android": "ENVFILE=prod.env react-native run-android",
-    "release-android": "ENVFILE=prod.env npx react-native run-android --mode=release",
+    "release-apk-android": "ENVFILE=prod.env npx react-native run-android --mode=release",
+    "release-android": "cd android && ./gradlew clean && ENVFILE=../prod.env && ./gradlew bundleRelease",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest"
