@@ -5,6 +5,7 @@ import {Colors} from '../utils/Colors';
 import {signOut} from '../services/auth';
 import dict from '../assets/values/dict.json';
 import Screen from '../components/common/Screen';
+import Privacy from '../components/settings/Privacy';
 import MenuItem from '../components/common/MenuItem';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -69,6 +70,9 @@ const SettingsScreen = ({navigation}) => {
       </View>
 
       {/*  App Version */}
+      <View style={styles.spaceHorOnly}>
+        <Privacy />
+      </View>
     </Screen>
   );
 };
@@ -88,6 +92,10 @@ const styles = StyleSheet.create({
     height: DimensionsUtils.getDP(18),
     marginLeft: DimensionsUtils.getDP(4),
     marginRight: DimensionsUtils.getDP(8),
+  },
+  spaceHorOnly: {
+    marginTop: DimensionsUtils.getDP(24),
+    marginHorizontal: DimensionsUtils.getDP(24),
   },
   spaceHor: {
     marginTop: DimensionsUtils.getDP(24),

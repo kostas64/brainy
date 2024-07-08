@@ -23,8 +23,8 @@ import {DimensionsUtils} from '../utils/DimensionUtils';
 import {useToastContext} from '../context/ToastProvider';
 import {useModalContext} from '../context/ModalProvider';
 import {isIOS, triggerHaptik} from '../utils/GenericUtils';
-import ConfirmationModal from '../components/ConfirmationModal';
 import {deleteUserAccount, updateProfile} from '../services/user';
+import ConfirmationModal from '../components/common/ConfirmationModal';
 
 const AccountScreen = ({navigation}) => {
   const insets = useSafeAreaInsets();

@@ -121,5 +121,9 @@
   "deleteAccountWarning": "Are you sure you want to delete your account? All your scores and friend list will be lost.",
   "agreeDelete": "Yes, delete it",
   "disagreeDelete": "No, keep it",
-  "accountDeleted": "Your account has been deleted ✓"
+  "accountDeleted": "Your account has been deleted ✓",
+  "privacyPolicy": "Privacy Policy",
+  "privacyPolicyURL": "https://node-brainy-production.up.railway.app/privacy-policy",
+  "support": "Support",
+  "supportURL": "https://node-brainy-production.up.railway.app/support"
 }

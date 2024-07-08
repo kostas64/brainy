@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-import Button from './common/Button';
-import {Colors} from '../utils/Colors';
-import {WIDTH} from '../utils/GenericUtils';
-import dict from '../assets/values/dict.json';
-import {DimensionsUtils} from '../utils/DimensionUtils';
+import Button from './Button';
+import {Colors} from '../../utils/Colors';
+import {WIDTH} from '../../utils/GenericUtils';
+import dict from '../../assets/values/dict.json';
+import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const ConfirmationModal = ({label, onPressPositive, onPressNegative}) => {
   const [loading, setLoading] = React.useState(false);
