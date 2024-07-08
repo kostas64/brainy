@@ -53,6 +53,21 @@ const onboardSearch1 = require('./onboardingSearch/onboarding_search_1.png');
 const onboardSearch2 = require('./onboardingSearch/onboarding_search_2.png');
 const onboardSearch3 = require('./onboardingSearch/onboarding_search_3.png');
 
+//Avatars
+const avatar1 = require('./avatar/avatar1.png');
+const avatar2 = require('./avatar/avatar2.png');
+const avatar3 = require('./avatar/avatar3.png');
+const avatar4 = require('./avatar/avatar4.png');
+const avatar5 = require('./avatar/avatar5.png');
+const avatar6 = require('./avatar/avatar6.png');
+const avatar7 = require('./avatar/avatar7.png');
+const avatar8 = require('./avatar/avatar8.png');
+const avatar9 = require('./avatar/avatar9.png');
+const avatar10 = require('./avatar/avatar10.png');
+const avatar11 = require('./avatar/avatar11.png');
+const avatar12 = require('./avatar/avatar12.png');
+const avatar13 = require('./avatar/avatar13.png');
+
 export default {
   addUser,
   arrowBlack,
@@ -104,4 +119,17 @@ export default {
   onboardSearch1,
   onboardSearch2,
   onboardSearch3,
+  avatar1,
+  avatar2,
+  avatar3,
+  avatar4,
+  avatar5,
+  avatar6,
+  avatar7,
+  avatar8,
+  avatar9,
+  avatar10,
+  avatar11,
+  avatar12,
+  avatar13,
 };
