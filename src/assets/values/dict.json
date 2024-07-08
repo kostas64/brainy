@@ -117,6 +117,9 @@
   "onboardingTitle3": "Climb the rank",
   "onboardingSubtitle3": "Track your progress and strive for the top spot in Brainy community",
   "close": "Close",
-  "requestAccountDeletion": "Request account deletion",
-  "requestAccountDeletionMessage": "mailto:konstantinos.efkarpidis@outlook.com?subject=Account deletion request&body=Hello, I would like to request the deletion of my account with email"
+  "deleteAccount": "Delete my account",
+  "deleteAccountWarning": "Are you sure you want to delete your account? All your scores and friend list will be lost.",
+  "agreeDelete": "Yes, delete it",
+  "disagreeDelete": "No, keep it",
+  "accountDeleted": "Your account has been deleted ✓"
 }

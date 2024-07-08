@@ -12,6 +12,7 @@ import {
   UPDATE_PROFILE,
   REQUEST_ACCESS,
   NOTIF_SETTINGS,
+  DELETE_ACCOUNT,
 } from '../Endpoints';
 import {storage} from '../..';
 
@@ -176,5 +177,38 @@ export const updateNotificationToken = async () => {
     });
   } catch (e) {
     console.log('API updateNotificationToken failed', e);
+  }
+};
+
+export const deleteUserAccount = async (successCb, errorCb) => {
+  console.log('API deleteUserAccount ', `${HOST}${DELETE_ACCOUNT}`);
+
+  try {
+    const token = await AsyncStorage.getItem('token');
+
+    return fetch(`${HOST}${DELETE_ACCOUNT}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `${BEARER}${token}`,
+      },
+    })
+      .then(async res => {
+        const response = await res.json();
+
+        if (response?.error) {
+          !!errorCb && errorCb();
+          return;
+        }
+
+        !!successCb && successCb();
+      })
+      .catch(() => {
+        !!errorCb && errorCb();
+      });
+  } catch (e) {
+    !!errorCb && errorCb();
+    console.log('API deleteUserAccount failed', e);
   }
 };

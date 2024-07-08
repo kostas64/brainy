@@ -6,12 +6,14 @@ import Animated, {
 
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View, Keyboard, ScrollView, StyleSheet, Linking} from 'react-native';
+import {View, Keyboard, ScrollView, StyleSheet} from 'react-native';
 
+import {storage} from '../..';
+import {Colors} from '../utils/Colors';
+import {signOut} from '../services/auth';
 import images from '../assets/images/images';
 import dict from '../assets/values/dict.json';
 import Input from '../components/common/Input';
-import {updateProfile} from '../services/user';
 import Screen from '../components/common/Screen';
 import {useKeyboard} from '../hooks/useKeyboard';
 import Button from '../components/common/Button';
@@ -19,13 +21,17 @@ import {animateInput} from '../utils/AnimateUtils';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import {useToastContext} from '../context/ToastProvider';
+import {useModalContext} from '../context/ModalProvider';
 import {isIOS, triggerHaptik} from '../utils/GenericUtils';
+import ConfirmationModal from '../components/ConfirmationModal';
+import {deleteUserAccount, updateProfile} from '../services/user';
 
 const AccountScreen = ({navigation}) => {
-  const keyboard = useKeyboard();
   const insets = useSafeAreaInsets();
+  const keyboard = useKeyboard(true);
   const {setToast} = useToastContext();
-  const {user, setUser} = useAuthContext();
+  const {user, setUser, setToken} = useAuthContext();
+  const {closeModal, setModalInfo} = useModalContext();
 
   const nameTranslateX = useSharedValue(0);
   const surnameTranslateX = useSharedValue(0);
@@ -157,9 +163,34 @@ const AccountScreen = ({navigation}) => {
     }
   }, [toUpdate, callUpdate, navigation]);
 
+  const onDeleteAccount = React.useCallback(() => {
+    deleteUserAccount(
+      async () => {
+        closeModal();
+        navigation.pop(3);
+        await signOut(setToken, setUser, true);
+        setToast({icon: images.logo, message: dict.accountDeleted});
+        storage.removeItem('firstTime');
+      },
+      () => {
+        closeModal();
+        setToast({icon: images.logo, message: dict.errorOnUpdate});
+      },
+    );
+  }, [closeModal, setUser, setToken, setToast, navigation]);
+
   const onPressDelete = React.useCallback(() => {
-    Linking.openURL(`${dict.requestAccountDeletionMessage}  ${user?.email}`);
-  }, [user.email]);
+    setModalInfo({
+      height: 190 + bottom,
+      content: (
+        <ConfirmationModal
+          onPressNegative={closeModal}
+          onPressPositive={onDeleteAccount}
+          label={dict.deleteAccountWarning}
+        />
+      ),
+    });
+  }, [bottom, closeModal, onDeleteAccount, setModalInfo]);
 
   return (
     <Screen label={dict.profileAccount} noIcon>
@@ -207,14 +238,6 @@ const AccountScreen = ({navigation}) => {
             />
           </Animated.View>
           <View style={styles.separator} />
-          {!toUpdate && keyboard === 0 && (
-            <Animated.View entering={FadeInUp.delay(600).duration(300)}>
-              <Button
-                onPress={onPressDelete}
-                label={dict.requestAccountDeletion}
-              />
-            </Animated.View>
-          )}
         </View>
       </ScrollView>
 
@@ -226,6 +249,18 @@ const AccountScreen = ({navigation}) => {
             containerStyle={{marginBottom: bottom}}
           />
         </View>
+      )}
+
+      {keyboard === 0 && (
+        <Button
+          onPress={onPressDelete}
+          label={dict.deleteAccount}
+          labelStyle={{color: Colors.white}}
+          containerStyle={{
+            marginBottom: bottom,
+            backgroundColor: Colors.fillRed,
+          }}
+        />
       )}
     </Screen>
   );
