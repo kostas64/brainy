@@ -23,7 +23,6 @@ const Stack = createNativeStackNavigator();
 
 const navigatorScreenOptions = {
   headerShown: false,
-  gestureEnabled: false,
   animationTypeForReplace: 'pop',
 };
 
