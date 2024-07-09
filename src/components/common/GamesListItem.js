@@ -12,9 +12,9 @@ import Animated, {interpolate, useAnimatedStyle} from 'react-native-reanimated';
 import {Colors} from '../../utils/Colors';
 import dict from '../../assets/values/dict.json';
 import {msToMMSSmmm} from '../../utils/StringUtils';
-import {HEIGHT, WIDTH} from '../../utils/GenericUtils';
 import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
+import {HEIGHT, isAndroid, WIDTH} from '../../utils/GenericUtils';
 
 const ITEM_WIDTH = HEIGHT <= 700 ? (WIDTH * 0.88) / 1.4 : WIDTH * 0.75;
 const ITEM_HEIGHT =
@@ -40,7 +40,7 @@ const GamesListItem = ({
 
   const scoreUnit = hasFlips
     ? `${hasFlips} flips`
-    : hasPoints
+    : typeof hasPoints === 'number'
     ? `${hasPoints} points`
     : '';
 
@@ -96,18 +96,21 @@ const styles = StyleSheet.create({
     borderWidth: DimensionsUtils.getDP(2),
   },
   scoreContainer: {
-    height: 28,
+    height: 32,
     position: 'absolute',
     left: DimensionsUtils.getDP(16),
     top: DimensionsUtils.getDP(16),
     backgroundColor: Colors.tabBarIcon,
     padding: DimensionsUtils.getDP(6),
     borderRadius: DimensionsUtils.getDP(8),
+    justifyContent: 'center',
+    paddingHorizontal: DimensionsUtils.getDP(8),
   },
   score: {
     fontSize: 12,
     color: Colors.black,
     fontFamily: 'Poppins-Medium',
+    lineHeight: isAndroid ? 22 : 20,
   },
   image: {
     borderRadius: DimensionsUtils.getDP(18),
