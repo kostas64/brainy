@@ -6,7 +6,13 @@ import {useNavigation} from '@react-navigation/native';
 
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
-const CircularTransition = ({posX, posY, inCircleColor, outCircleColor}) => {
+const CircularTransition = ({
+  posX,
+  posY,
+  isNewUser,
+  inCircleColor,
+  outCircleColor,
+}) => {
   const navigation = useNavigation();
   const scaleRef = React.useRef(new Animated.Value(0)).current;
 
@@ -18,17 +24,28 @@ const CircularTransition = ({posX, posY, inCircleColor, outCircleColor}) => {
         duration: 1000,
         useNativeDriver: true,
       }).start(() => {
-        navigation.navigate('GamesStack', {
-          screen: 'Games',
-          params: {
+        if (!isNewUser) {
+          navigation.navigate('GamesStack', {
+            screen: 'Games',
+            params: {
+              backTransition: () =>
+                Animated.timing(scaleRef, {
+                  toValue: 0,
+                  duration: 850,
+                  useNativeDriver: true,
+                }).start(),
+            },
+          });
+        } else {
+          navigation.navigate('SetNickname', {
             backTransition: () =>
               Animated.timing(scaleRef, {
                 toValue: 0,
                 duration: 850,
                 useNativeDriver: true,
               }).start(),
-          },
-        });
+          });
+        }
       });
     }
   }, [posX, posY, scaleRef]);
