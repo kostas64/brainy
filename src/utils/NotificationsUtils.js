@@ -25,7 +25,7 @@ export class NotificationUtils {
 
   static foregroundNotification = () => {
     return notifee.onForegroundEvent(async ({type, detail}) => {
-      console.log('foreground notification ', type, detail);
+      // console.log('foreground notification ', type, detail);
       const id = detail?.pressAction?.id;
 
       switch (type) {
