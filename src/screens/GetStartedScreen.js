@@ -19,7 +19,6 @@ import Button from '../components/common/Button';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import {HEIGHT, isAndroid} from '../utils/GenericUtils';
-import {useModalContext} from '../context/ModalProvider';
 import {requestNotPermissions} from '../utils/PermissionUtils';
 import CircularTransition from '../components/transitions/CircularTransition';
 
@@ -27,13 +26,13 @@ const GetStartedScreen = ({navigation}) => {
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
 
-  const {closeModal, setModalInfo} = useModalContext();
   const {token, setToken, user, setUser} = useAuthContext();
 
   const opacityRef = React.useRef(new Animated.Value(0)).current;
   const translateYRef = React.useRef(new Animated.Value(10)).current;
 
   const [loading, setLoading] = React.useState(false);
+  const [isNewUser, setIsNewUser] = React.useState(false);
   const [outCircle, setOutCircle] = React.useState(null);
   const [positionCirc, setPositionCirc] = React.useState({
     posX: -100,
@@ -57,9 +56,8 @@ const GetStartedScreen = ({navigation}) => {
           setToken,
           setUser,
           setLoading,
-          setModalInfo,
           () => setCircle(e, Colors.appGreen),
-          closeModal,
+          setIsNewUser,
         );
       } else {
         setUser({
@@ -129,10 +127,11 @@ const GetStartedScreen = ({navigation}) => {
   return (
     <>
       <CircularTransition
+        isNewUser={isNewUser}
         posX={positionCirc.posX}
         posY={positionCirc.posY}
-        inCircleColor={Colors.background}
         outCircleColor={outCircle}
+        inCircleColor={Colors.background}
       />
 
       <View style={styles.imageContainer}>
