@@ -11,6 +11,7 @@ const colorMatch = require('./color_match.png');
 const correct = require('./correct.png');
 const creative = require('./creative.png');
 const deleteUser = require('./delete_user.png');
+const edit = require('./edit.png');
 const envelope = require('./envelope.png');
 const friends = require('./friends.png');
 const friendsF = require('./friends_fill.png');
@@ -82,6 +83,7 @@ export default {
   correct,
   creative,
   deleteUser,
+  edit,
   envelope,
   friends,
   friendsF,

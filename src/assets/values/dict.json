@@ -71,6 +71,7 @@
   "nameUpdated": "Name has been updated  ✓",
   "surnameUpdated": "Surname has been updated  ✓",
   "nicknameUpdated": "Nickname has been updated  ✓",
+  "avatarUpdated": "Avatar has been updated  ✓",
   "errorOnUpdate": "Something went wrong ✗",
   "doneLabel": "Done",
   "friendRequests": "Friend requests",
@@ -125,5 +126,7 @@
   "privacyPolicy": "Privacy Policy",
   "privacyPolicyURL": "https://node-brainy-production.up.railway.app/privacy-policy",
   "support": "Support",
-  "supportURL": "https://node-brainy-production.up.railway.app/support"
+  "supportURL": "https://node-brainy-production.up.railway.app/support",
+  "pickAvatar": "Pick avatar",
+  "editAccount": "Edit account"
 }
