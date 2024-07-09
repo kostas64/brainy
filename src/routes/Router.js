@@ -13,10 +13,13 @@ import SettingsScreen from '../screens/SettingsScreen';
 import EqualMathScreen from '../screens/EqualMathScreen';
 import GestureItScreen from '../screens/GestureItScreen';
 import ColorCardScreen from '../screens/ColorCardScreen';
+import PickAvatarScreen from '../screens/PickAvatarScreen';
 import MemoryCardScreen from '../screens/MemoryCardScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import BallBalanceScreen from '../screens/BallBalanceScreen';
+import SetNicknameScreen from '../screens/SetNicknameScreen';
+import EditAccountScreen from '../screens/EditAccountScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 
 const Stack = createNativeStackNavigator();
@@ -59,67 +62,80 @@ const Router = ({onNavigationReady}) => {
           options={screenSlideConfig}
         />
         <Stack.Screen
+          name="SetNickname"
+          component={SetNicknameScreen}
+          options={gameStackOptions}
+        />
+        <Stack.Screen
+          name="PickAvatar"
+          component={PickAvatarScreen}
+          options={screenSlideConfig}
+        />
+        <Stack.Screen
           name="GamesStack"
           component={TabStack}
           options={gameStackOptions}
         />
-        <Stack.Group screenOptions={{gestureEnabled: true}}>
-          <Stack.Screen
-            name="ColorCard"
-            component={ColorCardScreen}
-            options={screenConfig}
-          />
-          <Stack.Screen
-            name="MemoryCard"
-            component={MemoryCardScreen}
-            options={screenConfig}
-          />
-          <Stack.Screen
-            name="EqualMath"
-            component={EqualMathScreen}
-            options={screenConfig}
-          />
-          <Stack.Screen
-            name="GestureIt"
-            component={GestureItScreen}
-            options={screenConfig}
-          />
-          <Stack.Screen
-            name="BallBalance"
-            component={BallBalanceScreen}
-            options={screenConfig}
-          />
-          <Stack.Screen
-            name="Profile"
-            component={ProfileScreen}
-            options={screenSlideConfig}
-          />
-          <Stack.Screen
-            name="Settings"
-            component={SettingsScreen}
-            options={screenSlideConfig}
-          />
-          <Stack.Screen
-            name="Account"
-            component={AccountScreen}
-            options={screenSlideConfig}
-          />
-          <Stack.Screen
-            name="FriendsTabs"
-            component={FriendsTabs}
-            options={screenSlideConfig}
-          />
-          <Stack.Screen
-            name="Notifications"
-            component={NotificationsScreen}
-            options={screenSlideConfig}
-          />
-          <Stack.Screen
-            name="Inspire"
-            component={InspireScreen}
-            options={screenSlideConfig}
-          />
-        </Stack.Group>
+        <Stack.Screen
+          name="ColorCard"
+          component={ColorCardScreen}
+          options={screenConfig}
+        />
+        <Stack.Screen
+          name="MemoryCard"
+          component={MemoryCardScreen}
+          options={screenConfig}
+        />
+        <Stack.Screen
+          name="EqualMath"
+          component={EqualMathScreen}
+          options={screenConfig}
+        />
+        <Stack.Screen
+          name="GestureIt"
+          component={GestureItScreen}
+          options={screenConfig}
+        />
+        <Stack.Screen
+          name="BallBalance"
+          component={BallBalanceScreen}
+          options={screenConfig}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={screenSlideConfig}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={screenSlideConfig}
+        />
+        <Stack.Screen
+          name="Account"
+          component={AccountScreen}
+          options={screenSlideConfig}
+        />
+        <Stack.Screen
+          name="EditAccount"
+          component={EditAccountScreen}
+          options={screenSlideConfig}
+        />
+        <Stack.Screen
+          name="FriendsTabs"
+          component={FriendsTabs}
+          options={screenSlideConfig}
+        />
+        <Stack.Screen
+          name="Notifications"
+          component={NotificationsScreen}
+          options={screenSlideConfig}
+        />
+        <Stack.Screen
+          name="Inspire"
+          component={InspireScreen}
+          options={screenSlideConfig}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
