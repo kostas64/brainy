@@ -9,6 +9,7 @@ import useTimeout from '../../hooks/useTimeout';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {normalizeMS} from '../../utils/MathUtils';
+import {AVATARS} from '../../assets/values/avatars';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useModalContext} from '../../context/ModalProvider';
 import UserProfileModal from '../userProfileModal/UserProfileModal';
@@ -61,7 +62,7 @@ const RankFlipListItem = ({item, index, isMe}) => {
         <FastImage
           style={styles.avatar}
           defaultSource={images.guest}
-          source={{uri: item?.user?.[0]?.avatar}}
+          source={AVATARS[item?.user?.[0]?.avatar]}
         />
       </View>
       <Text style={styles.textWrapper}>

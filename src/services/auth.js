@@ -3,12 +3,12 @@ import {
   GoogleSignin,
 } from '@react-native-google-signin/google-signin';
 
-import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {appleAuth} from '@invertase/react-native-apple-authentication';
 
 import {storage} from '../../index';
+import {isAndroid} from '../utils/GenericUtils';
 import {logoutUser, requestAccess} from './user';
-import SetNicknameModal from '../components/nickname/SetNicknameModal';
 
 export const signInGoogle = async () => {
   try {
@@ -56,13 +56,14 @@ export const signIn = async (
   setToken,
   setUser,
   setLoading,
-  setModalInfo,
   successCb,
-  closeModal,
+  setIsNewUser,
 ) => {
   try {
     setLoading(true);
-    const {logged, user} = await signInGoogle();
+
+    const {logged, user} =
+      isAndroid || __DEV__ ? await loginWithGoogle() : await loginWithApple();
 
     if (logged && user) {
       const res = await requestAccess(user);
@@ -75,25 +76,10 @@ export const signIn = async (
       storage.getBool('firstTime', async (_, result) => {
         if (result === null && !data?.user?.nickname) {
           storage.setBool('firstTime', false);
-
-          setModalInfo({
-            height: 200,
-            onBackPress: () => setLoading(false),
-            content: (
-              <SetNicknameModal
-                token={data?.token}
-                successCb={() => {
-                  closeModal();
-
-                  setTimeout(() => {
-                    setDataForLogin(data, setToken, setUser);
-                    !!successCb && successCb();
-                    setLoading(false);
-                  }, 500);
-                }}
-              />
-            ),
-          });
+          setIsNewUser(true);
+          setDataForLogin(data, setToken, setUser);
+          !!successCb && successCb();
+          setLoading(false);
         } else {
           setDataForLogin(data, setToken, setUser);
           !!successCb && successCb();
@@ -157,9 +143,66 @@ const setDataForLogin = async (data, setToken, setUser) => {
     surname: data?.user?.surname,
   }));
 
-  await AsyncStorage.setItem('token', data?.token);
-  await AsyncStorage.setItem('email', data?.user?.email);
-  await AsyncStorage.setItem('avatar', data?.user?.avatar);
-  await AsyncStorage.setItem('name', data?.user?.name);
-  await AsyncStorage.setItem('surname', data?.user?.surname);
+  if (data?.token) {
+    await AsyncStorage.setItem('token', data?.token);
+  }
+
+  if (data?.user?.email) {
+    await AsyncStorage.setItem('email', data?.user?.email);
+  }
+
+  if (typeof data?.user?.avatar === 'number') {
+    await AsyncStorage.setItem('avatar', `${data?.user?.avatar}`);
+  }
+
+  if (data?.user?.name) {
+    await AsyncStorage.setItem('name', data?.user?.name);
+  }
+
+  if (data?.user?.surname) {
+    await AsyncStorage.setItem('surname', data?.user?.surname);
+  }
+};
+
+const loginWithGoogle = async () => {
+  const {logged, user} = await signInGoogle();
+
+  return {
+    logged,
+    user,
+  };
+};
+
+const loginWithApple = async () => {
+  try {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      // Note: it appears putting FULL_NAME first is important, see issue #293
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+
+    // use credentialState response to ensure the user is authenticated
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      return {
+        logged: true,
+        user: {
+          idToken: appleAuthRequestResponse.identityToken,
+          user: {
+            email: appleAuthRequestResponse.email,
+            givenName: appleAuthRequestResponse.fullName?.givenName,
+            familyName: appleAuthRequestResponse.fullName?.familyName,
+          },
+        },
+      };
+    }
+  } catch (e) {
+    return {
+      logged: false,
+      user: null,
+    };
+  }
 };
