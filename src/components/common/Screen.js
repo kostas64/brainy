@@ -37,7 +37,6 @@ const Screen = ({
         noIcon={noIcon}
         hasDot={hasDot}
         iconStyle={iconStyle}
-        avatar={user?.avatar}
         secondIcon={secondIcon}
         labelStyle={labelStyle}
         isGuest={user?.isGuest}
@@ -45,6 +44,7 @@ const Screen = ({
         headerStyle={headerStyle}
         onIconPress={onIconPress}
         onScndIcnPress={onScndIcnPress}
+        avatar={parseInt(user?.avatar, 10)}
       />
       {children}
     </View>

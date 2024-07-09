@@ -7,6 +7,7 @@ import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
 import {WIDTH} from '../../utils/GenericUtils';
 import images from '../../assets/images/images';
+import {AVATARS} from '../../assets/values/avatars';
 import {useAuthContext} from '../../context/AuthProvider';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
@@ -61,8 +62,8 @@ const SearchListItem = ({item, style, isLast = false}) => {
         <View style={styles.rowCenter}>
           <FastImage
             style={styles.avatar}
-            source={{uri: item.avatar}}
             defaultSource={images.guest}
+            source={AVATARS[item.avatar]}
           />
           <View style={styles.spaceLeft}>
             {username && (

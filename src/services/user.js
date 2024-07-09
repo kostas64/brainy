@@ -29,7 +29,6 @@ export const requestAccess = async user => {
         token: user?.idToken,
         name: user?.user?.givenName,
         surname: user?.user?.familyName,
-        avatar: user?.user?.photo,
         email: user?.user?.email,
         deviceOS: Platform.OS,
       }),

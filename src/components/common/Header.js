@@ -7,6 +7,7 @@ import {View, Pressable, StyleSheet} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
+import {AVATARS} from '../../assets/values/avatars';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const Header = ({
@@ -31,7 +32,7 @@ const Header = ({
     ? images.guest
     : customIcon
     ? customIcon
-    : {uri: avatar};
+    : AVATARS[avatar];
 
   //** ----- STYLES -----
   const avatarStyles = isGuest ? styles.avatar : [styles.avatar, iconStyle];

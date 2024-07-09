@@ -11,6 +11,7 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 import {Colors} from '../../utils/Colors';
 import images from '../../assets/images/images';
+import {AVATARS} from '../../assets/values/avatars';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import UserProfileModalAnimatedAvatar from './UserProfileModalAnimatedAvatar';
 
@@ -29,7 +30,7 @@ const UserProfileModalAvatar = ({
   const [show, setShow] = React.useState(false);
   const [avatarPos, setAvatarPos] = React.useState();
 
-  const source = icon ? icon : {uri: user?.avatar};
+  const source = icon ? icon : AVATARS[user?.avatar];
 
   //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {
