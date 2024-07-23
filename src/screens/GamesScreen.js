@@ -44,7 +44,7 @@ const GamesScreen = ({navigation, route}) => {
     }).start();
 
     const bfrRemove = navigation.addListener('beforeRemove', () => {
-      route?.params?.backTransition();
+      !!route?.params?.backTransition && route?.params?.backTransition();
     });
 
     return bfrRemove;
