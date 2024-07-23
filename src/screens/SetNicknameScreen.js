@@ -1,29 +1,57 @@
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
+import {KeyboardAvoidingView, StatusBar, StyleSheet, View} from 'react-native';
 
+import {Colors} from '../utils/Colors';
 import dict from '../assets/values/dict.json';
 import Input from '../components/common/Input';
+import {updateProfile} from '../services/user';
 import {isAndroid} from '../utils/GenericUtils';
 import Screen from '../components/common/Screen';
 import Button from '../components/common/Button';
+import useBackAction from '../hooks/useBackAction';
+import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 
 const SetNicknameScreen = ({navigation, route}) => {
   const insets = useSafeAreaInsets();
+  const {user, setUser} = useAuthContext();
+
   const bottom =
     insets.bottom > 0
       ? insets.bottom + DimensionsUtils.getDP(8)
       : DimensionsUtils.getDP(16);
 
-  const [nickname, setNickname] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const [nickname, setNickname] = React.useState(user?.nickname);
+
+  useBackAction(() => {
+    return true;
+  });
 
   const onPress = () => {
-    navigation.navigate('PickAvatar', {
-      nickname,
-      backTransition: route?.params?.backTransition,
+    setLoading(true);
+
+    updateProfile({nickname}, () => {
+      setUser(old => ({
+        ...old,
+        nickname,
+      }));
+
+      setLoading(false);
+
+      navigation.navigate('PickAvatar', {
+        nickname,
+        backTransition: route?.params?.backTransition,
+      });
     });
   };
+
+  React.useEffect(() => {
+    if (user?.nickname) {
+      setNickname(user?.nickname);
+    }
+  }, [user]);
 
   return (
     <KeyboardAvoidingView
@@ -41,11 +69,16 @@ const SetNicknameScreen = ({navigation, route}) => {
         <View style={[styles.absoluteCenter, {bottom}]}>
           <Button
             onPress={onPress}
-            disabled={nickname.length === 0}
+            loading={loading}
             label={dict.getStartedLoggedInButton}
+            disabled={nickname?.length === 0 || loading}
           />
         </View>
       </Screen>
+      <StatusBar
+        barStyle={'light-content'}
+        backgroundColor={Colors.background}
+      />
     </KeyboardAvoidingView>
   );
 };

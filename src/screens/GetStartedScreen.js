@@ -60,6 +60,10 @@ const GetStartedScreen = ({navigation}) => {
           setIsNewUser,
         );
       } else {
+        if (!user?.nickname || !user?.avatar) {
+          setIsNewUser(true);
+        }
+
         setUser({
           email: user?.email,
           avatar: user?.avatar,

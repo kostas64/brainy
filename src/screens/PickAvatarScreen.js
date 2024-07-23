@@ -16,6 +16,7 @@ import {updateProfile} from '../services/user';
 import Screen from '../components/common/Screen';
 import {AVATARS} from '../assets/values/avatars';
 import Button from '../components/common/Button';
+import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 
@@ -30,6 +31,10 @@ const PickAvatarScreen = ({navigation, route}) => {
 
   const [selected, setSelected] = React.useState(user?.avatar || 0);
   const [loading, setLoading] = React.useState(false);
+
+  useBackAction(() => {
+    navigation.pop();
+  });
 
   const renderItem = React.useCallback(
     ({item, index}) => {
@@ -119,8 +124,9 @@ const PickAvatarScreen = ({navigation, route}) => {
       <View style={{bottom}}>
         <Button
           loading={loading}
-          label={dict.getStartedLoggedInButton}
+          disabled={loading}
           onPress={onPress}
+          label={dict.getStartedLoggedInButton}
         />
       </View>
     </Screen>

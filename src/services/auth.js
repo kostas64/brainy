@@ -62,8 +62,9 @@ export const signIn = async (
   try {
     setLoading(true);
 
-    const {logged, user} =
-      isAndroid || __DEV__ ? await loginWithGoogle() : await loginWithApple();
+    const {logged, user} = isAndroid
+      ? await loginWithGoogle()
+      : await loginWithApple();
 
     if (logged && user) {
       const res = await requestAccess(user);
