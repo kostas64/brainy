@@ -96,6 +96,7 @@ const ProfileScoresSection = ({show, passedScores, itemRefs, scrollRef}) => {
           data={LIST_GAMES}
           scrollEnabled={false}
           renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
         />
       </Animated.View>
 
