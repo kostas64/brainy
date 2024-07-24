@@ -19,6 +19,11 @@ const FriendsListItem = ({item}) => {
         item?.friendUserSurname ? item.friendUserSurname : ''
       }`;
 
+  const avatar =
+    typeof item.friendUserAvatar === 'number'
+      ? AVATARS[item.friendUserAvatar]
+      : images.guest;
+
   const onPress = React.useCallback(() => {
     navigation.navigate('Profile', {
       item: {
@@ -42,9 +47,9 @@ const FriendsListItem = ({item}) => {
       pressingAnimationDuration={25}
       releasingAnimationDuraiton={50}>
       <FastImage
+        source={avatar}
         style={styles.avatar}
         defaultSource={images.guest}
-        source={AVATARS[item.friendUserAvatar]}
       />
       <View style={styles.nameContainer}>
         <Text numberOfLines={2} style={styles.name}>

@@ -21,6 +21,9 @@ const SearchListItem = ({item, style, isLast = false}) => {
 
   const nickname = `${item?.nickname ? item.nickname : ''}`;
 
+  const avatar =
+    typeof item.avatar === 'number' ? AVATARS[item.avatar] : images.guest;
+
   //** ----- STYLES -----
   const containerStyle = [
     styles.container,
@@ -61,9 +64,9 @@ const SearchListItem = ({item, style, isLast = false}) => {
         style={containerStyle}>
         <View style={styles.rowCenter}>
           <FastImage
+            source={avatar}
             style={styles.avatar}
             defaultSource={images.guest}
-            source={AVATARS[item.avatar]}
           />
           <View style={styles.spaceLeft}>
             {username && (

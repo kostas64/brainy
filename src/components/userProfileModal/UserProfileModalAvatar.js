@@ -30,7 +30,11 @@ const UserProfileModalAvatar = ({
   const [show, setShow] = React.useState(false);
   const [avatarPos, setAvatarPos] = React.useState();
 
-  const source = icon ? icon : AVATARS[user?.avatar];
+  const source = icon
+    ? icon
+    : typeof user?.avatar === 'number'
+    ? AVATARS[user?.avatar]
+    : images.guest;
 
   //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {

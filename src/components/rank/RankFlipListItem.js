@@ -22,6 +22,11 @@ const RankFlipListItem = ({item, index, isMe}) => {
 
   const insetsBottom = insets.bottom > 0 ? insets.bottom : 26;
 
+  const avatar =
+    typeof item?.user?.[0]?.avatar === 'number'
+      ? AVATARS[item?.user?.[0]?.avatar]
+      : images.guest;
+
   //** ----- STYLES -----
   const containerStyles = [
     styles.container,
@@ -60,9 +65,9 @@ const RankFlipListItem = ({item, index, isMe}) => {
       <View style={styles.rowCenter}>
         <Text style={styles.index}>{index + 1}</Text>
         <FastImage
+          source={avatar}
           style={styles.avatar}
           defaultSource={images.guest}
-          source={AVATARS[item?.user?.[0]?.avatar]}
         />
       </View>
       <Text style={styles.textWrapper}>

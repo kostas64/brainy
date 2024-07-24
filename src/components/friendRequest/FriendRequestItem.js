@@ -30,6 +30,11 @@ const FriendRequestItem = ({item, updateList}) => {
         item?.friendUserSurname ? item.friendUserSurname : ''
       }`;
 
+  const avatar =
+    typeof item.friendUserAvatar === 'number'
+      ? AVATARS[item?.friendUserAvatar]
+      : images.guest;
+
   //** ----- FUNCTIONS -----
   const onPress = React.useCallback(() => {
     navigation.navigate('Profile', {
@@ -77,9 +82,9 @@ const FriendRequestItem = ({item, updateList}) => {
       <Touchable style={styles.firstRowContainer} onPress={onPress}>
         <View style={styles.row}>
           <FastImage
+            source={avatar}
             style={styles.avatar}
             defaultSource={images.guest}
-            source={AVATARS[item?.friendUserAvatar]}
           />
           <View style={styles.nameContainer}>
             <Text numberOfLines={2} style={styles.name}>
