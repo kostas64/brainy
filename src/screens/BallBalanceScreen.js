@@ -112,6 +112,8 @@ const BallBalanceScreen = ({route}) => {
   }, [duration, points]);
 
   const setNewGame = React.useCallback(() => {
+    rotX.value = (HEIGHT - 36) / 2;
+    rotY.value = (WIDTH - 36) / 2;
     setPoints(0);
     setGameOver(false);
     setHoleSize(INIT_HOLE_SIZE);
@@ -159,9 +161,13 @@ const BallBalanceScreen = ({route}) => {
           }
         });
       } else if (
-        distance > holeSize / 2 - BALL_SIZE / 2 &&
-        progress.value > 0 &&
-        progress.value < 1
+        ballCenterX < 18 ||
+        ballCenterY < 18 ||
+        ballCenterX > WIDTH - 18 ||
+        ballCenterY > HEIGHT - 18 || //Check if ball is out of bounds
+        (distance > holeSize / 2 - BALL_SIZE / 2 &&
+          progress.value > 0 &&
+          progress.value < 1) //Check if ball was in and after is out of hole
       ) {
         cancelAnimation(progress);
         runOnJS(setGameOver)(true);
