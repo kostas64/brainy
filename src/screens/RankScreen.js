@@ -99,7 +99,7 @@ const RankScreen = ({navigation}) => {
   );
 
   const onEndReached = React.useCallback(() => {
-    if (!state.noData && !loadingApi) {
+    if (!state.noData && !loadingApi && state.page !== 1) {
       fetchData();
     }
   }, [state, loadingApi, fetchData]);
@@ -161,6 +161,8 @@ const RankScreen = ({navigation}) => {
   React.useEffect(() => {
     // Reset data and page when gameInput changes
     if (firstRender.current !== 0) {
+      console.log('456');
+
       resetState();
       fetchData();
     }
@@ -168,6 +170,7 @@ const RankScreen = ({navigation}) => {
 
   React.useEffect(() => {
     if (!user.isGuest) {
+      console.log('123');
       fetchData();
     }
   }, []);

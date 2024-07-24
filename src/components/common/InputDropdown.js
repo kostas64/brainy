@@ -16,7 +16,7 @@ import {DimensionsUtils} from '../../utils/DimensionUtils';
 const AnimatedIcon = Animated.createAnimatedComponent(Image);
 
 const InputDropdown = React.forwardRef(
-  ({value, setValue, isFocused, onFieldPress, placeholder}, ref) => {
+  ({value, setValue, isFocused, placeholder}, ref) => {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const icon = useSharedValue(0);
@@ -38,12 +38,12 @@ const InputDropdown = React.forwardRef(
     const onPress = React.useCallback((isSelected, index) => {
       if (!isSelected) {
         setValue(GAMES[index]);
+      } else {
+        toggleListItem();
       }
     }, []);
 
     const toggleListItem = React.useCallback(() => {
-      !!onFieldPress && onFieldPress();
-
       if (isOpen) {
         height.value = withTiming(0);
         icon.value = withTiming(0);
@@ -55,7 +55,7 @@ const InputDropdown = React.forwardRef(
       }
 
       setIsOpen(open => !open);
-    }, [isOpen, icon, height, onFieldPress]);
+    }, [isOpen, icon, height]);
 
     const renderItem = ({item, index}) => {
       const isSelected = value === GAMES[index];
