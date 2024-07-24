@@ -63,7 +63,7 @@ export const signIn = async (
     setLoading(true);
 
     const {logged, user} = isAndroid
-      ? await loginWithGoogle()
+      ? await signInGoogle()
       : await loginWithApple();
 
     if (logged && user) {
@@ -163,15 +163,6 @@ const setDataForLogin = async (data, setToken, setUser) => {
   if (data?.user?.surname) {
     await AsyncStorage.setItem('surname', data?.user?.surname);
   }
-};
-
-const loginWithGoogle = async () => {
-  const {logged, user} = await signInGoogle();
-
-  return {
-    logged,
-    user,
-  };
 };
 
 const loginWithApple = async () => {
