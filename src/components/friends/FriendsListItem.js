@@ -7,6 +7,7 @@ import {Colors} from '../../utils/Colors';
 import Touchable from '../common/Touchable';
 import {WIDTH} from '../../utils/GenericUtils';
 import images from '../../assets/images/images';
+import {AVATARS} from '../../assets/values/avatars';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const FriendsListItem = ({item}) => {
@@ -43,7 +44,7 @@ const FriendsListItem = ({item}) => {
       <FastImage
         style={styles.avatar}
         defaultSource={images.guest}
-        source={{uri: item.friendUserAvatar}}
+        source={AVATARS[item.friendUserAvatar]}
       />
       <View style={styles.nameContainer}>
         <Text numberOfLines={2} style={styles.name}>

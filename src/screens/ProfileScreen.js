@@ -15,6 +15,7 @@ import useTimeout from '../hooks/useTimeout';
 import dict from '../assets/values/dict.json';
 import {isAndroid} from '../utils/GenericUtils';
 import Screen from '../components/common/Screen';
+import {AVATARS} from '../assets/values/avatars';
 import {LIST_GAMES} from '../assets/values/games';
 import Skeleton from '../components/skeleton/Skeleton';
 import {DimensionsUtils} from '../utils/DimensionUtils';
@@ -123,7 +124,7 @@ const ProfileScreen = ({route}) => {
         .then(() => {
           setToast({
             message: dict.deleteFriend,
-            icon: {uri: item?.user?.[0]?.avatar},
+            icon: AVATARS[item?.user?.[0]?.avatar],
           });
 
           setHasRequest(false);
@@ -136,7 +137,7 @@ const ProfileScreen = ({route}) => {
         .then(() => {
           setToast({
             message: dict.acceptedRequest,
-            icon: {uri: item?.user?.[0]?.avatar},
+            icon: AVATARS[item?.user?.[0]?.avatar],
           });
 
           setHasRequest(false);
@@ -156,7 +157,7 @@ const ProfileScreen = ({route}) => {
         .then(() => {
           setToast({
             message: dict.friendRequestSent,
-            icon: {uri: item?.user?.[0]?.avatar},
+            icon: AVATARS[item?.user?.[0]?.avatar],
           });
 
           setHasRequest('Cancel');

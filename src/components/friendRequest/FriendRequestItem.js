@@ -14,6 +14,7 @@ import {WIDTH} from '../../utils/GenericUtils';
 import images from '../../assets/images/images';
 import dict from '../../assets/values/dict.json';
 import {calcTimestamp} from '../../utils/MathUtils';
+import {AVATARS} from '../../assets/values/avatars';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 import {useToastContext} from '../../context/ToastProvider';
 
@@ -63,7 +64,7 @@ const FriendRequestItem = ({item, updateList}) => {
 
           setToast({
             message,
-            icon: {uri: item?.friendUserAvatar},
+            icon: AVATARS[item.friendUserAvatar],
           });
         })
         .finally(() => setLoading(null));
@@ -78,7 +79,7 @@ const FriendRequestItem = ({item, updateList}) => {
           <FastImage
             style={styles.avatar}
             defaultSource={images.guest}
-            source={{uri: item.friendUserAvatar}}
+            source={AVATARS[item?.friendUserAvatar]}
           />
           <View style={styles.nameContainer}>
             <Text numberOfLines={2} style={styles.name}>
