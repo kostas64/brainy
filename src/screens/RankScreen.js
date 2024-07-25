@@ -28,18 +28,19 @@ import InputDropdown from '../components/common/InputDropdown';
 
 const initialState = {
   data: [],
-  page: 1,
   noData: false,
 };
-
 const RankScreen = ({navigation}) => {
   const {user} = useAuthContext();
   const isFocused = useIsFocused();
 
   const opacity = useSharedValue(1);
 
+  const page = React.useRef(1);
+  const calls = React.useRef([]);
   const dropdownRef = React.useRef();
   const firstRender = React.useRef(0);
+  const isLoading = React.useRef(false);
 
   const [state, setState] = React.useState(initialState);
   const [showSearch, setShowSearch] = React.useState(false);
@@ -47,7 +48,7 @@ const RankScreen = ({navigation}) => {
   const [gameInput, setGameInput] = React.useState(GAMES[0]);
 
   const URL = `${HOST}${SCORE}${GenericUtils.getEndpoint(gameInput)}?page=${
-    state.page
+    page.current
   }`;
 
   //** ----- STYLES -----
@@ -99,18 +100,22 @@ const RankScreen = ({navigation}) => {
   );
 
   const onEndReached = React.useCallback(() => {
-    if (!state.noData && !loadingApi && state.page !== 1) {
+    if (!state.noData && !calls.current.some(call => call.includes(URL))) {
       fetchData();
     }
-  }, [state, loadingApi, fetchData]);
+  }, [state, fetchData]);
 
   const fetchGameData = async () => {
+    calls.current.push(URL);
     const tmp = await fetch(URL).then(res => res.json());
+
     return tmp;
   };
 
   const resetState = React.useCallback(() => {
     setState(initialState);
+    page.current = 1;
+    calls.current = [];
   }, []);
 
   const ListFooter = React.useCallback(() => {
@@ -128,14 +133,16 @@ const RankScreen = ({navigation}) => {
   const fetchData = async () => {
     try {
       setLoadingApi(true);
+      isLoading.current = true;
       firstRender.current += 1;
-      const newData = await fetchGameData(state.page, gameInput);
+      const newData = await fetchGameData(page.current, gameInput);
 
       setState(prevData => {
         if (!prevData.noData) {
+          page.current += 1;
+
           return {
             data: [...prevData.data, ...newData.scores],
-            page: state.page + 1,
             noData: newData.scores.length < 10,
           };
         } else {
@@ -144,8 +151,10 @@ const RankScreen = ({navigation}) => {
       });
 
       setLoadingApi(false);
+      isLoading.current = false;
     } catch (error) {
       setLoadingApi(false);
+      isLoading.current = false;
       console.error('Error fetching data:', error);
     }
   };
@@ -160,20 +169,11 @@ const RankScreen = ({navigation}) => {
 
   React.useEffect(() => {
     // Reset data and page when gameInput changes
-    if (firstRender.current !== 0) {
-      console.log('456');
-
+    if (!calls.current.some(call => call.includes(URL))) {
       resetState();
       fetchData();
     }
   }, [gameInput]);
-
-  React.useEffect(() => {
-    if (!user.isGuest) {
-      console.log('123');
-      fetchData();
-    }
-  }, []);
 
   return (
     <>
@@ -204,7 +204,6 @@ const RankScreen = ({navigation}) => {
                 <FlashList
                   data={state.data}
                   renderItem={renderItem}
-                  extraData={state.data}
                   onEndReached={onEndReached}
                   onEndReachedThreshold={0.25}
                   ListEmptyComponent={ListEmpty}
