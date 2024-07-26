@@ -35,13 +35,10 @@ const InputDropdown = React.forwardRef(
     );
 
     //** ----- FUNCTIONS -----
-    const onPress = React.useCallback((isSelected, index) => {
-      if (!isSelected) {
-        setValue(GAMES[index]);
-      } else {
-        toggleListItem();
-      }
-    }, []);
+    const onPress = (isSelected, index) => {
+      !isSelected && setValue(GAMES[index]);
+      toggleListItem();
+    };
 
     const toggleListItem = React.useCallback(() => {
       if (isOpen) {
@@ -55,7 +52,7 @@ const InputDropdown = React.forwardRef(
       }
 
       setIsOpen(open => !open);
-    }, [isOpen, icon, height]);
+    });
 
     const renderItem = ({item, index}) => {
       const isSelected = value === GAMES[index];
@@ -83,12 +80,6 @@ const InputDropdown = React.forwardRef(
         isOpen && toggleListItem();
       },
     }));
-
-    React.useEffect(() => {
-      if (value && isOpen) {
-        toggleListItem();
-      }
-    }, [value]);
 
     React.useEffect(() => {
       !isFocused && isOpen && toggleListItem();
