@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: DimensionsUtils.getDP(24),
   },
   label: {
-    fontSize: 20,
+    fontSize: 18,
     color: Colors.white,
     alignSelf: 'center',
     top: isAndroid ? 2 : 0,
