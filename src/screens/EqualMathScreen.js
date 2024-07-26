@@ -12,6 +12,7 @@ import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
+import HomeButton from '../components/common/HomeButton';
 import {WIDTH, triggerHaptik} from '../utils/GenericUtils';
 import EqualButton from '../components/equalMath/EqualButton';
 import AnimatedModal from '../components/common/AnimatedModal';
@@ -56,12 +57,10 @@ const EqualMathScreen = ({route}) => {
   const [number6, setNumber6] = React.useState();
   const [question, setQuestion] = React.useState(0);
 
-  const bottom = {
-    bottom:
-      insets.bottom > 0
-        ? insets.bottom + DimensionsUtils.getDP(96)
-        : DimensionsUtils.getDP(96),
-  };
+  const bottom =
+    insets.bottom > 0
+      ? {bottom: insets.bottom}
+      : {bottom: DimensionsUtils.getDP(24)};
 
   //** ----- FUNCTIONS -----
   const onCardPress = (firstCardPressed, isEqual = false, eq1, eq2) => {
@@ -203,19 +202,27 @@ const EqualMathScreen = ({route}) => {
           equation={question <= 10 ? equationEasyMed2 : equationDiff2}
         />
       </View>
-      <View style={styles.buttonContainer}>
-        <EqualButton
-          label={dict.equalLabel}
-          insets={insets}
-          disabled={isFinished}
-          onPress={() => onCardPress(false, true, eq1, eq2)}
-        />
-      </View>
+
+      {!isFinished && (
+        <View style={styles.buttonContainer}>
+          <EqualButton
+            label={dict.equalLabel}
+            insets={insets}
+            disabled={isFinished}
+            onPress={() => onCardPress(false, true, eq1, eq2)}
+          />
+        </View>
+      )}
 
       {isFinished && (
-        <View style={[styles.playAgainCont, bottom]}>
-          <NewGameButton setNewGame={setNewGame} />
-        </View>
+        <>
+          <View style={[styles.playAgainCont, bottom]}>
+            <NewGameButton setNewGame={setNewGame} />
+          </View>
+          <View style={[bottom, styles.homeBtn]}>
+            <HomeButton />
+          </View>
+        </>
       )}
 
       {isFinished && <CelebrationLottie ref={lottieRef} />}
@@ -285,6 +292,10 @@ const styles = StyleSheet.create({
   },
   separator: {
     marginVertical: DimensionsUtils.getDP(8),
+  },
+  homeBtn: {
+    position: 'absolute',
+    right: DimensionsUtils.getDP(16),
   },
 });
 

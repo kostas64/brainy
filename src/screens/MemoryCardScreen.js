@@ -13,6 +13,7 @@ import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import StopWatch from '../components/common/StopWatch';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import HomeButton from '../components/common/HomeButton';
 import AnimatedModal from '../components/common/AnimatedModal';
 import FlipCounter from '../components/cardMemory/FlipCounter';
 import AnimatedAnswer from '../components/common/AnimatedAnswer';
@@ -251,6 +252,9 @@ const MemoryCardScreen = ({route}) => {
       <View style={[styles.newGameCont, bottom]}>
         <NewGameButton setNewGame={setNewGame} />
       </View>
+      <View style={[bottom, styles.homeBtn]}>
+        <HomeButton />
+      </View>
     </>
   );
 };
@@ -285,6 +289,10 @@ const styles = StyleSheet.create({
   newGameCont: {
     position: 'absolute',
     alignSelf: 'center',
+  },
+  homeBtn: {
+    position: 'absolute',
+    right: DimensionsUtils.getDP(16),
   },
 });
 

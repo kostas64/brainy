@@ -13,6 +13,7 @@ import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import CountdownTimer from '../components/common/Timer';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import HomeButton from '../components/common/HomeButton';
 import ColorCard from '../components/cardColor/ColorCard';
 import {WIDTH, triggerHaptik} from '../utils/GenericUtils';
 import ColorButton from '../components/cardColor/ColorButton';
@@ -65,12 +66,10 @@ const ColorCardScreen = ({route}) => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
 
-  const bottom = {
-    bottom:
-      insets.bottom > 0
-        ? insets.bottom + DimensionsUtils.getDP(96)
-        : DimensionsUtils.getDP(96),
-  };
+  const bottom =
+    insets.bottom > 0
+      ? {bottom: insets.bottom}
+      : {bottom: DimensionsUtils.getDP(24)};
 
   //** ----- FUNCTIONS -----
   const checkValid = React.useCallback(
@@ -172,25 +171,33 @@ const ColorCardScreen = ({route}) => {
         <View style={{marginVertical: DimensionsUtils.getDP(8)}} />
         <ColorCard number1={rand3} number2={rand4} />
       </View>
-      <View style={styles.bottomContainer}>
-        <BottomButton
-          label={dict.noLabel}
-          disabled={isFinished}
-          onPress={() => onPressBtn(dict.noLabel.toLowerCase())}
-        />
-        <BottomButton
-          label={dict.yesLabel}
-          disabled={isFinished}
-          labelStyle={styles.positiveBtn}
-          containerStyle={styles.positiveBtnBg}
-          onPress={() => onPressBtn(dict.yesLabel.toLowerCase())}
-        />
-      </View>
+
+      {!isFinished && (
+        <View style={styles.bottomContainer}>
+          <BottomButton
+            label={dict.noLabel}
+            disabled={isFinished}
+            onPress={() => onPressBtn(dict.noLabel.toLowerCase())}
+          />
+          <BottomButton
+            label={dict.yesLabel}
+            disabled={isFinished}
+            labelStyle={styles.positiveBtn}
+            containerStyle={styles.positiveBtnBg}
+            onPress={() => onPressBtn(dict.yesLabel.toLowerCase())}
+          />
+        </View>
+      )}
 
       {isFinished && (
-        <View style={[styles.playAgainCont, bottom]}>
-          <NewGameButton setNewGame={setNewGame} />
-        </View>
+        <>
+          <View style={[styles.playAgainCont, bottom]}>
+            <NewGameButton setNewGame={setNewGame} />
+          </View>
+          <View style={[bottom, styles.homeBtn]}>
+            <HomeButton />
+          </View>
+        </>
       )}
 
       {isFinished && <CelebrationLottie ref={lottieRef} />}
@@ -237,6 +244,10 @@ const styles = StyleSheet.create({
   },
   positiveBtn: {
     color: Colors.tabBarBg,
+  },
+  homeBtn: {
+    position: 'absolute',
+    right: DimensionsUtils.getDP(16),
   },
 });
 

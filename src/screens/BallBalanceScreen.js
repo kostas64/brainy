@@ -22,6 +22,7 @@ import Points from '../components/common/Points';
 import {useAuthContext} from '../context/AuthProvider';
 import StopWatch from '../components/common/StopWatch';
 import {DimensionsUtils} from '../utils/DimensionUtils';
+import HomeButton from '../components/common/HomeButton';
 import AnimatedModal from '../components/common/AnimatedModal';
 import {HEIGHT, WIDTH, triggerHaptik} from '../utils/GenericUtils';
 import NewGameButton from '../components/cardMemory/NewGameButton';
@@ -54,12 +55,10 @@ const BallBalanceScreen = ({route}) => {
   const [holePos, setHolePos] = React.useState({x: 0, y: 0});
   const [holeSize, setHoleSize] = React.useState(INIT_HOLE_SIZE);
 
-  const bottom = {
-    bottom:
-      insets.bottom > 0
-        ? insets.bottom + DimensionsUtils.getDP(96)
-        : DimensionsUtils.getDP(96),
-  };
+  const bottom =
+    insets.bottom > 0
+      ? {bottom: insets.bottom}
+      : {bottom: DimensionsUtils.getDP(24)};
 
   const pad = n => (n < 10 ? '0' + n : n);
   const duration = timeRef?.current?.extractTime();
@@ -213,9 +212,14 @@ const BallBalanceScreen = ({route}) => {
       <Animated.View style={[animBall, styles.ball]} />
 
       {gameOver && (
-        <View style={[styles.playAgainCont, bottom]}>
-          <NewGameButton setNewGame={setNewGame} />
-        </View>
+        <>
+          <View style={[styles.playAgainCont, bottom]}>
+            <NewGameButton setNewGame={setNewGame} />
+          </View>
+          <View style={[bottom, styles.homeBtn]}>
+            <HomeButton />
+          </View>
+        </>
       )}
 
       {gameOver && <CelebrationLottie ref={lottieRef} />}
@@ -255,5 +259,9 @@ const styles = StyleSheet.create({
   playAgainCont: {
     position: 'absolute',
     alignSelf: 'center',
+  },
+  homeBtn: {
+    position: 'absolute',
+    right: DimensionsUtils.getDP(16),
   },
 });

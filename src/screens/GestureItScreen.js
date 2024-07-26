@@ -10,6 +10,7 @@ import useBackAction from '../hooks/useBackAction';
 import {useAuthContext} from '../context/AuthProvider';
 import {DimensionsUtils} from '../utils/DimensionUtils';
 import CountdownTimer from '../components/common/Timer';
+import HomeButton from '../components/common/HomeButton';
 import {GEST_DESIGNS} from '../assets/values/gestDesignes';
 import AnimatedModal from '../components/common/AnimatedModal';
 import AnimatedAnswer from '../components/common/AnimatedAnswer';
@@ -44,6 +45,11 @@ const GestureItScreen = ({route}) => {
   const [designs, setDesigns] = React.useState(
     GEST_DESIGNS?.map((_, index) => index),
   );
+
+  const bottom =
+    insets.bottom > 0
+      ? {bottom: insets.bottom}
+      : {bottom: DimensionsUtils.getDP(24)};
 
   const HOR_PADD = DimensionsUtils.getDP(56);
   const VER_PADD = insets.top + insets.bottom;
@@ -210,13 +216,14 @@ const GestureItScreen = ({route}) => {
         </PanGestureHandler>
       </View>
       {isFinished && (
-        <View
-          style={[
-            styles.newGameCont,
-            {bottom: insets.bottom > 0 ? insets.bottom : 24},
-          ]}>
-          <NewGameButton gameFinished={isFinished} setNewGame={setNewGame} />
-        </View>
+        <>
+          <View style={[styles.newGameCont, bottom]}>
+            <NewGameButton gameFinished={isFinished} setNewGame={setNewGame} />
+          </View>
+          <View style={[bottom, styles.homeBtn]}>
+            <HomeButton />
+          </View>
+        </>
       )}
       {isFinished && <CelebrationLottie ref={lottieRef} />}
       <AnimatedModal
@@ -242,6 +249,10 @@ const styles = StyleSheet.create({
   newGameCont: {
     position: 'absolute',
     alignSelf: 'center',
+  },
+  homeBtn: {
+    position: 'absolute',
+    right: DimensionsUtils.getDP(16),
   },
 });
 
