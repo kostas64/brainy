@@ -1,7 +1,6 @@
 const addUser = require('./add_user.png');
 const arrowBlack = require('./arrow_black.png');
 const arrowDown = require('./arrow_down.png');
-const arrow = require('./arrow.png');
 const ballBalance = require('./ball_balance.png');
 const check = require('./check.png');
 const chevron = require('./chevron.png');
@@ -73,7 +72,6 @@ export default {
   addUser,
   arrowBlack,
   arrowDown,
-  arrow,
   ballBalance,
   check,
   chevron,

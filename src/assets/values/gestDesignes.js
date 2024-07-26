@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Image} from 'react-native';
 
 import images from '../images/images';
+import {Colors} from '../../utils/Colors';
 import {DimensionsUtils} from '../../utils/DimensionUtils';
 
 const row = {
@@ -17,6 +18,7 @@ const itemsCenter = {
 };
 
 const image = {
+  tintColor: Colors.white,
   width: DimensionsUtils.getDP(28),
   height: DimensionsUtils.getDP(28),
 };
@@ -29,7 +31,7 @@ const verSpace = {
   marginVertical: DimensionsUtils.getDP(4),
 };
 
-const gestImg = images.arrow;
+const gestImg = images.arrowBlack;
 
 const transform = deg => {
   return {transform: [{rotate: `${deg}deg`}]};

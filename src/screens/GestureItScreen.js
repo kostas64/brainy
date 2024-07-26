@@ -57,14 +57,11 @@ const GestureItScreen = ({route}) => {
     <CardSuccessModal correct={correct} points={points} tries={tries} />
   );
 
-  const sendScore = React.useCallback(
-    () =>
-      submitScore('gesture_it', {
-        points,
-        correctness: Math.floor((correct / tries) * 100),
-      }).finally(() => route?.params?.update()),
-    [correct, tries, points, route?.params],
-  );
+  const sendScore = () =>
+    submitScore('gesture_it', {
+      points,
+      correctness: Math.floor((correct / tries) * 100),
+    }).finally(() => route?.params?.update());
 
   const setNewGame = () => {
     setTries(0);
@@ -87,6 +84,10 @@ const GestureItScreen = ({route}) => {
   }, [availableHeight, availableWidth, setDesPos]);
 
   const swipeHandler = e => {
+    if (isFinished) {
+      return;
+    }
+
     if (!timeRef.current.isRunning) {
       timeRef.current.start();
     }
@@ -151,7 +152,7 @@ const GestureItScreen = ({route}) => {
 
   React.useEffect(() => {
     generateNext();
-  }, []);
+  }, [generateNext]);
 
   React.useEffect(() => {
     if (isFinished) {
@@ -159,7 +160,7 @@ const GestureItScreen = ({route}) => {
       lottieRef?.current?.play(0, 210);
       !user?.isGuest && sendScore();
     }
-  }, [isFinished, user?.isGuest, sendScore]);
+  }, [isFinished, user?.isGuest]);
 
   return (
     <>
